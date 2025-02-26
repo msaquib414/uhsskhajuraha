@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>वृत्त MCQ टेस्ट - कक्षा 10 (सेट 2)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div id="timer">समय: <span id="time">25:00</span></div>
+        <h1>वृत्त MCQ टेस्ट - कक्षा 10 (सेट 2)</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  एक वृत्त के किसी बाह्य बिंदु से खींची गई स्पर्श रेखाएँ वृत्त को कितने बिंदुओं पर स्पर्श करती हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_1" id="vrutt2_1a" value="a">
+                        <label for="vrutt2_1a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_1" id="vrutt2_1b" value="b">
+                        <label for="vrutt2_1b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_1" id="vrutt2_1c" value="c">
+                        <label for="vrutt2_1c">c) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_1" id="vrutt2_1d" value="d">
+                        <label for="vrutt2_1d">d) 3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_1" style="display:none;">सही उत्तर: c) 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  दो वृत्त सर्वांगसम होते हैं यदि उनकी ______ बराबर हों।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_2" id="vrutt2_2a" value="a">
+                        <label for="vrutt2_2a">a) क्षेत्रफल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_2" id="vrutt2_2b" value="b">
+                        <label for="vrutt2_2b">b) परिधि</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_2" id="vrutt2_2c" value="c">
+                        <label for="vrutt2_2c">c) त्रिज्याएँ</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_2" id="vrutt2_2d" value="d">
+                        <label for="vrutt2_2d">d) व्यास</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_2" style="display:none;">सही उत्तर: c) त्रिज्याएँ</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  वृत्त के चाप की लंबाई ज्ञात करने का सूत्र क्या है, यदि कोण θ और त्रिज्या r है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_3" id="vrutt2_3a" value="a">
+                        <label for="vrutt2_3a">a) θ/360° × πr²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_3" id="vrutt2_3b" value="b">
+                        <label for="vrutt2_3b">b) θ/360° × 2πr</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_3" id="vrutt2_3c" value="c">
+                        <label for="vrutt2_3c">c) θ/180° × πr²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_3" id="vrutt2_3d" value="d">
+                        <label for="vrutt2_3d">d) θ/180° × 2πr</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_3" style="display:none;">सही उत्तर: b) θ/360° × 2πr</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  एक वृत्त के त्रिज्यखंड का क्षेत्रफल ज्ञात करने का सूत्र क्या है, यदि कोण θ और त्रिज्या r है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_4" id="vrutt2_4a" value="a">
+                        <label for="vrutt2_4a">a) θ/360° × πr²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_4" id="vrutt2_4b" value="b">
+                        <label for="vrutt2_4b">b) θ/360° × 2πr</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_4" id="vrutt2_4c" value="c">
+                        <label for="vrutt2_4c">c) θ/180° × πr²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_4" id="vrutt2_4d" value="d">
+                        <label for="vrutt2_4d">d) θ/180° × 2πr</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_4" style="display:none;">सही उत्तर: a) θ/360° × πr²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  एक वृत्त की त्रिज्या 14 सेमी है और त्रिज्यखंड का कोण 90° है। त्रिज्यखंड का क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_5" id="vrutt2_5a" value="a">
+                        <label for="vrutt2_5a">a) 154 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_5" id="vrutt2_5b" value="b">
+                        <label for="vrutt2_5b">b) 308 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_5" id="vrutt2_5c" value="c">
+                        <label for="vrutt2_5c">c) 462 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_5" id="vrutt2_5d" value="d">
+                        <label for="vrutt2_5d">d) 616 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_5" style="display:none;">सही उत्तर: a) 154 सेमी²</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  एक वृत्त की परिधि 44 सेमी है। वृत्त का क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_6" id="vrutt2_6a" value="a">
+                        <label for="vrutt2_6a">a) 154 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_6" id="vrutt2_6b" value="b">
+                        <label for="vrutt2_6b">b) 308 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_6" id="vrutt2_6c" value="c">
+                        <label for="vrutt2_6c">c) 462 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_6" id="vrutt2_6d" value="d">
+                        <label for="vrutt2_6d">d) 616 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_6" style="display:none;">सही उत्तर: a) 154 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  एक वृत्त के चतुर्थांश का कोण कितना होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_7" id="vrutt2_7a" value="a">
+                        <label for="vrutt2_7a">a) 30°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_7" id="vrutt2_7b" value="b">
+                        <label for="vrutt2_7b">b) 45°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_7" id="vrutt2_7c" value="c">
+                        <label for="vrutt2_7c">c) 60°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_7" id="vrutt2_7d" value="d">
+                        <label for="vrutt2_7d">d) 90°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_7" style="display:none;">सही उत्तर: d) 90°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  एक वृत्त के अर्धवृत्त का कोण कितना होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_8" id="vrutt2_8a" value="a">
+                        <label for="vrutt2_8a">a) 90°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_8" id="vrutt2_8b" value="b">
+                        <label for="vrutt2_8b">b) 180°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_8" id="vrutt2_8c" value="c">
+                        <label for="vrutt2_8c">c) 270°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_8" id="vrutt2_8d" value="d">
+                        <label for="vrutt2_8d">d) 360°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_8" style="display:none;">सही उत्तर: b) 180°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  दो संकेंद्रीय वृत्तों के बीच घिरे क्षेत्र को क्या कहते हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_9" id="vrutt2_9a" value="a">
+                        <label for="vrutt2_9a">a) त्रिज्यखंड</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_9" id="vrutt2_9b" value="b">
+                        <label for="vrutt2_9b">b) वृत्तखंड</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_9" id="vrutt2_9c" value="c">
+                        <label for="vrutt2_9c">c) वलयाकार क्षेत्र</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_9" id="vrutt2_9d" value="d">
+                        <label for="vrutt2_9d">d) चाप</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_9" style="display:none;">सही उत्तर: c) वलयाकार क्षेत्र</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10.  एक वृत्त की त्रिज्या 21 सेमी और चाप की लंबाई 22 सेमी है। केंद्र पर चाप द्वारा अंतरित कोण ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_10" id="vrutt2_10a" value="a">
+                        <label for="vrutt2_10a">a) 30°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_10" id="vrutt2_10b" value="b">
+                        <label for="vrutt2_10b">b) 60°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_10" id="vrutt2_10c" value="c">
+                        <label for="vrutt2_10c">c) 90°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_10" id="vrutt2_10d" value="d">
+                        <label for="vrutt2_10d">d) 120°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_10" style="display:none;">सही उत्तर: b) 60°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  एक घड़ी की मिनट की सुई की लंबाई 14 सेमी है। 5 मिनट में मिनट की सुई द्वारा तय क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_11" id="vrutt2_11a" value="a">
+                        <label for="vrutt2_11a">a) 154/3 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_11" id="vrutt2_11b" value="b">
+                        <label for="vrutt2_11b">b) 308/3 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_11" id="vrutt2_11c" value="c">
+                        <label for="vrutt2_11c">c) 462/3 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_11" id="vrutt2_11d" value="d">
+                        <label for="vrutt2_11d">d) 616/3 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_11" style="display:none;">सही उत्तर: a) 154/3 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  वृत्तखंड का क्षेत्रफल ज्ञात करने का सूत्र क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_12" id="vrutt2_12a" value="a">
+                        <label for="vrutt2_12a">a) त्रिज्यखंड का क्षेत्रफल - त्रिभुज का क्षेत्रफल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_12" id="vrutt2_12b" value="b">
+                        <label for="vrutt2_12b">b) त्रिज्यखंड का क्षेत्रफल + त्रिभुज का क्षेत्रफल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_12" id="vrutt2_12c" value="c">
+                        <label for="vrutt2_12c">c) वृत्त का क्षेत्रफल - त्रिज्यखंड का क्षेत्रफल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_12" id="vrutt2_12d" value="d">
+                        <label for="vrutt2_12d">d) वृत्त का क्षेत्रफल + त्रिज्यखंड का क्षेत्रफल</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_12" style="display:none;">सही उत्तर: a) त्रिज्यखंड का क्षेत्रफल - त्रिभुज का क्षेत्रफल</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  एक वृत्त की त्रिज्या 10 सेमी है और जीवा केंद्र पर 90° का कोण अंतरित करती है। संगत लघु वृत्तखंड का क्षेत्रफल ज्ञात कीजिए। (π = 3.14)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_13" id="vrutt2_13a" value="a">
+                        <label for="vrutt2_13a">a) 28.5 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_13" id="vrutt2_13b" value="b">
+                        <label for="vrutt2_13b">b) 78.5 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_13" id="vrutt2_13c" value="c">
+                        <label for="vrutt2_13c">c) 157 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_13" id="vrutt2_13d" value="d">
+                        <label for="vrutt2_13d">d) 314 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_13" style="display:none;">सही उत्तर: a) 28.5 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  एक वृत्त का व्यास 28 सेमी है। अर्धवृत्त की परिमाप ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_14" id="vrutt2_14a" value="a">
+                        <label for="vrutt2_14a">a) 44 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_14" id="vrutt2_14b" value="b">
+                        <label for="vrutt2_14b">b) 58 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_14" id="vrutt2_14c" value="c">
+                        <label for="vrutt2_14c">c) 72 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_14" id="vrutt2_14d" value="d">
+                        <label for="vrutt2_14d">d) 86 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_14" style="display:none;">सही उत्तर: c) 72 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  यदि एक वृत्त की त्रिज्या 3.5 सेमी है, तो वृत्त की परिधि क्या होगी? (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_15" id="vrutt2_15a" value="a">
+                        <label for="vrutt2_15a">a) 11 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_15" id="vrutt2_15b" value="b">
+                        <label for="vrutt2_15b">b) 22 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_15" id="vrutt2_15c" value="c">
+                        <label for="vrutt2_15c">c) 33 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_15" id="vrutt2_15d" value="d">
+                        <label for="vrutt2_15d">d) 44 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_15" style="display:none;">सही उत्तर: b) 22 सेमी</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  एक वृत्त का क्षेत्रफल 616 सेमी² है। वृत्त की त्रिज्या ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_16" id="vrutt2_16a" value="a">
+                        <label for="vrutt2_16a">a) 7 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_16" id="vrutt2_16b" value="b">
+                        <label for="vrutt2_16b">b) 14 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_16" id="vrutt2_16c" value="c">
+                        <label for="vrutt2_16c">c) 21 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_16" id="vrutt2_16d" value="d">
+                        <label for="vrutt2_16d">d) 28 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_16" style="display:none;">सही उत्तर: b) 14 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  एक ट्रैक्टर के अगले और पिछले पहियों के व्यास क्रमशः 80 सेमी और 2 मीटर हैं। पिछले पहिया 800 चक्कर लगाता है तो अगला पहिया कितने चक्कर लगाएगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_17" id="vrutt2_17a" value="a">
+                        <label for="vrutt2_17a">a) 400</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_17" id="vrutt2_17b" value="b">
+                        <label for="vrutt2_17b">b) 800</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_17" id="vrutt2_17c" value="c">
+                        <label for="vrutt2_17c">c) 1600</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_17" id="vrutt2_17d" value="d">
+                        <label for="vrutt2_17d">d) 3200</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_17" style="display:none;">सही उत्तर: c) 1600</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  एक वृत्ताकार पार्क की परिधि 308 मीटर है। पार्क का क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_18" id="vrutt2_18a" value="a">
+                        <label for="vrutt2_18a">a) 7546 मीटर²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_18" id="vrutt2_18b" value="b">
+                        <label for="vrutt2_18b">b) 2356 मीटर²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_18" id="vrutt2_18c" value="c">
+                        <label for="vrutt2_18c">c) 4756 मीटर²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_18" id="vrutt2_18d" value="d">
+                        <label for="vrutt2_18d">d) 9264 मीटर²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_18" style="display:none;">सही उत्तर: a) 7546 मीटर²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  10 सेमी त्रिज्या वाले वृत्त में, केंद्र पर 60° का कोण बनाने वाले त्रिज्यखंड का क्षेत्रफल ज्ञात कीजिए। (π = 3.14)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_19" id="vrutt2_19a" value="a">
+                        <label for="vrutt2_19a">a) 52.33 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_19" id="vrutt2_19b" value="b">
+                        <label for="vrutt2_19b">b) 52.38 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_19" id="vrutt2_19c" value="c">
+                        <label for="vrutt2_19c">c) 52.44 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_19" id="vrutt2_19d" value="d">
+                        <label for="vrutt2_19d">d) 52.50 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_19" style="display:none;">सही उत्तर: b) 52.38 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  6 सेमी त्रिज्या वाले एक वृत्त के एक त्रिज्यखंड का क्षेत्रफल ज्ञात कीजिए, जिसका कोण 60° है। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_20" id="vrutt2_20a" value="a">
+                        <label for="vrutt2_20a">a) 132/7 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_20" id="vrutt2_20b" value="b">
+                        <label for="vrutt2_20b">b) 792/7 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_20" id="vrutt2_2c" value="c">
+                        <label for="vrutt2_2c">c) 1584/7 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_20" id="vrutt2_2d" value="d">
+                        <label for="vrutt2_20d">d) 3168/7 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_20" style="display:none;">सही उत्तर: a) 132/7 सेमी²</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  एक वृत्त की परिधि 39.6 सेमी है। वृत्त का क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_21" id="vrutt2_21a" value="a">
+                        <label for="vrutt2_21a">a) 124.74 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_21" id="vrutt2_2b" value="b">
+                        <label for="vrutt2_2b">b) 249.48 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_21" id="vrutt2_2c" value="c">
+                        <label for="vrutt2_2c">c) 374.22 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_21" id="vrutt2_2d" value="d">
+                        <label for="vrutt2_21d">d) 499.96 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_21" style="display:none;">सही उत्तर: a) 124.74 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  एक वृत्त की त्रिज्या को 50% कम कर दिया जाए तो क्षेत्रफल में कितने प्रतिशत की कमी होगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_22" id="vrutt2_22a" value="a">
+                        <label for="vrutt2_22a">a) 25%</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_22" id="vrutt2_2b" value="b">
+                        <label for="vrutt2_2b">b) 50%</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_22" id="vrutt2_2c" value="c">
+                        <label for="vrutt2_2c">c) 75%</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_22" id="vrutt2_2d" value="d">
+                        <label for="vrutt2_22d">d) 100%</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_22" style="display:none;">सही उत्तर: c) 75%</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  एक वर्गाकार पार्क के चारों ओर 2 मीटर चौड़ा एक वृत्ताकार पथ बना हुआ है। यदि पार्क की भुजा 28 मीटर है, तो पथ का क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_23" id="vrutt2_23a" value="a">
+                        <label for="vrutt2_23a">a) 704 मीटर²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_23" id="vrutt2_2b" value="b">
+                        <label for="vrutt2_2b">b) 1408 मीटर²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_23" id="vrutt2_2c" value="c">
+                        <label for="vrutt2_23c">c) 2112 मीटर²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_23" id="vrutt2_2d" value="d">
+                        <label for="vrutt2_23d">d) 2816 मीटर²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_23" style="display:none;">सही उत्तर: a) 704 मीटर²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  एक वृत्त की त्रिज्या 7 सेमी है। 60° कोण वाले त्रिज्यखंड के संगत चाप की लंबाई ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_24" id="vrutt2_24a" value="a">
+                        <label for="vrutt2_24a">a) 22/3 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_24" id="vrutt2_2b" value="b">
+                        <label for="vrutt2_2b">b) 44/3 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_24" id="vrutt2_2c" value="c">
+                        <label for="vrutt2_2c">c) 88/3 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_24" id="vrutt2_2d" value="d">
+                        <label for="vrutt2_24d">d) 176/3 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_24" style="display:none;">सही उत्तर: a) 22/3 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  यदि एक वृत्त की परिधि और क्षेत्रफल संख्यात्मक रूप से बराबर हैं, तो वृत्त की त्रिज्या क्या होगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_25" id="vrutt2_25a" value="a">
+                        <label for="vrutt2_25a">a) 1 इकाई</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_25" id="vrutt2_2b" value="b">
+                        <label for="vrutt2_25b">b) 2 इकाई</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_25" id="vrutt2_2c" value="c">
+                        <label for="vrutt2_25c">c) 3 इकाई</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2_25" id="vrutt2_2d" value="d">
+                        <label for="vrutt2_25d">d) 4 इकाई</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2_25" style="display:none;">सही उत्तर: b) 2 इकाई</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersVruttClass10Set2 = {
+            vrutt2_1: 'c', vrutt2_2: 'c', vrutt2_3: 'b', vrutt2_4: 'a', vrutt2_5: 'a',
+            vrutt2_6: 'a', vrutt2_7: 'd', vrutt2_8: 'b', vrutt2_9: 'c', vrutt2_10: 'b',
+            vrutt2_11: 'a', vrutt2_12: 'a', vrutt2_13: 'a', vrutt2_14: 'c', vrutt2_15: 'b',
+            vrutt2_16: 'b', vrutt2_17: 'c', vrutt2_18: 'a', vrutt2_19: 'b', vrutt2_20: 'a',
+            vrutt2_21: 'a', vrutt2_22: 'c', vrutt2_23: 'a', vrutt2_24: 'a', vrutt2_25: 'b'
+        };
+
+        let quizSubmitted = false;
+        const timerDuration =  25 * 60; // 25 minutes in seconds
+        let timeLeft = timerDuration;
+        let timerInterval;
+
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                     timeLeft = timerDuration; // Reset timer if it goes below 0, for visual looping if needed
+                     startTimer(); // Restart the timer immediately for continuous loop. Remove if you want it to stop at 00:00
+                }
+            }, 1000);
+        }
+
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the visual timer when quiz is submitted.
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersVruttClass10Set2) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersVruttClass10Set2[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersVruttClass10Set2[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click();
+        }
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizSubmitted) {
+                submitQuiz();
+            }
+        });
+
+
+        startTimer(); // Start timer when page loads
+
+    </script>
+</body>
+</html>

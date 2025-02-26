@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>त्रिकोणमिति के कुछ अनुप्रयोग MCQ टेस्ट - कक्षा 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div id="timer">समय: <span id="time">25:00</span></div>
+        <h1>त्रिकोणमिति के कुछ अनुप्रयोग MCQ टेस्ट - कक्षा 10</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  एक ऊर्ध्वाधर खंभे की छाया की लंबाई खंभे की ऊँचाई के बराबर है। सूर्य का उन्नयन कोण क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku1" id="tkaku1a" value="a">
+                        <label for="tkaku1a">a) 30°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku1" id="tkaku1b" value="b">
+                        <label for="tkaku1b">b) 45°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku1" id="tkaku1c" value="c">
+                        <label for="tkaku1c">c) 60°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku1" id="tkaku1d" value="d">
+                        <label for="tkaku1d">d) 90°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku1" style="display:none;">सही उत्तर: b) 45°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  एक मीनार के पाद से 30 मीटर दूर स्थित बिंदु से मीनार के शीर्ष का उन्नयन कोण 30° है। मीनार की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku2" id="tkaku2a" value="a">
+                        <label for="tkaku2a">a) 10 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku2" id="tkaku2b" value="b">
+                        <label for="tkaku2b">b) 10√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku2" id="tkaku2c" value="c">
+                        <label for="tkaku2c">c) 30/√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku2" id="tkaku2d" value="d">
+                        <label for="tkaku2d">d) 30 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku2" style="display:none;">सही उत्तर: c) 30/√3 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  जब हम क्षैतिज रेखा से ऊपर की ओर देखते हैं, तो दृष्टि रेखा और क्षैतिज रेखा के बीच बने कोण को क्या कहते हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku3" id="tkaku3a" value="a">
+                        <label for="tkaku3a">a) अवनमन कोण</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku3" id="tkaku3b" value="b">
+                        <label for="tkaku3b">b) उन्नयन कोण</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku3" id="tkaku3c" value="c">
+                        <label for="tkaku3c">c) समकोण</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku3" id="tkaku3d" value="d">
+                        <label for="tkaku3d">d) ऋजु कोण</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku3" style="display:none;">सही उत्तर: b) उन्नयन कोण</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  एक 1.5 मीटर लंबा लड़का एक चिमनी से 28.5 मीटर की दूरी पर खड़ा है। उसकी आँखों से चिमनी के शीर्ष का उन्नयन कोण 30° है। चिमनी की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku4" id="tkaku4a" value="a">
+                        <label for="tkaku4a">a) 30 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku4" id="tkaku4b" value="b">
+                        <label for="tkaku4b">b) 30√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku4" id="tkaku4c" value="c">
+                        <label for="tkaku4c">c) 28.5 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku4" id="tkaku4d" value="d">
+                        <label for="tkaku4d">d) (28.5/√3) + 1.5 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku4" style="display:none;">सही उत्तर: d) (28.5/√3) + 1.5 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  भूमि पर एक बिंदु P से 10 मीटर ऊँचे भवन के शिखर का उन्नयन कोण 30° है। बिंदु P से भवन के पाद की दूरी क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku5" id="tkaku5a" value="a">
+                        <label for="tkaku5a">a) 10 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku5" id="tkaku5b" value="b">
+                        <label for="tkaku5b">b) 10/√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku5" id="tkaku5c" value="c">
+                        <label for="tkaku5c">c) 10√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku5" id="tkaku5d" value="d">
+                        <label for="tkaku5d">d) 20 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku5" style="display:none;">सही उत्तर: c) 10√3 मीटर</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  एक नदी के किनारे खड़ा एक आदमी देखता है कि नदी के दूसरे किनारे पर एक पेड़ के शीर्ष का उन्नयन कोण 60° है। जब वह किनारे से 40 मीटर पीछे हटता है, तो उन्नयन कोण 30° हो जाता है। पेड़ की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku6" id="tkaku6a" value="a">
+                        <label for="tkaku6a">a) 20 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku6" id="tkaku6b" value="b">
+                        <label for="tkaku6b">b) 20√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku6" id="tkaku6c" value="c">
+                        <label for="tkaku6c">c) 40 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku6" id="tkaku6d" value="d">
+                        <label for="tkaku6d">d) 40√3 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku6" style="display:none;">सही उत्तर: b) 20√3 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  एक हवाई जहाज जो क्षैतिज तल से 3000 मीटर की ऊँचाई पर उड़ रहा है, जमीन पर एक बिंदु से 60° का उन्नयन कोण बनाता है। बिंदु से हवाई जहाज की क्षैतिज दूरी क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku7" id="tkaku7a" value="a">
+                        <label for="tkaku7a">a) 1000 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku7" id="tkaku7b" value="b">
+                        <label for="tkaku7b">b) 1000√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku7" id="tkaku7c" value="c">
+                        <label for="tkaku7c">c) 3000/√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku7" id="tkaku7d" value="d">
+                        <label for="tkaku7d">d) 3000 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku7" style="display:none;">सही उत्तर: c) 3000/√3 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  10 मीटर ऊँची एक इमारत के शीर्ष से एक केबल टॉवर के शीर्ष का उन्नयन कोण 60° है और उसके पाद का अवनमन कोण 45° है। टॉवर की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku8" id="tkaku8a" value="a">
+                        <label for="tkaku8a">a) 10(√3 + 1) मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku8" id="tkaku8b" value="b">
+                        <label for="tkaku8b">b) 10√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku8" id="tkaku8c" value="c">
+                        <label for="tkaku8c">c) 10 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku8" id="tkaku8d" value="d">
+                        <label for="tkaku8d">d) 20 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku8" style="display:none;">सही उत्तर: a) 10(√3 + 1) मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  एक वृत्त के केंद्र से 20 मीटर की दूरी पर स्थित एक बिंदु से वृत्त पर खींची गई स्पर्श रेखा की लंबाई 16 मीटर है। वृत्त की त्रिज्या क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku9" id="tkaku9a" value="a">
+                        <label for="tkaku9a">a) 12 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku9" id="tkaku9b" value="b">
+                        <label for="tkaku9b">b) 10 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku9" id="tkaku9c" value="c">
+                        <label for="tkaku9c">c) 16 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku9" id="tkaku9d" value="d">
+                        <label for="tkaku9d">d) 20 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku9" style="display:none;">सही उत्तर: a) 12 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10.  एक मीनार के शीर्ष से 50 मीटर ऊँचे भवन के शीर्ष और पाद के अवनमन कोण क्रमशः 30° और 60° हैं। भवन और मीनार के बीच क्षैतिज दूरी क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku10" id="tkaku10a" value="a">
+                        <label for="tkaku10a">a) 50/√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku10" id="tkaku10b" value="b">
+                        <label for="tkaku10b">b) 50√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku10" id="tkaku10c" value="c">
+                        <label for="tkaku10c">c) 50 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku10" id="tkaku10d" value="d">
+                        <label for="tkaku10d">d) 100 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku10" style="display:none;">सही उत्तर: a) 50/√3 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  एक नदी के पुल के एक बिंदु से नदी के विपरीत किनारों के अवनमन कोण 30° और 45° हैं। यदि पुल किनारों से 3 मीटर की ऊँचाई पर है, तो नदी की चौड़ाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku11" id="tkaku11a" value="a">
+                        <label for="tkaku11a">a) 3(√3 + 1) मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku11" id="tkaku11b" value="b">
+                        <label for="tkaku11b">b) 3√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku11" id="tkaku11c" value="c">
+                        <label for="tkaku11c">c) 3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku11" id="tkaku11d" value="d">
+                        <label for="tkaku11d">d) 6 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku11" style="display:none;">सही उत्तर: a) 3(√3 + 1) मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  समुद्र तल से 75 मीटर ऊँची लाइटहाउस के शिखर से देखने पर दो समुद्री जहाजों के अवनमन कोण 30° और 45° हैं। यदि एक जहाज दूसरे के ठीक पीछे है, तो जहाजों के बीच की दूरी क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku12" id="tkaku12a" value="a">
+                        <label for="tkaku12a">a) 75(√3 - 1) मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku12" id="tkaku12b" value="b">
+                        <label for="tkaku12b">b) 75√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku12" id="tkaku12c" value="c">
+                        <label for="tkaku12c">c) 75 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku12" id="tkaku12d" value="d">
+                        <label for="tkaku12d">d) 150 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku12" style="display:none;">सही उत्तर: a) 75(√3 - 1) मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  एक ऊर्ध्वाधर मीनार एक क्षैतिज तल पर खड़ी है और उसके ऊपर 20 मीटर ऊँचा एक ध्वजदंड लगा है। तल पर किसी बिंदु से ध्वजदंड के पाद और शिखर के उन्नयन कोण क्रमशः 30° और 60° हैं। मीनार की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku13" id="tkaku13a" value="a">
+                        <label for="tkaku13a">a) 10 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku13" id="tkaku13b" value="b">
+                        <label for="tkaku13b">b) 10√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku13" id="tkaku13c" value="c">
+                        <label for="tkaku13c">c) 20 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku13" id="tkaku13d" value="d">
+                        <label for="tkaku13d">d) 20√3 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku13" style="display:none;">सही उत्तर: a) 10 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  एक पेड़ की चोटी का उन्नयन कोण जमीन पर एक बिंदु से 60° है। यदि बिंदु पेड़ के पाद से 20 मीटर दूर है, तो पेड़ की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku14" id="tkaku14a" value="a">
+                        <label for="tkaku14a">a) 20 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku14" id="tkaku14b" value="b">
+                        <label for="tkaku14b">b) 20√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku14" id="tkaku14c" value="c">
+                        <label for="tkaku14c">c) 40 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku14" id="tkaku14d" value="d">
+                        <label for="tkaku14d">d) 40√3 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku14" style="display:none;">सही उत्तर: b) 20√3 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  एक इमारत के पाद से एक मीनार के शीर्ष का उन्नयन कोण 30° है और मीनार के पाद से इमारत के शीर्ष का उन्नयन कोण 60° है। यदि मीनार 60 मीटर ऊँची है, तो इमारत की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku15" id="tkaku15a" value="a">
+                        <label for="tkaku15a">a) 20 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku15" id="tkaku15b" value="b">
+                        <label for="tkaku15b">b) 20√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku15" id="tkaku15c" value="c">
+                        <label for="tkaku15c">c) 30 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku15" id="tkaku15d" value="d">
+                        <label for="tkaku15d">d) 40 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku15" style="display:none;">सही उत्तर: a) 20 मीटर</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  सूर्य की ऊँचाई 60° से 30° में बदलने पर, एक मीनार की छाया 40 मीटर बढ़ जाती है। मीनार की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku16" id="tkaku16a" value="a">
+                        <label for="tkaku16a">a) 20 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku16" id="tkaku16b" value="b">
+                        <label for="tkaku16b">b) 20√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku16" id="tkaku16c" value="c">
+                        <label for="tkaku16c">c) 40 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku16" id="tkaku16d" value="d">
+                        <label for="tkaku16d">d) 40/√3 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku16" style="display:none;">सही उत्तर: b) 20√3 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  एक ऊर्ध्वाधर खंभे के शीर्ष पर लगा एक झंडा 6 मीटर ऊँचा है। जमीन पर एक बिंदु से झंडे के शीर्ष और पाद के उन्नयन कोण क्रमशः 45° और 30° हैं। खंभे की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku17" id="tkaku17a" value="a">
+                        <label for="tkaku17a">a) 3(√3 + 1) मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku17" id="tkaku17b" value="b">
+                        <label for="tkaku17b">b) 3(√3 - 1) मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku17" id="tkaku17c" value="c">
+                        <label for="tkaku17c">c) 6 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku17" id="tkaku17d" value="d">
+                        <label for="tkaku17d">d) 6√3 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku17" style="display:none;">सही उत्तर: b) 3(√3 - 1) मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  एक टॉवर के पाद से गुजरने वाली सीधी रेखा पर, पाद से क्रमशः 4 मीटर और 9 मीटर की दूरी पर स्थित दो बिंदुओं से टॉवर के शीर्ष के उन्नयन कोण पूरक पाए जाते हैं। टॉवर की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku18" id="tkaku18a" value="a">
+                        <label for="tkaku18a">a) 5 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku18" id="tkaku18b" value="b">
+                        <label for="tkaku18b">b) 6 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku18" id="tkaku18c" value="c">
+                        <label for="tkaku18c">c) 7 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku18" id="tkaku18d" value="d">
+                        <label for="tkaku18d">d) 8 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku18" style="display:none;">सही उत्तर: b) 6 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  एक 6 मीटर ऊँचे खंभे की छाया जमीन पर 2√3 मीटर लंबी है। सूर्य का उन्नयन कोण क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku19" id="tkaku19a" value="a">
+                        <label for="tkaku19a">a) 30°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku19" id="tkaku19b" value="b">
+                        <label for="tkaku19b">b) 45°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku19" id="tkaku19c" value="c">
+                        <label for="tkaku19c">c) 60°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku19" id="tkaku19d" value="d">
+                        <label for="tkaku19d">d) 90°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku19" style="display:none;">सही उत्तर: c) 60°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  एक मीनार के पाद से क्षैतिज तल पर एक बिंदु की दूरी 40 मीटर है और उस बिंदु से मीनार के शीर्ष का उन्नयन कोण 60° है। मीनार की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku20" id="tkaku20a" value="a">
+                        <label for="tkaku20a">a) 40 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku20" id="tkaku20b" value="b">
+                        <label for="tkaku20b">b) 40/√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku20" id="tkaku20c" value="c">
+                        <label for="tkaku20c">c) 40√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku20" id="tkaku20d" value="d">
+                        <label for="tkaku20d">d) 80 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku20" style="display:none;">सही उत्तर: c) 40√3 मीटर</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  एक 10 मीटर ऊँची इमारत के शीर्ष से जमीन पर किसी वस्तु का अवनमन कोण 30° है। वस्तु की इमारत के पाद से दूरी क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku21" id="tkaku21a" value="a">
+                        <label for="tkaku21a">a) 10 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku21" id="tkaku21b" value="b">
+                        <label for="tkaku21b">b) 10/√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku21" id="tkaku21c" value="c">
+                        <label for="tkaku21c">c) 10√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku21" id="tkaku21d" value="d">
+                        <label for="tkaku21d">d) 20 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku21" style="display:none;">सही उत्तर: c) 10√3 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  जब सूर्य का उन्नयन कोण 30° से 60° में परिवर्तित होता है, तो एक खंभे की छाया की लंबाई x मीटर से y मीटर तक कम हो जाती है। खंभे की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku22" id="tkaku22a" value="a">
+                        <label for="tkaku22a">a) (x - y) मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku22" id="tkaku22b" value="b">
+                        <label for="tkaku22b">b) (x + y) मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku22" id="tkaku22c" value="c">
+                        <label for="tkaku22c">c) (x - y)√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku22" id="tkaku22d" value="d">
+                        <label for="tkaku22d">d) (x - y)/√3 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku22" style="display:none;">सही उत्तर: d) (x - y)/√3 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  दो खंभे 20 मीटर और 14 मीटर ऊँचे हैं। उनके शीर्षों को एक तार से जोड़ा जाता है। यदि तार क्षैतिज के साथ 30° का कोण बनाता है, तो तार की लंबाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku23" id="tkaku23a" value="a">
+                        <label for="tkaku23a">a) 6 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku23" id="tkaku23b" value="b">
+                        <label for="tkaku23b">b) 12 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku23" id="tkaku23c" value="c">
+                        <label for="tkaku23c">c) 12√3 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku23" id="tkaku23d" value="d">
+                        <label for="tkaku23d">d) 24 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku23" style="display:none;">सही उत्तर: b) 12 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  एक बहुमंजिला भवन के शीर्ष से देखने पर, एक 8 मीटर ऊँचे भवन के शीर्ष और पाद के अवनमन कोण क्रमशः 30° और 45° हैं। बहुमंजिला भवन की ऊँचाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku24" id="tkaku24a" value="a">
+                        <label for="tkaku24a">a) 4(3 + √3) मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku24" id="tkaku24b" value="b">
+                        <label for="tkaku24b">b) 8(√3 + 1) मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku24" id="tkaku24c" value="c">
+                        <label for="tkaku24c">c) 16 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku24" id="tkaku24d" value="d">
+                        <label for="tkaku24d">d) 24 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku24" style="display:none;">सही उत्तर: a) 4(3 + √3) मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  एक सीधी सड़क एक मीनार के पाद तक जाती है। मीनार के शीर्ष पर खड़ा एक आदमी एक कार को 30° के अवनमन कोण पर देखता है जो मीनार के पाद की ओर एक समान गति से आ रही है। छह सेकंड बाद, अवनमन कोण 60° पाया जाता है। कार को मीनार के पाद तक पहुँचने में लगने वाला कुल समय कितना होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tkaku25" id="tkaku25a" value="a">
+                        <label for="tkaku25a">a) 3 सेकंड</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku25" id="tkaku25b" value="b">
+                        <label for="tkaku25b">b) 6 सेकंड</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku25" id="tkaku25c" value="c">
+                        <label for="tkaku25c">c) 9 सेकंड</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tkaku25" id="tkaku25d" value="d">
+                        <label for="tkaku25d">d) 12 सेकंड</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tkaku25" style="display:none;">सही उत्तर: a) 3 सेकंड</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersTrikonmitiAnuprayog = {
+            tkaku1: 'b', tkaku2: 'c', tkaku3: 'b', tkaku4: 'd', tkaku5: 'c',
+            tkaku6: 'b', tkaku7: 'c', tkaku8: 'a', tkaku9: 'a', tkaku10: 'a',
+            tkaku11: 'a', tkaku12: 'a', tkaku13: 'a', tkaku14: 'b', tkaku15: 'a',
+            tkaku16: 'b', tkaku17: 'b', tkaku18: 'b', tkaku19: 'c', tkaku20: 'c',
+            tkaku21: 'c', tkaku22: 'd', tkaku23: 'b', tkaku24: 'a', tkaku25: 'a'
+        };
+
+        let quizSubmitted = false;
+        const timerDuration =  25 * 60; // 25 minutes in seconds
+        let timeLeft = timerDuration;
+        let timerInterval;
+
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                     timeLeft = timerDuration; // Reset timer if it goes below 0, for visual looping if needed
+                     startTimer(); // Restart the timer immediately for continuous loop. Remove if you want it to stop at 00:00
+                }
+            }, 1000);
+        }
+
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the visual timer when quiz is submitted.
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersTrikonmitiAnuprayog) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersTrikonmitiAnuprayog[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersTrikonmitiAnuprayog[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click();
+        }
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizSubmitted) {
+                submitQuiz();
+            }
+        });
+
+
+        startTimer(); // Start timer when page loads
+
+    </script>
+</body>
+</html>

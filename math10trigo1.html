@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>त्रिकोणमिति परीक्षा</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        #result-container {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: none; /* Hidden initially */
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .wrong-answer {
+            color: red;
+            font-weight: bold;
+        }
+        #submit-btn:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer">25:00</div>
+
+    <div style="padding: 20px;">
+        <h1>कक्षा 10 - त्रिकोणमिति अनुपात और सर्वसमिकाएँ परीक्षा</h1>
+        <div id="name-input-container">
+            <label for="studentName">अपना नाम दर्ज करें:</label>
+            <input type="text" id="studentName" placeholder="नाम">
+            <button onclick="startQuiz()">परीक्षा शुरू करें</button>
+        </div>
+
+        <div id="quiz-container" style="display: none;">
+            <form id="quiz-form">
+                </form>
+            <button id="submit-btn" onclick="submitAnswers()" disabled style="display: none;">जमा करें</button>
+        </div>
+
+        <div id="result-container">
+            <h2>परिणाम</h2>
+            <div id="marks-display"></div>
+            <div id="answer-key-display"></div>
+            <button onclick="downloadResult()" style="display: none;" id="download-btn">परिणाम डाउनलोड करें</button>
+        </div>
+    </div>
+
+    <script>
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+        let studentName = "";
+        let questions = [];
+        let userAnswers = {};
+        let correctAnswersData = {};
+        let submitButton = document.getElementById("submit-btn");
+        let downloadButton = document.getElementById("download-btn");
+
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById("timer").innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById("timer").innerText = "समय समाप्त";
+                    // Timer does nothing on time out as per instruction.
+                }
+            }, 1000);
+        }
+
+        function startQuiz() {
+            studentName = document.getElementById("studentName").value;
+            if (!studentName.trim()) {
+                alert("कृपया अपना नाम दर्ज करें।");
+                return;
+            }
+            document.getElementById("name-input-container").style.display = "none";
+            document.getElementById("quiz-container").style.display = "block";
+            submitButton.style.display = "block";
+            submitButton.disabled = false; // Enable submit button once quiz starts
+            generateQuestions();
+            startTimer();
+        }
+
+
+        function generateQuestions() {
+            questions = [
+                {
+                    question: "यदि sin A = 3/5 है, तो cos A का मान क्या है?",
+                    options: ["4/5", "5/4", "3/4", "4/3"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "tan 45° + cot 45° का मान क्या है?",
+                    options: ["0", "1", "2", "-1"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "सर्वसमिका sin²θ + cos²θ = 1 में, θ का मान क्या हो सकता है?",
+                    options: ["केवल 0°", "केवल 90°", "कोई भी वास्तविक संख्या", "केवल धनात्मक कोण"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "यदि tan θ = 1/√3 है, तो θ का मान क्या है?",
+                    options: ["30°", "45°", "60°", "90°"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "sec 60° किसके बराबर है?",
+                    options: ["sin 30°", "cos 30°", "cosec 30°", "cot 30°"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "cosec A = 2, तो A का मान ज्ञात कीजिए।",
+                    options: ["30°", "45°", "60°", "90°"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "(1 + tan²θ) किसके बराबर है?",
+                    options: ["sin²θ", "cos²θ", "sec²θ", "cosec²θ"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "यदि cos θ = √3/2, तो cosec θ का मान क्या है?",
+                    options: ["2/√3", "√3/2", "2", "1/2"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "sin 30° * cos 60° + cos 30° * sin 60° का मान क्या है?",
+                    options: ["0", "1/2", "1", "√3/2"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "9 sec²A - 9 tan²A किसके बराबर है?",
+                    options: ["0", "9", "-9", "1"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "यदि tan A = 4/3, तो sec A का मान क्या होगा?",
+                    options: ["3/5", "4/5", "5/3", "5/4"],
+                    correctAnswer: "d"
+                },
+                {
+                    question: "cot 90° का मान क्या है?",
+                    options: ["0", "1", "√3", "1/√3"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "(cosec²θ - 1) किसके बराबर है?",
+                    options: ["tan²θ", "cot²θ", "sec²θ", "sin²θ"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "यदि sin θ = cos θ है, तो θ का मान क्या है?",
+                    options: ["0°", "30°", "45°", "60°"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "(1 - cos²A) किसके बराबर है?",
+                    options: ["sin²A", "cos²A", "tan²A", "cot²A"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "यदि sec θ = 2/√3, तो θ का मान क्या है?",
+                    options: ["30°", "45°", "60°", "90°"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "cosec 45° किसके बराबर है?",
+                    options: ["sin 45°", "cos 45°", "sec 45°", "√2"],
+                    correctAnswer: "d"
+                },
+                {
+                    question: "tan 60° का मान क्या है?",
+                    options: ["1/√3", "1", "√3", "2"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "यदि cot A = √3, तो A का मान ज्ञात कीजिए।",
+                    options: ["30°", "45°", "60°", "90°"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "(sec A - 1)(sec A + 1) किसके बराबर है?",
+                    options: ["sin²A", "cos²A", "tan²A", "sec²A"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "यदि sin θ = 1/√2, तो cot θ का मान क्या है?",
+                    options: ["0", "1", "√3", "अनंत"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "cos 90° का मान क्या है?",
+                    options: ["0", "1", "1/√2", "-1"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "cot²A - cosec²A + 1 = ?",
+                    options: ["0", "1", "-1", "2"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "यदि tan A = √3 और sin B = 1/√2, तो A और B के मान क्रमशः क्या हैं?",
+                    options: ["A=60°, B=45°", "A=45°, B=60°", "A=30°, B=45°", "A=60°, B=30°"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "(sin A + cos A)² + (sin A - cos A)² = ?",
+                    options: ["0", "1", "2", "4"],
+                    correctAnswer: "c"
+                }
+            ];
+
+
+            correctAnswersData = {}; // Reset correct answers data for display after submission.
+            const quizForm = document.getElementById("quiz-form");
+            let questionHTML = '';
+            questions.forEach((q, index) => {
+                const questionNumber = index + 1;
+                correctAnswersData[questionNumber] = q.correctAnswer; // Store correct answer for later display
+                questionHTML += `
+                    <div class="question">
+                        <p>${questionNumber}. ${questionNumber}. ${q.question}</p>
+                        <div class="options">
+                            <label><input type="radio" name="answer_${index}" value="a"> a) ${q.options[0]}</label>
+                            <label><input type="radio" name="answer_${index}" value="b"> b) ${q.options[1]}</label>
+                            <label><input type="radio" name="answer_${index}" value="c"> c) ${q.options[2]}</label>
+                            <label><input type="radio" name="answer_${index}" value="d"> d) ${q.options[3]}</label>
+                        </div>
+                        <div id="correct-answer-${index}" style="display:none;" class="correct-answer-display">सही उत्तर: ${q.options[q.correctAnswer.charCodeAt(0) - 97]}</div>
+                    </div>
+                `;
+            });
+            quizForm.innerHTML = questionHTML;
+        }
+
+
+        function submitAnswers() {
+            submitButton.disabled = true; // Disable submit button after first click
+            clearInterval(timerInterval); // Stop the timer on submission
+            document.getElementById("timer").style.display = "none"; // Hide timer after submit
+
+            const form = document.getElementById("quiz-form");
+            const formData = new FormData(form);
+            let marks = 0;
+            userAnswers = {};
+
+            questions.forEach((q, index) => {
+                const selectedAnswer = formData.get(`answer_${index}`);
+                userAnswers[index + 1] = selectedAnswer || ""; // Store user's answer
+                if (selectedAnswer === q.correctAnswer) {
+                    marks++;
+                }
+                document.getElementById(`correct-answer-${index}`).style.display = "block"; // Show correct answers
+            });
+
+            displayResult(marks);
+            document.getElementById("quiz-container").style.display = "none";
+            submitButton.style.display = "none";
+            downloadButton.style.display = "block"; // Show download button after submission
+            document.getElementById("result-container").style.display = "block";
+        }
+
+        function displayResult(marks) {
+            document.getElementById("marks-display").innerText = `आपने ${questions.length} में से ${marks} अंक प्राप्त किए।`;
+        }
+
+
+        function downloadResult() {
+            const marks = document.getElementById("marks-display").innerText;
+            const csvContent = "data:text/csv;charset=utf-8," +
+                "नाम,अंक\n" +
+                `${studentName},${marks.split(' ')[2]}\n`; // Assuming marks are the 3rd word
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link); // Required for Firefox
+
+            link.click();
+
+            document.body.removeChild(link); // Clean up
+        }
+
+    </script>
+
+</body>
+</html>

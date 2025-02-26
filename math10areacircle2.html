@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>वृत्त से संबंधित क्षेत्रफल MCQ टेस्ट - कक्षा 10 (सेट 3)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div id="timer">समय: <span id="time">25:00</span></div>
+        <h1>वृत्त से संबंधित क्षेत्रफल MCQ टेस्ट - कक्षा 10 (सेट 2)</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  एक वृत्त की त्रिज्या 3.5 सेमी है। वृत्त का क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_1" id="kshetrafal3_1a" value="a">
+                        <label for="kshetrafal3_1a">a) 22 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_1" id="kshetrafal3_1b" value="b">
+                        <label for="kshetrafal3_1b">b) 38.5 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_1" id="kshetrafal3_1c" value="c">
+                        <label for="kshetrafal3_1c">c) 44 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_1" id="kshetrafal3_1d" value="d">
+                        <label for="kshetrafal3_1d">d) 77 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_1" style="display:none;">सही उत्तर: b) 38.5 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  यदि एक वृत्त की परिधि 2πr से बदलकर πr कर दी जाए तो, नया क्षेत्रफल पुराने क्षेत्रफल का कितना गुना होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_2" id="kshetrafal3_2a" value="a">
+                        <label for="kshetrafal3_2a">a) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_2" id="kshetrafal3_2b" value="b">
+                        <label for="kshetrafal3_2b">b) 1/4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_2" id="kshetrafal3_2c" value="c">
+                        <label for="kshetrafal3_2c">c) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_2" id="kshetrafal3_2d" value="d">
+                        <label for="kshetrafal3_2d">d) 4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_2" style="display:none;">सही उत्तर: b) 1/4</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  एक वृत्त का व्यास 42 सेमी है। वृत्त की परिधि ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_3" id="kshetrafal3_3a" value="a">
+                        <label for="kshetrafal3_3a">a) 88 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_3" id="kshetrafal3_3b" value="b">
+                        <label for="kshetrafal3_3b">b) 132 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_3" id="kshetrafal3_3c" value="c">
+                        <label for="kshetrafal3_3c">c) 176 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_3" id="kshetrafal3_3d" value="d">
+                        <label for="kshetrafal3_3d">d) 264 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_3" style="display:none;">सही उत्तर: b) 132 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  यदि एक वृत्त की त्रिज्या 1 इकाई बढ़ा दी जाए, तो परिधि में कितनी वृद्धि होगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_4" id="kshetrafal3_4a" value="a">
+                        <label for="kshetrafal3_4a">a) π इकाई</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_4" id="kshetrafal3_4b" value="b">
+                        <label for="kshetrafal3_4b">b) 2π इकाई</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_4" id="kshetrafal3_4c" value="c">
+                        <label for="kshetrafal3_4c">c) 4π इकाई</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_4" id="kshetrafal3_4d" value="d">
+                        <label for="kshetrafal3_4d">d) π² इकाई</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_4" style="display:none;">सही उत्तर: b) 2π इकाई</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  एक वृत्त का क्षेत्रफल 9π सेमी² है। वृत्त की परिधि ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_5" id="kshetrafal3_5a" value="a">
+                        <label for="kshetrafal3_5a">a) 3π सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_5" id="kshetrafal3_5b" value="b">
+                        <label for="kshetrafal3_5b">b) 6π सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_5" id="kshetrafal3_5c" value="c">
+                        <label for="kshetrafal3_5c">c) 9π सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_5" id="kshetrafal3_5d" value="d">
+                        <label for="kshetrafal3_5d">d) 18π सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_5" style="display:none;">सही उत्तर: b) 6π सेमी</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  एक वृत्त के त्रिज्यखंड का क्षेत्रफल ज्ञात कीजिए, जिसकी त्रिज्या 7 सेमी और कोण 90° है। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_6" id="kshetrafal3_6a" value="a">
+                        <label for="kshetrafal3_6a">a) 77 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_6" id="kshetrafal3_6b" value="b">
+                        <label for="kshetrafal3_6b">b) 38.5 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_6" id="kshetrafal3_6c" value="c">
+                        <label for="kshetrafal3_6c">c) 154 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_6" id="kshetrafal3_6d" value="d">
+                        <label for="kshetrafal3_6d">d) 308 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_6" style="display:none;">सही उत्तर: b) 38.5 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  12 सेमी त्रिज्या वाले वृत्त के एक त्रिज्यखंड का क्षेत्रफल 32π सेमी² है। त्रिज्यखंड का कोण ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_7" id="kshetrafal3_7a" value="a">
+                        <label for="kshetrafal3_7a">a) 30°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_7" id="kshetrafal3_7b" value="b">
+                        <label for="kshetrafal3_7b">b) 60°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_7" id="kshetrafal3_7c" value="c">
+                        <label for="kshetrafal3_7c">c) 90°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_7" id="kshetrafal3_7d" value="d">
+                        <label for="kshetrafal3_7d">d) 120°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_7" style="display:none;">सही उत्तर: c) 90°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  एक वृत्त के त्रिज्यखंड का कोण 120° और त्रिज्या 21 सेमी है। त्रिज्यखंड का क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_8" id="kshetrafal3_8a" value="a">
+                        <label for="kshetrafal3_8a">a) 462 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_8" id="kshetrafal3_8b" value="b">
+                        <label for="kshetrafal3_8b">b) 924 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_8" id="kshetrafal3_8c" value="c">
+                        <label for="kshetrafal3_8c">c) 1386 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_8" id="kshetrafal3_8d" value="d">
+                        <label for="kshetrafal3_8d">d) 1848 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_8" style="display:none;">सही उत्तर: a) 462 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  एक वृत्त की त्रिज्या 14 सेमी और त्रिज्यखंड का कोण 30° है। लघु त्रिज्यखंड का क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_9" id="kshetrafal3_9a" value="a">
+                        <label for="kshetrafal3_9a">a) 154/3 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_9" id="kshetrafal3_9b" value="b">
+                        <label for="kshetrafal3_9b">b) 308/3 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_9" id="kshetrafal3_9c" value="c">
+                        <label for="kshetrafal3_9c">c) 462/3 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_9" id="kshetrafal3_9d" value="d">
+                        <label for="kshetrafal3_9d">d) 616/3 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_9" style="display:none;">सही उत्तर: a) 154/3 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10.  एक वृत्त की त्रिज्या 5 सेमी है। त्रिज्यखंड का क्षेत्रफल ज्ञात कीजिए, यदि चाप की लंबाई 3.5 सेमी है।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_10" id="kshetrafal3_10a" value="a">
+                        <label for="kshetrafal3_10a">a) 8.75 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_10" id="kshetrafal3_10b" value="b">
+                        <label for="kshetrafal3_10b">b) 17.5 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_10" id="kshetrafal3_10c" value="c">
+                        <label for="kshetrafal3_10c">c) 35 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_10" id="kshetrafal3_10d" value="d">
+                        <label for="kshetrafal3_10d">d) 70 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_10" style="display:none;">सही उत्तर: a) 8.75 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  एक वृत्त के चतुर्थांश का क्षेत्रफल ज्ञात कीजिए, जिसकी त्रिज्या 14 सेमी है। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_11" id="kshetrafal3_11a" value="a">
+                        <label for="kshetrafal3_11a">a) 154 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_11" id="kshetrafal3_11b" value="b">
+                        <label for="kshetrafal3_11b">b) 77 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_11" id="kshetrafal3_11c" value="c">
+                        <label for="kshetrafal3_11c">c) 308 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_11" id="kshetrafal3_11d" value="d">
+                        <label for="kshetrafal3_11d">d) 616 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_11" style="display:none;">सही उत्तर: a) 154 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  यदि वृत्त के चतुर्थांश का क्षेत्रफल 38.5 सेमी² है, तो वृत्त की त्रिज्या ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_12" id="kshetrafal3_12a" value="a">
+                        <label for="kshetrafal3_12a">a) 3.5 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_12" id="kshetrafal3_12b" value="b">
+                        <label for="kshetrafal3_12b">b) 7 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_12" id="kshetrafal3_12c" value="c">
+                        <label for="kshetrafal3_12c">c) 10.5 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_12" id="kshetrafal3_12d" value="d">
+                        <label for="kshetrafal3_12d">d) 14 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_12" style="display:none;">सही उत्तर: b) 7 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  एक वृत्त के चतुर्थांश की परिमाप ज्ञात कीजिए, यदि वृत्त की त्रिज्या 7 सेमी है। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_13" id="kshetrafal3_13a" value="a">
+                        <label for="kshetrafal3_13a">a) 25 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_13" id="kshetrafal3_13b" value="b">
+                        <label for="kshetrafal3_13b">b) 36 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_13" id="kshetrafal3_13c" value="c">
+                        <label for="kshetrafal3_13c">c) 49 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_13" id="kshetrafal3_13d" value="d">
+                        <label for="kshetrafal3_13d">d) 56 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_13" style="display:none;">सही उत्तर: a) 25 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  एक वृत्त के वृत्तखंड का क्षेत्रफल ज्ञात करने का सूत्र क्या है? (जहाँ त्रिज्यखंड का क्षेत्रफल = A, त्रिभुज का क्षेत्रफल = T)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_14" id="kshetrafal3_14a" value="a">
+                        <label for="kshetrafal3_14a">a) A + T</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_14" id="kshetrafal3_14b" value="b">
+                        <label for="kshetrafal3_14b">b) A - T</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_14" id="kshetrafal3_14c" value="c">
+                        <label for="kshetrafal3_14c">c) T - A</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_14" id="kshetrafal3_14d" value="d">
+                        <label for="kshetrafal3_14d">d) 2A - T</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_14" style="display:none;">सही उत्तर: b) A - T</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  एक वृत्त की त्रिज्या 21 सेमी और कोण 60° है। वृत्तखंड का क्षेत्रफल ज्ञात कीजिए। (π = 22/7, √3 = 1.732)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_15" id="kshetrafal3_15a" value="a">
+                        <label for="kshetrafal3_15a">a) 40.044 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_15" id="kshetrafal3_15b" value="b">
+                        <label for="kshetrafal3_15b">b) 40.088 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_15" id="kshetrafal3_15c" value="c">
+                        <label for="kshetrafal3_15c">c) 40.132 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_15" id="kshetrafal3_15d" value="d">
+                        <label for="kshetrafal3_15d">d) 40.176 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_15" style="display:none;">सही उत्तर: a) 40.044 सेमी²</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  एक वृत्त की त्रिज्या 10 सेमी और जीवा केंद्र पर 90° का कोण अंतरित करती है। दीर्घ वृत्तखंड का क्षेत्रफल ज्ञात कीजिए। (π = 3.14)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_16" id="kshetrafal3_16a" value="a">
+                        <label for="kshetrafal3_16a">a) 235.5 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_16" id="kshetrafal3_16b" value="b">
+                        <label for="kshetrafal3_16b">b) 285.5 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_16" id="kshetrafal3_16c" value="c">
+                        <label for="kshetrafal3_16c">c) 314 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_16" id="kshetrafal3_16d" value="d">
+                        <label for="kshetrafal3_16d">d) 342.5 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_16" style="display:none;">सही उत्तर: a) 235.5 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  एक वृत्त की जीवा की लंबाई 12 सेमी और त्रिज्या 10 सेमी है। लघु वृत्तखंड का क्षेत्रफल ज्ञात कीजिए। (π = 3.14, √21 = 4.583)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_17" id="kshetrafal3_17a" value="a">
+                        <label for="kshetrafal3_17a">a) 28.44 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_17" id="kshetrafal3_17b" value="b">
+                        <label for="kshetrafal3_17b">b) 14.22 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_17" id="kshetrafal3_17c" value="c">
+                        <label for="kshetrafal3_17c">c) 56.88 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_17" id="kshetrafal3_17d" value="d">
+                        <label for="kshetrafal3_17d">d) 113.76 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_17" style="display:none;">सही उत्तर: b) 14.22 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  एक वृत्त की त्रिज्या 15 सेमी और जीवा केंद्र पर 60° का कोण अंतरित करती है। लघु वृत्तखंड का क्षेत्रफल ज्ञात कीजिए। (π = 3.14, √3 = 1.732)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_18" id="kshetrafal3_18a" value="a">
+                        <label for="kshetrafal3_18a">a) 20.43 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_18" id="kshetrafal3_18b" value="b">
+                        <label for="kshetrafal3_18b">b) 39.25 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_18" id="kshetrafal3_18c" value="c">
+                        <label for="kshetrafal3_18c">c) 68.6 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_18" id="kshetrafal3_18d" value="d">
+                        <label for="kshetrafal3_18d">d) 117.75 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_18" style="display:none;">सही उत्तर: a) 20.43 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  एक वृत्त की त्रिज्या 12 सेमी और जीवा केंद्र पर 120° का कोण अंतरित करती है। वृत्तखंड का क्षेत्रफल ज्ञात कीजिए। (π = 3.14, √3 = 1.732)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_19" id="kshetrafal3_19a" value="a">
+                        <label for="kshetrafal3_19a">a) 88.44 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_19" id="kshetrafal3_19b" value="b">
+                        <label for="kshetrafal3_19b">b) 44.22 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_19" id="kshetrafal3_19c" value="c">
+                        <label for="kshetrafal3_19c">c) 176.88 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_19" id="kshetrafal3_19d" value="d">
+                        <label for="kshetrafal3_19d">d) 353.76 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_19" style="display:none;">सही उत्तर: a) 88.44 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  एक वृत्ताकार मेज़पोश की त्रिज्या 32 सेमी है। इस पर डिज़ाइन बना हुआ है जो 60° त्रिज्यखंड छोड़ता है। डिज़ाइन का क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_20" id="kshetrafal3_20a" value="a">
+                        <label for="kshetrafal3_20a">a) 1207.53 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_20" id="kshetrafal3_20b" value="b">
+                        <label for="kshetrafal3_20b">b) 1072.53 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_20" id="kshetrafal3_20c" value="c">
+                        <label for="kshetrafal3_20c">c) 998.53 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_20" id="kshetrafal3_20d" value="d">
+                        <label for="kshetrafal3_20d">d) 856.53 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_20" style="display:none;">सही उत्तर: a) 1207.53 सेमी²</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  एक वृत्ताकार तालाब का व्यास 3.5 मीटर है। इसके चारों ओर 0.7 मीटर चौड़ा पथ बना हुआ है। पथ का क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_21" id="kshetrafal3_21a" value="a">
+                        <label for="kshetrafal3_21a">a) 8.25 मीटर²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_21" id="kshetrafal3_21b" value="b">
+                        <label for="kshetrafal3_21b">b) 4.125 मीटर²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_21" id="kshetrafal3_21c" value="c">
+                        <label for="kshetrafal3_21c">c) 16.5 मीटर²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_21" id="kshetrafal3_21d" value="d">
+                        <label for="kshetrafal3_21d">d) 24.75 मीटर²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_21" style="display:none;">सही उत्तर: a) 8.25 मीटर²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  एक वृत्त के क्षेत्रफल और परिधि का अनुपात क्या है, यदि त्रिज्या r है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_22" id="kshetrafal3_22a" value="a">
+                        <label for="kshetrafal3_22a">a) r : 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_22" id="kshetrafal3_22b" value="b">
+                        <label for="kshetrafal3_22b">b) 2 : r</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_22" id="kshetrafal3_22c" value="c">
+                        <label for="kshetrafal3_22c">c) πr : 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_22" id="kshetrafal3_22d" value="d">
+                        <label for="kshetrafal3_22d">d) 2 : πr</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_22" style="display:none;">सही उत्तर: a) r : 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  दो संकेंद्रीय वृत्तों की त्रिज्याएँ क्रमशः 5 सेमी और 3 सेमी हैं। वलयाकार क्षेत्र का क्षेत्रफल ज्ञात कीजिए। (π = 3.14)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_23" id="kshetrafal3_23a" value="a">
+                        <label for="kshetrafal3_23a">a) 50.24 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_23" id="kshetrafal3_23b" value="b">
+                        <label for="kshetrafal3_23b">b) 25.12 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_23" id="kshetrafal3_23c" value="c">
+                        <label for="kshetrafal3_23c">c) 78.5 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_23" id="kshetrafal3_23d" value="d">
+                        <label for="kshetrafal3_23d">d) 15.7 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_23" style="display:none;">सही उत्तर: a) 50.24 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  एक साइकिल के पहिए का व्यास 70 सेमी है। यदि पहिया 10 मिनट में 1000 चक्कर लगाता है, तो साइकिल की गति किमी/घंटा में ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_24" id="kshetrafal3_24a" value="a">
+                        <label for="kshetrafal3_24a">a) 13.2 किमी/घंटा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_24" id="kshetrafal3_24b" value="b">
+                        <label for="kshetrafal3_24b">b) 11 किमी/घंटा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_24" id="kshetrafal3_24c" value="c">
+                        <label for="kshetrafal3_24c">c) 15.4 किमी/घंटा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_24" id="kshetrafal3_24d" value="d">
+                        <label for="kshetrafal3_24d">d) 17.6 किमी/घंटा</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_24" style="display:none;">सही उत्तर: a) 13.2 किमी/घंटा</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  एक वृत्ताकार पार्क का क्षेत्रफल 5544 मीटर² है। पार्क की परिधि ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_25" id="kshetrafal3_25a" value="a">
+                        <label for="kshetrafal3_25a">a) 132 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_25" id="kshetrafal3_25b" value="b">
+                        <label for="kshetrafal3_25b">b) 264 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_25" id="kshetrafal3_25c" value="c">
+                        <label for="kshetrafal3_25c">c) 528 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="kshetrafal3_25" id="kshetrafal3_25d" value="d">
+                        <label for="kshetrafal3_25d">d) 1056 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_kshetrafal3_25" style="display:none;">सही उत्तर: b) 264 मीटर</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersKshetrafalClass10Set3 = {
+            kshetrafal3_1: 'b', kshetrafal3_2: 'b', kshetrafal3_3: 'b', kshetrafal3_4: 'b', kshetrafal3_5: 'b',
+            kshetrafal3_6: 'b', kshetrafal3_7: 'c', kshetrafal3_8: 'a', kshetrafal3_9: 'a', kshetrafal3_10: 'a',
+            kshetrafal3_11: 'a', kshetrafal3_12: 'b', kshetrafal3_13: 'a', kshetrafal3_14: 'b', kshetrafal3_15: 'a',
+            kshetrafal3_16: 'a', kshetrafal3_17: 'b', kshetrafal3_18: 'a', kshetrafal3_19: 'a', kshetrafal3_20: 'a',
+            kshetrafal3_21: 'a', kshetrafal3_22: 'a', kshetrafal3_23: 'a', kshetrafal3_24: 'a', kshetrafal3_25: 'b'
+        };
+
+        let quizSubmitted = false;
+        const timerDuration =  25 * 60; // 25 minutes in seconds
+        let timeLeft = timerDuration;
+        let timerInterval;
+
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                     timeLeft = timerDuration; // Reset timer if it goes below 0, for visual looping if needed
+                     startTimer(); // Restart the timer immediately for continuous loop. Remove if you want it to stop at 00:00
+                }
+            }, 1000);
+        }
+
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the visual timer when quiz is submitted.
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersKshetrafalClass10Set3) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersKshetrafalClass10Set3[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersKshetrafalClass10Set3[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click();
+        }
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizSubmitted) {
+                submitQuiz();
+            }
+        });
+
+
+        startTimer(); // Start timer when page loads
+
+    </script>
+</body>
+</html>

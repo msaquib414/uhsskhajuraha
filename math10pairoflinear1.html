@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>दो चर वाले रैखिक समीकरण युग्म MCQ टेस्ट - कक्षा 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <h1>दो चर वाले रैखिक समीकरण युग्म MCQ टेस्ट - कक्षा 10</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  रैखिक समीकरण युग्म  x + y = 5 और 2x - y = 4 का हल क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq1" id="dcq1a" value="a">
+                        <label for="dcq1a">a) x=3, y=2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq1" id="dcq1b" value="b">
+                        <label for="dcq1b">b) x=2, y=3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq1" id="dcq1c" value="c">
+                        <label for="dcq1c">c) x=4, y=1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq1" id="dcq1d" value="d">
+                        <label for="dcq1d">d) x=1, y=4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq1" style="display:none;">सही उत्तर: a) x=3, y=2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  यदि दो रेखाएँ एक बिंदु पर प्रतिच्छेद करती हैं, तो समीकरण युग्म का हल कैसा होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq2" id="dcq2a" value="a">
+                        <label for="dcq2a">a) कोई हल नहीं</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq2" id="dcq2b" value="b">
+                        <label for="dcq2b">b) अद्वितीय हल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq2" id="dcq2c" value="c">
+                        <label for="dcq2c">c) अनंत अनेक हल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq2" id="dcq2d" value="d">
+                        <label for="dcq2d">d) दो हल</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq2" style="display:none;">सही उत्तर: b) अद्वितीय हल</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  समीकरण युग्म 2x + 3y = 7 और 4x + 6y = 14 किस प्रकार का है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq3" id="dcq3a" value="a">
+                        <label for="dcq3a">a) असंगत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq3" id="dcq3b" value="b">
+                        <label for="dcq3b">b) संगत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq3" id="dcq3c" value="c">
+                        <label for="dcq3c">c) विरोधी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq3" id="dcq3d" value="d">
+                        <label for="dcq3d">d) अविरोधी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq3" style="display:none;">सही उत्तर: b) संगत</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  यदि a₁/a₂ = b₁/b₂ ≠ c₁/c₂, तो समीकरण युग्म का ग्राफीय निरूपण कैसा होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq4" id="dcq4a" value="a">
+                        <label for="dcq4a">a) प्रतिच्छेदी रेखाएँ</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq4" id="dcq4b" value="b">
+                        <label for="dcq4b">b) संपाती रेखाएँ</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq4" id="dcq4c" value="c">
+                        <label for="dcq4c">c) लंबवत रेखाएँ</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq4" id="dcq4d" value="d">
+                        <label for="dcq4d">d) समानांतर रेखाएँ</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq4" style="display:none;">सही उत्तर: d) समानांतर रेखाएँ</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  समीकरण x - y = 2 और x + y = 4 को हल करने पर y का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq5" id="dcq5a" value="a">
+                        <label for="dcq5a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq5" id="dcq5b" value="b">
+                        <label for="dcq5b">b) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq5" id="dcq5c" value="c">
+                        <label for="dcq5c">c) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq5" id="dcq5d" value="d">
+                        <label for="dcq5d">d) 4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq5" style="display:none;">सही उत्तर: a) 1</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  दो चर वाले रैखिक समीकरण युग्म के हल करने की बीजगणितीय विधि कौन सी है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq6" id="dcq6a" value="a">
+                        <label for="dcq6a">a) ग्राफीय विधि</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq6" id="dcq6b" value="b">
+                        <label for="dcq6b">b) आलेखीय विधि</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq6" id="dcq6c" value="c">
+                        <label for="dcq6c">c) प्रतिस्थापन विधि</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq6" id="dcq6d" value="d">
+                        <label for="dcq6d">d) आनुपातिक विधि</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq6" style="display:none;">सही उत्तर: c) प्रतिस्थापन विधि</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  यदि a₁/a₂ = b₁/b₂ = c₁/c₂, तो समीकरण युग्म का हल कैसा होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq7" id="dcq7a" value="a">
+                        <label for="dcq7a">a) अद्वितीय हल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq7" id="dcq7b" value="b">
+                        <label for="dcq7b">b) कोई हल नहीं</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq7" id="dcq7c" value="c">
+                        <label for="dcq7c">c) दो हल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq7" id="dcq7d" value="d">
+                        <label for="dcq7d">d) अनंत अनेक हल</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq7" style="display:none;">सही उत्तर: d) अनंत अनेक हल</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  समीकरण युग्म 3x - 2y = 5 और 9x - 6y = 15 किस प्रकार का है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq8" id="dcq8a" value="a">
+                        <label for="dcq8a">a) असंगत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq8" id="dcq8b" value="b">
+                        <label for="dcq8b">b) अद्वितीय हल वाला</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq8" id="dcq8c" value="c">
+                        <label for="dcq8c">c) अनंत अनेक हल वाला</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq8" id="dcq8d" value="d">
+                        <label for="dcq8d">d) कोई हल नहीं वाला</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq8" style="display:none;">सही उत्तर: c) अनंत अनेक हल वाला</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  यदि दो रेखाएँ समानांतर हैं, तो समीकरण युग्म का हल कैसा होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq9" id="dcq9a" value="a">
+                        <label for="dcq9a">a) अद्वितीय हल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq9" id="dcq9b" value="b">
+                        <label for="dcq9b">b) अनंत अनेक हल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq9" id="dcq9c" value="c">
+                        <label for="dcq9c">c) दो हल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq9" id="dcq9d" value="d">
+                        <label for="dcq9d">d) कोई हल नहीं</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq9" style="display:none;">सही उत्तर: d) कोई हल नहीं</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10. समीकरण 2x + y = 6 और 4x - y = 0 को हल करने पर x का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq10" id="dcq10a" value="a">
+                        <label for="dcq10a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq10" id="dcq10b" value="b">
+                        <label for="dcq10b">b) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq10" id="dcq10c" value="c">
+                        <label for="dcq10c">c) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq10" id="dcq10d" value="d">
+                        <label for="dcq10d">d) 4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq10" style="display:none;">सही उत्तर: a) 1</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  दो संख्याओं का योग 27 और अंतर 13 है। संख्याएँ ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq11" id="dcq11a" value="a">
+                        <label for="dcq11a">a) 20, 7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq11" id="dcq11b" value="b">
+                        <label for="dcq11b">b) 10, 17</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq11" id="dcq11c" value="c">
+                        <label for="dcq11c">c) 25, 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq11" id="dcq11d" value="d">
+                        <label for="dcq11d">d) 15, 12</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq11" style="display:none;">सही उत्तर: a) 20, 7</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  एक नाव धारा के अनुकूल 2 घंटे में 20 किमी जाती है और धारा के प्रतिकूल 4 घंटे में 4 किमी जाती है। स्थिर पानी में नाव की गति क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq12" id="dcq12a" value="a">
+                        <label for="dcq12a">a) 6 किमी/घंटा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq12" id="dcq12b" value="b">
+                        <label for="dcq12b">b) 8 किमी/घंटा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq12" id="dcq12c" value="c">
+                        <label for="dcq12c">c) 10 किमी/घंटा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq12" id="dcq12d" value="d">
+                        <label for="dcq12d">d) 12 किमी/घंटा</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq12" style="display:none;">सही उत्तर: a) 6 किमी/घंटा</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  यदि a₁/a₂ = b₁/b₂ = c₁/c₂, तो रेखाएँ कैसी होंगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq13" id="dcq13a" value="a">
+                        <label for="dcq13a">a) समानांतर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq13" id="dcq13b" value="b">
+                        <label for="dcq13b">b) प्रतिच्छेदी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq13" id="dcq13c" value="c">
+                        <label for="dcq13c">c) संपाती</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq13" id="dcq13d" value="d">
+                        <label for="dcq13d">d) लंबवत</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq13" style="display:none;">सही उत्तर: c) संपाती</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  समीकरण 3x + 2y = 11 और 2x + 3y = 4 को हल करने पर y का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq14" id="dcq14a" value="a">
+                        <label for="dcq14a">a) -5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq14" id="dcq14b" value="b">
+                        <label for="dcq14b">b) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq14" id="dcq14c" value="c">
+                        <label for="dcq14c">c) 7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq14" id="dcq14d" value="d">
+                        <label for="dcq14d">d) -7</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq14" style="display:none;">सही उत्तर: a) -5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  यदि समीकरण युग्म असंगत है, तो रेखाएँ कैसी होंगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq15" id="dcq15a" value="a">
+                        <label for="dcq15a">a) प्रतिच्छेदी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq15" id="dcq15b" value="b">
+                        <label for="dcq15b">b) संपाती</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq15" id="dcq15c" value="c">
+                        <label for="dcq15c">c) लंबवत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq15" id="dcq15d" value="d">
+                        <label for="dcq15d">d) समानांतर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq15" style="display:none;">सही उत्तर: d) समानांतर</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  अनुपात a₁/a₂, b₁/b₂ और c₁/c₂ की तुलना करके, हम किस बारे में जान सकते हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq16" id="dcq16a" value="a">
+                        <label for="dcq16a">a) समीकरणों की संख्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq16" id="dcq16b" value="b">
+                        <label for="dcq16b">b) चरों की संख्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq16" id="dcq16c" value="c">
+                        <label for="dcq16c">c) हलों की प्रकृति</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq16" id="dcq16d" value="d">
+                        <label for="dcq16d">d) गुणांकों का प्रकार</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq16" style="display:none;">सही उत्तर: c) हलों की प्रकृति</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  समीकरण युग्म x + 2y = 3 और 2x + 4y = 6 किस प्रकार का है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq17" id="dcq17a" value="a">
+                        <label for="dcq17a">a) असंगत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq17" id="dcq17b" value="b">
+                        <label for="dcq17b">b) अद्वितीय हल वाला</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq17" id="dcq17c" value="c">
+                        <label for="dcq17c">c) अनंत अनेक हल वाला</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq17" id="dcq17d" value="d">
+                        <label for="dcq17d">d) कोई हल नहीं वाला</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq17" style="display:none;">सही उत्तर: c) अनंत अनेक हल वाला</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  यदि a₁/a₂ ≠ b₁/b₂, तो समीकरण युग्म का हल कैसा होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq18" id="dcq18a" value="a">
+                        <label for="dcq18a">a) कोई हल नहीं</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq18" id="dcq18b" value="b">
+                        <label for="dcq18b">b) अनंत अनेक हल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq18" id="dcq18c" value="c">
+                        <label for="dcq18c">c) दो हल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq18" id="dcq18d" value="d">
+                        <label for="dcq18d">d) अद्वितीय हल</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq18" style="display:none;">सही उत्तर: d) अद्वितीय हल</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  समीकरण x + y = 14 और x - y = 4 को हल करने पर x का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq19" id="dcq19a" value="a">
+                        <label for="dcq19a">a) 9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq19" id="dcq19b" value="b">
+                        <label for="dcq19b">b) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq19" id="dcq19c" value="c">
+                        <label for="dcq19c">c) 10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq19" id="dcq19d" value="d">
+                        <label for="dcq19d">d) 6</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq19" style="display:none;">सही उत्तर: a) 9</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20. समीकरण 0x + 3y - 6 = 0 और 0x + 0y + 5 = 0 किस प्रकार का है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq20" id="dcq20a" value="a">
+                        <label for="dcq20a">a) संगत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq20" id="dcq20b" value="b">
+                        <label for="dcq20b">b) असंगत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq20" id="dcq20c" value="c">
+                        <label for="dcq20c">c) निश्चित रूप से संगत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq20" id="dcq20d" value="d">
+                        <label for="dcq20d">d) निश्चित रूप से असंगत</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq20" style="display:none;">सही उत्तर: b) असंगत</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  दो अंकों की संख्या के अंकों का योग 9 है। यदि संख्या में 27 जोड़ा जाए, तो अंक उलट जाते हैं। संख्या ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq21" id="dcq21a" value="a">
+                        <label for="dcq21a">a) 36</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq21" id="dcq21b" value="b">
+                        <label for="dcq21b">b) 63</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq21" id="dcq21c" value="c">
+                        <label for="dcq21c">c) 45</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq21" id="dcq21d" value="d">
+                        <label for="dcq21d">d) 54</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq21" style="display:none;">सही उत्तर: a) 36</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  यदि a₁x + b₁y + c₁ = 0 और a₂x + b₂y + c₂ = 0 रैखिक समीकरण युग्म हैं, तो 'x' का गुणांक क्या है पहले समीकरण में?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq22" id="dcq22a" value="a">
+                        <label for="dcq22a">a) b₁</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq22" id="dcq22b" value="b">
+                        <label for="dcq22b">b) c₁</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq22" id="dcq22c" value="c">
+                        <label for="dcq22c">c) a₂</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq22" id="dcq22d" value="d">
+                        <label for="dcq22d">d) a₁</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq22" style="display:none;">सही उत्तर: d) a₁</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  समीकरण युग्म 2x - 3y = 8 और 4x - 6y = 16 किस प्रकार का है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq23" id="dcq23a" value="a">
+                        <label for="dcq23a">a) असंगत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq23" id="dcq23b" value="b">
+                        <label for="dcq23b">b) अद्वितीय हल वाला</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq23" id="dcq23c" value="c">
+                        <label for="dcq23c">c) अनंत अनेक हल वाला</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq23" id="dcq23d" value="d">
+                        <label for="dcq23d">d) कोई हल नहीं वाला</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq23" style="display:none;">सही उत्तर: c) अनंत अनेक हल वाला</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  रैखिक समीकरण युग्म को हल करने की ग्राफीय विधि में, रेखाएँ क्या दर्शाती हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq24" id="dcq24a" value="a">
+                        <label for="dcq24a">a) हलों की संख्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq24" id="dcq24b" value="b">
+                        <label for="dcq24b">b) समीकरणों की कोटि</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq24" id="dcq24c" value="c">
+                        <label for="dcq24c">c) समीकरणों के प्रकार</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq24" id="dcq24d" value="d">
+                        <label for="dcq24d">d) समीकरणों का ज्यामितीय निरूपण</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq24" style="display:none;">सही उत्तर: d) समीकरणों का ज्यामितीय निरूपण</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  यदि a₁/a₂ = b₁/b₂ ≠ c₁/c₂, तो समीकरण युग्म कैसा होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="dcq25" id="dcq25a" value="a">
+                        <label for="dcq25a">a) संगत और आश्रित</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq25" id="dcq25b" value="b">
+                        <label for="dcq25b">b) संगत और स्वतंत्र</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq25" id="dcq25c" value="c">
+                        <label for="dcq25c">c) असंगत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="dcq25" id="dcq25d" value="d">
+                        <label for="dcq25d">d) विरोधी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_dcq25" style="display:none;">सही उत्तर: c) असंगत</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersDoChar = {
+            dcq1: 'a', dcq2: 'b', dcq3: 'b', dcq4: 'd', dcq5: 'a',
+            dcq6: 'c', dcq7: 'd', dcq8: 'c', dcq9: 'd', dcq10: 'a',
+            dcq11: 'a', dcq12: 'a', dcq13: 'c', dcq14: 'a', dcq15: 'd',
+            dcq16: 'c', dcq17: 'c', dcq18: 'd', dcq19: 'a', dcq20: 'b',
+            dcq21: 'a', dcq22: 'd', dcq23: 'c', dcq24: 'd', dcq25: 'c'
+        };
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersDoChar) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersDoChar[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersDoChar[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click(); // Initiate download immediately
+        });
+    </script>
+</body>
+</html>

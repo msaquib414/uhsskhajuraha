@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>वास्तविक संख्या MCQ टेस्ट</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <h1>वास्तविक संख्या MCQ टेस्ट</h1>
+        <div id="nameForm">
+            <label for="studentName">छात्र का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम दर्ज करें">
+            <button id="startQuiz">क्विज शुरू करें</button>
+        </div>
+
+        <form id="quizForm" style="display:none;">
+            <div class="question">
+                <p><strong>1. निम्नलिखित में से कौन सी संख्या अपरिमेय है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq1" id="nq1a" value="a">
+                        <label for="nq1a">a) √4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq1" id="nq1b" value="b">
+                        <label for="nq1b">b) √9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq1" id="nq1c" value="c">
+                        <label for="nq1c">c) √16</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq1" id="nq1d" value="d">
+                        <label for="nq1d">d) √5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq1" style="display:none;">सही उत्तर: d) √5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2. दो परिमेय संख्याओं के बीच कितनी परिमेय संख्याएँ हो सकती हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq2" id="nq2a" value="a">
+                        <label for="nq2a">a) एक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq2" id="nq2b" value="b">
+                        <label for="nq2b">b) दो</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq2" id="nq2c" value="c">
+                        <label for="nq2c">c) कोई नहीं</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq2" id="nq2d" value="d">
+                        <label for="nq2d">d) अनंत</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq2" style="display:none;">सही उत्तर: d) अनंत</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  π (पाई) किस प्रकार की संख्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq3" id="nq3a" value="a">
+                        <label for="nq3a">a) परिमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq3" id="nq3b" value="b">
+                        <label for="nq3b">b) अपरिमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq3" id="nq3c" value="c">
+                        <label for="nq3c">c) पूर्णांक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq3" id="nq3d" value="d">
+                        <label for="nq3d">d) प्राकृतिक संख्या</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq3" style="display:none;">सही उत्तर: b) अपरिमेय</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  निम्नलिखित में से कौन सा कथन सत्य है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq4" id="nq4a" value="a">
+                        <label for="nq4a">a) प्रत्येक पूर्णांक एक प्राकृतिक संख्या है</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq4" id="nq4b" value="b">
+                        <label for="nq4b">b) प्रत्येक परिमेय संख्या एक पूर्णांक है</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq4" id="nq4c" value="c">
+                        <label for="nq4c">c) प्रत्येक वास्तविक संख्या या तो परिमेय या अपरिमेय है</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq4" id="nq4d" value="d">
+                        <label for="nq4d">d) प्रत्येक अपरिमेय संख्या एक वास्तविक संख्या नहीं है</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq4" style="display:none;">सही उत्तर: c) प्रत्येक वास्तविक संख्या या तो परिमेय या अपरिमेय है</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  संख्या 0.3̅ को p/q रूप में कैसे व्यक्त किया जा सकता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq5" id="nq5a" value="a">
+                        <label for="nq5a">a) 1/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq5" id="nq5b" value="b">
+                        <label for="nq5b">b) 3/10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq5" id="nq5c" value="c">
+                        <label for="nq5c">c) 3/99</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq5" id="nq5d" value="d">
+                        <label for="nq5d">d) 33/100</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq5" style="display:none;">सही उत्तर: a) 1/3</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  निम्नलिखित में से कौन सा दशमलव प्रसार सांत है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq6" id="nq6a" value="a">
+                        <label for="nq6a">a) 1/7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq6" id="nq6b" value="b">
+                        <label for="nq6b">b) 1/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq6" id="nq6c" value="c">
+                        <label for="nq6c">c) 1/6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq6" id="nq6d" value="d">
+                        <label for="nq6d">d) 1/8</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq6" style="display:none;">सही उत्तर: d) 1/8</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  यूक्लिड विभाजन प्रमेयिका (Euclid's division lemma) क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq7" id="nq7a" value="a">
+                        <label for="nq7a">a) a = bq + r,  0 ≤ r < b</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq7" id="nq7b" value="b">
+                        <label for="nq7b">b) a = b + r,  0 ≤ r < q</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq7" id="nq7c" value="c">
+                        <label for="nq7c">c) a = q + r,  0 ≤ r < b</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq7" id="nq7d" value="d">
+                        <label for="nq7d">d) q = br + a,  0 ≤ r < a</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq7" style="display:none;">सही उत्तर: a) a = bq + r,  0 ≤ r < b</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  दो संख्याओं का HCF और LCM का गुणनफल किसके बराबर होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq8" id="nq8a" value="a">
+                        <label for="nq8a">a) संख्याओं का योग</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq8" id="nq8b" value="b">
+                        <label for="nq8b">b) संख्याओं का अंतर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq8" id="nq8c" value="c">
+                        <label for="nq8c">c) संख्याओं का गुणनफल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq8" id="nq8d" value="d">
+                        <label for="nq8d">d) संख्याओं का भागफल</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq8" style="display:none;">सही उत्तर: c) संख्याओं का गुणनफल</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  संख्या 140 के अभाज्य गुणनखंडन में 2 की घात क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq9" id="nq9a" value="a">
+                        <label for="nq9a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq9" id="nq9b" value="b">
+                        <label for="nq9b">b) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq9" id="nq9c" value="c">
+                        <label for="nq9c">c) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq9" id="nq9d" value="d">
+                        <label for="nq9d">d) 4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq9" style="display:none;">सही उत्तर: b) 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10. यदि दो संख्याओं का HCF 1 है, तो वे संख्याएँ क्या कहलाती हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq10" id="nq10a" value="a">
+                        <label for="nq10a">a) सह-अभाज्य (co-prime)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq10" id="nq10b" value="b">
+                        <label for="nq10b">b) अभाज्य (prime)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq10" id="nq10c" value="c">
+                        <label for="nq10c">c) भाज्य (composite)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq10" id="nq10d" value="d">
+                        <label for="nq10d">d) सम (even)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq10" style="display:none;">सही उत्तर: a) सह-अभाज्य (co-prime)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  संख्या 2 + √3 किस प्रकार की संख्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq11" id="nq11a" value="a">
+                        <label for="nq11a">a) परिमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq11" id="nq11b" value="b">
+                        <label for="nq11b">b) अपरिमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq11" id="nq11c" value="c">
+                        <label for="nq11c">c) पूर्णांक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq11" id="nq11d" value="d">
+                        <label for="nq11d">d) प्राकृतिक संख्या</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq11" style="display:none;">सही उत्तर: b) अपरिमेय</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  यदि p और q सह-अभाज्य संख्याएँ हैं, तो उनका HCF क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq12" id="nq12a" value="a">
+                        <label for="nq12a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq12" id="nq12b" value="b">
+                        <label for="nq12b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq12" id="nq12c" value="c">
+                        <label for="nq12c">c) p</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq12" id="nq12d" value="d">
+                        <label for="nq12d">d) q</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq12" style="display:none;">सही उत्तर: b) 1</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  अंकगणित की आधारभूत प्रमेय (Fundamental Theorem of Arithmetic) किससे संबंधित है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq13" id="nq13a" value="a">
+                        <label for="nq13a">a) HCF और LCM</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq13" id="nq13b" value="b">
+                        <label for="nq13b">b) अभाज्य गुणनखंडन</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq13" id="nq13c" value="c">
+                        <label for="nq13c">c) यूक्लिड विभाजन प्रमेयिका</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq13" id="nq13d" value="d">
+                        <label for="nq13d">d) दशमलव प्रसार</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq13" style="display:none;">सही उत्तर: b) अभाज्य गुणनखंडन</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  संख्या √2 किस प्रकार की संख्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq14" id="nq14a" value="a">
+                        <label for="nq14a">a) परिमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq14" id="nq14b" value="b">
+                        <label for="nq14b">b) अपरिमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq14" id="nq14c" value="c">
+                        <label for="nq14c">c) पूर्णांक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq14" id="nq14d" value="d">
+                        <label for="nq14d">d) प्राकृतिक संख्या</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq14" style="display:none;">सही उत्तर: b) अपरिमेय</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  निम्नलिखित में से कौन सी परिमेय संख्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq15" id="nq15a" value="a">
+                        <label for="nq15a">a) π</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq15" id="nq15b" value="b">
+                        <label for="nq15b">b) √3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq15" id="nq15c" value="c">
+                        <label for="nq15c">c) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq15" id="nq15d" value="d">
+                        <label for="nq15d">d) √7</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq15" style="display:none;">सही उत्तर: c) 0</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  यदि p एक अभाज्य संख्या है, तो √p किस प्रकार की संख्या होगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq16" id="nq16a" value="a">
+                        <label for="nq16a">a) परिमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq16" id="nq16b" value="b">
+                        <label for="nq16b">b) अपरिमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq16" id="nq16c" value="c">
+                        <label for="nq16c">c) पूर्णांक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq16" id="nq16d" value="d">
+                        <label for="nq16d">d) प्राकृतिक संख्या</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq16" style="display:none;">सही उत्तर: b) अपरिमेय</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  संख्या 2.131131113... किस प्रकार का दशमलव प्रसार है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq17" id="nq17a" value="a">
+                        <label for="nq17a">a) सांत दशमलव</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq17" id="nq17b" value="b">
+                        <label for="nq17b">b) असांत आवर्ती दशमलव</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq17" id="nq17c" value="c">
+                        <label for="nq17c">c) असांत अनावर्ती दशमलव</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq17" id="nq17d" value="d">
+                        <label for="nq17d">d) पूर्णांक</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq17" style="display:none;">सही उत्तर: c) असांत अनावर्ती दशमलव</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  दो अपरिमेय संख्याओं का गुणनफल हमेशा क्या होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq18" id="nq18a" value="a">
+                        <label for="nq18a">a) परिमेय संख्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq18" id="nq18b" value="b">
+                        <label for="nq18b">b) अपरिमेय संख्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq18" id="nq18c" value="c">
+                        <label for="nq18c">c) परिमेय या अपरिमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq18" id="nq18d" value="d">
+                        <label for="nq18d">d) हमेशा पूर्णांक</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq18" style="display:none;">सही उत्तर: c) परिमेय या अपरिमेय</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  सबसे छोटी अभाज्य संख्या कौन सी है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq19" id="nq19a" value="a">
+                        <label for="nq19a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq19" id="nq19b" value="b">
+                        <label for="nq19b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq19" id="nq19c" value="c">
+                        <label for="nq19c">c) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq19" id="nq19d" value="d">
+                        <label for="nq19d">d) 3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq19" style="display:none;">सही उत्तर: c) 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  निम्नलिखित में से कौन सी संख्या वास्तविक संख्या नहीं है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq20" id="nq20a" value="a">
+                        <label for="nq20a">a) √(-4)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq20" id="nq20b" value="b">
+                        <label for="nq20b">b) √4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq20" id="nq20c" value="c">
+                        <label for="nq20c">c) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq20" id="nq20d" value="d">
+                        <label for="nq20d">d) -5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq20" style="display:none;">सही उत्तर: a) √(-4)</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  संख्या रेखा पर प्रत्येक बिंदु क्या दर्शाता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq21" id="nq21a" value="a">
+                        <label for="nq21a">a) एक वास्तविक संख्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq21" id="nq21b" value="b">
+                        <label for="nq21b">b) एक परिमेय संख्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq21" id="nq21c" value="c">
+                        <label for="nq21c">c) एक अपरिमेय संख्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq21" id="nq21d" value="d">
+                        <label for="nq21d">d) एक पूर्णांक</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq21" style="display:none;">सही उत्तर: a) एक वास्तविक संख्या</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  संख्या 5005 को अभाज्य गुणनखंडन में कैसे व्यक्त किया जा सकता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq22" id="nq22a" value="a">
+                        <label for="nq22a">a) 5 x 7 x 11 x 13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq22" id="nq22b" value="b">
+                        <label for="nq22b">b) 5² x 7 x 11</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq22" id="nq22c" value="c">
+                        <label for="nq22c">c) 2 x 5 x 7 x 11 x 13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq22" id="nq22d" value="d">
+                        <label for="nq22d">d) 5 x 7² x 13</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq22" style="display:none;">सही उत्तर: a) 5 x 7 x 11 x 13</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  यदि a = bq + r में r = 0 हो, तो HCF(a, b) किसके बराबर होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq23" id="nq23a" value="a">
+                        <label for="nq23a">a) a</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq23" id="nq23b" value="b">
+                        <label for="nq23b">b) b</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq23" id="nq23c" value="c">
+                        <label for="nq23c">c) q</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq23" id="nq23d" value="d">
+                        <label for="nq23d">d) r</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq23" style="display:none;">सही उत्तर: b) b</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  संख्या √2 और √3 के बीच एक परिमेय संख्या क्या हो सकती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq24" id="nq24a" value="a">
+                        <label for="nq24a">a) √6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq24" id="nq24b" value="b">
+                        <label for="nq24b">b) 1.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq24" id="nq24c" value="c">
+                        <label for="nq24c">c) √5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq24" id="nq24d" value="d">
+                        <label for="nq24d">d) √8</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq24" style="display:none;">सही उत्तर: b) 1.5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  यदि किसी परिमेय संख्या का हर 2ⁿ 5ᵐ के रूप में है, तो उसका दशमलव प्रसार कैसा होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="nq25" id="nq25a" value="a">
+                        <label for="nq25a">a) सांत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq25" id="nq25b" value="b">
+                        <label for="nq25b">b) असांत आवर्ती</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq25" id="nq25c" value="c">
+                        <label for="nq25c">c) असांत अनावर्ती</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="nq25" id="nq25d" value="d">
+                        <label for="nq25d">d) कोई प्रसार नहीं</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_nq25" style="display:none;">सही उत्तर: a) सांत</p>
+            </div>
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+        <div id="downloadLinkContainer" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        const correctAnswersNewSet_vastawik = {
+            nq1: 'd', nq2: 'd', nq3: 'b', nq4: 'c', nq5: 'a',
+            nq6: 'd', nq7: 'a', nq8: 'c', nq9: 'b', nq10: 'a',
+            nq11: 'b', nq12: 'b', nq13: 'b', nq14: 'b', nq15: 'c',
+            nq16: 'b', nq17: 'c', nq18: 'c', nq19: 'c', nq20: 'a',
+            nq21: 'a', nq22: 'a', nq23: 'b', nq24: 'b', nq25: 'a'
+        };
+
+        let studentName = "";
+        let quizStarted = false;
+
+        document.getElementById('startQuiz').addEventListener('click', function() {
+            studentName = document.getElementById('studentName').value.trim();
+            if (studentName === "") {
+                alert("कृपया अपना नाम दर्ज करें.");
+                return;
+            }
+            document.getElementById('nameForm').style.display = 'none';
+            document.getElementById('quizForm').style.display = 'block';
+            quizStarted = true;
+        });
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizStarted) return; // Prevent submit if quiz hasn't started via button
+
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersNewSet_vastawik) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersNewSet_vastawik[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersNewSet_vastawik[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            document.getElementById('result').textContent = `आपका स्कोर: ${score} / 25`;
+
+            // Create CSV data and download link
+            const csvData = studentName + "," + score + "\r\n";
+            const blob = new Blob([csvData], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            document.getElementById('downloadLinkContainer').appendChild(downloadLink);
+
+        });
+    </script>
+</body>
+</html>

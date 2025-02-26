@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>वृत्त MCQ टेस्ट - कक्षा 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div id="timer">समय: <span id="time">25:00</span></div>
+        <h1>वृत्त MCQ टेस्ट - कक्षा 10</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  एक वृत्त की सबसे लंबी जीवा क्या होती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt1" id="vrutt1a" value="a">
+                        <label for="vrutt1a">a) त्रिज्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt1" id="vrutt1b" value="b">
+                        <label for="vrutt1b">b) व्यास</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt1" id="vrutt1c" value="c">
+                        <label for="vrutt1c">c) चाप</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt1" id="vrutt1d" value="d">
+                        <label for="vrutt1d">d) परिधि</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt1" style="display:none;">सही उत्तर: b) व्यास</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  वृत्त के केंद्र पर बना कोण कितना होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2" id="vrutt2a" value="a">
+                        <label for="vrutt2a">a) 90°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2" id="vrutt2b" value="b">
+                        <label for="vrutt2b">b) 180°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2" id="vrutt2c" value="c">
+                        <label for="vrutt2c">c) 270°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt2" id="vrutt2d" value="d">
+                        <label for="vrutt2d">d) 360°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt2" style="display:none;">सही उत्तर: d) 360°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  एक वृत्त की त्रिज्या 7 सेमी है। वृत्त का व्यास क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt3" id="vrutt3a" value="a">
+                        <label for="vrutt3a">a) 3.5 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt3" id="vrutt3b" value="b">
+                        <label for="vrutt3b">b) 7 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt3" id="vrutt3c" value="c">
+                        <label for="vrutt3c">c) 10.5 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt3" id="vrutt3d" value="d">
+                        <label for="vrutt3d">d) 14 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt3" style="display:none;">सही उत्तर: d) 14 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  वृत्त की परिधि और व्यास का अनुपात क्या होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt4" id="vrutt4a" value="a">
+                        <label for="vrutt4a">a) π/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt4" id="vrutt4b" value="b">
+                        <label for="vrutt4b">b) π</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt4" id="vrutt4c" value="c">
+                        <label for="vrutt4c">c) 2π</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt4" id="vrutt4d" value="d">
+                        <label for="vrutt4d">d) 4π</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt4" style="display:none;">सही उत्तर: b) π</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  एक वृत्त का क्षेत्रफल ज्ञात करने का सूत्र क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt5" id="vrutt5a" value="a">
+                        <label for="vrutt5a">a) 2πr</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt5" id="vrutt5b" value="b">
+                        <label for="vrutt5b">b) πr</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt5" id="vrutt5c" value="c">
+                        <label for="vrutt5c">c) πr²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt5" id="vrutt5d" value="d">
+                        <label for="vrutt5d">d) πd</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt5" style="display:none;">सही उत्तर: c) πr²</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  एक वृत्त की परिधि 88 सेमी है। वृत्त की त्रिज्या क्या होगी? (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt6" id="vrutt6a" value="a">
+                        <label for="vrutt6a">a) 7 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt6" id="vrutt6b" value="b">
+                        <label for="vrutt6b">b) 14 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt6" id="vrutt6c" value="c">
+                        <label for="vrutt6c">c) 21 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt6" id="vrutt6d" value="d">
+                        <label for="vrutt6d">d) 28 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt6" style="display:none;">सही उत्तर: b) 14 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  वृत्त के किसी बिंदु पर स्पर्श रेखा वृत्त की त्रिज्या पर क्या होती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt7" id="vrutt7a" value="a">
+                        <label for="vrutt7a">a) समानांतर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt7" id="vrutt7b" value="b">
+                        <label for="vrutt7b">b) लंबवत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt7" id="vrutt7c" value="c">
+                        <label for="vrutt7c">c) प्रतिच्छेदी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt7" id="vrutt7d" value="d">
+                        <label for="vrutt7d">d) संरेख</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt7" style="display:none;">सही उत्तर: b) लंबवत</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  वृत्त के बाहर स्थित एक बिंदु से वृत्त पर कितनी स्पर्श रेखाएँ खींची जा सकती हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt8" id="vrutt8a" value="a">
+                        <label for="vrutt8a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt8" id="vrutt8b" value="b">
+                        <label for="vrutt8b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt8" id="vrutt8c" value="c">
+                        <label for="vrutt8c">c) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt8" id="vrutt8d" value="d">
+                        <label for="vrutt8d">d) अनगिनत</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt8" style="display:none;">सही उत्तर: c) 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  दो संकेंद्रीय वृत्तों की त्रिज्याएँ 5 सेमी और 3 सेमी हैं। बड़े वृत्त की उस जीवा की लंबाई ज्ञात कीजिए जो छोटे वृत्त को स्पर्श करती है।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt9" id="vrutt9a" value="a">
+                        <label for="vrutt9a">a) 4 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt9" id="vrutt9b" value="b">
+                        <label for="vrutt9b">b) 6 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt9" id="vrutt9c" value="c">
+                        <label for="vrutt9c">c) 8 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt9" id="vrutt9d" value="d">
+                        <label for="vrutt9d">d) 10 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt9" style="display:none;">सही उत्तर: c) 8 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10.  एक वृत्त में एक जीवा केंद्र से 12 सेमी की दूरी पर है और वृत्त की त्रिज्या 13 सेमी है। जीवा की लंबाई ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt10" id="vrutt10a" value="a">
+                        <label for="vrutt10a">a) 5 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt10" id="vrutt10b" value="b">
+                        <label for="vrutt10b">b) 10 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt10" id="vrutt10c" value="c">
+                        <label for="vrutt10c">c) 15 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt10" id="vrutt10d" value="d">
+                        <label for="vrutt10d">d) 20 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt10" style="display:none;">सही उत्तर: b) 10 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  एक वृत्त की दो समांतर जीवाएँ केंद्र के विपरीत दिशा में स्थित हैं। यदि जीवाओं की लंबाई 6 सेमी और 8 सेमी है और उनके बीच की दूरी 7 सेमी है, तो वृत्त की त्रिज्या ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt11" id="vrutt11a" value="a">
+                        <label for="vrutt11a">a) 4 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt11" id="vrutt11b" value="b">
+                        <label for="vrutt11b">b) 5 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt11" id="vrutt11c" value="c">
+                        <label for="vrutt11c">c) 6 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt11" id="vrutt11d" value="d">
+                        <label for="vrutt11d">d) 7 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt11" style="display:none;">सही उत्तर: b) 5 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  चक्रीय चतुर्भुज के सम्मुख कोणों का योग कितना होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt12" id="vrutt12a" value="a">
+                        <label for="vrutt12a">a) 90°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt12" id="vrutt12b" value="b">
+                        <label for="vrutt12b">b) 180°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt12" id="vrutt12c" value="c">
+                        <label for="vrutt12c">c) 270°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt12" id="vrutt12d" value="d">
+                        <label for="vrutt12d">d) 360°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt12" style="display:none;">सही उत्तर: b) 180°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  एक वृत्त के एक चाप द्वारा केंद्र पर बनाया गया कोण उस चाप द्वारा वृत्त के शेष भाग पर बने कोण का क्या होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt13" id="vrutt13a" value="a">
+                        <label for="vrutt13a">a) आधा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt13" id="vrutt13b" value="b">
+                        <label for="vrutt13b">b) बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt13" id="vrutt13c" value="c">
+                        <label for="vrutt13c">c) दोगुना</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt13" id="vrutt13d" value="d">
+                        <label for="vrutt13d">d) तीन गुना</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt13" style="display:none;">सही उत्तर: c) दोगुना</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  एक ही वृत्तखंड में बने कोण क्या होते हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt14" id="vrutt14a" value="a">
+                        <label for="vrutt14a">a) अलग-अलग</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt14" id="vrutt14b" value="b">
+                        <label for="vrutt14b">b) बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt14" id="vrutt14c" value="c">
+                        <label for="vrutt14c">c) पूरक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt14" id="vrutt14d" value="d">
+                        <label for="vrutt14d">d) संपूरक</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt14" style="display:none;">सही उत्तर: b) बराबर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  अर्धवृत्त में बना कोण कितना होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt15" id="vrutt15a" value="a">
+                        <label for="vrutt15a">a) 45°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt15" id="vrutt15b" value="b">
+                        <label for="vrutt15b">b) 60°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt15" id="vrutt15c" value="c">
+                        <label for="vrutt15c">c) 90°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt15" id="vrutt15d" value="d">
+                        <label for="vrutt15d">d) 180°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt15" style="display:none;">सही उत्तर: c) 90°</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  यदि एक चतुर्भुज के सम्मुख कोण संपूरक हों, तो चतुर्भुज कैसा होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt16" id="vrutt16a" value="a">
+                        <label for="vrutt16a">a) समांतर चतुर्भुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt16" id="vrutt16b" value="b">
+                        <label for="vrutt16b">b) आयत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt16" id="vrutt16c" value="c">
+                        <label for="vrutt16c">c) चक्रीय चतुर्भुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt16" id="vrutt16d" value="d">
+                        <label for="vrutt16d">d) वर्ग</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt16" style="display:none;">सही उत्तर: c) चक्रीय चतुर्भुज</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  एक वृत्त के केंद्र से जीवा पर डाला गया लंब जीवा को क्या करता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt17" id="vrutt17a" value="a">
+                        <label for="vrutt17a">a) विभाजित नहीं करता</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt17" id="vrutt17b" value="b">
+                        <label for="vrutt17b">b) समद्विभाजित करता है</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt17" id="vrutt17c" value="c">
+                        <label for="vrutt17c">c) तीन भागों में विभाजित करता है</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt17" id="vrutt17d" value="d">
+                        <label for="vrutt17d">d) चार भागों में विभाजित करता है</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt17" style="display:none;">सही उत्तर: b) समद्विभाजित करता है</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  समान त्रिज्या वाले दो वृत्त क्या कहलाते हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt18" id="vrutt18a" value="a">
+                        <label for="vrutt18a">a) संकेंद्रीय वृत्त</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt18" id="vrutt18b" value="b">
+                        <label for="vrutt18b">b) सर्वांगसम वृत्त</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt18" id="vrutt18c" value="c">
+                        <label for="vrutt18c">c) विषम वृत्त</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt18" id="vrutt18d" value="d">
+                        <label for="vrutt18d">d) अलग वृत्त</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt18" style="display:none;">सही उत्तर: b) सर्वांगसम वृत्त</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  एक वृत्त की जीवा की लंबाई वृत्त की त्रिज्या के बराबर है। केंद्र पर जीवा द्वारा अंतरित कोण क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt19" id="vrutt19a" value="a">
+                        <label for="vrutt19a">a) 30°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt19" id="vrutt19b" value="b">
+                        <label for="vrutt19b">b) 45°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt19" id="vrutt19c" value="c">
+                        <label for="vrutt19c">c) 60°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt19" id="vrutt19d" value="d">
+                        <label for="vrutt19d">d) 90°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt19" style="display:none;">सही उत्तर: c) 60°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  वृत्त पर किसी बिंदु से वृत्त के अंदर स्थित बिंदु को मिलाने वाली रेखा क्या कहलाती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt20" id="vrutt20a" value="a">
+                        <label for="vrutt20a">a) त्रिज्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt20" id="vrutt20b" value="b">
+                        <label for="vrutt20b">b) व्यास</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt20" id="vrutt20c" value="c">
+                        <label for="vrutt20c">c) जीवा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt20" id="vrutt20d" value="d">
+                        <label for="vrutt20d">d) स्पर्श रेखा</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt20" style="display:none;">सही उत्तर: c) जीवा</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  एक बिंदु Q से, एक वृत्त पर स्पर्श रेखा की लंबाई 24 सेमी और केंद्र से Q की दूरी 25 सेमी है। वृत्त की त्रिज्या ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt21" id="vrutt21a" value="a">
+                        <label for="vrutt21a">a) 7 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt21" id="vrutt21b" value="b">
+                        <label for="vrutt21b">b) 12 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt21" id="vrutt21c" value="c">
+                        <label for="vrutt21c">c) 16 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt21" id="vrutt21d" value="d">
+                        <label for="vrutt21d">d) 20 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt21" style="display:none;">सही उत्तर: a) 7 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  यदि एक वृत्त की दो स्पर्श रेखाएँ एक बिंदु से खींची जाती हैं, तो स्पर्श रेखाओं की लंबाई क्या होती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt22" id="vrutt22a" value="a">
+                        <label for="vrutt22a">a) असमान</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt22" id="vrutt22b" value="b">
+                        <label for="vrutt22b">b) बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt22" id="vrutt22c" value="c">
+                        <label for="vrutt22c">c) लंबवत</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt22" id="vrutt22d" value="d">
+                        <label for="vrutt22d">d) समानांतर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt22" style="display:none;">सही उत्तर: b) बराबर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  एक वृत्त का क्षेत्रफल 154 सेमी² है। वृत्त की परिधि ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt23" id="vrutt23a" value="a">
+                        <label for="vrutt23a">a) 22 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt23" id="vrutt23b" value="b">
+                        <label for="vrutt23b">b) 44 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt23" id="vrutt23c" value="c">
+                        <label for="vrutt23c">c) 66 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt23" id="vrutt23d" value="d">
+                        <label for="vrutt23d">d) 88 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt23" style="display:none;">सही उत्तर: b) 44 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  एक वृत्त की त्रिज्या को दोगुना कर दिया जाए तो क्षेत्रफल कितने गुना बढ़ जाएगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt24" id="vrutt24a" value="a">
+                        <label for="vrutt24a">a) 2 गुना</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt24" id="vrutt24b" value="b">
+                        <label for="vrutt24b">b) 3 गुना</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt24" id="vrutt24c" value="c">
+                        <label for="vrutt24c">c) 4 गुना</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt24" id="vrutt24d" value="d">
+                        <label for="vrutt24d">d) 8 गुना</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt24" style="display:none;">सही उत्तर: c) 4 गुना</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  एक वृत्त की परिधि, व्यास से 30 सेमी अधिक है। वृत्त का व्यास ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="vrutt25" id="vrutt25a" value="a">
+                        <label for="vrutt25a">a) 7 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt25" id="vrutt25b" value="b">
+                        <label for="vrutt25b">b) 10.5 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt25" id="vrutt25c" value="c">
+                        <label for="vrutt25c">c) 14 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="vrutt25" id="vrutt25d" value="d">
+                        <label for="vrutt25d">d) 21 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_vrutt25" style="display:none;">सही उत्तर: c) 14 सेमी</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersVruttClass10 = {
+            vrutt1: 'b', vrutt2: 'd', vrutt3: 'd', vrutt4: 'b', vrutt5: 'c',
+            vrutt6: 'b', vrutt7: 'b', vrutt8: 'c', vrutt9: 'c', vrutt10: 'b',
+            vrutt11: 'b', vrutt12: 'b', vrutt13: 'c', vrutt14: 'b', vrutt15: 'c',
+            vrutt16: 'c', vrutt17: 'b', vrutt18: 'b', vrutt19: 'c', vrutt20: 'c',
+            vrutt21: 'a', vrutt22: 'b', vrutt23: 'b', vrutt24: 'c', vrutt25: 'c'
+        };
+
+        let quizSubmitted = false;
+        const timerDuration =  25 * 60; // 25 minutes in seconds
+        let timeLeft = timerDuration;
+        let timerInterval;
+
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                     timeLeft = timerDuration; // Reset timer if it goes below 0, for visual looping if needed
+                     startTimer(); // Restart the timer immediately for continuous loop. Remove if you want it to stop at 00:00
+                }
+            }, 1000);
+        }
+
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the visual timer when quiz is submitted.
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersVruttClass10) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersVruttClass10[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersVruttClass10[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click();
+        }
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizSubmitted) {
+                submitQuiz();
+            }
+        });
+
+
+        startTimer(); // Start timer when page loads
+
+    </script>
+</body>
+</html>

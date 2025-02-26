@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>प्रायिकता MCQ टेस्ट - कक्षा 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div id="timer">समय: <span id="time">25:00</span></div>
+        <h1>प्रायिकता MCQ टेस्ट - कक्षा 10</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  एक असंभव घटना की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta1" id="prayikta1a" value="a">
+                        <label for="prayikta1a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta1" id="prayikta1b" value="b">
+                        <label for="prayikta1b">b) 0.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta1" id="prayikta1c" value="c">
+                        <label for="prayikta1c">c) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta1" id="prayikta1d" value="d">
+                        <label for="prayikta1d">d) परिभाषित नहीं</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta1" style="display:none;">सही उत्तर: c) 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  एक निश्चित घटना की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2" id="prayikta2a" value="a">
+                        <label for="prayikta2a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2" id="prayikta2b" value="b">
+                        <label for="prayikta2b">b) 0.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2" id="prayikta2c" value="c">
+                        <label for="prayikta2c">c) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2" id="prayikta2d" value="d">
+                        <label for="prayikta2d">d) -1</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2" style="display:none;">सही उत्तर: c) 1</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  प्रायिकता का अधिकतम मान क्या हो सकता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta3" id="prayikta3a" value="a">
+                        <label for="prayikta3a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta3" id="prayikta3b" value="b">
+                        <label for="prayikta3b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta3" id="prayikta3c" value="c">
+                        <label for="prayikta3c">c) 100</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta3" id="prayikta3d" value="d">
+                        <label for="prayikta3d">d) अनंत</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta3" style="display:none;">सही उत्तर: b) 1</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  एक पासे को एक बार फेंका जाता है। संख्या 4 से कम प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta4" id="prayikta4a" value="a">
+                        <label for="prayikta4a">a) 1/6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta4" id="prayikta4b" value="b">
+                        <label for="prayikta4b">b) 1/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta4" id="prayikta4c" value="c">
+                        <label for="prayikta4c">c) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta4" id="prayikta4d" value="d">
+                        <label for="prayikta4d">d) 2/3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta4" style="display:none;">सही उत्तर: c) 1/2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  अंग्रेजी वर्णमाला का एक अक्षर यादृच्छिक रूप से चुना जाता है। एक व्यंजन चुने जाने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta5" id="prayikta5a" value="a">
+                        <label for="prayikta5a">a) 5/26</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta5" id="prayikta5b" value="b">
+                        <label for="prayikta5b">b) 21/26</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta5" id="prayikta5c" value="c">
+                        <label for="prayikta5c">c) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta5" id="prayikta5d" value="d">
+                        <label for="prayikta5d">d) 3/4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta5" style="display:none;">सही उत्तर: b) 21/26</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  एक थैले में 5 लाल और 3 नीली गेंदें हैं। थैले से यादृच्छिक रूप से एक गेंद निकाली जाती है। नीली गेंद निकाले जाने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta6" id="prayikta6a" value="a">
+                        <label for="prayikta6a">a) 5/8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta6" id="prayikta6b" value="b">
+                        <label for="prayikta6b">b) 3/8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta6" id="prayikta6c" value="c">
+                        <label for="prayikta6c">c) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta6" id="prayikta6d" value="d">
+                        <label for="prayikta6d">d) 2/5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta6" style="display:none;">सही उत्तर: b) 3/8</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  एक लीप वर्ष में 53 रविवार होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta7" id="prayikta7a" value="a">
+                        <label for="prayikta7a">a) 1/7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta7" id="prayikta7b" value="b">
+                        <label for="prayikta7b">b) 2/7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta7" id="prayikta7c" value="c">
+                        <label for="prayikta7c">c) 3/7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta7" id="prayikta7d" value="d">
+                        <label for="prayikta7d">d) 4/7</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta7" style="display:none;">सही उत्तर: b) 2/7</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  ताश के 52 पत्तों की एक अच्छी तरह से फेटी गई गड्डी से एक पत्ता निकाला जाता है। एक बादशाह प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta8" id="prayikta8a" value="a">
+                        <label for="prayikta8a">a) 1/52</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta8" id="prayikta8b" value="b">
+                        <label for="prayikta8b">b) 1/26</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta8" id="prayikta8c" value="c">
+                        <label for="prayikta8c">c) 1/13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta8" id="prayikta8d" value="d">
+                        <label for="prayikta8d">d) 1/4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta8" style="display:none;">सही उत्तर: c) 1/13</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  एक थैले में 3 सफेद गेंदें और 5 काली गेंदें हैं। थैले से यादृच्छिक रूप से एक गेंद निकाली जाती है। सफेद गेंद न निकलने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta9" id="prayikta9a" value="a">
+                        <label for="prayikta9a">a) 3/8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta9" id="prayikta9b" value="b">
+                        <label for="prayikta9b">b) 5/8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta9" id="prayikta9c" value="c">
+                        <label for="prayikta9c">c) 1/4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta9" id="prayikta9d" value="d">
+                        <label for="prayikta9d">d) 1/2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta9" style="display:none;">सही उत्तर: b) 5/8</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10.  दो पासे एक साथ फेंके जाते हैं। दोनों पासे पर एक ही संख्या प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta10" id="prayikta10a" value="a">
+                        <label for="prayikta10a">a) 1/36</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta10" id="prayikta10b" value="b">
+                        <label for="prayikta10b">b) 1/6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta10" id="prayikta10c" value="c">
+                        <label for="prayikta10c">c) 5/36</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta10" id="prayikta10d" value="d">
+                        <label for="prayikta10d">d) 7/36</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta10" style="display:none;">सही उत्तर: b) 1/6</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  यदि P(E) = 0.65, तो 'E नहीं' की प्रायिकता क्या होगी, यानी P(E') क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta11" id="prayikta11a" value="a">
+                        <label for="prayikta11a">a) 0.35</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta11" id="prayikta11b" value="b">
+                        <label for="prayikta11b">b) 0.65</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta11" id="prayikta11c" value="c">
+                        <label for="prayikta11c">c) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta11" id="prayikta11d" value="d">
+                        <label for="prayikta11d">d) 0</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta11" style="display:none;">सही उत्तर: a) 0.35</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  एक थैले में 5 काली और 6 सफेद गेंदें हैं। थैले से यादृच्छिक रूप से एक गेंद निकाली जाती है। निकाली गई गेंद के न तो काली और न ही सफेद होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta12" id="prayikta12a" value="a">
+                        <label for="prayikta12a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta12" id="prayikta12b" value="b">
+                        <label for="prayikta12b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta12" id="prayikta12c" value="c">
+                        <label for="prayikta12c">c) 5/11</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta12" id="prayikta12d" value="d">
+                        <label for="prayikta12d">d) 6/11</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta12" style="display:none;">सही उत्तर: a) 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  निम्नलिखित में से कौन सी संख्या किसी घटना की प्रायिकता नहीं हो सकती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta13" id="prayikta13a" value="a">
+                        <label for="prayikta13a">a) 2/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta13" id="prayikta13b" value="b">
+                        <label for="prayikta13b">b) -1.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta13" id="prayikta13c" value="c">
+                        <label for="prayikta13c">c) 15%</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta13" id="prayikta13d" value="d">
+                        <label for="prayikta13d">d) 0.7</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta13" style="display:none;">सही उत्तर: b) -1.5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  एक बच्चे के जन्म लेने पर लड़का होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta14" id="prayikta14a" value="a">
+                        <label for="prayikta14a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta14" id="prayikta14b" value="b">
+                        <label for="prayikta14b">b) 1/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta14" id="prayikta14c" value="c">
+                        <label for="prayikta14c">c) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta14" id="prayikta14d" value="d">
+                        <label for="prayikta14d">d) 0</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta14" style="display:none;">सही उत्तर: c) 1/2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  किसी घटना E की प्रायिकता + घटना 'E नहीं' की प्रायिकता किसके बराबर होती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta15" id="prayikta15a" value="a">
+                        <label for="prayikta15a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta15" id="prayikta15b" value="b">
+                        <label for="prayikta15b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta15" id="prayikta15c" value="c">
+                        <label for="prayikta15c">c) 0.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta15" id="prayikta15d" value="d">
+                        <label for="prayikta15d">d) 2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta15" style="display:none;">सही उत्तर: b) 1</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  यदि किसी खेल को जीतने की प्रायिकता 0.3 है, तो हारने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta16" id="prayikta16a" value="a">
+                        <label for="prayikta16a">a) 0.3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta16" id="prayikta16b" value="b">
+                        <label for="prayikta16b">b) 0.7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta16" id="prayikta16c" value="c">
+                        <label for="prayikta16c">c) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta16" id="prayikta16d" value="d">
+                        <label for="prayikta16d">d) 0</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta16" style="display:none;">सही उत्तर: b) 0.7</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  एक पासे को एक बार फेंका जाता है। एक अभाज्य संख्या प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta17" id="prayikta17a" value="a">
+                        <label for="prayikta17a">a) 1/6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta17" id="prayikta17b" value="b">
+                        <label for="prayikta17b">b) 1/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta17" id="prayikta17c" value="c">
+                        <label for="prayikta17c">c) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta17" id="prayikta17d" value="d">
+                        <label for="prayikta17d">d) 2/3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta17" style="display:none;">सही उत्तर: c) 1/2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  दो सिक्के एक साथ उछाले जाते हैं। बिल्कुल एक चित्त प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta18" id="prayikta18a" value="a">
+                        <label for="prayikta18a">a) 1/4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta18" id="prayikta18b" value="b">
+                        <label for="prayikta18b">b) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta18" id="prayikta18c" value="c">
+                        <label for="prayikta18c">c) 3/4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta18" id="prayikta18d" value="d">
+                        <label for="prayikta18d">d) 1</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta18" style="display:none;">सही उत्तर: b) 1/2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  एक थैले में 4 हरी और 2 पीली गेंदें हैं। थैले से दो गेंदों को यादृच्छिक रूप से निकाला जाता है। दोनों गेंदों के हरी होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta19" id="prayikta19a" value="a">
+                        <label for="prayikta19a">a) 2/5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta19" id="prayikta19b" value="b">
+                        <label for="prayikta19b">b) 1/5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta19" id="prayikta19c" value="c">
+                        <label for="prayikta19c">c) 3/5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta19" id="prayikta19d" value="d">
+                        <label for="prayikta19d">d) 4/5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta19" style="display:none;">सही उत्तर: b) 1/5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  52 पत्तों की ताश की गड्डी से, एक पत्ता निकाला जाता है। निकाले गए पत्ते के इक्का या बादशाह होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta20" id="prayikta20a" value="a">
+                        <label for="prayikta20a">a) 2/13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta20" id="prayikta20b" value="b">
+                        <label for="prayikta20b">b) 4/13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta20" id="prayikta20c" value="c">
+                        <label for="prayikta20c">c) 3/13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta20" id="prayikta20d" value="d">
+                        <label for="prayikta20d">d) 1/13</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta20" style="display:none;">सही उत्तर: a) 2/13</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  एक लॉटरी में 5 पुरस्कार और 95 रिक्त स्थान हैं। एक पुरस्कार जीतने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta21" id="prayikta21a" value="a">
+                        <label for="prayikta21a">a) 1/20</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta21" id="prayikta21b" value="b">
+                        <label for="prayikta21b">b) 1/95</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta21" id="prayikta21c" value="c">
+                        <label for="prayikta21c">c) 5/95</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta21" id="prayikta21d" value="d">
+                        <label for="prayikta21d">d) 19/20</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta21" style="display:none;">सही उत्तर: a) 1/20</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  दो पासे एक साथ फेंके जाते हैं। योग 9 प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta22" id="prayikta22a" value="a">
+                        <label for="prayikta22a">a) 1/9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta22" id="prayikta22b" value="b">
+                        <label for="prayikta22b">b) 1/18</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta22" id="prayikta22c" value="c">
+                        <label for="prayikta22c">c) 1/6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta22" id="prayikta22d" value="d">
+                        <label for="prayikta22d">d) 5/36</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta22" style="display:none;">सही उत्तर: a) 1/9</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  एक थैले में 8 लाल, 7 सफेद और 5 नीली गेंदें हैं। थैले से एक गेंद यादृच्छिक रूप से निकाली जाती है। निकाली गई गेंद के लाल या सफेद होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta23" id="prayikta23a" value="a">
+                        <label for="prayikta23a">a) 3/5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta23" id="prayikta23b" value="b">
+                        <label for="prayikta23b">b) 7/10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta23" id="prayikta23c" value="c">
+                        <label for="prayikta23c">c) 2/5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta23" id="prayikta23d" value="d">
+                        <label for="prayikta23d">d) 9/20</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta23" style="display:none;">सही उत्तर: d) 9/20</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  एक पासे को दो बार फेंका जाता है। 5 कम से कम एक बार आए इसकी प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta24" id="prayikta24a" value="a">
+                        <label for="prayikta24a">a) 11/36</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta24" id="prayikta24b" value="b">
+                        <label for="prayikta24b">b) 5/36</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta24" id="prayikta24c" value="c">
+                        <label for="prayikta24c">c) 25/36</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta24" id="prayikta24d" value="d">
+                        <label for="prayikta24d">d) 1/6</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta24" style="display:none;">सही उत्तर: a) 11/36</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  दो खिलाड़ी, Sangeeta और Reshma, टेनिस का मैच खेलते हैं। यह ज्ञात है कि Sangeeta द्वारा मैच जीतने की प्रायिकता 0.62 है। Reshma के जीतने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta25" id="prayikta25a" value="a">
+                        <label for="prayikta25a">a) 0.62</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta25" id="prayikta25b" value="b">
+                        <label for="prayikta25b">b) 0.38</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta25" id="prayikta25c" value="c">
+                        <label for="prayikta25c">c) 0.50</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta25" id="prayikta25d" value="d">
+                        <label for="prayikta25d">d) 0.40</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta25" style="display:none;">सही उत्तर: b) 0.38</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersPrayiktaClass10 = {
+            prayikta1: 'c', prayikta2: 'c', prayikta3: 'b', prayikta4: 'c', prayikta5: 'b',
+            prayikta6: 'b', prayikta7: 'b', prayikta8: 'c', prayikta9: 'b', prayikta10: 'b',
+            prayikta11: 'a', prayikta12: 'a', prayikta13: 'b', prayikta14: 'c', prayikta15: 'b',
+            prayikta16: 'b', prayikta17: 'c', prayikta18: 'b', prayikta19: 'b', prayikta20: 'a',
+            prayikta21: 'a', prayikta22: 'a', prayikta23: 'd', prayikta24: 'a', prayikta25: 'b'
+        };
+
+        let quizSubmitted = false;
+        const timerDuration =  25 * 60; // 25 minutes in seconds
+        let timeLeft = timerDuration;
+        let timerInterval;
+
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                     timeLeft = timerDuration; // Reset timer if it goes below 0, for visual looping if needed
+                     startTimer(); // Restart the timer immediately for continuous loop. Remove if you want it to stop at 00:00
+                }
+            }, 1000);
+        }
+
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the visual timer when quiz is submitted.
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersPrayiktaClass10) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersPrayiktaClass10[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersPrayiktaClass10[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click();
+        }
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizSubmitted) {
+                submitQuiz();
+            }
+        });
+
+
+        startTimer(); // Start timer when page loads
+
+    </script>
+</body>
+</html>

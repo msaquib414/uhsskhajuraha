@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>बहुपद MCQ टेस्ट - कक्षा 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <h1>बहुपद MCQ टेस्ट - कक्षा 10</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  एक द्विघात बहुपद के कितने शून्यक हो सकते हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq1" id="bq1a" value="a">
+                        <label for="bq1a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq1" id="bq1b" value="b">
+                        <label for="bq1b">b) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq1" id="bq1c" value="c">
+                        <label for="bq1c">c) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq1" id="bq1d" value="d">
+                        <label for="bq1d">d) 0</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq1" style="display:none;">सही उत्तर: b) 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  यदि बहुपद p(x) = x² - 3x + 2 है, तो p(2) का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq2" id="bq2a" value="a">
+                        <label for="bq2a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq2" id="bq2b" value="b">
+                        <label for="bq2b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq2" id="bq2c" value="c">
+                        <label for="bq2c">c) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq2" id="bq2d" value="d">
+                        <label for="bq2d">d) -2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq2" style="display:none;">सही उत्तर: a) 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  बहुपद 3x³ - 5x² + 7x - 2 में x² का गुणांक क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq3" id="bq3a" value="a">
+                        <label for="bq3a">a) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq3" id="bq3b" value="b">
+                        <label for="bq3b">b) -5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq3" id="bq3c" value="c">
+                        <label for="bq3c">c) 7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq3" id="bq3d" value="d">
+                        <label for="bq3d">d) -2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq3" style="display:none;">सही उत्तर: b) -5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  निम्नलिखित में से कौन सा बहुपद नहीं है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq4" id="bq4a" value="a">
+                        <label for="bq4a">a) x² + 2x + 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq4" id="bq4b" value="b">
+                        <label for="bq4b">b) √x + 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq4" id="bq4c" value="c">
+                        <label for="bq4c">c) x³ - 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq4" id="bq4d" value="d">
+                        <label for="bq4d">d) 5x</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq4" style="display:none;">सही उत्तर: b) √x + 5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  यदि बहुपद के शून्यक -2 और 5 हैं, तो बहुपद क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq5" id="bq5a" value="a">
+                        <label for="bq5a">a) x² + 3x - 10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq5" id="bq5b" value="b">
+                        <label for="bq5b">b) x² - 3x - 10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq5" id="bq5c" value="c">
+                        <label for="bq5c">c) x² + 7x + 10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq5" id="bq5d" value="d">
+                        <label for="bq5d">d) x² - 7x + 10</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq5" style="display:none;">सही उत्तर: b) x² - 3x - 10</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  एक रैखिक बहुपद (linear polynomial) की घात (degree) क्या होती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq6" id="bq6a" value="a">
+                        <label for="bq6a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq6" id="bq6b" value="b">
+                        <label for="bq6b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq6" id="bq6c" value="c">
+                        <label for="bq6c">c) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq6" id="bq6d" value="d">
+                        <label for="bq6d">d) 3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq6" style="display:none;">सही उत्तर: b) 1</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  यदि α और β बहुपद ax² + bx + c के शून्यक हैं, तो α + β किसके बराबर है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq7" id="bq7a" value="a">
+                        <label for="bq7a">a) c/a</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq7" id="bq7b" value="b">
+                        <label for="bq7b">b) -c/a</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq7" id="bq7c" value="c">
+                        <label for="bq7c">c) b/a</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq7" id="bq7d" value="d">
+                        <label for="bq7d">d) -b/a</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq7" style="display:none;">सही उत्तर: d) -b/a</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  बहुपद x² - 4 के शून्यक क्या हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq8" id="bq8a" value="a">
+                        <label for="bq8a">a) 2, 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq8" id="bq8b" value="b">
+                        <label for="bq8b">b) -2, -2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq8" id="bq8c" value="c">
+                        <label for="bq8c">c) 2, -2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq8" id="bq8d" value="d">
+                        <label for="bq8d">d) 4, -1</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq8" style="display:none;">सही उत्तर: c) 2, -2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  त्रिघात बहुपद (cubic polynomial) की घात क्या होती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq9" id="bq9a" value="a">
+                        <label for="bq9a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq9" id="bq9b" value="b">
+                        <label for="bq9b">b) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq9" id="bq9c" value="c">
+                        <label for="bq9c">c) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq9" id="bq9d" value="d">
+                        <label for="bq9d">d) 4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq9" style="display:none;">सही उत्तर: c) 3</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10. यदि बहुपद p(x) = x - 5 है, तो बहुपद का शून्यक क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq10" id="bq10a" value="a">
+                        <label for="bq10a">a) -5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq10" id="bq10b" value="b">
+                        <label for="bq10b">b) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq10" id="bq10c" value="c">
+                        <label for="bq10c">c) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq10" id="bq10d" value="d">
+                        <label for="bq10d">d) 1</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq10" style="display:none;">सही उत्तर: b) 5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  बहुपद 2x² + 5x - 3 के शून्यकों का गुणनफल क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq11" id="bq11a" value="a">
+                        <label for="bq11a">a) 5/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq11" id="bq11b" value="b">
+                        <label for="bq11b">b) -3/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq11" id="bq11c" value="c">
+                        <label for="bq11c">c) 2/5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq11" id="bq11d" value="d">
+                        <label for="bq11d">d) 3/2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq11" style="display:none;">सही उत्तर: b) -3/2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  यदि α, β और γ त्रिघात बहुपद ax³ + bx² + cx + d के शून्यक हैं, तो αβγ किसके बराबर है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq12" id="bq12a" value="a">
+                        <label for="bq12a">a) -d/a</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq12" id="bq12b" value="b">
+                        <label for="bq12b">b) d/a</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq12" id="bq12c" value="c">
+                        <label for="bq12c">c) c/a</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq12" id="bq12d" value="d">
+                        <label for="bq12d">d) -b/a</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq12" style="display:none;">सही उत्तर: a) -d/a</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  बहुपद x² + 7x + 12 के शून्यक ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq13" id="bq13a" value="a">
+                        <label for="bq13a">a) 3, 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq13" id="bq13b" value="b">
+                        <label for="bq13b">b) -3, -4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq13" id="bq13c" value="c">
+                        <label for="bq13c">c) 3, -4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq13" id="bq13d" value="d">
+                        <label for="bq13d">d) -3, 4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq13" style="display:none;">सही उत्तर: b) -3, -4</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  एक द्विघात बहुपद का सामान्य रूप क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq14" id="bq14a" value="a">
+                        <label for="bq14a">a) ax + b</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq14" id="bq14b" value="b">
+                        <label for="bq14b">b) ax² + bx + c</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq14" id="bq14c" value="c">
+                        <label for="bq14c">c) ax³ + bx² + cx + d</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq14" id="bq14d" value="d">
+                        <label for="bq14d">d) a + bx</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq14" style="display:none;">सही उत्तर: b) ax² + bx + c</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  यदि बहुपद p(x) = x² - 9 है, तो p(3) का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq15" id="bq15a" value="a">
+                        <label for="bq15a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq15" id="bq15b" value="b">
+                        <label for="bq15b">b) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq15" id="bq15c" value="c">
+                        <label for="bq15c">c) 9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq15" id="bq15d" value="d">
+                        <label for="bq15d">d) -9</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq15" style="display:none;">सही उत्तर: a) 0</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  बहुपद 4x² - 12x + 9 किस प्रकार का बहुपद है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq16" id="bq16a" value="a">
+                        <label for="bq16a">a) रैखिक बहुपद</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq16" id="bq16b" value="b">
+                        <label for="bq16b">b) द्विघात बहुपद</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq16" id="bq16c" value="c">
+                        <label for="bq16c">c) त्रिघात बहुपद</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq16" id="bq16d" value="d">
+                        <label for="bq16d">d) अचर बहुपद</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq16" style="display:none;">सही उत्तर: b) द्विघात बहुपद</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  यदि α और β बहुपद x² - 5x + 6 के शून्यक हैं, तो αβ किसके बराबर है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq17" id="bq17a" value="a">
+                        <label for="bq17a">a) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq17" id="bq17b" value="b">
+                        <label for="bq17b">b) -5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq17" id="bq17c" value="c">
+                        <label for="bq17c">c) 6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq17" id="bq17d" value="d">
+                        <label for="bq17d">d) -6</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq17" style="display:none;">सही उत्तर: c) 6</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  बहुपद p(x) = x³ - 2x² + x - 1 में x³ का गुणांक क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq18" id="bq18a" value="a">
+                        <label for="bq18a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq18" id="bq18b" value="b">
+                        <label for="bq18b">b) -2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq18" id="bq18c" value="c">
+                        <label for="bq18c">c) 1 (दूसरा वाला)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq18" id="bq18d" value="d">
+                        <label for="bq18d">d) -1</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq18" style="display:none;">सही उत्तर: a) 1</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  यदि बहुपद p(x) = kx - 3 का शून्यक 2 है, तो k का मान ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq19" id="bq19a" value="a">
+                        <label for="bq19a">a) 3/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq19" id="bq19b" value="b">
+                        <label for="bq19b">b) -3/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq19" id="bq19c" value="c">
+                        <label for="bq19c">c) 2/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq19" id="bq19d" value="d">
+                        <label for="bq19d">d) -2/3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq19" style="display:none;">सही उत्तर: a) 3/2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  बहुपद x² - 2x - 8 के शून्यक क्या होंगे?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq20" id="bq20a" value="a">
+                        <label for="bq20a">a) 4, -2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq20" id="bq20b" value="b">
+                        <label for="bq20b">b) -4, 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq20" id="bq20c" value="c">
+                        <label for="bq20c">c) 4, 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq20" id="bq20d" value="d">
+                        <label for="bq20d">d) -4, -2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq20" style="display:none;">सही उत्तर: a) 4, -2</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  यदि α और β बहुपद x² + px + q के शून्यक हैं, तो α² + β² किसके बराबर है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq21" id="bq21a" value="a">
+                        <label for="bq21a">a) p² - 2q</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq21" id="bq21b" value="b">
+                        <label for="bq21b">b) p² + 2q</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq21" id="bq21c" value="c">
+                        <label for="bq21c">c) p² - q</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq21" id="bq21d" value="d">
+                        <label for="bq21d">d) p² + q</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq21" style="display:none;">सही उत्तर: a) p² - 2q</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  बहुपद x⁴ - 16 किस प्रकार का बहुपद है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq22" id="bq22a" value="a">
+                        <label for="bq22a">a) रैखिक बहुपद</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq22" id="bq22b" value="b">
+                        <label for="bq22b">b) द्विघात बहुपद</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq22" id="bq22c" value="c">
+                        <label for="bq22c">c) त्रिघात बहुपद</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq22" id="bq22d" value="d">
+                        <label for="bq22d">d) चतुर्घात बहुपद</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq22" style="display:none;">सही उत्तर: d) चतुर्घात बहुपद</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  यदि बहुपद p(y) = y² - 5y + 6 है, तो p(3) का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq23" id="bq23a" value="a">
+                        <label for="bq23a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq23" id="bq23b" value="b">
+                        <label for="bq23b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq23" id="bq23c" value="c">
+                        <label for="bq23c">c) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq23" id="bq23d" value="d">
+                        <label for="bq23d">d) 3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq23" style="display:none;">सही उत्तर: a) 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  बहुपद x² - x - 6 के शून्यक क्या हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq24" id="bq24a" value="a">
+                        <label for="bq24a">a) 3, -2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq24" id="bq24b" value="b">
+                        <label for="bq24b">b) -3, 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq24" id="bq24c" value="c">
+                        <label for="bq24c">c) 2, -3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq24" id="bq24d" value="d">
+                        <label for="bq24d">d) -2, 3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq24" style="display:none;">सही उत्तर: a) 3, -2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  यदि बहुपद p(x) = x² + 6x + k का एक शून्यक -2 है, तो k का मान ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="bq25" id="bq25a" value="a">
+                        <label for="bq25a">a) 8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq25" id="bq25b" value="b">
+                        <label for="bq25b">b) -8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq25" id="bq25c" value="c">
+                        <label for="bq25c">c) 12</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="bq25" id="bq25d" value="d">
+                        <label for="bq25d">d) -12</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_bq25" style="display:none;">सही उत्तर: a) 8</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersBahupad = {
+            bq1: 'b', bq2: 'a', bq3: 'b', bq4: 'b', bq5: 'b',
+            bq6: 'b', bq7: 'd', bq8: 'c', bq9: 'c', bq10: 'b',
+            bq11: 'b', bq12: 'a', bq13: 'b', bq14: 'b', bq15: 'a',
+            bq16: 'b', bq17: 'c', bq18: 'a', bq19: 'a', bq20: 'a',
+            bq21: 'a', bq22: 'd', bq23: 'a', bq24: 'a', bq25: 'a'
+        };
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersBahupad) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersBahupad[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersBahupad[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click(); // Initiate download immediately
+        });
+    </script>
+</body>
+</html>

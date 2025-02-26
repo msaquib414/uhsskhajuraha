@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>नियामक ज्यामिति MCQ टेस्ट - कक्षा 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div id="timer">समय: <span id="time">25:00</span></div>
+        <h1>नियामक ज्यामिति MCQ टेस्ट - कक्षा 10</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  बिंदुओं (2, 3) और (4, 1) के बीच की दूरी क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq1" id="njq1a" value="a">
+                        <label for="njq1a">a) √2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq1" id="njq1b" value="b">
+                        <label for="njq1b">b) 2√2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq1" id="njq1c" value="c">
+                        <label for="njq1c">c) 3√2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq1" id="njq1d" value="d">
+                        <label for="njq1d">d) 4√2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq1" style="display:none;">सही उत्तर: b) 2√2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  बिंदु (2, -3) किस चतुर्थांश में स्थित है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq2" id="njq2a" value="a">
+                        <label for="njq2a">a) प्रथम</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq2" id="njq2b" value="b">
+                        <label for="njq2b">b) द्वितीय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq2" id="njq2c" value="c">
+                        <label for="njq2c">c) तृतीय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq2" id="njq2d" value="d">
+                        <label for="njq2d">d) चतुर्थ</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq2" style="display:none;">सही उत्तर: d) चतुर्थ</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  मूल बिंदु के निर्देशांक क्या हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq3" id="njq3a" value="a">
+                        <label for="njq3a">a) (1, 1)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq3" id="njq3b" value="b">
+                        <label for="njq3b">b) (1, 0)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq3" id="njq3c" value="c">
+                        <label for="njq3c">c) (0, 1)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq3" id="njq3d" value="d">
+                        <label for="njq3d">d) (0, 0)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq3" style="display:none;">सही उत्तर: d) (0, 0)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  बिंदुओं (-2, 5) और (3, -4) को मिलाने वाले रेखाखंड का मध्यबिंदु क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq4" id="njq4a" value="a">
+                        <label for="njq4a">a) (1/2, 1/2)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq4" id="njq4b" value="b">
+                        <label for="njq4b">b) (2, 1)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq4" id="njq4c" value="c">
+                        <label for="njq4c">c) (5/2, 9/2)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq4" id="njq4d" value="d">
+                        <label for="njq4d">d) (1/2, -1/2)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq4" style="display:none;">सही उत्तर: a) (1/2, 1/2)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  x-अक्ष पर स्थित किसी बिंदु का y-निर्देशांक क्या होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq5" id="njq5a" value="a">
+                        <label for="njq5a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq5" id="njq5b" value="b">
+                        <label for="njq5b">b) -1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq5" id="njq5c" value="c">
+                        <label for="njq5c">c) कोई भी संख्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq5" id="njq5d" value="d">
+                        <label for="njq5d">d) 0</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq5" style="display:none;">सही उत्तर: d) 0</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  यदि बिंदु (x, 2) और (3, 4) के बीच की दूरी √8 है, तो x का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq6" id="njq6a" value="a">
+                        <label for="njq6a">a) 1, 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq6" id="njq6b" value="b">
+                        <label for="njq6b">b) 2, 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq6" id="njq6c" value="c">
+                        <label for="njq6c">c) 3, 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq6" id="njq6d" value="d">
+                        <label for="njq6d">d) 2, 5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq6" style="display:none;">सही उत्तर: a) 1, 5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  त्रिभुज जिसके शीर्ष (0, 0), (3, 0) और (0, 4) हैं, का क्षेत्रफल क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq7" id="njq7a" value="a">
+                        <label for="njq7a">a) 6 वर्ग इकाई</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq7" id="njq7b" value="b">
+                        <label for="njq7b">b) 12 वर्ग इकाई</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq7" id="njq7c" value="c">
+                        <label for="njq7c">c) 24 वर्ग इकाई</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq7" id="njq7d" value="d">
+                        <label for="njq7d">d) 5 वर्ग इकाई</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq7" style="display:none;">सही उत्तर: a) 6 वर्ग इकाई</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  रेखा 2x + 3y - 6 = 0, x-अक्ष को किस बिंदु पर काटती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq8" id="njq8a" value="a">
+                        <label for="njq8a">a) (0, 2)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq8" id="njq8b" value="b">
+                        <label for="njq8b">b) (3, 0)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq8" id="njq8c" value="c">
+                        <label for="njq8c">c) (2, 0)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq8" id="njq8d" value="d">
+                        <label for="njq8d">d) (0, 3)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq8" style="display:none;">सही उत्तर: b) (3, 0)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  यदि बिंदु (p, q), मूल बिंदु से समान दूरी पर है, तो निम्न में से कौन सा सत्य है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq9" id="njq9a" value="a">
+                        <label for="njq9a">a) p = q</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq9" id="njq9b" value="b">
+                        <label for="njq9b">b) p² = q²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq9" id="njq9c" value="c">
+                        <label for="njq9c">c) p² + q² = 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq9" id="njq9d" value="d">
+                        <label for="njq9d">d) p + q = 0</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq9" style="display:none;">सही उत्तर: b) p² = q²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10.  y-अक्ष से बिंदु (3, -5) की लंबवत दूरी क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq10" id="njq10a" value="a">
+                        <label for="njq10a">a) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq10" id="njq10b" value="b">
+                        <label for="njq10b">b) -5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq10" id="njq10c" value="c">
+                        <label for="njq10c">c) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq10" id="njq10d" value="d">
+                        <label for="njq10d">d) 8</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq10" style="display:none;">सही उत्तर: a) 3</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  यदि बिंदु A(2, 3), B(4, k) और C(6, -3) संरेख हैं, तो k का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq11" id="njq11a" value="a">
+                        <label for="njq11a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq11" id="njq11b" value="b">
+                        <label for="njq11b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq11" id="njq11c" value="c">
+                        <label for="njq11c">c) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq11" id="njq11d" value="d">
+                        <label for="njq11d">d) 3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq11" style="display:none;">सही उत्तर: a) 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  बिंदुओं (0, 0) और (x, y) के बीच की दूरी ज्ञात करने का सूत्र क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq12" id="njq12a" value="a">
+                        <label for="njq12a">a) √(x + y)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq12" id="njq12b" value="b">
+                        <label for="njq12b">b) x² + y²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq12" id="njq12c" value="c">
+                        <label for="njq12c">c) √(x² + y²)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq12" id="njq12d" value="d">
+                        <label for="njq12d">d) |x + y|</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq12" style="display:none;">सही उत्तर: c) √(x² + y²)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  बिंदु P(2, 3) की x-अक्ष से दूरी क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq13" id="njq13a" value="a">
+                        <label for="njq13a">a) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq13" id="njq13b" value="b">
+                        <label for="njq13b">b) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq13" id="njq13c" value="c">
+                        <label for="njq13c">c) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq13" id="njq13d" value="d">
+                        <label for="njq13d">d) √13</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq13" style="display:none;">सही उत्तर: b) 3</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  बिंदु (-3, -4) किस चतुर्थांश में स्थित है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq14" id="njq14a" value="a">
+                        <label for="njq14a">a) प्रथम</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq14" id="njq14b" value="b">
+                        <label for="njq14b">b) द्वितीय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq14" id="njq14c" value="c">
+                        <label for="njq14c">c) तृतीय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq14" id="njq14d" value="d">
+                        <label for="njq14d">d) चतुर्थ</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq14" style="display:none;">सही उत्तर: c) तृतीय</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  बिंदुओं (x₁, y₁) और (x₂, y₂) को मिलाने वाले रेखाखंड को 2:1 के अनुपात में अंतःविभाजित करने वाले बिंदु के निर्देशांक क्या हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq15" id="njq15a" value="a">
+                        <label for="njq15a">a) ((2x₂ + x₁)/3, (2y₂ + y₁)/3)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq15" id="njq15b" value="b">
+                        <label for="njq15b">b) ((x₂ + 2x₁)/3, (y₂ + 2y₁)/3)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq15" id="njq15c" value="c">
+                        <label for="njq15c">c) ((x₁ + x₂)/2, (y₁ + y₂)/2)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq15" id="njq15d" value="d">
+                        <label for="njq15d">d) ((2x₁ + x₂)/3, (2y₁ + y₂)/3)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq15" style="display:none;">सही उत्तर: a) ((2x₂ + x₁)/3, (2y₂ + y₁)/3)</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  बिंदु (3, 4) की y-अक्ष से दूरी कितनी है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq16" id="njq16a" value="a">
+                        <label for="njq16a">a) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq16" id="njq16b" value="b">
+                        <label for="njq16b">b) 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq16" id="njq16c" value="c">
+                        <label for="njq16c">c) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq16" id="njq16d" value="d">
+                        <label for="njq16d">d) 7</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq16" style="display:none;">सही उत्तर: a) 3</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  यदि किसी बिंदु के निर्देशांक (x, y) हैं, तो भुज क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq17" id="njq17a" value="a">
+                        <label for="njq17a">a) x</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq17" id="njq17b" value="b">
+                        <label for="njq17b">b) y</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq17" id="njq17c" value="c">
+                        <label for="njq17c">c) x + y</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq17" id="njq17d" value="d">
+                        <label for="njq17d">d) x - y</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq17" style="display:none;">सही उत्तर: a) x</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  बिंदु (0, -3) किस अक्ष पर स्थित है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq18" id="njq18a" value="a">
+                        <label for="njq18a">a) x-अक्ष</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq18" id="njq18b" value="b">
+                        <label for="njq18b">b) y-अक्ष</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq18" id="njq18c" value="c">
+                        <label for="njq18c">c) मूल बिंदु</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq18" id="njq18d" value="d">
+                        <label for="njq18d">d) किसी भी अक्ष पर नहीं</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq18" style="display:none;">सही उत्तर: b) y-अक्ष</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  यदि बिंदु (2, 3), (-2, -3) और (2, -3) हों, तो त्रिभुज किस प्रकार का होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq19" id="njq19a" value="a">
+                        <label for="njq19a">a) समबाहु</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq19" id="njq19b" value="b">
+                        <label for="njq19b">b) समद्विबाहु</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq19" id="njq19c" value="c">
+                        <label for="njq19c">c) विषमबाहु</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq19" id="njq19d" value="d">
+                        <label for="njq19d">d) समकोण</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq19" style="display:none;">सही उत्तर: d) समकोण</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  बिंदुओं (4, -3) और (-2, 6) को मिलाने वाले रेखाखंड को y-अक्ष किस अनुपात में विभाजित करता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq20" id="njq20a" value="a">
+                        <label for="njq20a">a) 2:1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq20" id="njq20b" value="b">
+                        <label for="njq20b">b) 1:2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq20" id="njq20c" value="c">
+                        <label for="njq20c">c) 2:3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq20" id="njq20d" value="d">
+                        <label for="njq20d">d) 3:2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq20" style="display:none;">सही उत्तर: a) 2:1</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  बिंदुओं (7, -6) और (3, 4) को मिलाने वाले रेखाखंड को x-अक्ष किस अनुपात में विभाजित करता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq21" id="njq21a" value="a">
+                        <label for="njq21a">a) 3:2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq21" id="njq21b" value="b">
+                        <label for="njq21b">b) 2:3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq21" id="njq21c" value="c">
+                        <label for="njq21c">c) 4:6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq21" id="njq21d" value="d">
+                        <label for="njq21d">d) 6:4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq21" style="display:none;">सही उत्तर: b) 2:3</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  यदि बिंदुएँ (a, 0), (0, b) और (1, 1) संरेख हैं, तो 1/a + 1/b का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq22" id="njq22a" value="a">
+                        <label for="njq22a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq22" id="njq22b" value="b">
+                        <label for="njq22b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq22" id="njq22c" value="c">
+                        <label for="njq22c">c) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq22" id="njq22d" value="d">
+                        <label for="njq22d">d) -1</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq22" style="display:none;">सही उत्तर: b) 1</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  बिंदु (2, 3) और (4, 5) को मिलाने वाले रेखाखंड का लंब समद्विभाजक किस बिंदु से होकर गुजरता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq23" id="njq23a" value="a">
+                        <label for="njq23a">a) (0, 0)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq23" id="njq23b" value="b">
+                        <label for="njq23b">b) (2, 2)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq23" id="njq23c" value="c">
+                        <label for="njq23c">c) (4, 4)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq23" id="njq23d" value="d">
+                        <label for="njq23d">d) (1, 1)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq23" style="display:none;">सही उत्तर: a) (0, 0)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  किसी त्रिभुज के केंद्रक के निर्देशांक क्या होते हैं, जिसके शीर्ष (x₁, y₁), (x₂, y₂) और (x₃, y₃) हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq24" id="njq24a" value="a">
+                        <label for="njq24a">a) ((x₁+x₂+x₃)/3, (y₁+y₂+y₃)/3)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq24" id="njq24b" value="b">
+                        <label for="njq24b">b) ((x₁+x₂)/2, (y₁+y₂)/2)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq24" id="njq24c" value="c">
+                        <label for="njq24c">c) ((x₁+x₂)/3, (y₁+y₂)/3)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq24" id="njq24d" value="d">
+                        <label for="njq24d">d) ((x₂+x₃)/3, (y₂+y₃)/3)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq24" style="display:none;">सही उत्तर: a) ((x₁+x₂+x₃)/3, (y₁+y₂+y₃)/3)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  बिंदुओं (2, 3) और (4, 7) के मध्य बिंदु के निर्देशांक क्या हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="njq25" id="njq25a" value="a">
+                        <label for="njq25a">a) (3, 5)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq25" id="njq25b" value="b">
+                        <label for="njq25b">b) (6, 10)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq25" id="njq25c" value="c">
+                        <label for="njq25c">c) (5, 6)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="njq25" id="njq25d" value="d">
+                        <label for="njq25d">d) (3, 4)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_njq25" style="display:none;">सही उत्तर: a) (3, 5)</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersNiyamakJyamiti = {
+            njq1: 'b', njq2: 'd', njq3: 'd', njq4: 'a', njq5: 'd',
+            njq6: 'a', njq7: 'a', njq8: 'b', njq9: 'b', njq10: 'a',
+            njq11: 'a', njq12: 'c', njq13: 'b', njq14: 'c', njq15: 'a',
+            njq16: 'a', njq17: 'a', njq18: 'b', njq19: 'd', njq20: 'a',
+            njq21: 'b', njq22: 'b', njq23: 'a', njq24: 'a', njq25: 'a'
+        };
+
+        let quizSubmitted = false;
+        const timerDuration =  25 * 60; // 25 minutes in seconds
+        let timeLeft = timerDuration;
+        let timerInterval;
+
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                     timeLeft = timerDuration; // Reset timer if it goes below 0, for visual looping if needed
+                     startTimer(); // Restart the timer immediately for continuous loop. Remove if you want it to stop at 00:00
+                }
+            }, 1000);
+        }
+
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the visual timer when quiz is submitted.
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersNiyamakJyamiti) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersNiyamakJyamiti[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersNiyamakJyamiti[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click();
+        }
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizSubmitted) {
+                submitQuiz();
+            }
+        });
+
+
+        startTimer(); // Start timer when page loads
+
+    </script>
+</body>
+</html>

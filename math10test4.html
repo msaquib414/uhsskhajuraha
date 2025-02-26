@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>गणित परीक्षा</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        #result-container {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: none; /* Hidden initially */
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .wrong-answer {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer">50:00</div>
+
+    <div style="padding: 20px;">
+        <h1>गणित कक्षा 10 परीक्षा</h1>
+        <div id="name-input-container">
+            <label for="studentName">अपना नाम दर्ज करें:</label>
+            <input type="text" id="studentName" placeholder="नाम">
+            <button onclick="startQuiz()">परीक्षा शुरू करें</button>
+        </div>
+
+        <div id="quiz-container" style="display: none;">
+            <form id="quiz-form">
+                </form>
+            <button id="submit-btn" onclick="submitAnswers()" style="display: none;">जमा करें</button>
+        </div>
+
+        <div id="result-container">
+            <h2>परिणाम</h2>
+            <div id="marks-display"></div>
+            <div id="answer-key-display"></div>
+            <button onclick="downloadResult()">परिणाम डाउनलोड करें</button>
+        </div>
+    </div>
+
+    <script>
+        let timerInterval;
+        let timeLeft = 50 * 60; // 50 minutes in seconds
+        let studentName = "";
+        let questions = [];
+        let userAnswers = {};
+        let correctAnswersData = {};
+
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById("timer").innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById("timer").innerText = "समय समाप्त";
+                    submitAnswers(); // Automatically submit when time is up (optional)
+                }
+            }, 1000);
+        }
+
+        function startQuiz() {
+            studentName = document.getElementById("studentName").value;
+            if (!studentName.trim()) {
+                alert("कृपया अपना नाम दर्ज करें।");
+                return;
+            }
+            document.getElementById("name-input-container").style.display = "none";
+            document.getElementById("quiz-container").style.display = "block";
+            document.getElementById("submit-btn").style.display = "block";
+            generateQuestions();
+            startTimer();
+        }
+
+
+        function generateQuestions() {
+            questions = [
+                 {
+                    question: "वास्तविक संख्याएँ: निम्नलिखित में से कौन सा कथन यूक्लिड विभाजन प्रमेयिका के बारे में सत्य है?",
+                    options: ["यह केवल धनात्मक पूर्णांकों के लिए लागू है", "यह केवल ऋणात्मक पूर्णांकों के लिए लागू है", "यह सभी पूर्णांकों के लिए लागू है", "यह केवल परिमेय संख्याओं के लिए लागू है"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "बहुपद: बहुपद p(x) = x² + 7x + 10 के शून्यक हैं:",
+                    options: ["2 और 5", "-2 और -5", "2 और -5", "-2 और 5"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "दो चरों वाले रैखिक समीकरण युग्म: यदि समीकरण युग्म संगत है, तो रेखाएँ कैसी होंगी?",
+                    options: ["हमेशा समानांतर", "हमेशा प्रतिच्छेदी", "प्रतिच्छेदी या संपाती", "हमेशा लंबवत"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "द्विघात समीकरण: द्विघात समीकरण 3x² - 2x + 8 = 0 के मूलों की प्रकृति क्या है?",
+                    options: ["वास्तविक और भिन्न", "वास्तविक और बराबर", "काल्पनिक", "निर्धारित नहीं किया जा सकता"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "समांतर श्रेढ़ी: यदि किसी समांतर श्रेढ़ी का पहला पद 2 और सार्व अंतर 3 है, तो 10वां पद क्या होगा?",
+                    options: ["27", "29", "31", "33"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "त्रिभुज: एक त्रिभुज के कोणों का योग कितना होता है?",
+                    options: ["90°", "180°", "270°", "360°"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "निर्देशांक ज्यामिति: बिंदुओं (2, 3) और (4, 1) के बीच की दूरी क्या है?",
+                    options: ["√2", "2√2", "4", "2"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "त्रिकोणमिति का परिचय: sin²θ + cos²θ किसके बराबर है?",
+                    options: ["tan²θ", "cot²θ", "1", "0"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "त्रिकोणमिति के अनुप्रयोग: यदि एक मीनार की ऊँचाई और छाया की लंबाई बराबर है, तो सूर्य का उन्नयन कोण क्या होगा?",
+                    options: ["30°", "45°", "60°", "90°"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "वृत्त: वृत्त की परिधि का सूत्र क्या है?",
+                    options: ["πr²", "2πr", "πd", "πr²/2"],
+                    correctAnswer: "b"
+                },
+                 {
+                    question: "रचनाएँ: किसी दिए गए रेखाखंड को दिए गए अनुपात में विभाजित करने के लिए किस प्रमेय का उपयोग किया जाता है?",
+                    options: ["पाइथागोरस प्रमेय", "आधारभूत समानुपातिकता प्रमेय", "थेल्स प्रमेय", "विभाजन एल्गोरिथ्म"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "वृत्त का क्षेत्रफल: एक वृत्त की त्रिज्या 10 सेमी है। वृत्त का क्षेत्रफल क्या है?",
+                    options: ["10π वर्ग सेमी", "20π वर्ग सेमी", "100π वर्ग सेमी", "200π वर्ग सेमी"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "पृष्ठीय क्षेत्रफल और आयतन: एक घनाभ की लंबाई, चौड़ाई और ऊँचाई क्रमशः 12 सेमी, 10 सेमी और 8 सेमी हैं। घनाभ का आयतन क्या है?",
+                    options: ["960 घन सेमी", "960 वर्ग सेमी", "30 वर्ग सेमी", "30 घन सेमी"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "सांख्यिकी: माध्य, माध्यक और बहुलक में से कौन सा औसत का सबसे अधिक प्रभावित माप है?",
+                    options: ["माध्य", "माध्यक", "बहुलक", "सभी समान रूप से प्रभावित होते हैं"],
+                    correctAnswer: "a"
+                },
+                 {
+                    question: "वास्तविक संख्याएँ: निम्नलिखित में से कौन सी संख्या परिमेय है?",
+                    options: ["√3", "√5", "√7", "√16"],
+                    correctAnswer: "d"
+                },
+                {
+                    question: "बहुपद: बहुपद p(x) = x² - 9 के शून्यक हैं:",
+                    options: ["3 और -3", "9 और -9", "3 और 3", "-3 और -3"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "दो चरों वाले रैखिक समीकरण युग्म: समीकरण युग्म x - y = 2 और x + y = 4 का अद्वितीय हल क्या है?",
+                    options: ["(3, 1)", "(1, 3)", "(2, 2)", "(4, 0)"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "द्विघात समीकरण: द्विघात समीकरण x² - 2x + 1 = 0 के मूलों की प्रकृति क्या है?",
+                    options: ["वास्तविक और भिन्न", "वास्तविक और बराबर", "काल्पनिक", "अपरिमेय"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "समांतर श्रेढ़ी: समांतर श्रेढ़ी -5, -2, 1, 4,... का 25वां पद क्या है?",
+                    options: ["65", "67", "70", "73"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "त्रिभुज: यदि एक त्रिभुज के दो कोण 40° और 60° हैं, तो तीसरा कोण क्या होगा?",
+                    options: ["60°", "80°", "90°", "100°"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "निर्देशांक ज्यामिति: बिंदु (5, -2) किस चतुर्थांश में स्थित है?",
+                    options: ["प्रथम", "द्वितीय", "तृतीय", "चतुर्थ"],
+                    correctAnswer: "d"
+                },
+                {
+                    question: "त्रिकोणमिति का परिचय: tan 30° का मान क्या है?",
+                    options: ["√3", "1/√3", "1", "0"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "त्रिकोणमिति के अनुप्रयोग: एक ऊर्ध्वाधर मीनार 50 मीटर ऊंची है और जमीन पर छाया बनाती है। यदि छाया की लंबाई 50√3 मीटर है, तो सूर्य का उन्नयन कोण क्या होगा?",
+                    options: ["30°", "45°", "60°", "90°"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "वृत्त: वृत्त की जीवा वृत्त को कितने भागों में विभाजित करती है?",
+                    options: ["1", "2", "3", "अनंत"],
+                    correctAnswer: "b"
+                },
+                 {
+                    question: "रचनाएँ: त्रिभुज के अंतर्वृत्त की रचना करने के लिए किस बिंदु का निर्धारण किया जाता है?",
+                    options: ["परिकेन्द्र", "अंतःकेन्द्र", "लम्बकेन्द्र", "गुरुत्व केंद्र"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "वृत्त का क्षेत्रफल: एक वृत्त की परिधि 88 सेमी है। वृत्त की त्रिज्या क्या है?",
+                    options: ["7 सेमी", "14 सेमी", "21 सेमी", "28 सेमी"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "पृष्ठीय क्षेत्रफल और आयतन: एक गोले की त्रिज्या 21 सेमी है। गोले का पृष्ठीय क्षेत्रफल क्या है?",
+                    options: ["1386 वर्ग सेमी", "5544 वर्ग सेमी", "38808 वर्ग सेमी", "1764 वर्ग सेमी"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "सांख्यिकी: निम्नलिखित में से कौन सा माप केंद्रीय प्रवृत्ति का माप है?",
+                    options: ["प्रसार", "विचलन", "माध्य विचलन", "माध्यक"],
+                    correctAnswer: "d"
+                },
+                 {
+                    question: "वास्तविक संख्याएँ: निम्नलिखित में से कौन सी संख्या एक शांत दशमलव है?",
+                    options: ["1/7", "1/3", "1/6", "1/8"],
+                    correctAnswer: "d"
+                },
+                {
+                    question: "बहुपद: यदि बहुपद x² - px + 8 के शून्यकों का योग 6 है, तो p का मान क्या है?",
+                    options: ["6", "-6", "8", "-8"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "दो चरों वाले रैखिक समीकरण युग्म: समीकरण x + 2y = 5 और 2x + 4y = 10 रेखाएँ कैसी हैं?",
+                    options: ["प्रतिच्छेदी", "समानांतर", "संपाती", "लंबवत"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "द्विघात समीकरण: द्विघात समीकरण x² + 4x + 4 = 0 के मूल क्या हैं?",
+                    options: ["2, 2", "-2, -2", "2, -2", "काल्पनिक"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "समांतर श्रेढ़ी: समांतर श्रेढ़ी 3, 8, 13, ... का कौन सा पद 78 है?",
+                    options: ["15वां", "16वां", "17वां", "18वां"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "त्रिभुज: यदि एक त्रिभुज के कोण 30°, 60°, 90° हैं, तो सबसे छोटी भुजा और सबसे बड़ी भुजा का अनुपात क्या होगा?",
+                    options: ["1:2", "1:√3", "1:2√3", "√3:2"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "निर्देशांक ज्यामिति: बिंदुओं (-2, 3) और (2, -3) के मध्यबिंदु के निर्देशांक क्या हैं?",
+                    options: ["(0, 0)", "(2, 0)", "(0, 2)", "(4, -6)"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "त्रिकोणमिति अनुपात और सर्वसमिकाएँ: sin(90° - θ) किसके बराबर होता है?",
+                    options: ["sin θ", "cos θ", "tan θ", "cot θ"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "त्रिकोणमिति अनुपात और सर्वसमिकाएँ: यदि tan θ = 3/4, तो sin θ का मान क्या है?",
+                    options: ["3/5", "4/5", "5/3", "5/4"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "त्रिकोणमिति अनुपात और सर्वसमिकाएँ:  (sec A - tan A)(sec A + tan A) किसके बराबर है?",
+                    options: ["0", "1", "-1", "sec²A + tan²A"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "वृत्त: एक वृत्त में अधिकतम कितनी समान्तर स्पर्श रेखाएँ हो सकती हैं?",
+                    options: ["1", "2", "अनंत", "कोई नहीं"],
+                    correctAnswer: "b"
+                },
+                 {
+                    question: "रचनाएँ: त्रिभुज की माध्यिकाएँ किस बिंदु पर मिलती हैं?",
+                    options: ["परिकेन्द्र", "अंतःकेन्द्र", "लम्बकेन्द्र", "गुरुत्व केंद्र"],
+                    correctAnswer: "d"
+                },
+                {
+                    question: "वृत्त का क्षेत्रफल: एक वृत्त और एक वर्ग का परिमाप बराबर है। यदि वृत्त का क्षेत्रफल K वर्ग इकाई है और वर्ग का क्षेत्रफल Y वर्ग इकाई है, तो निम्नलिखित में से कौन सा कथन सत्य है?",
+                    options: ["K > Y", "K < Y", "K = Y", "संबंध निर्धारित नहीं किया जा सकता"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "पृष्ठीय क्षेत्रफल और आयतन: 5 सेमी भुजा वाले घन का पृष्ठीय क्षेत्रफल क्या है?",
+                    options: ["25 वर्ग सेमी", "100 वर्ग सेमी", "150 वर्ग सेमी", "625 वर्ग सेमी"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "सांख्यिकी: एक वर्गीकृत बारंबारता वितरण में, माध्यक वर्ग निर्धारित करने के लिए संचयी बारंबारता का उपयोग किस प्रकार किया जाता है?",
+                    options: ["सबसे बड़ी संचयी बारंबारता का चयन करके", "n/2 से ठीक बड़ी संचयी बारंबारता वाले वर्ग को देखकर", "न्यूनतम संचयी बारंबारता का चयन करके", "किसी भी संचयी बारंबारता को चयन करके"],
+                    correctAnswer: "b"
+                },
+                 {
+                    question: "वास्तविक संख्याएँ: क्या प्रत्येक अपरिमेय संख्या एक वास्तविक संख्या है?",
+                    options: ["हाँ", "नहीं", "कभी-कभी", "हमेशा परिमेय"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "बहुपद: बहुपद x³ - 6x² + 11x - 6 के गुणनखंड क्या हैं?",
+                    options: ["(x-1)(x-2)(x-3)", "(x+1)(x+2)(x+3)", "(x-1)(x-2)(x+3)", "(x+1)(x-2)(x-3)"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "दो चरों वाले रैखिक समीकरण युग्म: समीकरणों a₁x + b₁y + c₁ = 0 और a₂x + b₂y + c₂ = 0 के अद्वितीय हल के लिए शर्त क्या है?",
+                    options: ["a₁/a₂ = b₁/b₂", "a₁/a₂ ≠ b₁/b₂", "a₁/a₂ = b₁/b₂ = c₁/c₂", "a₁/a₂ = b₁/b₂ ≠ c₁/c₂"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "द्विघात समीकरण: द्विघात समीकरण x² + 5x + 6 = 0 के मूलों का योग क्या है?",
+                    options: ["5", "-5", "6", "-6"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "समांतर श्रेढ़ी: एक समांतर श्रेढ़ी के प्रथम n पदों का योग Sn = 3n² + 4n है। दूसरा पद क्या होगा?",
+                    options: ["10", "14", "16", "27"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "त्रिभुज: यदि दो समरूप त्रिभुजों की भुजाओं का अनुपात k:1 है, तो उनके क्षेत्रफलों का अनुपात क्या होगा?",
+                    options: ["k:1", "1:k", "k²:1", "1:k²"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "निर्देशांक ज्यामिति: बिंदुओं (x₁, y₁) और (x₂, y₂) को मिलाने वाले रेखाखंड को m:n के अनुपात में अंतःविभाजित करने वाले बिंदु के x-निर्देशांक का सूत्र क्या है?",
+                    options: ["(nx₁+mx₂)/(m+n)", "(mx₁+nx₂)/(m+n)", "(my₁+ny₂)/(m+n)", "(ny₁+my₂)/(m+n)"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "त्रिकोणमिति अनुपात और सर्वसमिकाएँ:  cosec θ किसके बराबर है?",
+                    options: ["1/sin θ", "1/cos θ", "sin θ/cos θ", "cos θ/sin θ"],
+                    correctAnswer: "a"
+                },
+                {
+                    question: "त्रिकोणमिति अनुपात और सर्वसमिकाएँ: यदि sin A = cos A, तो A का मान क्या है?",
+                    options: ["0°", "30°", "45°", "60°"],
+                    correctAnswer: "c"
+                },
+                {
+                    question: "त्रिकोणमिति अनुपात और सर्वसमिकाएँ:  (1 + cot²A) किसके बराबर है?",
+                    options: ["sec²A", "cosec²A", "tan²A", "sin²A"],
+                    correctAnswer: "b"
+                },
+                {
+                    question: "वृत्त: वृत्त की स्पर्श रेखा स्पर्श बिंदु पर त्रिज्या के साथ कितना कोण बनाती है?",
+                    options: ["0°", "45°", "90°", "180°"],
+                    correctAnswer: "c"
+                }
+            ];
+
+
+            correctAnswersData = {}; // Reset correct answers data for display after submission.
+            const quizForm = document.getElementById("quiz-form");
+            let questionHTML = '';
+            questions.forEach((q, index) => {
+                const questionNumber = index + 1;
+                correctAnswersData[questionNumber] = q.correctAnswer; // Store correct answer for later display
+                questionHTML += `
+                    <div class="question">
+                        <p>${questionNumber}. ${q.question}</p>
+                        <div class="options">
+                            <label><input type="radio" name="answer_${index}" value="a"> a) ${q.options[0]}</label>
+                            <label><input type="radio" name="answer_${index}" value="b"> b) ${q.options[1]}</label>
+                            <label><input type="radio" name="answer_${index}" value="c"> c) ${q.options[2]}</label>
+                            <label><input type="radio" name="answer_${index}" value="d"> d) ${q.options[3]}</label>
+                        </div>
+                    </div>
+                `;
+            });
+            quizForm.innerHTML = questionHTML;
+        }
+
+
+        function submitAnswers() {
+            clearInterval(timerInterval); // Stop the timer on submission
+            document.getElementById("timer").style.display = "none"; // Hide timer after submit
+
+            const form = document.getElementById("quiz-form");
+            const formData = new FormData(form);
+            let marks = 0;
+            userAnswers = {};
+
+            questions.forEach((q, index) => {
+                const selectedAnswer = formData.get(`answer_${index}`);
+                userAnswers[index + 1] = selectedAnswer || ""; // Store user's answer
+                if (selectedAnswer === q.correctAnswer) {
+                    marks++;
+                }
+            });
+
+            displayResult(marks);
+            document.getElementById("quiz-container").style.display = "none";
+            document.getElementById("submit-btn").style.display = "none";
+            document.getElementById("result-container").style.display = "block";
+        }
+
+        function displayResult(marks) {
+            document.getElementById("marks-display").innerText = `आपने ${questions.length} में से ${marks} अंक प्राप्त किए।`;
+
+            let answerKeyHTML = "<h3>उत्तर कुंजी:</h3>";
+            questions.forEach((q, index) => {
+                const questionNumber = index + 1;
+                const userAnswer = userAnswers[questionNumber] || "उत्तर नहीं दिया";
+                const isCorrect = userAnswer === q.correctAnswer;
+                const answerClass = isCorrect ? 'correct-answer' : 'wrong-answer';
+                answerKeyHTML += `<p>${questionNumber}. ${q.question}<br>`;
+                answerKeyHTML += `आपका जवाब: <span class="${userAnswer ? answerClass : ''}">${userAnswer}</span>, सही उत्तर: <span class="correct-answer">${q.correctAnswer}) ${q.options[q.correctAnswer.charCodeAt(0) - 97]}</span></p>`;
+            });
+            document.getElementById("answer-key-display").innerHTML = answerKeyHTML;
+        }
+
+
+        function downloadResult() {
+            const marks = document.getElementById("marks-display").innerText;
+            const csvContent = "data:text/csv;charset=utf-8," +
+                "नाम,अंक\n" +
+                `${studentName},${marks.split(' ')[2]}\n`; // Assuming marks are the 3rd word
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link); // Required for Firefox
+
+            link.click();
+
+            document.body.removeChild(link); // Clean up
+        }
+
+    </script>
+
+</body>
+</html>

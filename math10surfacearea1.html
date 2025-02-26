@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पृष्ठ क्षेत्रफल और आयतन MCQ टेस्ट - कक्षा 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div id="timer">समय: <span id="time">25:00</span></div>
+        <h1>पृष्ठ क्षेत्रफल और आयतन MCQ टेस्ट - कक्षा 10</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  एक घन का कुल पृष्ठीय क्षेत्रफल 96 सेमी² है। घन की भुजा की लंबाई क्या होगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal1" id="chetrafal1a" value="a">
+                        <label for="chetrafal1a">a) 2 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal1" id="chetrafal1b" value="b">
+                        <label for="chetrafal1b">b) 4 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal1" id="chetrafal1c" value="c">
+                        <label for="chetrafal1c">c) 6 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal1" id="chetrafal1d" value="d">
+                        <label for="chetrafal1d">d) 8 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal1" style="display:none;">सही उत्तर: b) 4 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  एक घनाभ की लंबाई, चौड़ाई और ऊँचाई क्रमशः 12 सेमी, 8 सेमी और 6 सेमी हैं। घनाभ का आयतन क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal2" id="chetrafal2a" value="a">
+                        <label for="chetrafal2a">a) 480 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal2" id="chetrafal2b" value="b">
+                        <label for="chetrafal2b">b) 576 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal2" id="chetrafal2c" value="c">
+                        <label for="chetrafal2c">c) 688 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal2" id="chetrafal2d" value="d">
+                        <label for="chetrafal2d">d) 720 सेमी³</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal2" style="display:none;">सही उत्तर: b) 576 सेमी³</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  एक लंब वृत्तीय बेलन की त्रिज्या 7 सेमी और ऊँचाई 10 सेमी है। बेलन का वक्र पृष्ठीय क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal3" id="chetrafal3a" value="a">
+                        <label for="chetrafal3a">a) 220 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal3" id="chetrafal3b" value="b">
+                        <label for="chetrafal3b">b) 440 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal3" id="chetrafal3c" value="c">
+                        <label for="chetrafal3c">c) 880 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal3" id="chetrafal3d" value="d">
+                        <label for="chetrafal3d">d) 1540 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal3" style="display:none;">सही उत्तर: b) 440 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  एक शंकु की त्रिज्या 3 सेमी और तिर्यक ऊँचाई 5 सेमी है। शंकु का कुल पृष्ठीय क्षेत्रफल क्या होगा? (π = 3.14)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal4" id="chetrafal4a" value="a">
+                        <label for="chetrafal4a">a) 28.26 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal4" id="chetrafal4b" value="b">
+                        <label for="chetrafal4b">b) 47.1 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal4" id="chetrafal4c" value="c">
+                        <label for="chetrafal4c">c) 75.36 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal4" id="chetrafal4d" value="d">
+                        <label for="chetrafal4d">d) 84.78 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal4" style="display:none;">सही उत्तर: c) 75.36 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  एक गोले की त्रिज्या 21 सेमी है। गोले का आयतन ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal5" id="chetrafal5a" value="a">
+                        <label for="chetrafal5a">a) 38808 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal5" id="chetrafal5b" value="b">
+                        <label for="chetrafal5b">b) 48510 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal5" id="chetrafal5c" value="c">
+                        <label for="chetrafal5c">c) 55440 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal5" id="chetrafal5d" value="d">
+                        <label for="chetrafal5d">d) 97020 सेमी³</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal5" style="display:none;">सही उत्तर: a) 38808 सेमी³</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  एक अर्धगोले की त्रिज्या 14 सेमी है। अर्धगोले का कुल पृष्ठीय क्षेत्रफल ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal6" id="chetrafal6a" value="a">
+                        <label for="chetrafal6a">a) 1232 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal6" id="chetrafal6b" value="b">
+                        <label for="chetrafal6b">b) 1848 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal6" id="chetrafal6c" value="c">
+                        <label for="chetrafal6c">c) 2464 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal6" id="chetrafal6d" value="d">
+                        <label for="chetrafal6d">d) 3080 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal6" style="display:none;">सही उत्तर: b) 1848 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  एक घनाभ के तीन आसन्न फलकों के क्षेत्रफल x, y और z हैं। घनाभ का आयतन क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal7" id="chetrafal7a" value="a">
+                        <label for="chetrafal7a">a) √(xyz)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal7" id="chetrafal7b" value="b">
+                        <label for="chetrafal7b">b) xyz</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal7" id="chetrafal7c" value="c">
+                        <label for="chetrafal7c">c) 2(x+y+z)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal7" id="chetrafal7d" value="d">
+                        <label for="chetrafal7d">d) xy + yz + zx</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal7" style="display:none;">सही उत्तर: a) √(xyz)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  एक बेलन और एक शंकु की त्रिज्याएँ और ऊँचाई समान हैं। उनके आयतनों का अनुपात क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal8" id="chetrafal8a" value="a">
+                        <label for="chetrafal8a">a) 1:3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal8" id="chetrafal8b" value="b">
+                        <label for="chetrafal8b">b) 3:1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal8" id="chetrafal8c" value="c">
+                        <label for="chetrafal8c">c) 1:2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal8" id="chetrafal8d" value="d">
+                        <label for="chetrafal8d">d) 2:1</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal8" style="display:none;">सही उत्तर: b) 3:1</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  यदि एक गोले की त्रिज्या को आधा कर दिया जाए, तो आयतन कितने गुना कम हो जाएगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal9" id="chetrafal9a" value="a">
+                        <label for="chetrafal9a">a) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal9" id="chetrafal9b" value="b">
+                        <label for="chetrafal9b">b) 1/4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal9" id="chetrafal9c" value="c">
+                        <label for="chetrafal9c">c) 1/8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal9" id="chetrafal9d" value="d">
+                        <label for="chetrafal9d">d) 1/16</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal9" style="display:none;">सही उत्तर: c) 1/8</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10.  एक शंकु के छिन्नक के दोनों वृत्ताकार सिरों की त्रिज्याएँ R और r (R > r) तथा ऊँचाई h है। छिन्नक का आयतन क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal10" id="chetrafal10a" value="a">
+                        <label for="chetrafal10a">a) (1/3)πh(R² + r² + Rr)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal10" id="chetrafal10b" value="b">
+                        <label for="chetrafal10b">b) (1/3)πh(R² - r²)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal10" id="chetrafal10c" value="c">
+                        <label for="chetrafal10c">c) πh(R² + r²)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal10" id="chetrafal10d" value="d">
+                        <label for="chetrafal10d">d) πh(R² - r² + Rr)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal10" style="display:none;">सही उत्तर: a) (1/3)πh(R² + r² + Rr)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  एक बेलनाकार स्तंभ का वक्र पृष्ठीय क्षेत्रफल 1320 सेमी² और ऊँचाई 20 सेमी है। स्तंभ की त्रिज्या ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal11" id="chetrafal11a" value="a">
+                        <label for="chetrafal11a">a) 10.5 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal11" id="chetrafal11b" value="b">
+                        <label for="chetrafal11b">b) 21 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal11" id="chetrafal11c" value="c">
+                        <label for="chetrafal11c">c) 31.5 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal11" id="chetrafal11d" value="d">
+                        <label for="chetrafal11d">d) 42 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal11" style="display:none;">सही उत्तर: a) 10.5 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  24 सेमी ऊँचाई और 6 सेमी त्रिज्या वाले शंकु को पिघलाकर 4 सेमी त्रिज्या वाला बेलन बनाया जाता है। बेलन की ऊँचाई ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal12" id="chetrafal12a" value="a">
+                        <label for="chetrafal12a">a) 9 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal12" id="chetrafal12b" value="b">
+                        <label for="chetrafal12b">b) 18 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal12" id="chetrafal12c" value="c">
+                        <label for="chetrafal12c">c) 27 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal12" id="chetrafal12d" value="d">
+                        <label for="chetrafal12d">d) 54 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal12" style="display:none;">सही उत्तर: b) 18 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  एक ठोस अर्धगोले का कुल पृष्ठीय क्षेत्रफल 462 सेमी² है। अर्धगोले की त्रिज्या ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal13" id="chetrafal13a" value="a">
+                        <label for="chetrafal13a">a) 7 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal13" id="chetrafal13b" value="b">
+                        <label for="chetrafal13b">b) 14 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal13" id="chetrafal13c" value="c">
+                        <label for="chetrafal13c">c) 21 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal13" id="chetrafal13d" value="d">
+                        <label for="chetrafal13d">d) 28 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal13" style="display:none;">सही उत्तर: a) 7 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  एक घनाकार डिब्बे का किनारा 10 सेमी है। डिब्बे का पार्श्व पृष्ठीय क्षेत्रफल ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal14" id="chetrafal14a" value="a">
+                        <label for="chetrafal14a">a) 200 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal14" id="chetrafal14b" value="b">
+                        <label for="chetrafal14b">b) 400 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal14" id="chetrafal14c" value="c">
+                        <label for="chetrafal14c">c) 600 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal14" id="chetrafal14d" value="d">
+                        <label for="chetrafal14d">d) 1000 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal14" style="display:none;">सही उत्तर: b) 400 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  एक बेलन का आयतन 1540 सेमी³ और ऊँचाई 10 सेमी है। बेलन की त्रिज्या ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal15" id="chetrafal15a" value="a">
+                        <label for="chetrafal15a">a) 7 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal15" id="chetrafal15b" value="b">
+                        <label for="chetrafal15b">b) 14 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal15" id="chetrafal15c" value="c">
+                        <label for="chetrafal15c">c) 21 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal15" id="chetrafal15d" value="d">
+                        <label for="chetrafal15d">d) 28 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal15" style="display:none;">सही उत्तर: a) 7 सेमी</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  एक शंकु की ऊँचाई 15 सेमी और आधार की त्रिज्या 8 सेमी है। शंकु का आयतन ज्ञात कीजिए। (π = 3.14)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal16" id="chetrafal16a" value="a">
+                        <label for="chetrafal16a">a) 1004.8 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal16" id="chetrafal16b" value="b">
+                        <label for="chetrafal16b">b) 3014.4 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal16" id="chetrafal16c" value="c">
+                        <label for="chetrafal16c">c) 3617.28 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal16" id="chetrafal16d" value="d">
+                        <label for="chetrafal16d">d) 4823.04 सेमी³</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal16" style="display:none;">सही उत्तर: a) 1004.8 सेमी³</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  एक ठोस गोले का पृष्ठीय क्षेत्रफल 616 सेमी² है। गोले का त्रिज्या ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal17" id="chetrafal17a" value="a">
+                        <label for="chetrafal17a">a) 7 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal17" id="chetrafal17b" value="b">
+                        <label for="chetrafal17b">b) 14 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal17" id="chetrafal17c" value="c">
+                        <label for="chetrafal17c">c) 21 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal17" id="chetrafal17d" value="d">
+                        <label for="chetrafal17d">d) 28 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal17" style="display:none;">सही उत्तर: a) 7 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  एक अर्धगोलाकार कटोरे की आंतरिक त्रिज्या 3.5 सेमी है। कटोरे का आयतन ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal18" id="chetrafal18a" value="a">
+                        <label for="chetrafal18a">a) 89.83 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal18" id="chetrafal18b" value="b">
+                        <label for="chetrafal18b">b) 44.91 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal18" id="chetrafal18c" value="c">
+                        <label for="chetrafal18c">c) 179.67 सेमी³</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal18" id="chetrafal18d" value="d">
+                        <label for="chetrafal18d">d) 359.34 सेमी³</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal18" style="display:none;">सही उत्तर: a) 89.83 सेमी³</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  2 सेमी व्यास वाले सीसे के गोलों की संख्या ज्ञात कीजिए जिन्हें 12 सेमी त्रिज्या वाले ठोस बेलन में ढाला जा सकता है जिसकी ऊँचाई 15 सेमी है।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal19" id="chetrafal19a" value="a">
+                        <label for="chetrafal19a">a) 135</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal19" id="chetrafal19b" value="b">
+                        <label for="chetrafal19b">b) 270</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal19" id="chetrafal19c" value="c">
+                        <label for="chetrafal19c">c) 405</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal19" id="chetrafal19d" value="d">
+                        <label for="chetrafal19d">d) 540</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal19" style="display:none;">सही उत्तर: b) 270</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  यदि दो घनों के आयतनों का अनुपात 1:27 है, तो उनके पृष्ठीय क्षेत्रफलों का अनुपात क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal20" id="chetrafal20a" value="a">
+                        <label for="chetrafal20a">a) 1:9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal20" id="chetrafal20b" value="b">
+                        <label for="chetrafal20b">b) 1:3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal20" id="chetrafal20c" value="c">
+                        <label for="chetrafal20c">c) 1:27</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal20" id="chetrafal20d" value="d">
+                        <label for="chetrafal20d">d) 1:81</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal20" style="display:none;">सही उत्तर: a) 1:9</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  एक लंब वृत्तीय शंकु का आयतन 9856 सेमी³ है। यदि आधार का व्यास 28 सेमी है, तो शंकु की ऊँचाई ज्ञात कीजिए। (π = 22/7)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal21" id="chetrafal21a" value="a">
+                        <label for="chetrafal21a">a) 48 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal21" id="chetrafal21b" value="b">
+                        <label for="chetrafal21b">b) 24 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal21" id="chetrafal21c" value="c">
+                        <label for="chetrafal21c">c) 12 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal21" id="chetrafal21d" value="d">
+                        <label for="chetrafal21d">d) 6 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal21" style="display:none;">सही उत्तर: a) 48 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  एक शंकु की ऊँचाई 16 सेमी और आधार की त्रिज्या 12 सेमी है। शंकु का वक्र पृष्ठीय क्षेत्रफल ज्ञात कीजिए। (π = 3.14)</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal22" id="chetrafal22a" value="a">
+                        <label for="chetrafal22a">a) 602.88 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal22" id="chetrafal22b" value="b">
+                        <label for="chetrafal22b">b) 753.6 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal22" id="chetrafal22c" value="c">
+                        <label for="chetrafal22c">c) 904.32 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal22" id="chetrafal22d" value="d">
+                        <label for="chetrafal22d">d) 1205.76 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal22" style="display:none;">सही उत्तर: b) 753.6 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  यदि एक घन का आयतन 512 सेमी³ है, तो घन का किनारा क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal23" id="chetrafal23a" value="a">
+                        <label for="chetrafal23a">a) 8 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal23" id="chetrafal23b" value="b">
+                        <label for="chetrafal23b">b) 16 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal23" id="chetrafal23c" value="c">
+                        <label for="chetrafal23c">c) 24 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal23" id="chetrafal23d" value="d">
+                        <label for="chetrafal23d">d) 32 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal23" style="display:none;">सही उत्तर: a) 8 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  एक घनाभ की लंबाई, चौड़ाई और ऊँचाई का अनुपात 5:3:2 है। यदि घनाभ का आयतन 480 सेमी³ है, तो ऊँचाई ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal24" id="chetrafal24a" value="a">
+                        <label for="chetrafal24a">a) 4 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal24" id="chetrafal24b" value="b">
+                        <label for="chetrafal24b">b) 6 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal24" id="chetrafal24c" value="c">
+                        <label for="chetrafal24c">c) 8 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal24" id="chetrafal24d" value="d">
+                        <label for="chetrafal24d">d) 10 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal24" style="display:none;">सही उत्तर: a) 4 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  एक ठोस शंकु को ऊँचाई के मध्य बिंदु से होकर आधार के समांतर एक तल द्वारा काटा जाता है। छोटे शंकु के आयतन का मूल शंकु के आयतन से अनुपात ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal25" id="chetrafal25a" value="a">
+                        <label for="chetrafal25a">a) 1:8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal25" id="chetrafal25b" value="b">
+                        <label for="chetrafal25b">b) 1:4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal25" id="chetrafal25c" value="c">
+                        <label for="chetrafal25c">c) 1:2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="chetrafal25" id="chetrafal25d" value="d">
+                        <label for="chetrafal25d">d) 1:16</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_chetrafal25" style="display:none;">सही उत्तर: a) 1:8</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersPrishthChetrafalClass10 = {
+            chetrafal1: 'b', chetrafal2: 'b', chetrafal3: 'b', chetrafal4: 'c', chetrafal5: 'a',
+            chetrafal6: 'b', chetrafal7: 'a', chetrafal8: 'b', chetrafal9: 'c', chetrafal10: 'a',
+            chetrafal11: 'a', chetrafal12: 'b', chetrafal13: 'a', chetrafal14: 'b', chetrafal15: 'a',
+            chetrafal16: 'a', chetrafal17: 'a', chetrafal18: 'a', chetrafal19: 'b', chetrafal20: 'a',
+            chetrafal21: 'a', chetrafal22: 'b', chetrafal23: 'a', chetrafal24: 'a', chetrafal25: 'a'
+        };
+
+        let quizSubmitted = false;
+        const timerDuration =  25 * 60; // 25 minutes in seconds
+        let timeLeft = timerDuration;
+        let timerInterval;
+
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                     timeLeft = timerDuration; // Reset timer if it goes below 0, for visual looping if needed
+                     startTimer(); // Restart the timer immediately for continuous loop. Remove if you want it to stop at 00:00
+                }
+            }, 1000);
+        }
+
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the visual timer when quiz is submitted.
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersPrishthChetrafalClass10) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersPrishthChetrafalClass10[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersPrishthChetrafalClass10[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click();
+        }
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizSubmitted) {
+                submitQuiz();
+            }
+        });
+
+
+        startTimer(); // Start timer when page loads
+
+    </script>
+</body>
+</html>

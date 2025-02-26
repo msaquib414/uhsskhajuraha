@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>समांतर श्रेढ़ी MCQ टेस्ट - कक्षा 10 - सेट 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <h1>समांतर श्रेढ़ी MCQ टेस्ट - कक्षा 10 - सेट 2</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  समांतर श्रेढ़ी 10, 8, 6, 4, ... का 20वां पद क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q1" id="sq2q1a" value="a">
+                        <label for="sq2q1a">a) -28</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q1" id="sq2q1b" value="b">
+                        <label for="sq2q1b">b) -30</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q1" id="sq2q1c" value="c">
+                        <label for="sq2q1c">c) -32</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q1" id="sq2q1d" value="d">
+                        <label for="sq2q1d">d) -34</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q1" style="display:none;">सही उत्तर: a) -28</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  यदि किसी AP का प्रथम पद 15 और सार्व अंतर -3 है, तो AP का 10वां पद क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q2" id="sq2q2a" value="a">
+                        <label for="sq2q2a">a) -9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q2" id="sq2q2b" value="b">
+                        <label for="sq2q2b">b) -12</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q2" id="sq2q2c" value="c">
+                        <label for="sq2q2c">c) -15</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q2" id="sq2q2d" value="d">
+                        <label for="sq2q2d">d) -18</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q2" style="display:none;">सही उत्तर: b) -12</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  समांतर श्रेढ़ी -5, 0, 5, 10, ... का सार्व अंतर (d) क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q3" id="sq2q3a" value="a">
+                        <label for="sq2q3a">a) -5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q3" id="sq2q3b" value="b">
+                        <label for="sq2q3b">b) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q3" id="sq2q3c" value="c">
+                        <label for="sq2q3c">c) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q3" id="sq2q3d" value="d">
+                        <label for="sq2q3d">d) 10</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q3" style="display:none;">सही उत्तर: c) 5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  यदि किसी AP का nवां पद aₙ = 9 - 2n है, तो इसका सार्व अंतर क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q4" id="sq2q4a" value="a">
+                        <label for="sq2q4a">a) -2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q4" id="sq2q4b" value="b">
+                        <label for="sq2q4b">b) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q4" id="sq2q4c" value="c">
+                        <label for="sq2q4c">c) 7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q4" id="sq2q4d" value="d">
+                        <label for="sq2q4d">d) 9</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q4" style="display:none;">सही उत्तर: a) -2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  समांतर श्रेढ़ी 25, 20, 15, ... का 15वां पद क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q5" id="sq2q5a" value="a">
+                        <label for="sq2q5a">a) -40</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q5" id="sq2q5b" value="b">
+                        <label for="sq2q5b">b) -45</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q5" id="sq2q5c" value="c">
+                        <label for="sq2q5c">c) -50</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q5" id="sq2q5d" value="d">
+                        <label for="sq2q5d">d) -55</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q5" style="display:none;">सही उत्तर: c) -50</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  समांतर श्रेढ़ी 6, 13, 20, ... का कौन सा पद 216 होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q6" id="sq2q6a" value="a">
+                        <label for="sq2q6a">a) 30वां</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q6" id="sq2q6b" value="b">
+                        <label for="sq2q6b">b) 31वां</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q6" id="sq2q6c" value="c">
+                        <label for="sq2q6c">c) 32वां</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q6" id="sq2q6d" value="d">
+                        <label for="sq2q6d">d) 33वां</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q6" style="display:none;">सही उत्तर: b) 31वां</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  किसी AP के प्रथम n पदों के योग का सूत्र Sₙ = n/2 * (a + l) में 'l' क्या दर्शाता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q7" id="sq2q7a" value="a">
+                        <label for="sq2q7a">a) सार्व अंतर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q7" id="sq2q7b" value="b">
+                        <label for="sq2q7b">b) पदों की संख्या</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q7" id="sq2q7c" value="c">
+                        <label for="sq2q7c">c) अंतिम पद</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q7" id="sq2q7d" value="d">
+                        <label for="sq2q7d">d) प्रथम पद</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q7" style="display:none;">सही उत्तर: c) अंतिम पद</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  AP 2, 7, 12, ..., 47 में कितने पद हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q8" id="sq2q8a" value="a">
+                        <label for="sq2q8a">a) 8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q8" id="sq2q8b" value="b">
+                        <label for="sq2q8b">b) 9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q8" id="sq2q8c" value="c">
+                        <label for="sq2q8c">c) 10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q8" id="sq2q8d" value="d">
+                        <label for="sq2q8d">d) 11</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q8" style="display:none;">सही उत्तर: c) 10</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  यदि किसी AP का प्रथम पद 5 और अंतिम पद 45 है, और योग 400 है, तो पदों की संख्या (n) क्या होगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q9" id="sq2q9a" value="a">
+                        <label for="sq2q9a">a) 12</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q9" id="sq2q9b" value="b">
+                        <label for="sq2q9b">b) 14</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q9" id="sq2q9c" value="c">
+                        <label for="sq2q9c">c) 16</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q9" id="sq2q9d" value="d">
+                        <label for="sq2q9d">d) 18</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q9" style="display:none;">सही उत्तर: c) 16</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10. समांतर श्रेढ़ी 34, 32, 30, ..., 10 के पदों का योग क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q10" id="sq2q10a" value="a">
+                        <label for="sq2q10a">a) 264</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q10" id="sq2q10b" value="b">
+                        <label for="sq2q10b">b) 276</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q10" id="sq2q10c" value="c">
+                        <label for="sq2q10c">c) 288</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q10" id="sq2q10d" value="d">
+                        <label for="sq2q10d">d) 300</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q10" style="display:none;">सही उत्तर: b) 276</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  समांतर श्रेढ़ी -40, -15, 10, ... का 11वां पद क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q11" id="sq2q1a" value="a">
+                        <label for="sq2q1a">a) 60</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q11" id="sq2q1b" value="b">
+                        <label for="sq2q1b">b) 65</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q11" id="sq2q1c" value="c">
+                        <label for="sq2q1c">c) 70</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q11" id="sq2q1d" value="d">
+                        <label for="sq2q1d">d) 75</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q11" style="display:none;">सही उत्तर: a) 60</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  किसी AP के दूसरे और 7वें पद का योग 30 है, और 15वें पद का मान 41 है।  AP का प्रथम पद क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q12" id="sq2q12a" value="a">
+                        <label for="sq2q12a">a) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q12" id="sq2q12b" value="b">
+                        <label for="sq2q12b">b) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q12" id="sq2q12c" value="c">
+                        <label for="sq2q12c">c) 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q12" id="sq2q1d" value="d">
+                        <label for="sq2q1d">d) 5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q12" style="display:none;">सही उत्तर: a) 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  यदि एक AP का 3रा और 9वां पद क्रमशः 4 और -8 हैं, तो कौन सा पद 0 होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q13" id="sq2q13a" value="a">
+                        <label for="sq2q13a">a) 4वां</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q13" id="sq2q1b" value="b">
+                        <label for="sq2q13b">b) 5वां</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q13" id="sq2q1c" value="c">
+                        <label for="sq2q13c">c) 6वां</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q13" id="sq2q1d" value="d">
+                        <label for="sq2q1d">d) 7वां</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q13" style="display:none;">सही उत्तर: b) 5वां</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  क्या संख्याओं की सूची 5, 10, 20, 40, ... एक समांतर श्रेढ़ी है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q14" id="sq2q14a" value="a">
+                        <label for="sq2q14a">a) हाँ</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q14" id="sq2q14b" value="b">
+                        <label for="sq2q14b">b) नहीं</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q14" id="sq2q1c" value="c">
+                        <label for="sq2q14c">c) कुछ पदों तक हाँ</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q14" id="sq2q1d" value="d">
+                        <label for="sq2q14d">d) कह नहीं सकते</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q14" style="display:none;">सही उत्तर: b) नहीं</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  AP -37, -33, -29, ... के पहले 12 पदों का योग कितना होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q15" id="sq2q15a" value="a">
+                        <label for="sq2q15a">a) -180</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q15" id="sq2q1b" value="b">
+                        <label for="sq2q15b">b) -190</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q15" id="sq2q1c" value="c">
+                        <label for="sq2q15c">c) -200</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q15" id="sq2q1d" value="d">
+                        <label for="sq2q1d">d) -210</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q15" style="display:none;">सही उत्तर: a) -180</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  यदि किसी AP के प्रथम 5 पदों का योग 75 है और प्रथम 10 पदों का योग 250 है, तो प्रथम पद (a) क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q16" id="sq2q16a" value="a">
+                        <label for="sq2q16a">a) -5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q16" id="sq2q16b" value="b">
+                        <label for="sq2q16b">b) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q16" id="sq2q1c" value="c">
+                        <label for="sq2q16c">c) 10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q16" id="sq2q1d" value="d">
+                        <label for="sq2q1d">d) 15</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q16" style="display:none;">सही उत्तर: a) -5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  AP 24, 21, 18, ... के कितने पद लिए जाएं ताकि उनका योग 78 हो?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q17" id="sq2q17a" value="a">
+                        <label for="sq2q17a">a) 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q17" id="sq2q1b" value="b">
+                        <label for="sq2q1b">b) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q17" id="sq2q1c" value="c">
+                        <label for="sq2q1c">c) 6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q17" id="sq2q1d" value="d">
+                        <label for="sq2q1d">d) 7</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q17" style="display:none;">सही उत्तर: a) 4</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  यदि किसी AP के दूसरे और तीसरे पद का अंतर 5 है, तो सार्व अंतर (d) क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q18" id="sq2q18a" value="a">
+                        <label for="sq2q18a">a) -5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q18" id="sq2q1b" value="b">
+                        <label for="sq2q18b">b) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q18" id="sq2q1c" value="c">
+                        <label for="sq2q18c">c) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q18" id="sq2q1d" value="d">
+                        <label for="sq2q18d">d) 10</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q18" style="display:none;">सही उत्तर: c) 5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  AP -1, -3, -5, -7, ... के प्रथम 25 पदों का योग क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q19" id="sq2q19a" value="a">
+                        <label for="sq2q19a">a) -1625</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q19" id="sq2q1b" value="b">
+                        <label for="sq2q1b">b) -1525</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q19" id="sq2q1c" value="c">
+                        <label for="sq2q1c">c) -1425</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q19" id="sq2q1d" value="d">
+                        <label for="sq2q1d">d) -1325</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q19" style="display:none;">सही उत्तर: a) -1625</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  यदि किसी AP के प्रथम 3 पदों का योग 33 है और उनका अंतर 4 है, तो सबसे छोटा पद क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q20" id="sq2q20a" value="a">
+                        <label for="sq2q20a">a) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q20" id="sq2q20b" value="b">
+                        <label for="sq2q20b">b) 7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q20" id="sq2q2c" value="c">
+                        <label for="sq2q2c">c) 9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q20" id="sq2q2d" value="d">
+                        <label for="sq2q20d">d) 11</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q20" style="display:none;">सही उत्तर: a) 5</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  समांतर श्रेढ़ी 1.5, 2.0, 2.5, 3.0, ... का सार्व अंतर क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q21" id="sq2q21a" value="a">
+                        <label for="sq2q21a">a) 0.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q21" id="sq2q21b" value="b">
+                        <label for="sq2q21b">b) 1.0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q21" id="sq2q21c" value="c">
+                        <label for="sq2q21c">c) 1.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q21" id="sq2q21d" value="d">
+                        <label for="sq2q21d">d) 2.0</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q21" style="display:none;">सही उत्तर: a) 0.5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  यदि किसी AP का प्रथम पद -18 और सार्व अंतर 2.5 है, तो AP का 6वां पद क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q22" id="sq2q22a" value="a">
+                        <label for="sq2q22a">a) -5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q22" id="sq2q2b" value="b">
+                        <label for="sq2q22b">b) -5.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q22" id="sq2q2c" value="c">
+                        <label for="sq2q2c">c) -6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q22" id="sq2q2d" value="d">
+                        <label for="sq2q2d">d) -6.5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q22" style="display:none;">सही उत्तर: b) -5.5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  समांतर श्रेढ़ी √3, 2√3, 3√3, 4√3, ... का 10वां पद क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q23" id="sq2q23a" value="a">
+                        <label for="sq2q23a">a) 10√3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q23" id="sq2q2b" value="b">
+                        <label for="sq2q23b">b) 9√3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q23" id="sq2q2c" value="c">
+                        <label for="sq2q2c">c) 8√3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q23" id="sq2q2d" value="d">
+                        <label for="sq2q2d">d) 11√3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q23" style="display:none;">सही उत्तर: a) 10√3</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  एक AP में, यदि a = 7, a₁₃ = 35 है, तो सार्व अंतर (d) क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q24" id="sq2q24a" value="a">
+                        <label for="sq2q24a">a) 7/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q24" id="sq2q2b" value="b">
+                        <label for="sq2q2b">b) 14/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q24" id="sq2q2c" value="c">
+                        <label for="sq2q2c">c) 21/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q24" id="sq2q2d" value="d">
+                        <label for="sq2q2d">d) 28/3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q24" style="display:none;">सही उत्तर: b) 14/3</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  समांतर श्रेढ़ी 17, 14, 11, ..., -40 का अंतिम पद से 10वां पद क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sq2q25" id="sq2q25a" value="a">
+                        <label for="sq2q25a">a) -13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q25" id="sq2q2b" value="b">
+                        <label for="sq2q25b">b) -16</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q25" id="sq2q2c" value="c">
+                        <label for="sq2q2c">c) -19</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sq2q25" id="sq2q2d" value="d">
+                        <label for="sq2q2d">d) -22</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sq2q25" style="display:none;">सही उत्तर: a) -13</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersSamantarSet2 = {
+            sq2q1: 'a', sq2q2: 'b', sq2q3: 'c', sq2q4: 'a', sq2q5: 'c',
+            sq2q6: 'b', sq2q7: 'c', sq2q8: 'c', sq2q9: 'c', sq2q10: 'b',
+            sq2q11: 'a', sq2q12: 'a', sq2q13: 'b', sq2q14: 'b', sq2q15: 'a',
+            sq2q16: 'a', sq2q17: 'a', sq2q18: 'c', sq2q19: 'a', sq2q20: 'a',
+            sq2q21: 'a', sq2q22: 'b', sq2q23: 'a', sq2q24: 'b', sq2q25: 'a'
+        };
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersSamantarSet2) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersSamantarSet2[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersSamantarSet2[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click(); // Initiate download immediately
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>प्रायिकता MCQ टेस्ट - कक्षा 10 (सेट 2)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div id="timer">समय: <span id="time">25:00</span></div>
+        <h1>प्रायिकता MCQ टेस्ट - कक्षा 10 (सेट 2)</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  52 पत्तों की अच्छी तरह से फेटी हुई गड्डी से एक पत्ता यादृच्छिक रूप से निकाला जाता है। तस्वीर वाला पत्ता (गुलाम, बेगम या बादशाह) प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_1" id="prayikta2_1a" value="a">
+                        <label for="prayikta2_1a">a) 1/26</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_1" id="prayikta2_1b" value="b">
+                        <label for="prayikta2_1b">b) 3/13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_1" id="prayikta2_1c" value="c">
+                        <label for="prayikta2_1c">c) 4/13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_1" id="prayikta2_1d" value="d">
+                        <label for="prayikta2_1d">d) 9/52</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_1" style="display:none;">सही उत्तर: b) 3/13</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  एक पासे को दो बार फेंका जाता है। अंकों का योग 10 होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_2" id="prayikta2_2a" value="a">
+                        <label for="prayikta2_2a">a) 1/36</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_2" id="prayikta2_2b" value="b">
+                        <label for="prayikta2_2b">b) 1/12</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_2" id="prayikta2_2c" value="c">
+                        <label for="prayikta2_2c">c) 1/9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_2" id="prayikta2_2d" value="d">
+                        <label for="prayikta2_2d">d) 5/36</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_2" style="display:none;">सही उत्तर: b) 1/12</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  दो पासे एक साथ फेंके जाते हैं। प्राप्त संख्याओं का गुणनफल 12 होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_3" id="prayikta2_3a" value="a">
+                        <label for="prayikta2_3a">a) 5/36</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_3" id="prayikta2_3b" value="b">
+                        <label for="prayikta2_3b">b) 1/9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_3" id="prayikta2_3c" value="c">
+                        <label for="prayikta2_3c">c) 2/9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_3" id="prayikta2_3d" value="d">
+                        <label for="prayikta2_3d">d) 1/6</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_3" style="display:none;">सही उत्तर: b) 1/9</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  एक क्रिकेट मैच में, एक महिला बल्लेबाज खेली गई 30 गेंदों में से 6 बार चौका मारती है। चौका न मारने की प्रायिकता ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_4" id="prayikta2_4a" value="a">
+                        <label for="prayikta2_4a">a) 1/5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_4" id="prayikta2_4b" value="b">
+                        <label for="prayikta2_4b">b) 4/5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_4" id="prayikta2_4c" value="c">
+                        <label for="prayikta2_4c">c) 3/5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_4" id="prayikta2_4d" value="d">
+                        <label for="prayikta2_4d">d) 2/5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_4" style="display:none;">सही उत्तर: b) 4/5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  एक थैले में 3 लाल, 5 काली और 7 सफेद गेंदें हैं। थैले से एक गेंद यादृच्छिक रूप से निकाली जाती है। निकाली गई गेंद के लाल होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_5" id="prayikta2_5a" value="a">
+                        <label for="prayikta2_5a">a) 3/15</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_5" id="prayikta2_5b" value="b">
+                        <label for="prayikta2_5b">b) 5/15</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_5" id="prayikta2_5c" value="c">
+                        <label for="prayikta2_5c">c) 7/15</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_5" id="prayikta2_5d" value="d">
+                        <label for="prayikta2_5d">d) 1/5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_5" style="display:none;">सही उत्तर: d) 1/5</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  एक बक्से में 100 बल्ब हैं, जिनमें से 10 दोषपूर्ण हैं। बक्से से एक बल्ब यादृच्छिक रूप से निकाला जाता है। दोषपूर्ण बल्ब प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_6" id="prayikta2_6a" value="a">
+                        <label for="prayikta2_6a">a) 1/10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_6" id="prayikta2_6b" value="b">
+                        <label for="prayikta2_6b">b) 9/10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_6" id="prayikta2_6c" value="c">
+                        <label for="prayikta2_6c">c) 1/100</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_6" id="prayikta2_6d" value="d">
+                        <label for="prayikta2_6d">d) 90/100</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_6" style="display:none;">सही उत्तर: a) 1/10</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  एक डिब्बे में 6 कंचे हैं जिन पर 1 से 6 तक संख्याएँ अंकित हैं। डिब्बे से यादृच्छिक रूप से एक कंचा निकाला जाता है। संख्या 5 प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_7" id="prayikta2_7a" value="a">
+                        <label for="prayikta2_7a">a) 1/6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_7" id="prayikta2_7b" value="b">
+                        <label for="prayikta2_7b">b) 5/6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_7" id="prayikta2_7c" value="c">
+                        <label for="prayikta2_7c">c) 1/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_7" id="prayikta2_7d" value="d">
+                        <label for="prayikta2_7d">d) 2/3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_7" style="display:none;">सही उत्तर: a) 1/6</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  एक थैले में 5 हरी और 7 लाल गेंदें हैं। थैले से एक गेंद यादृच्छिक रूप से निकाली जाती है। गेंद के लाल होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_8" id="prayikta2_8a" value="a">
+                        <label for="prayikta2_8a">a) 5/12</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_8" id="prayikta2_8b" value="b">
+                        <label for="prayikta2_8b">b) 7/12</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_8" id="prayikta2_8c" value="c">
+                        <label for="prayikta2_8c">c) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_8" id="prayikta2_8d" value="d">
+                        <label for="prayikta2_8d">d) 1/3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_8" style="display:none;">सही उत्तर: b) 7/12</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  यदि दो सिक्के एक साथ उछाले जाते हैं, तो दोनों पर चित्त आने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_9" id="prayikta2_9a" value="a">
+                        <label for="prayikta2_9a">a) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_9" id="prayikta2_9b" value="b">
+                        <label for="prayikta2_9b">b) 1/4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_9" id="prayikta2_9c" value="c">
+                        <label for="prayikta2_9c">c) 3/4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_9" id="prayikta2_9d" value="d">
+                        <label for="prayikta2_9d">d) 1</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_9" style="display:none;">सही उत्तर: b) 1/4</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10.  एक पेटी में 90 डिस्क हैं, जिन पर 1 से 90 तक संख्याएँ अंकित हैं। पेटी से एक डिस्क यादृच्छिक रूप से निकाली जाती है। दो अंकों की संख्या वाली डिस्क प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_10" id="prayikta2_10a" value="a">
+                        <label for="prayikta2_10a">a) 81/90</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_10" id="prayikta2_10b" value="b">
+                        <label for="prayikta2_10b">b) 9/10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_10" id="prayikta2_10c" value="c">
+                        <label for="prayikta2_10c">c) 1/10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_10" id="prayikta2_10d" value="d">
+                        <label for="prayikta2_10d">d) 19/90</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_10" style="display:none;">सही उत्तर: b) 9/10</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  किसी घटना के घटित होने की प्रायिकता 0.07 है। घटना के न घटित होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_11" id="prayikta2_11a" value="a">
+                        <label for="prayikta2_11a">a) 0.93</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_11" id="prayikta2_11b" value="b">
+                        <label for="prayikta2_11b">b) 0.07</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_11" id="prayikta2_11c" value="c">
+                        <label for="prayikta2_11c">c) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_11" id="prayikta2_11d" value="d">
+                        <label for="prayikta2_11d">d) 0</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_11" style="display:none;">सही उत्तर: a) 0.93</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  एक खेल में, एक तीर घूमने वाले पहिये को इंगित करने के लिए घुमाया जाता है जो संख्याओं 1, 2, 3, 4, 5, 6, 7, 8 में से किसी एक पर आराम करने के लिए समान रूप से संभावित परिणामों में से एक को इंगित करता है (जैसा कि आकृति में दिखाया गया है)। तीर के किसी विषम संख्या पर इंगित करने की प्रायिकता ज्ञात कीजिए।</strong></p>
+                 <div style="text-align: center;">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAgESAAMAAAABAAEAAFEgAAIAAAABAAAAoAEgADIAAAABAAAAoAAAAAGmH0pAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAAoeAAADT2AAA+wgADrSAAHTUAAAo5E1g8AAAACVBMVEUAAAD///9otVI7AAAAAnRSTlMA/1SOA/gAAABMSURBVHja7d1BDYBADALw/5OSs8AQC7U0pZ04d7l5R/8kR+7YcQ5x9C02g9tgM7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D7tgs7YPu2Cztg+7YLO2D<div>
+                    </div>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_12" id="prayikta2_12a" value="a">
+                        <label for="prayikta2_12a">a) 1/8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_12" id="prayikta2_12b" value="b">
+                        <label for="prayikta2_12b">b) 3/8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_12" id="prayikta2_12c" value="c">
+                        <label for="prayikta2_12c">c) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_12" id="prayikta2_12d" value="d">
+                        <label for="prayikta2_12d">d) 5/8</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_12" style="display:none;">सही उत्तर: c) 1/2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  एक अच्छी तरह से फेटी गई 52 ताश के पत्तों की गड्डी में से, एक काला बादशाह प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_13" id="prayikta2_13a" value="a">
+                        <label for="prayikta2_13a">a) 1/26</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_13" id="prayikta2_13b" value="b">
+                        <label for="prayikta2_13b">b) 1/13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_13" id="prayikta2_13c" value="c">
+                        <label for="prayikta2_13c">c) 2/13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_13" id="prayikta2_13d" value="d">
+                        <label for="prayikta2_13d">d) 3/26</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_13" style="display:none;">सही उत्तर: a) 1/26</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  एक थैले में 3 नीली, 2 सफेद और 4 लाल कंचे हैं। यदि इस थैले से यादृच्छिक रूप से एक कंचा निकाला जाता है, तो उस कंचे के सफेद होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_14" id="prayikta2_14a" value="a">
+                        <label for="prayikta2_14a">a) 2/9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_14" id="prayikta2_14b" value="b">
+                        <label for="prayikta2_14b">b) 3/9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_14" id="prayikta2_14c" value="c">
+                        <label for="prayikta2_14c">c) 4/9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_14" id="prayikta2_14d" value="d">
+                        <label for="prayikta2_14d">d) 5/9</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_14" style="display:none;">सही उत्तर: a) 2/9</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  एक बक्से में 5 लाल कंचे, 8 सफेद कंचे और 4 हरे कंचे हैं। यदि इस बक्से में से एक कंचा यादृच्छिक रूप से निकाला जाता है, तो उस कंचे के लाल या सफेद होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_15" id="prayikta2_15a" value="a">
+                        <label for="prayikta2_15a">a) 5/17</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_15" id="prayikta2_15b" value="b">
+                        <label for="prayikta2_15b">b) 8/17</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_15" id="prayikta2_15c" value="c">
+                        <label for="prayikta2_15c">c) 13/17</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_15" id="prayikta2_15d" value="d">
+                        <label for="prayikta2_15d">d) 12/17</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_15" style="display:none;">सही उत्तर: c) 13/17</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  एक पासे को एक बार फेंका जाता है। 3 से बड़ा अंक प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_16" id="prayikta2_16a" value="a">
+                        <label for="prayikta2_16a">a) 1/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_16" id="prayikta2_16b" value="b">
+                        <label for="prayikta2_16b">b) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_16" id="prayikta2_16c" value="c">
+                        <label for="prayikta2_16c">c) 2/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_16" id="prayikta2_16d" value="d">
+                        <label for="prayikta2_16d">d) 5/6</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_16" style="display:none;">सही उत्तर: b) 1/2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  एक थैले में केवल नींबू की सुगंध वाली टॉफियां हैं। मालिनी बिना थैले में देखे एक टॉफी निकालती है। नारंगी सुगंध वाली टॉफी निकालने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_17" id="prayikta2_17a" value="a">
+                        <label for="prayikta2_17a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_17" id="prayikta2_17b" value="b">
+                        <label for="prayikta2_17b">b) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_17" id="prayikta2_17c" value="c">
+                        <label for="prayikta2_17c">c) 0.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_17" id="prayikta2_17d" value="d">
+                        <label for="prayikta2_17d">परिभाषित नहीं</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_17" style="display:none;">सही उत्तर: b) 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  S से शुरू होने वाले महीने में 5 रविवार होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_18" id="prayikta2_18a" value="a">
+                        <label for="prayikta2_18a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_18" id="prayikta2_18b" value="b">
+                        <label for="prayikta2_18b">b) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_18" id="prayikta2_18c" value="c">
+                        <label for="prayikta2_18c">c) 1/7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_18" id="prayikta2_18d" value="d">
+                        <label for="prayikta2_18d">d) 2/7</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_18" style="display:none;">सही उत्तर: a) 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  एक अच्छी तरह से फेटी गई 52 ताश के पत्तों की गड्डी से, एक हुकुम का पत्ता प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_19" id="prayikta2_19a" value="a">
+                        <label for="prayikta2_19a">a) 1/4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_19" id="prayikta2_19b" value="b">
+                        <label for="prayikta2_19b">b) 1/13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_19" id="prayikta2_19c" value="c">
+                        <label for="prayikta2_19c">c) 13/52</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_19" id="prayikta2_19d" value="d">
+                        <label for="prayikta2_19d">d) 3/4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_19" style="display:none;">सही उत्तर: a) 1/4</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  एक गैर-लीप वर्ष में 53 सोमवार होने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_20" id="prayikta2_20a" value="a">
+                        <label for="prayikta2_20a">a) 1/7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_20" id="prayikta2_20b" value="b">
+                        <label for="prayikta2_20b">b) 2/7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_20" id="prayikta2_20c" value="c">
+                        <label for="prayikta2_20c">c) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_20" id="prayikta2_20d" value="d">
+                        <label for="prayikta2_20d">d) 3/7</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_20" style="display:none;">सही उत्तर: a) 1/7</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  जब एक पासा फेंका जाता है तो 2 और 6 के बीच की संख्या प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_21" id="prayikta2_21a" value="a">
+                        <label for="prayikta2_21a">a) 1/6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_21" id="prayikta2_21b" value="b">
+                        <label for="prayikta2_21b">b) 1/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_21" id="prayikta2_21c" value="c">
+                        <label for="prayikta2_21c">c) 1/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_21" id="prayikta2_21d" value="d">
+                        <label for="prayikta2_21d">d) 2/3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_21" style="display:none;">सही उत्तर: b) 1/3</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  यदि एक घटना की प्रायिकता p है, तो पूरक घटना की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_22" id="prayikta2_22a" value="a">
+                        <label for="prayikta2_22a">a) p - 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_22" id="prayikta2_22b" value="b">
+                        <label for="prayikta2_22b">b) 1 - p</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_22" id="prayikta2_22c" value="c">
+                        <label for="prayikta2_22c">c) p</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_22" id="prayikta2_22d" value="d">
+                        <label for="prayikta2_22d">2p</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_22" style="display:none;">सही उत्तर: b) 1 - p</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  एक थैले में 3 लाल गेंदें और 5 काली गेंदें हैं। इस थैले में एक और काली गेंद डाल दी जाती है। थैले से अब एक लाल गेंद निकालने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_23" id="prayikta2_23a" value="a">
+                        <label for="prayikta2_23a">a) 3/8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_23" id="prayikta2_23b" value="b">
+                        <label for="prayikta2_23b">b) 3/9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_23" id="prayikta2_2c" value="c">
+                        <label for="prayikta2_23c">c) 4/9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_23" id="prayikta2_23d" value="d">
+                        <label for="prayikta2_23d">d) 5/9</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_23" style="display:none;">सही उत्तर: b) 3/9</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  यदि एक घटना की प्रायिकता 1 है, तो ऐसी घटना कहलाती है:</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_24" id="prayikta2_24a" value="a">
+                        <label for="prayikta2_24a">a) असंभव घटना</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_24" id="prayikta2_24b" value="b">
+                        <label for="prayikta2_24b">b) निश्चित घटना</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_24" id="prayikta2_24c" value="c">
+                        <label for="prayikta2_24c">c) संभावित घटना</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_24" id="prayikta2_24d" value="d">
+                        <label for="prayikta2_24d">d) अनिश्चित घटना</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_24" style="display:none;">सही उत्तर: b) निश्चित घटना</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  एक पासे को एक बार फेंका जाता है। 6 से विभाज्य संख्या प्राप्त करने की प्रायिकता क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_25" id="prayikta2_25a" value="a">
+                        <label for="prayikta2_25a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_25" id="prayikta2_25b" value="b">
+                        <label for="prayikta2_25b">b) 1/6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_25" id="prayikta2_25c" value="c">
+                        <label for="prayikta2_25c">c) 1/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="prayikta2_25" id="prayikta2_2d" value="d">
+                        <label for="prayikta2_25d">d) 1/2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_prayikta2_25" style="display:none;">सही उत्तर: b) 1/6</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersPrayiktaClass10Set2 = {
+            prayikta2_1: 'b', prayikta2_2: 'b', prayikta2_3: 'b', prayikta2_4: 'b', prayikta2_5: 'd',
+            prayikta2_6: 'a', prayikta2_7: 'a', prayikta2_8: 'b', prayikta2_9: 'b', prayikta2_10: 'b',
+            prayikta2_11: 'a', prayikta2_12: 'c', prayikta2_13: 'a', prayikta2_14: 'a', prayikta2_15: 'c',
+            prayikta2_16: 'b', prayikta2_17: 'b', prayikta2_18: 'a', prayikta2_19: 'a', prayikta2_20: 'a',
+            prayikta2_21: 'b', prayikta2_22: 'b', prayikta2_23: 'b', prayikta2_24: 'b', prayikta2_25: 'b'
+        };
+
+        let quizSubmitted = false;
+        const timerDuration =  25 * 60; // 25 minutes in seconds
+        let timeLeft = timerDuration;
+        let timerInterval;
+
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                     timeLeft = timerDuration; // Reset timer if it goes below 0, for visual looping if needed
+                     startTimer(); // Restart the timer immediately for continuous loop. Remove if you want it to stop at 00:00
+                }
+            }, 1000);
+        }
+
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the visual timer when quiz is submitted.
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersPrayiktaClass10Set2) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersPrayiktaClass10Set2[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersPrayiktaClass10Set2[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click();
+        }
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizSubmitted) {
+                submitQuiz();
+            }
+        });
+
+
+        startTimer(); // Start timer when page loads
+
+    </script>
+</body>
+</html>

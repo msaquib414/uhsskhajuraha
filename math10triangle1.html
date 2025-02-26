@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>त्रिभुज MCQ टेस्ट - कक्षा 10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div id="timer">समय: <span id="time">01:00</span></div>
+        <h1>त्रिभुज MCQ टेस्ट - कक्षा 10</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  दो त्रिभुज समरूप होते हैं यदि:</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq1" id="tq1a" value="a">
+                        <label for="tq1a">a) उनके क्षेत्रफल बराबर हों</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq1" id="tq1b" value="b">
+                        <label for="tq1b">b) उनकी संगत भुजाएँ समानुपाती हों और संगत कोण बराबर हों</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq1" id="tq1c" value="c">
+                        <label for="tq1c">c) उनके परिमाप बराबर हों</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq1" id="tq1d" value="d">
+                        <label for="tq1d">d) उनके कोण 90 डिग्री हों</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq1" style="display:none;">सही उत्तर: b) उनकी संगत भुजाएँ समानुपाती हों और संगत कोण बराबर हों</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  यदि ΔABC ~ ΔPQR और AB/PQ = 1/3 है, तो क्षेत्रफल(ΔABC)/क्षेत्रफल(ΔPQR) का अनुपात क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq2" id="tq2a" value="a">
+                        <label for="tq2a">a) 1/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq2" id="tq2b" value="b">
+                        <label for="tq2b">b) 1/6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq2" id="tq2c" value="c">
+                        <label for="tq2c">c) 1/9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq2" id="tq2d" value="d">
+                        <label for="tq2d">d) 1/27</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq2" style="display:none;">सही उत्तर: c) 1/9</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  एक समकोण त्रिभुज में, कर्ण का वर्ग अन्य दो भुजाओं के वर्गों के योग के बराबर होता है। यह प्रमेय किस नाम से जानी जाती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq3" id="tq3a" value="a">
+                        <label for="tq3a">a) थेल्स प्रमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq3" id="tq3b" value="b">
+                        <label for="tq3b">b) पाइथागोरस प्रमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq3" id="tq3c" value="c">
+                        <label for="tq3c">c) आधारभूत समानुपातिकता प्रमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq3" id="tq3d" value="d">
+                        <label for="tq3d">d) कोण-कोण समरूपता कसौटी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq3" style="display:none;">सही उत्तर: b) पाइथागोरस प्रमेय</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  यदि एक त्रिभुज की एक भुजा के समानांतर अन्य दो भुजाओं को भिन्न बिंदुओं पर प्रतिच्छेद करने के लिए एक रेखा खींची जाए, तो ये अन्य दो भुजाएँ एक ही अनुपात में विभाजित हो जाती हैं। यह कथन किस प्रमेय का है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq4" id="tq4a" value="a">
+                        <label for="tq4a">a) पाइथागोरस प्रमेय</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq4" id="tq4b" value="b">
+                        <label for="tq4b">b) थेल्स प्रमेय (आधारभूत समानुपातिकता प्रमेय)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq4" id="tq4c" value="c">
+                        <label for="tq4c">c) कोण-कोण समरूपता कसौटी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq4" id="tq4d" value="d">
+                        <label for="tq4d">d) भुजा-भुजा-भुजा समरूपता कसौटी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq4" style="display:none;">सही उत्तर: b) थेल्स प्रमेय (आधारभूत समानुपातिकता प्रमेय)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  ΔABC में, यदि DE || BC और AD/DB = 2/3, AE = 4 सेमी है, तो EC की लंबाई ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq5" id="tq5a" value="a">
+                        <label for="tq5a">a) 4 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq5" id="tq5b" value="b">
+                        <label for="tq5b">b) 6 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq5" id="tq5c" value="c">
+                        <label for="tq5c">c) 8 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq5" id="tq5d" value="d">
+                        <label for="tq5d">d) 10 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq5" style="display:none;">सही उत्तर: b) 6 सेमी</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  दो समरूप त्रिभुजों की भुजाओं का अनुपात 4:9 है। इन त्रिभुजों के क्षेत्रफलों का अनुपात क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq6" id="tq6a" value="a">
+                        <label for="tq6a">a) 4:9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq6" id="tq6b" value="b">
+                        <label for="tq6b">b) 2:3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq6" id="tq6c" value="c">
+                        <label for="tq6c">c) 16:81</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq6" id="tq6d" value="d">
+                        <label for="tq6d">d) 8:27</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq6" style="display:none;">सही उत्तर: c) 16:81</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  एक त्रिभुज ABC में, AB = 6√3 सेमी, AC = 12 सेमी और BC = 6 सेमी है। कोण B का माप क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq7" id="tq7a" value="a">
+                        <label for="tq7a">a) 90°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq7" id="tq7b" value="b">
+                        <label for="tq7b">b) 60°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq7" id="tq7c" value="c">
+                        <label for="tq7c">c) 30°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq7" id="tq7d" value="d">
+                        <label for="tq7d">d) 45°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq7" style="display:none;">सही उत्तर: a) 90°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  सभी ______ त्रिभुज समरूप होते हैं।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq8" id="tq8a" value="a">
+                        <label for="tq8a">a) समद्विबाहु</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq8" id="tq8b" value="b">
+                        <label for="tq8b">b) समबाहु</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq8" id="tq8c" value="c">
+                        <label for="tq8c">c) विषमबाहु</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq8" id="tq8d" value="d">
+                        <label for="tq8d">d) समकोण</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq8" style="display:none;">सही उत्तर: b) समबाहु</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  दो बहुभुज समरूप होते हैं, यदि उनके संगत कोण ______ और संगत भुजाएँ ______ हों।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq9" id="tq9a" value="a">
+                        <label for="tq9a">a) बराबर, बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq9" id="tq9b" value="b">
+                        <label for="tq9b">b) बराबर, समानुपाती</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq9" id="tq9c" value="c">
+                        <label for="tq9c">c) समानुपाती, बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq9" id="tq9d" value="d">
+                        <label for="tq9d">d) समानुपाती, समानुपाती</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq9" style="display:none;">सही उत्तर: b) बराबर, समानुपाती</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10. 6 मीटर ऊँचे एक खंभे की छाया 4 मीटर लंबी है। उसी समय, एक मीनार की छाया 28 मीटर लंबी है। मीनार की ऊँचाई ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq10" id="tq10a" value="a">
+                        <label for="tq10a">a) 42 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq10" id="tq10b" value="b">
+                        <label for="tq10b">b) 40 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq10" id="tq10c" value="c">
+                        <label for="tq10c">c) 38 मीटर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq10" id="tq10d" value="d">
+                        <label for="tq10d">d) 36 मीटर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq10" style="display:none;">सही उत्तर: a) 42 मीटर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  त्रिभुज की माध्यिकाएँ त्रिभुज को कितने बराबर क्षेत्रफल वाले त्रिभुजों में विभाजित करती हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq11" id="tq11a" value="a">
+                        <label for="tq11a">a) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq11" id="tq1b" value="b">
+                        <label for="tq1b">b) 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq11" id="tq1c" value="c">
+                        <label for="tq1c">c) 6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq11" id="tq1d" value="d">
+                        <label for="tq1d">d) 8</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq11" style="display:none;">सही उत्तर: c) 6</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  एक त्रिभुज ABC में, कोण A = 30°, कोण B = 60°, तो कोण C का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq12" id="tq12a" value="a">
+                        <label for="tq12a">a) 30°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq12" id="tq12b" value="b">
+                        <label for="tq12b">b) 60°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq12" id="tq12c" value="c">
+                        <label for="tq12c">c) 90°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq12" id="tq12d" value="d">
+                        <label for="tq12d">d) 120°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq12" style="display:none;">सही उत्तर: c) 90°</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  यदि ΔABC और ΔDEF समरूप त्रिभुज हैं, तो निम्नलिखित में से कौन सा कथन सत्य है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq13" id="tq13a" value="a">
+                        <label for="tq13a">a) AB = DE</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq13" id="tq13b" value="b">
+                        <label for="tq13b">b) कोण A = कोण D</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq13" id="tq13c" value="c">
+                        <label for="tq13c">c) क्षेत्रफल(ΔABC) = क्षेत्रफल(ΔDEF)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq13" id="tq1d" value="d">
+                        <label for="tq1d">d) परिमाप(ΔABC) = परिमाप(ΔDEF)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq13" style="display:none;">सही उत्तर: b) कोण A = कोण D</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  पाइथागोरस प्रमेय किस प्रकार के त्रिभुज के लिए लागू होती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq14" id="tq14a" value="a">
+                        <label for="tq14a">a) सभी त्रिभुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq14" id="tq14b" value="b">
+                        <label for="tq14b">b) केवल समकोण त्रिभुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq14" id="tq14c" value="c">
+                        <label for="tq14c">c) केवल अधिक कोण त्रिभुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq14" id="tq14d" value="d">
+                        <label for="tq14d">d) केवल न्यून कोण त्रिभुज</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq14" style="display:none;">सही उत्तर: b) केवल समकोण त्रिभुज</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  यदि एक त्रिभुज की भुजाएँ 3 सेमी, 4 सेमी और 5 सेमी हैं, तो यह किस प्रकार का त्रिभुज है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq15" id="tq15a" value="a">
+                        <label for="tq15a">a) न्यून कोण त्रिभुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq15" id="tq15b" value="b">
+                        <label for="tq15b">b) अधिक कोण त्रिभुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq15" id="tq15c" value="c">
+                        <label for="tq15c">c) समकोण त्रिभुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq15" id="tq15d" value="d">
+                        <label for="tq15d">d) समबाहु त्रिभुज</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq15" style="display:none;">सही उत्तर: c) समकोण त्रिभुज</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  एक समबाहु त्रिभुज की प्रत्येक भुजा 8 सेमी है। त्रिभुज का क्षेत्रफल क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq16" id="tq16a" value="a">
+                        <label for="tq16a">a) 16√3 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq16" id="tq16b" value="b">
+                        <label for="tq16b">b) 64 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq16" id="tq16c" value="c">
+                        <label for="tq16c">c) 32 सेमी²</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq16" id="tq16d" value="d">
+                        <label for="tq16d">d) 48 सेमी²</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq16" style="display:none;">सही उत्तर: a) 16√3 सेमी²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  यदि ΔABC ~ ΔDEF और क्षेत्रफल(ΔABC)/क्षेत्रफल(ΔDEF) = 4/25 है, तो AB/DE का अनुपात क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq17" id="tq17a" value="a">
+                        <label for="tq17a">a) 2/5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq17" id="tq17b" value="b">
+                        <label for="tq17b">b) 4/25</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq17" id="tq17c" value="c">
+                        <label for="tq17c">c) 16/625</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq17" id="tq17d" value="d">
+                        <label for="tq17d">d) 5/2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq17" style="display:none;">सही उत्तर: a) 2/5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  एक त्रिभुज का क्षेत्रफल ज्ञात करने का सूत्र क्या है यदि आधार 'b' और ऊँचाई 'h' दी गई हो?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq18" id="tq18a" value="a">
+                        <label for="tq18a">a) b × h</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq18" id="tq18b" value="b">
+                        <label for="tq18b">b) 1/2 × b × h</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq18" id="tq18c" value="c">
+                        <label for="tq18c">c) 2 × b × h</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq18" id="tq18d" value="d">
+                        <label for="tq18d">d) √(b × h)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq18" style="display:none;">सही उत्तर: b) 1/2 × b × h</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  दो समरूप त्रिभुजों के परिमापों का अनुपात 3:5 है। उनकी संगत माध्यिकाओं का अनुपात क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq19" id="tq19a" value="a">
+                        <label for="tq19a">a) 3:5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq19" id="tq19b" value="b">
+                        <label for="tq19b">b) 9:25</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq19" id="tq19c" value="c">
+                        <label for="tq19c">c) √3:√5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq19" id="tq19d" value="d">
+                        <label for="tq19d">d) 5:3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq19" style="display:none;">सही उत्तर: a) 3:5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20. त्रिभुज के तीनों कोणों का योग कितना होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq20" id="tq20a" value="a">
+                        <label for="tq20a">a) 90°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq20" id="tq20b" value="b">
+                        <label for="tq20b">b) 180°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq20" id="tq20c" value="c">
+                        <label for="tq20c">c) 270°</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq20" id="tq20d" value="d">
+                        <label for="tq20d">d) 360°</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq20" style="display:none;">सही उत्तर: b) 180°</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  यदि किसी त्रिभुज में, एक कोण 90° का हो, तो वह त्रिभुज क्या कहलाता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq21" id="tq21a" value="a">
+                        <label for="tq21a">a) न्यून कोण त्रिभुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq21" id="tq21b" value="b">
+                        <label for="tq21b">b) अधिक कोण त्रिभुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq21" id="tq21c" value="c">
+                        <label for="tq21c">c) समकोण त्रिभुज</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq21" id="tq21d" value="d">
+                        <label for="tq21d">d) समबाहु त्रिभुज</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq21" style="display:none;">सही उत्तर: c) समकोण त्रिभुज</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  भुजा-कोण-भुजा (SAS) समरूपता कसौटी के अनुसार, दो त्रिभुज समरूप होते हैं यदि:</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq22" id="tq22a" value="a">
+                        <label for="tq22a">a) सभी कोण बराबर हों</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq22" id="tq22b" value="b">
+                        <label for="tq22b">b) सभी भुजाएँ समानुपाती हों</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq22" id="tq22c" value="c">
+                        <label for="tq22c">c) दो भुजाएँ समानुपाती हों और उनके बीच का कोण बराबर हो</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq22" id="tq22d" value="d">
+                        <label for="tq22d">d) एक कोण समकोण हो</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq22" style="display:none;">सही उत्तर: c) दो भुजाएँ समानुपाती हों और उनके बीच का कोण बराबर हो</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  समरूप त्रिभुजों के संगत कोण कैसे होते हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq23" id="tq23a" value="a">
+                        <label for="tq23a">a) बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq23" id="tq23b" value="b">
+                        <label for="tq23b">b) समानुपाती</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq23" id="tq23c" value="c">
+                        <label for="tq23c">c) पूरक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq23" id="tq23d" value="d">
+                        <label for="tq23d">d) संपूरक</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq23" style="display:none;">सही उत्तर: a) बराबर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  एक त्रिभुज की दो भुजाओं की लंबाई क्रमशः 7 सेमी और 24 सेमी है। तीसरी भुजा की न्यूनतम पूर्णांक लंबाई क्या हो सकती है ताकि यह एक त्रिभुज बना सके?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq24" id="tq24a" value="a">
+                        <label for="tq24a">a) 17 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq24" id="tq24b" value="b">
+                        <label for="tq24b">b) 25 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq24" id="tq24c" value="c">
+                        <label for="tq24c">c) 26 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq24" id="tq24d" value="d">
+                        <label for="tq24d">d) 31 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq24" style="display:none;">सही उत्तर: a) 17 सेमी</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  यदि ΔABC में, कोण B = 90°, AB = 3 सेमी और BC = 4 सेमी है, तो AC की लंबाई ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="tq25" id="tq25a" value="a">
+                        <label for="tq25a">a) 5 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq25" id="tq25b" value="b">
+                        <label for="tq25b">b) 7 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq25" id="tq25c" value="c">
+                        <label for="tq25c">c) 12 सेमी</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="tq25" id="tq25d" value="d">
+                        <label for="tq25d">d) 25 सेमी</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_tq25" style="display:none;">सही उत्तर: a) 5 सेमी</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersTribhuj = {
+            tq1: 'b', tq2: 'c', tq3: 'b', tq4: 'b', tq5: 'c', // Balanced answers now
+            tq6: 'd', tq7: 'a', tq8: 'b', tq9: 'c', tq10: 'd',
+            tq11: 'a', tq12: 'b', tq13: 'c', tq14: 'd', tq15: 'a',
+            tq16: 'b', tq17: 'c', tq18: 'd', tq19: 'a', tq20: 'b',
+            tq21: 'c', tq22: 'a', tq23: 'd', tq24: 'b', tq25: 'c'
+        };
+
+        let quizSubmitted = false;
+        const timerDuration =  1500; // 1 minute in seconds
+        let timeLeft = timerDuration;
+        let timerInterval;
+
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                     timeLeft = timerDuration; // Reset timer if it goes below 0, for visual looping if needed
+                     startTimer(); // Restart the timer immediately for continuous loop. Remove if you want it to stop at 00:00
+                }
+            }, 1000);
+        }
+
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the visual timer when quiz is submitted.
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersTribhuj) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersTribhuj[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersTribhuj[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click();
+        }
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizSubmitted) {
+                submitQuiz();
+            }
+        });
+
+
+        startTimer(); // Start timer when page loads
+
+    </script>
+</body>
+</html>

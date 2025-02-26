@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>द्विघात समीकरण MCQ टेस्ट</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <h1>द्विघात समीकरण MCQ टेस्ट</h1>
+        <form id="quizForm">
+            <div class="question">
+                <p><strong>1. यदि द्विघात समीकरण x² + 5x + 6 = 0 है, तो इसके मूल क्या हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q1" id="q1a" value="a">
+                        <label for="q1a">a) -2, -3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q1" id="q1b" value="b">
+                        <label for="q1b">b) 2, 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q1" id="q1c" value="c">
+                        <label for="q1c">c) -2, 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q1" id="q1d" value="d">
+                        <label for="q1d">d) 2, -3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q1" style="display:none;">सही उत्तर: a) -2, -3</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2. द्विघात समीकरण 2x² - 7x + 3 = 0 का विविक्तकर (discriminant) क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q2" id="q2a" value="a">
+                        <label for="q2a">a) 49</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q2" id="q2b" value="b">
+                        <label for="q2b">b) 25</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q2" id="q2c" value="c">
+                        <label for="q2c">c) 13</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q2" id="q2d" value="d">
+                        <label for="q2d">d) 1</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q2" style="display:none;">सही उत्तर: b) 25</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3. यदि द्विघात समीकरण के मूल समान हों, तो विविक्तकर का मान क्या होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q3" id="q3a" value="a">
+                        <label for="q3a">a) > 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q3" id="q3b" value="b">
+                        <label for="q3b">b) &lt; 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q3" id="q3c" value="c">
+                        <label for="q3c">c) = 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q3" id="q3d" value="d">
+                        <label for="q3d">d) कोई भी मान</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q3" style="display:none;">सही उत्तर: c) = 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4. समीकरण x² - 9x + 20 = 0 के मूलों का योग क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q4" id="q4a" value="a">
+                        <label for="q4a">a) -9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q4" id="q4b" value="b">
+                        <label for="q4b">b) 9</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q4" id="q4c" value="c">
+                        <label for="q4c">c) 20</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q4" id="q4d" value="d">
+                        <label for="q4d">d) -20</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q4" style="display:none;">सही उत्तर: b) 9</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5. यदि एक मूल 2 और मूलों का योग 5 है, तो दूसरे मूल का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q5" id="q5a" value="a">
+                        <label for="q5a">a) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q5" id="q5b" value="b">
+                        <label for="q5b">b) -3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q5" id="q5c" value="c">
+                        <label for="q5c">c) 7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q5" id="q5d" value="d">
+                        <label for="q5d">d) -7</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q5" style="display:none;">सही उत्तर: a) 3</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6. द्विघात समीकरण 3x² + 9x + 6 = 0 के मूलों का गुणनफल क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q6" id="q6a" value="a">
+                        <label for="q6a">a) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q6" id="q6b" value="b">
+                        <label for="q6b">b) -2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q6" id="q6c" value="c">
+                        <label for="q6c">c) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q6" id="q6d" value="d">
+                        <label for="q6d">d) -3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q6" style="display:none;">सही उत्तर: a) 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7. निम्नलिखित में से कौन सा द्विघात समीकरण नहीं है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q7" id="q7a" value="a">
+                        <label for="q7a">a) (x+1)² = 2(x-3)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q7" id="q7b" value="b">
+                        <label for="q7b">b) x² + 3x - 5 = 0 </label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q7" id="q7c" value="c">
+                        <label for="q7c">c) x + 1/x = x² </label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q7" id="q7d" value="d">
+                        <label for="q7d">d) 3x² - 5x + 2 = 0</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q7" style="display:none;">सही उत्तर: c) x + 1/x = x²</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8. यदि द्विघात समीकरण x² - kx + 4 = 0 के मूल वास्तविक और समान हैं, तो k का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q8" id="q8a" value="a">
+                        <label for="q8a">a) ±4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q8" id="q8b" value="b">
+                        <label for="q8b">b) ±2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q8" id="q8c" value="c">
+                        <label for="q8c">c) 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q8" id="q8d" value="d">
+                        <label for="q8d">d) 2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q8" style="display:none;">सही उत्तर: a) ±4</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9. द्विघात समीकरण x² - 7x + 12 = 0 के मूल क्या होंगे?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q9" id="q9a" value="a">
+                        <label for="q9a">a) 3, 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q9" id="q9b" value="b">
+                        <label for="q9b">b) -3, -4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q9" id="q9c" value="c">
+                        <label for="q9c">c) 2, 6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q9" id="q9d" value="d">
+                        <label for="q9d">d) 1, 12</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q9" style="display:none;">सही उत्तर: a) 3, 4</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10. समीकरण (x-3)² = 49 को हल करने पर x का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q10" id="q10a" value="a">
+                        <label for="q10a">a) 10, -4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q10" id="q10b" value="b">
+                        <label for="q10b">b) 10, 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q10" id="q10c" value="c">
+                        <label for="q10c">c) -10, 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q10" id="q10d" value="d">
+                        <label for="q10d">d) -10, -4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q10" style="display:none;">सही उत्तर: a) 10, -4</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  समीकरण x² - 5x = 0 के मूल हैं:</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q11" id="q11a" value="a">
+                        <label for="q11a">a) 0, 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q11" id="q11b" value="b">
+                        <label for="q11b">b) 0, -5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q11" id="q11c" value="c">
+                        <label for="q11c">c) 5, 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q11" id="q11d" value="d">
+                        <label for="q11d">d) -5, -5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q11" style="display:none;">सही उत्तर: a) 0, 5</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12. यदि द्विघात समीकरण x² + bx + c = 0 का एक मूल -1 है, तो निम्नलिखित में से क्या सत्य है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q12" id="q12a" value="a">
+                        <label for="q12a">a) 1 - b + c = 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q12" id="q12b" value="b">
+                        <label for="q12b">b) 1 + b + c = 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q12" id="q12c" value="c">
+                        <label for="q12c">c) b - c + 1 = 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q12" id="q12d" value="d">
+                        <label for="q12d">d) b + c - 1 = 0</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q12" style="display:none;">सही उत्तर: b) 1 + b + c = 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13. द्विघात समीकरण 9x² - 6x + 1 = 0 के मूलों की प्रकृति कैसी होगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q13" id="q13a" value="a">
+                        <label for="q13a">a) वास्तविक और बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q13" id="q13b" value="b">
+                        <label for="q13b">b) वास्तविक और असमान</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q13" id="q13c" value="c">
+                        <label for="q13c">c) काल्पनिक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q13" id="q13d" value="d">
+                        <label for="q13d">d) अपरिमेय</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q13" style="display:none;">सही उत्तर: a) वास्तविक और बराबर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14. यदि द्विघात समीकरण x² - 4x + k = 0 का एक मूल 4 है, तो k का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q14" id="q14a" value="a">
+                        <label for="q14a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q14" id="q14b" value="b">
+                        <label for="q14b">b) 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q14" id="q14c" value="c">
+                        <label for="q14c">c) -16</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q14" id="q14d" value="d">
+                        <label for="q14d">d) 16</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q14" style="display:none;">सही उत्तर: a) 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15. द्विघात समीकरण 2x² + 3x + 5 = 0 के मूल कैसे होंगे?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q15" id="q15a" value="a">
+                        <label for="q15a">a) काल्पनिक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q15" id="q15b" value="b">
+                        <label for="q15b">b) वास्तविक और बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q15" id="q15c" value="c">
+                        <label for="q15c">c) वास्तविक और असमान</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q15" id="q15d" value="d">
+                        <label for="q15d">d) अपरिमेय</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q15" style="display:none;">सही उत्तर: a) काल्पनिक</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16. समीकरण √(2x+9) = x - 3 को हल करने पर x का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q16" id="q16a" value="a">
+                        <label for="q16a">a) 8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q16" id="q16b" value="b">
+                        <label for="q16b">b) 7</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q16" id="q16c" value="c">
+                        <label for="q16c">c) 6</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q16" id="q16d" value="d">
+                        <label for="q16d">d) 5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q16" style="display:none;">सही उत्तर: b) 7</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  यदि α और β समीकरण 2x² + 5x - 12 = 0 के मूल हैं, तो α + β का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q17" id="q17a" value="a">
+                        <label for="q17a">a) -5/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q17" id="q17b" value="b">
+                        <label for="q17b">b) 5/2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q17" id="q17c" value="c">
+                        <label for="q17c">c) -12</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q17" id="q17d" value="d">
+                        <label for="q17d">d) 12</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q17" style="display:none;">सही उत्तर: a) -5/2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18. द्विघात समीकरण x² + 6x + 9 = 0 के मूलों का विविक्तकर क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q18" id="q18a" value="a">
+                        <label for="q18a">a) 0</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q18" id="q18b" value="b">
+                        <label for="q18b">b) 36</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q18" id="q18c" value="c">
+                        <label for="q18c">c) -36</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q18" id="q18d" value="d">
+                        <label for="q18d">d) 18</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q18" style="display:none;">सही उत्तर: a) 0</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19. यदि द्विघात समीकरण 3x² - kx + 5 = 0 का एक मूल 1 है, तो k का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q19" id="q19a" value="a">
+                        <label for="q19a">a) 8</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q19" id="q19b" value="b">
+                        <label for="q19b">b) 5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q19" id="q19c" value="c">
+                        <label for="q19c">c) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q19" id="q19d" value="d">
+                        <label for="q19d">d) 2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q19" style="display:none;">सही उत्तर: a) 8</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  समीकरण x² + 2x - 3 = 0 के मूल कैसे होंगे?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q20" id="q20a" value="a">
+                        <label for="q20a">a) वास्तविक और असमान</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q20" id="q20b" value="b">
+                        <label for="q20b">b) वास्तविक और बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q20" id="q20c" value="c">
+                        <label for="q20c">c) काल्पनिक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q20" id="q20d" value="d">
+                        <label for="q20d">d) अपरिमेय</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q20" style="display:none;">सही उत्तर: a) वास्तविक और असमान</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  द्विघात समीकरण 4x² - 3x + 2 = 0 के मूलों का योग क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q21" id="q21a" value="a">
+                        <label for="q21a">a) 3/4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q21" id="q21b" value="b">
+                        <label for="q21b">b) -3/4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q21" id="q21c" value="c">
+                        <label for="q21c">c) 4/3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q21" id="q21d" value="d">
+                        <label for="q21d">d) -4/3</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q21" style="display:none;">सही उत्तर: a) 3/4</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  यदि द्विघात समीकरण 3x² + kx + 2 = 0 के मूल एक-दूसरे के व्युत्क्रम हैं, तो k का मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q22" id="q22a" value="a">
+                        <label for="q22a">a) -3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q22" id="q22b" value="b">
+                        <label for="q22b">b) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q22" id="q22c" value="c">
+                        <label for="q22c">c) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q22" id="q22d" value="d">
+                        <label for="q22d">d) -2</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q22" style="display:none;">सही उत्तर: a) -3</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  द्विघात समीकरण 5x² - 20x + 5 = 0 के मूलों की प्रकृति क्या होगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q23" id="q23a" value="a">
+                        <label for="q23a">a) वास्तविक और असमान</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q23" id="q23b" value="b">
+                        <label for="q23b">b) वास्तविक और बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q23" id="q23c" value="c">
+                        <label for="q23c">c) काल्पनिक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q23" id="q23d" value="d">
+                        <label for="q23d">d) अपरिमेय</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q23" style="display:none;">सही उत्तर: a) वास्तविक और असमान</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  यदि द्विघात समीकरण ax² + bx + c = 0 का विविक्तकर 0 है, तो मूल कैसे होंगे?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q24" id="q24a" value="a">
+                        <label for="q24a">a) वास्तविक और बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q24" id="q24b" value="b">
+                        <label for="q24b">b) वास्तविक और असमान</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q24" id="q24c" value="c">
+                        <label for="q24c">c) काल्पनिक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q24" id="q24d" value="d">
+                        <label for="q24d">d) अपरिमेय</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q24" style="display:none;">सही उत्तर: a) वास्तविक और बराबर</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  द्विघात समीकरण x² - 2√5x + 5 = 0 के मूलों की प्रकृति क्या होगी?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="q25" id="q25a" value="a">
+                        <label for="q25a">a) वास्तविक और बराबर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q25" id="q25b" value="b">
+                        <label for="q25b">b) वास्तविक और असमान</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q25" id="q25c" value="c">
+                        <label for="q25c">c) काल्पनिक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="q25" id="q25d" value="d">
+                        <label for="q25d">d) अपरिमेय</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_q25" style="display:none;">सही उत्तर: a) वास्तविक और बराबर</p>
+            </div>
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            q1: 'a',
+            q2: 'b',
+            q3: 'c',
+            q4: 'b',
+            q5: 'a',
+            q6: 'a',
+            q7: 'c',
+            q8: 'a',
+            q9: 'a',
+            q10: 'a',
+            q11: 'a',
+            q12: 'b',
+            q13: 'a',
+            q14: 'a',
+            q15: 'a',
+            q16: 'b',
+            q17: 'a',
+            q18: 'a',
+            q19: 'a',
+            q20: 'a',
+            q21: 'a',
+            q22: 'a',
+            q23: 'a',
+            q24: 'a',
+            q25: 'a'
+        };
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true; // Disable submit button after first click
+
+            let score = 0;
+            for (let question in correctAnswers) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block'; // Show correct answer after each question
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight'); // Highlight correct option if chosen correctly
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer'); // Indicate incorrect selection
+                    }
+                }
+
+                 // Highlight the correct option in all cases, even if not selected
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswers[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+
+            }
+
+            document.getElementById('result').textContent = `आपका स्कोर: ${score} / 25`;
+        });
+    </script>
+</body>
+</html>

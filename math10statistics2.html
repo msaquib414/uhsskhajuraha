@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>सांख्यिकी MCQ टेस्ट - कक्षा 10 (सेट 2)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: ltr;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .input-name {
+            margin-bottom: 20px;
+        }
+        .input-name label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-name input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option-item {
+            margin-bottom: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        .correct-option-highlight {
+            background-color: lightgreen;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Center horizontally */
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div class="container">
+        <div id="timer">समय: <span id="time">25:00</span></div>
+        <h1>सांख्यिकी MCQ टेस्ट - कक्षा 10 (सेट 2)</h1>
+        <div class="input-name">
+            <label for="studentName">विद्यार्थी का नाम:</label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें">
+        </div>
+        <form id="quizForm">
+
+            <div class="question">
+                <p><strong>1.  यदि माध्य, माध्यिका और बहुलक के बीच संबंध लगभग अनुभवजन्य है, तो निम्नलिखित में से कौन सा सत्य है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_1" id="sankhyiki2_1a" value="a">
+                        <label for="sankhyiki2_1a">a) 2 माध्य = 3 माध्यिका - बहुलक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_1" id="sankhyiki2_1b" value="b">
+                        <label for="sankhyiki2_1b">b) माध्य = 3 माध्यिका - 2 बहुलक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_1" id="sankhyiki2_1c" value="c">
+                        <label for="sankhyiki2_1c">c) 2 बहुलक = 3 माध्यिका - माध्य</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_1" id="sankhyiki2_1d" value="d">
+                        <label for="sankhyiki2_1d">d) 3 माध्य = 2 माध्यिका - बहुलक</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_1" style="display:none;">सही उत्तर: a) 2 माध्य = 3 माध्यिका - बहुलक</p>
+            </div>
+
+            <div class="question">
+                <p><strong>2.  किसी वर्गीकृत बारंबारता बंटन के लिए, माध्यक वर्ग और बहुलक वर्ग को ग्राफिक रूप से निर्धारित करने में क्रमशः कौन से आरेख सहायक होते हैं?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_2" id="sankhyiki2_2a" value="a">
+                        <label for="sankhyiki2_2a">a) तोरण, बार ग्राफ</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_2" id="sankhyiki2_2b" value="b">
+                        <label for="sankhyiki2_2b">b) आयतचित्र, तोरण</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_2" id="sankhyiki2_2c" value="c">
+                        <label for="sankhyiki2_2c">c) तोरण, आयतचित्र</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_2" id="sankhyiki2_2d" value="d">
+                        <label for="sankhyiki2_2d">d) बारंबारता बहुभुज, आयतचित्र</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_2" style="display:none;">सही उत्तर: c) तोरण, आयतचित्र</p>
+            </div>
+
+            <div class="question">
+                <p><strong>3.  एक दिवसीय अंतर्राष्ट्रीय क्रिकेट मैचों में, गेंदबाजों द्वारा लिए गए विकटों की संख्या का बहुलक ज्ञात करें: 2, 6, 4, 5, 0, 2, 1, 3, 2, 3.</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_3" id="sankhyiki2_3a" value="a">
+                        <label for="sankhyiki2_3a">a) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_3" id="sankhyiki2_3b" value="b">
+                        <label for="sankhyiki2_3b">b) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_3" id="sankhyiki2_3c" value="c">
+                        <label for="sankhyiki2_3c">c) 4</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_3" id="sankhyiki2_3d" value="d">
+                        <label for="sankhyiki2_3d">d) 5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_3" style="display:none;">सही उत्तर: a) 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>4.  संचयी बारंबारता सारणी में, बारंबारताओं का संचयन किससे शुरू होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_4" id="sankhyiki2_4a" value="a">
+                        <label for="sankhyiki2_4a">a) उच्चतम वर्ग सीमा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_4" id="sankhyiki2_4b" value="b">
+                        <label for="sankhyiki2_4b">b) निम्नतम वर्ग सीमा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_4" id="sankhyiki2_4c" value="c">
+                        <label for="sankhyiki2_4c">c) माध्यक वर्ग</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_4" id="sankhyiki2_4d" value="d">
+                        <label for="sankhyiki2_4d">d) बहुलक वर्ग</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_4" style="display:none;">सही उत्तर: b) निम्नतम वर्ग सीमा</p>
+            </div>
+
+            <div class="question">
+                <p><strong>5.  यदि किसी वितरण का माध्य 25 और माध्यिका 30 है, तो बहुलक का अनुमानित मान क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_5" id="sankhyiki2_5a" value="a">
+                        <label for="sankhyiki2_5a">a) 35</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_5" id="sankhyiki2_5b" value="b">
+                        <label for="sankhyiki2_5b">b) 40</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_5" id="sankhyiki2_5c" value="c">
+                        <label for="sankhyiki2_5c">c) 45</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_5" id="sankhyiki2_5d" value="d">
+                        <label for="sankhyiki2_5d">d) 50</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_5" style="display:none;">सही उत्तर: b) 40</p>
+            </div>
+
+             <div class="question">
+                <p><strong>6.  वर्ग चिह्न का सूत्र क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_6" id="sankhyiki2_6a" value="a">
+                        <label for="sankhyiki2_6a">a) (उच्च सीमा - निम्न सीमा) / 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_6" id="sankhyiki2_6b" value="b">
+                        <label for="sankhyiki2_6b">b) उच्च सीमा + निम्न सीमा</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_6" id="sankhyiki2_6c" value="c">
+                        <label for="sankhyiki2_6c">c) (उच्च सीमा + निम्न सीमा) / 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_6" id="sankhyiki2_6d" value="d">
+                        <label for="sankhyiki2_6d">d) उच्च सीमा - निम्न सीमा</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_6" style="display:none;">सही उत्तर: c) (उच्च सीमा + निम्न सीमा) / 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>7.  यदि माध्यक वर्ग 130 - 145 है, तो माध्यक वर्ग की निम्न सीमा क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_7" id="sankhyiki2_7a" value="a">
+                        <label for="sankhyiki2_7a">a) 130</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_7" id="sankhyiki2_7b" value="b">
+                        <label for="sankhyiki2_7b">b) 145</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_7" id="sankhyiki2_7c" value="c">
+                        <label for="sankhyiki2_7c">c) 137.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_7" id="sankhyiki2_7d" value="d">
+                        <label for="sankhyiki2_7d">वर्ग आकार ज्ञात नहीं किया जा सकता</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_7" style="display:none;">सही उत्तर: a) 130</p>
+            </div>
+
+            <div class="question">
+                <p><strong>8.  बहुलक की गणना के लिए आयतचित्र में, आयताकार स्तंभों की ऊँचाई क्या दर्शाती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_8" id="sankhyiki2_8a" value="a">
+                        <label for="sankhyiki2_8a">a) संचयी बारंबारता</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_8" id="sankhyiki2_8b" value="b">
+                        <label for="sankhyiki2_8b">b) वर्ग अंतराल</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_8" id="sankhyiki2_8c" value="c">
+                        <label for="sankhyiki2_8c">c) बारंबारता घनत्व</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_8" id="sankhyiki2_8d" value="d">
+                        <label for="sankhyiki2_8d">d) बारंबारता</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_8" style="display:none;">सही उत्तर: d) बारंबारता</p>
+            </div>
+
+            <div class="question">
+                <p><strong>9.  एक तोरण को ______ की सहायता से ग्राफिक रूप से दर्शाया जाता है।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_9" id="sankhyiki2_9a" value="a">
+                        <label for="sankhyiki2_9a">a) बारंबारता</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_9" id="sankhyiki2_9b" value="b">
+                        <label for="sankhyiki2_9b">b) वर्ग सीमाएँ</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_9" id="sankhyiki2_9c" value="c">
+                        <label for="sankhyiki2_9c">c) संचयी बारंबारता</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_9" id="sankhyiki2_9d" value="d">
+                        <label for="sankhyiki2_9d">d) वर्ग चिह्न</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_9" style="display:none;">सही उत्तर: c) संचयी बारंबारता</p>
+            </div>
+
+            <div class="question">
+                <p><strong>10.  यदि माध्य - बहुलक = 3, और माध्य - माध्यिका = 1. तो माध्यिका और बहुलक के बीच का अंतर ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_10" id="sankhyiki2_10a" value="a">
+                        <label for="sankhyiki2_10a">a) 1</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_10" id="sankhyiki2_10b" value="b">
+                        <label for="sankhyiki2_10b">b) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_10" id="sankhyiki2_10c" value="c">
+                        <label for="sankhyiki2_10c">c) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_10" id="sankhyiki2_10d" value="d">
+                        <label for="sankhyiki2_10d">d) 4</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_10" style="display:none;">सही उत्तर: b) 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>11.  वर्ग 30-50 की उच्च वर्ग सीमा क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_11" id="sankhyiki2_11a" value="a">
+                        <label for="sankhyiki2_11a">a) 30</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_11" id="sankhyiki2_11b" value="b">
+                        <label for="sankhyiki2_11b">b) 40</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_11" id="sankhyiki2_11c" value="c">
+                        <label for="sankhyiki2_11c">c) 50</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_11" id="sankhyiki2_11d" value="d">
+                        <label for="sankhyiki2_11d">d) 80</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_11" style="display:none;">सही उत्तर: c) 50</p>
+            </div>
+
+            <div class="question">
+                <p><strong>12.  माध्य, माध्यिका और बहुलक में से कौन सा मान चरम मानों से सबसे कम प्रभावित होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_12" id="sankhyiki2_12a" value="a">
+                        <label for="sankhyiki2_12a">a) माध्य</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_12" id="sankhyiki2_12b" value="b">
+                        <label for="sankhyiki2_12b">b) माध्यिका</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_12" id="sankhyiki2_12c" value="c">
+                        <label for="sankhyiki2_12c">c) बहुलक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_12" id="sankhyiki2_12d" value="d">
+                        <label for="sankhyiki2_12d">d) सभी समान रूप से प्रभावित होते हैं</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_12" style="display:none;">सही उत्तर: b) माध्यिका</p>
+            </div>
+
+            <div class="question">
+                <p><strong>13.  पहले 5 पूर्ण संख्याओं का माध्य क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_13" id="sankhyiki2_13a" value="a">
+                        <label for="sankhyiki2_13a">a) 2</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_13" id="sankhyiki2_13b" value="b">
+                        <label for="sankhyiki2_13b">b) 2.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_13" id="sankhyiki2_13c" value="c">
+                        <label for="sankhyiki2_13c">c) 3</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_13" id="sankhyiki2_13d" value="d">
+                        <label for="sankhyiki2_13d">d) 3.5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_13" style="display:none;">सही उत्तर: a) 2</p>
+            </div>
+
+            <div class="question">
+                <p><strong>14.  माध्यिका की गणना करते समय, संचयी बारंबारता वक्र का उपयोग करके, x-अक्ष पर माध्यिका का मान ________ से प्राप्त होता है।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_14" id="sankhyiki2_14a" value="a">
+                        <label for="sankhyiki2_14a">a) y-अक्ष पर N/2 से</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_14" id="sankhyiki2_14b" value="b">
+                        <label for="sankhyiki2_14b">b) मूल बिंदु से</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_14" id="sankhyiki2_14c" value="c">
+                        <label for="sankhyiki2_14c">c) x-अक्ष पर N/4 से</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_14" id="sankhyiki2_14d" value="d">
+                        <label for="sankhyiki2_14d">d) y-अक्ष पर N/4 से</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_14" style="display:none;">सही उत्तर: a) y-अक्ष पर N/2 से</p>
+            </div>
+
+            <div class="question">
+                <p><strong>15.  आंकड़ों के अधिकतम और न्यूनतम मान के बीच के अंतर को क्या कहा जाता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_15" id="sankhyiki2_15a" value="a">
+                        <label for="sankhyiki2_15a">a) आवृत्ति</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_15" id="sankhyiki2_15b" value="b">
+                        <label for="sankhyiki2_15b">b) वर्ग आकार</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_15" id="sankhyiki2_15c" value="c">
+                        <label for="sankhyiki2_15c">c) परिसर</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_15" id="sankhyiki2_15d" value="d">
+                        <label for="sankhyiki2_15d">d) संचयी बारंबारता</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_15" style="display:none;">सही उत्तर: c) परिसर</p>
+            </div>
+
+             <div class="question">
+                <p><strong>16.  यदि प्रथम 10 सम प्राकृतिक संख्याओं का माध्य k है, तो k का मान ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_16" id="sankhyiki2_16a" value="a">
+                        <label for="sankhyiki2_16a">a) 10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_16" id="sankhyiki2_16b" value="b">
+                        <label for="sankhyiki2_16b">b) 10.5</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_16" id="sankhyiki2_16c" value="c">
+                        <label for="sankhyiki2_16c">c) 11</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_16" id="sankhyiki2_16d" value="d">
+                        <label for="sankhyiki2_16d">d) 11.5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_16" style="display:none;">सही उत्तर: c) 11</p>
+            </div>
+
+            <div class="question">
+                <p><strong>17.  वर्ग 20-40, 40-60, 60-80, ..., 100-120 की वर्ग चौड़ाई क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_17" id="sankhyiki2_17a" value="a">
+                        <label for="sankhyiki2_17a">a) 10</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_17" id="sankhyiki2_17b" value="b">
+                        <label for="sankhyiki2_17b">b) 20</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_17" id="sankhyiki2_17c" value="c">
+                        <label for="sankhyiki2_17c">c) 30</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_17" id="sankhyiki2_17d" value="d">
+                        <label for="sankhyiki2_17d">d) 40</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_17" style="display:none;">सही उत्तर: b) 20</p>
+            </div>
+
+            <div class="question">
+                <p><strong>18.  निम्नलिखित वितरण में बहुलक वर्ग ज्ञात कीजिए:
+                <br>
+                वर्ग: 0-20, 20-40, 40-60, 60-80, 80-100
+                <br>
+                बारंबारता: 10, 15, 30, 22, 8
+                </strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_18" id="sankhyiki2_18a" value="a">
+                        <label for="sankhyiki2_18a">a) 20-40</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_18" id="sankhyiki2_18b" value="b">
+                        <label for="sankhyiki2_18b">b) 40-60</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_18" id="sankhyiki2_18c" value="c">
+                        <label for="sankhyiki2_18c">c) 60-80</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_18" id="sankhyiki2_18d" value="d">
+                        <label for="sankhyiki2_18d">d) 80-100</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_18" style="display:none;">सही उत्तर: b) 40-60</p>
+            </div>
+
+            <div class="question">
+                <p><strong>19.  पग-विचलन विधि में माध्य ज्ञात करने का सूत्र क्या है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_19" id="sankhyiki2_19a" value="a">
+                        <label for="sankhyiki2_19a">a) a + h(Σfi ui / Σfi)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_19" id="sankhyiki2_19b" value="b">
+                        <label for="sankhyiki2_19b">b) a + (Σfi ui / Σfi)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_19" id="sankhyiki2_19c" value="c">
+                        <label for="sankhyiki2_19c">c) h(Σfi ui / Σfi)</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_19" id="sankhyiki2_19d" value="d">
+                        <label for="sankhyiki2_19d">d) a + h(Σfi ui)</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_19" style="display:none;">सही उत्तर: a) a + h(Σfi ui / Σfi)</p>
+            </div>
+
+            <div class="question">
+                <p><strong>20.  कुछ प्रेक्षणों का माध्य 27 है। यदि प्रत्येक प्रेक्षण को 2 से गुणा किया जाए, तो नया माध्य क्या होगा?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_20" id="sankhyiki2_20a" value="a">
+                        <label for="sankhyiki2_20a">a) 27</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_20" id="sankhyiki2_20b" value="b">
+                        <label for="sankhyiki2_20b">b) 54</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_20" id="sankhyiki2_20c" value="c">
+                        <label for="sankhyiki2_20c">c) 29</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_20" id="sankhyiki2_20d" value="d">
+                        <label for="sankhyiki2_20d">d) 13.5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_20" style="display:none;">सही उत्तर: b) 54</p>
+            </div>
+
+             <div class="question">
+                <p><strong>21.  एक कक्षा में छात्रों की ऊँचाई का माध्य ज्ञात करने के लिए किस माप का उपयोग किया जाता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_21" id="sankhyiki2_21a" value="a">
+                        <label for="sankhyiki2_21a">a) बहुलक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_21" id="sankhyiki2_21b" value="b">
+                        <label for="sankhyiki2_21b">b) माध्यिका</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_21" id="sankhyiki2_21c" value="c">
+                        <label for="sankhyiki2_21c">c) माध्य</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_21" id="sankhyiki2_21d" value="d">
+                        <label for="sankhyiki2_21d">d) परिसर</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_21" style="display:none;">सही उत्तर: c) माध्य</p>
+            </div>
+
+            <div class="question">
+                <p><strong>22.  यदि एक आंकड़ा समूह का माध्यिका 35 और बहुलक 30 है, तो माध्य का अनुमानित मान ज्ञात कीजिए।</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_22" id="sankhyiki2_22a" value="a">
+                        <label for="sankhyiki2_22a">a) 36.67</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_22" id="sankhyiki2_22b" value="b">
+                        <label for="sankhyiki2_22b">b) 40</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_22" id="sankhyiki2_22c" value="c">
+                        <label for="sankhyiki2_22c">c) 33.33</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_22" id="sankhyiki2_22d" value="d">
+                        <label for="sankhyiki2_22d">d) 32.5</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_22" style="display:none;">सही उत्तर: a) 36.67</p>
+            </div>
+
+            <div class="question">
+                <p><strong>23.  निम्न बंटन में संचयी बारंबारता ज्ञात कीजिए:
+                <br>
+                वर्ग अंतराल: 0-10, 10-20, 20-30, 30-40, 40-50
+                <br>
+                बारंबारता: 8, 12, 15, 9, 6
+                <br>
+                वर्ग 20-30 के लिए संचयी बारंबारता क्या है?
+                </strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_23" id="sankhyiki2_23a" value="a">
+                        <label for="sankhyiki2_23a">a) 15</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_23" id="sankhyiki2_23b" value="b">
+                        <label for="sankhyiki2_23b">b) 20</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_23" id="sankhyiki2_23c" value="c">
+                        <label for="sankhyiki2_23c">c) 35</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_23" id="sankhyiki2_23d" value="d">
+                        <label for="sankhyiki2_23d">d) 44</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_23" style="display:none;">सही उत्तर: c) 35</p>
+            </div>
+
+            <div class="question">
+                <p><strong>24.  बारंबारता बहुभुज का क्षेत्रफल किसके क्षेत्रफल के बराबर होता है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_24" id="sankhyiki2_24a" value="a">
+                        <label for="sankhyiki2_24a">a) तोरण</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_24" id="sankhyiki2_24b" value="b">
+                        <label for="sankhyiki2_24b">b) आयतचित्र</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_24" id="sankhyiki2_24c" value="c">
+                        <label for="sankhyiki2_24c">c) बार ग्राफ</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_24" id="sankhyiki2_24d" value="d">
+                        <label for="sankhyiki2_24d">d) वृत्त आरेख</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_24" style="display:none;">सही उत्तर: b) आयतचित्र</p>
+            </div>
+
+            <div class="question">
+                <p><strong>25.  आमतौर पर, असतत बारंबारता बंटन के लिए केंद्रीय प्रवृत्ति के किस माप को प्राथमिकता दी जाती है?</strong></p>
+                <div class="options">
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_25" id="sankhyiki2_25a" value="a">
+                        <label for="sankhyiki2_25a">a) माध्य</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_25" id="sankhyiki2_25b" value="b">
+                        <label for="sankhyiki2_25b">b) माध्यिका</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_25" id="sankhyiki2_25c" value="c">
+                        <label for="sankhyiki2_25c">c) बहुलक</label>
+                    </div>
+                    <div class="option-item">
+                        <input type="radio" name="sankhyiki2_25" id="sankhyiki2_25d" value="d">
+                        <label for="sankhyiki2_25d">d) कोई भी माप</label>
+                    </div>
+                </div>
+                <p class="correct-answer" id="correct_sankhyiki2_25" style="display:none;">सही उत्तर: b) माध्यिका</p>
+            </div>
+
+
+            <button type="submit">जमा करें</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswersSankhyikiClass10Set2 = {
+            sankhyiki2_1: 'a', sankhyiki2_2: 'c', sankhyiki2_3: 'a', sankhyiki2_4: 'b', sankhyiki2_5: 'b',
+            sankhyiki2_6: 'c', sankhyiki2_7: 'a', sankhyiki2_8: 'd', sankhyiki2_9: 'c', sankhyiki2_10: 'b',
+            sankhyiki2_11: 'c', sankhyiki2_12: 'b', sankhyiki2_13: 'a', sankhyiki2_14: 'a', sankhyiki2_15: 'c',
+            sankhyiki2_16: 'c', sankhyiki2_17: 'b', sankhyiki2_18: 'b', sankhyiki2_19: 'a', sankhyiki2_20: 'b',
+            sankhyiki2_21: 'c', sankhyiki2_22: 'a', sankhyiki2_23: 'c', sankhyiki2_24: 'b', sankhyiki2_25: 'b'
+        };
+
+        let quizSubmitted = false;
+        const timerDuration =  25 * 60; // 25 minutes in seconds
+        let timeLeft = timerDuration;
+        let timerInterval;
+
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('time').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft < 0) {
+                    clearInterval(timerInterval);
+                     timeLeft = timerDuration; // Reset timer if it goes below 0, for visual looping if needed
+                     startTimer(); // Restart the timer immediately for continuous loop. Remove if you want it to stop at 00:00
+                }
+            }, 1000);
+        }
+
+
+        function submitQuiz() {
+            if (quizSubmitted) return;
+
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the visual timer when quiz is submitted.
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            let score = 0;
+            for (let question in correctAnswersSankhyikiClass10Set2) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const correctAnswerElement = document.getElementById(`correct_${question}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswersSankhyikiClass10Set2[question]) {
+                        score++;
+                        selectedOption.parentElement.classList.add('correct-option-highlight');
+                    } else {
+                        selectedOption.parentElement.classList.add('incorrect-answer');
+                    }
+                }
+
+                const correctOptionLabel = document.querySelector(`label[for="${question}${correctAnswersSankhyikiClass10Set2[question]}"]`);
+                correctOptionLabel.classList.add('correct-option-highlight');
+            }
+
+            const studentName = document.getElementById('studentName').value.trim();
+            const timestamp = new Date().toLocaleString();
+            let csvData = `Name,Score,Timestamp\n"${studentName}",${score},"${timestamp}"`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvData);
+            downloadLink.download = 'result.csv';
+            downloadLink.textContent = 'परिणाम डाउनलोड करें (CSV)';
+            downloadLink.style.display = 'block';
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `आपका स्कोर: ${score} / 25<br>`;
+            resultDiv.appendChild(downloadLink);
+
+            downloadLink.click();
+        }
+
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!quizSubmitted) {
+                submitQuiz();
+            }
+        });
+
+
+        startTimer(); // Start timer when page loads
+
+    </script>
+</body>
+</html>
