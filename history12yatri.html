@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>यात्रियों के नजरिये से इतिहास प्रश्नोत्तरी</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+}
+#timer {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f0f0f0; /* Optional background for better visibility */
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 1000; /* Ensure timer is always on top */
+}
+.question {
+    margin-bottom: 20px;
+}
+.options label {
+    display: block;
+    margin-bottom: 5px;
+}
+#result {
+    margin-top: 20px;
+    font-weight: bold;
+}
+.correct-answer {
+    color: green;
+    font-weight: bold;
+}
+.incorrect-answer {
+    color: red;
+}
+.option-label {
+    font-weight: normal; /* To make option labels normal weight */
+}
+</style>
+</head>
+<body oncontextmenu="return false;">
+
+<div id="timer"></div>
+
+<h1>यात्रियों के नजरिये से इतिहास प्रश्नोत्तरी</h1>
+
+<label for="studentName">अपना नाम दर्ज करें:</label>
+<input type="text" id="studentName" required><br><br>
+
+<form id="quizForm">
+    <div id="questions">
+        </div>
+    <button type="submit">प्रश्नोत्तरी जमा करें</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+document.addEventListener('contextmenu', event => event.preventDefault());
+
+let timerInterval;
+let timeLeft = 25 * 60; // 25 minutes in seconds
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById('timer').textContent = `Time Left: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(function() {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            submitQuiz(); // Optional: auto-submit when time runs out
+            alert("Time's up!");
+        }
+    }, 1000);
+}
+
+startTimer();
+
+const questionsData = [
+    {
+        question: "Q1. किस प्रसिद्ध यात्री के वृत्तांत मौर्य साम्राज्य में अंतर्दृष्टि प्रदान करते हैं?",
+        options: {
+            a: "इब्न बतूता",
+            b: "मेगस्थनीज",
+            c: "फाह्यान",
+            d: "ह्वेन त्सांग"
+        },
+        correctAnswer: "b"
+    },
+    {
+        question: "Q2.  'रिहला' किस मध्यकालीन यात्री द्वारा लिखित एक यात्रा वृत्तांत है?",
+        options: {
+            a: "मार्को पोलो",
+            b: "अल-बिरूनी",
+            c: "इब्न बतूता",
+            d: "निकोलो डे कोंटी"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "Q3. किस चीनी तीर्थयात्री ने हर्षवर्धन के शासनकाल के दौरान भारत का दौरा किया?",
+        options: {
+            a: "फाह्यान",
+            b: "आई-चिंग",
+            c: "ह्वेन त्सांग",
+            d: "जुआनजांग"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "Q4.  निम्नलिखित यात्रियों में से कौन विजयनगर के विस्तृत विवरण के लिए जाना जाता है?",
+        options: {
+            a: "डोमिंगोस पेस",
+            b: "जीन-बैप्टिस्ट टैवर्नियर",
+            c: "फ्रांकोइस बर्नियर",
+            d: "राल्फ फिच"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "Q5.  'इंडिका' मौर्य दरबार में किस यूनानी राजदूत द्वारा लिखी गई थी?",
+        options: {
+            a: "प्लिनी द एल्डर",
+            b: "स्ट्रैबो",
+            c: "मेगस्थनीज",
+            d: "टॉलेमी"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "Q6.  किस यात्री के लेखन मुगल काल, विशेषकर शाहजहाँ के शासनकाल को समझने के लिए महत्वपूर्ण हैं?",
+        options: {
+            a: "विलियम हॉकिन्स",
+            b: "थॉमस रो",
+            c: "फ्रांकोइस बर्नियर",
+            d: "जीन-बैप्टिस्ट टैवर्नियर"
+        },
+        correctAnswer: "d"
+    },
+    {
+        question: "Q7.  कुबलाई खान के दरबार में सेवा करने वाला वेनिस का व्यापारी कौन था जिसने चीन की यात्रा की?",
+        options: {
+            a: "निकोलो डे कोंटी",
+            b: "मार्को पोलो",
+            c: "लुडोविको डि वर्थेमा",
+            d: "सीज़र फ्रेडरिक"
+        },
+        correctAnswer: "b"
+    },
+    {
+        question: "Q8.  किस यात्री ने 11वीं शताब्दी के दौरान भारत की सामाजिक और आर्थिक स्थितियों में बहुमूल्य अंतर्दृष्टि प्रदान की?",
+        options: {
+            a: "अल-बिरूनी",
+            b: "अब्दुर रज्जाक",
+            c: "इब्न खल्दुन",
+            d: "अल-मसूदी"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "Q9.  'ट्रैवल्स इन द मुगल एम्पायर' किस यूरोपीय चिकित्सक और यात्री की कृति है?",
+        options: {
+            a: "पीटर मुंडी",
+            b: "फ्रांकोइस बर्नियर",
+            c: "जॉन फ्रायर",
+            d: "एडवर्ड टेरी"
+        },
+        correctAnswer: "b"
+    },
+    {
+        question: "Q10.  किस यात्री का वृत्तांत चंद्रगुप्त द्वितीय के शासनकाल को समझने के लिए महत्वपूर्ण है?",
+        options: {
+            a: "ह्वेन त्सांग",
+            b: "फाह्यान",
+            c: "आई-चिंग",
+            d: "सुंग यून"
+        },
+        correctAnswer: "b"
+    },
+    {
+        question: "Q11.  इन यात्रियों में से किसने ईस्ट इंडिया कंपनी के प्रभाव के शुरुआती वर्षों के दौरान भारत का दौरा किया?",
+        options: {
+            a: "फ्रांकोइस बर्नियर",
+            b: "जीन-बैप्टिस्ट टैवर्नियर",
+            c: "राल्फ फिच",
+            d: "पीटर मुंडी"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "Q12.  किस यात्री के अवलोकन भारतीय वनस्पतियों और जीवों के विस्तृत विवरण के लिए जाने जाते हैं?",
+        options: {
+            a: "जॉन मार्शल",
+            b: "गार्सिया डे ओर्टा",
+            c: "एंगेलबर्ट केम्फर",
+            d: "गेरिट वैन वुइस्टहॉफ"
+        },
+        correctAnswer: "b"
+    },
+    {
+        question: "Q13.  'किताब-उल-हिंद' या 'तारीख-उल-हिंद' किसकी प्रसिद्ध कृति है:",
+        options: {
+            a: "अल-बिरूनी",
+            b: "अल-मसूदी",
+            c: "इब्न खल्दुन",
+            d: "इब्न मिस्कावेह"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "Q14.  किस यात्री के पत्र औरंगजेब के भारत पर समकालीन यूरोपीय परिप्रेक्ष्य प्रदान करते हैं?",
+        options: {
+            a: "निकोलाओ मनुची",
+            b: "फ्रांकोइस बर्नियर",
+            c: "जीन डे थेवेनोट",
+            d: "जॉन जॉर्डन"
+        },
+        correctAnswer: "b"
+    },
+    {
+        question: "Q15.  कौन इतालवी यात्री था जिसने भारत का दौरा किया और जहांगीर के अधीन मुगल प्रशासन के बारे में लिखा?",
+        options: {
+            a: "पिएत्रो डेला वैले",
+            b: "सेबास्टियानो मैनरिक",
+            c: "थॉमस कोरीट",
+            d: "पॉल लुकास"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "Q16.  किस यात्री का वृत्तांत 17वीं शताब्दी में दक्षिण भारत के दैनिक जीवन और रीति-रिवाजों में अंतर्दृष्टि देता है?",
+        options: {
+            a: "जीन चारडिन",
+            b: "फ्रांकोइस पिरार्ड डे लावल",
+            c: "वास्को डी गामा",
+            d: "लुडोविको डि वर्थेमा"
+        },
+        correctAnswer: "b"
+    },
+    {
+        question: "Q17.  निम्नलिखित में से कौन मुख्य रूप से यात्री नहीं था, लेकिन जिनके लेखन भारत के बारे में ऐतिहासिक भौगोलिक जानकारी प्रदान करते हैं?",
+        options: {
+            a: "अल-इदरीसी",
+            b: "टॉलेमी",
+            c: "हेरोडोटस",
+            d: "प्लिनी द एल्डर"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "Q18.  किस यात्री की पत्रिकाएँ जहाँगीर के दरबार के ज्वलंत विवरण के लिए जानी जाती हैं?",
+        options: {
+            a: "विलियम फिंच",
+            b: "निकोलस विथिंगटन",
+            c: "एडवर्ड टेरी",
+            d: "थॉमस हर्बर्ट"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "Q19.  'ए डिस्क्रिप्शन ऑफ द कोस्ट्स ऑफ ईस्ट अफ्रीका एंड मालाबार' किसके लिए जिम्मेदार ठहराया गया है:",
+        options: {
+            a: "डुआर्ट बारबोसा",
+            b: "टोमे पाइर्स",
+            c: "गैस्पर कोरिया",
+            d: "जोआओ डे बारोस"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "Q20.  किस यात्री की कृति मध्यकालीन भारत में सामाजिक पदानुक्रम और जाति व्यवस्था को समझने के लिए महत्वपूर्ण है?",
+        options: {
+            a: "अब्दुर रज्जाक",
+            b: "इब्न बतूता",
+            c: "अल-बिरूनी",
+            d: "डोमिंगोस पेस"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "Q21.  जहाँगीर के शासनकाल के दौरान मुगल दरबार में पहला अंग्रेजी राजदूत कौन था?",
+        options: {
+            a: "विलियम हॉकिन्स",
+            b: "थॉमस रो",
+            c: "पॉल कैनिंग",
+            d: "गेब्रियल बॉटन"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "Q22.  किस यात्री के वृत्तांत 17वीं शताब्दी के भारत के आर्थिक इतिहास के अध्ययन के लिए मूल्यवान हैं?",
+        options: {
+            a: "जीन-बैप्टिस्ट टैवर्नियर",
+            b: "फ्रांकोइस बर्नियर",
+            c: "ऑगस्टिन ऑफ बोर्डो",
+            d: "अल्बर्ट डे मंडेलस्लो"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "Q23.  'द बुक ऑफ सर मार्को पोलो' को और किस नाम से जाना जाता है:",
+        options: {
+            a: "द ट्रेवल्स ऑफ मार्को पोलो",
+            b: "इल मिलिओन",
+            c: "द डिस्क्रिप्शन ऑफ द वर्ल्ड",
+            d: "उपरोक्त सभी"
+        },
+        correctAnswer: "d"
+    },
+    {
+        question: "Q24.  किस यात्री का कथन विजयनगर के कृष्णदेवराय के शासनकाल में अंतर्दृष्टि प्रदान करता है?",
+        options: {
+            a: "Fernão Nuniz",
+            b: "डोमिंगोस पेस",
+            c: "रॉबर्ट सेवेल",
+            d: "कॉलिन मैकेंज़ी"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "Q25.  निम्नलिखित यात्रियों में से कौन एक रत्न व्यापारी था और उसने गोलकुंडा की हीरा खदानों के बारे में विवरण प्रदान किया?",
+        options: {
+            a: "फ्रांकोइस बर्नियर",
+            b: "जीन-बैप्टिस्ट टैवर्नियर",
+            c: "जॉन फ्रायर",
+            d: "जेमेली कैरेरी"
+        },
+        correctAnswer: "b"
+    }
+];
+
+
+function generateQuizQuestions() {
+    const questionsDiv = document.getElementById('questions');
+    questionsData.forEach((questionData, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question';
+        questionDiv.innerHTML = `<p>${questionData.question}</p>`;
+
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        for (const optionKey in questionData.options) {
+            optionsDiv.innerHTML += `
+                <label>
+                    <input type="radio" name="answer${index}" value="${optionKey}">
+                    <span class="option-label">${optionKey.toUpperCase()}. ${questionData.options[optionKey]}</span>
+                </label>
+            `;
+        }
+        questionDiv.appendChild(optionsDiv);
+        questionsDiv.appendChild(questionDiv);
+    });
+}
+
+generateQuizQuestions();
+
+let quizSubmitted = false;
+let studentMarks = 0;
+
+document.getElementById('quizForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    if (quizSubmitted) {
+        alert("प्रश्नोत्तरी पहले ही जमा कर दी गई है!");
+        return;
+    }
+    submitQuiz();
+    quizSubmitted = true;
+});
+
+function submitQuiz() {
+    clearInterval(timerInterval); // Stop the timer on submit
+    studentMarks = 0;
+    const questionsDiv = document.getElementById('questions');
+    const studentName = document.getElementById('studentName').value;
+
+    if (!studentName) {
+        alert("कृपया अपना नाम दर्ज करें।");
+        quizSubmitted = false; // Allow submit again if name was missing
+        startTimer(); // Restart timer if quiz is not submitted
+        return;
+    }
+
+
+    questionsData.forEach((questionData, index) => {
+        const selectedOption = document.querySelector(`input[name="answer${index}"]:checked`);
+        const questionBlock = questionsDiv.children[index];
+        const optionsLabels = questionBlock.querySelectorAll('.options label');
+        let isCorrect = false;
+
+        if (selectedOption) {
+            if (selectedOption.value === questionData.correctAnswer) {
+                studentMarks++;
+                isCorrect = true;
+            }
+        }
+
+        optionsLabels.forEach(label => {
+            const input = label.querySelector('input');
+            const optionKey = input.value;
+            label.classList.add('option-label'); // Ensure default style
+
+            if (optionKey === questionData.correctAnswer) {
+                label.classList.add('correct-answer');
+            } else if (selectedOption && selectedOption.value === optionKey && !isCorrect) {
+                label.classList.add('incorrect-answer');
+            }
+            input.disabled = true; // Disable options after submission
+        });
+    });
+
+    document.getElementById('result').textContent = `आपका स्कोर: ${studentMarks} में से ${questionsData.length}`;
+
+    downloadCsv(studentName, studentMarks);
+}
+
+
+function downloadCsv(studentName, studentMarks) {
+    const csvContent = "data:text/csv;charset=utf-8," +
+        "Student Name,Marks\n" +
+        `${studentName},${studentMarks}\n`;
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "result.csv");
+    document.body.appendChild(link); // Required for Firefox
+
+    link.click();
+
+    document.body.removeChild(link); // Clean up after downloading
+}
+
+
+</script>
+
+</body>
+</html>
