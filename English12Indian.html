@@ -353,4 +353,91 @@
                 submitQuiz();
             }
             timeLeft--;
- 
+  }
+
+        function startTimer() {
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        startTimer();
+
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            if (!submitClicked) {
+                submitQuiz();
+                submitClicked = true;
+                this.disabled = true;
+            }
+        });
+
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            const form = document.getElementById('quizForm');
+            const formData = new FormData(form);
+            let score = 0;
+            const correctAnswers = {
+                q1: "Egypt",
+                q2: "Pharaohs",
+                q3: "British rule",
+                q4: "Mahatma Gandhi",
+                q5: "Indians",
+                q6: "truth and non-violence",
+                q7: "Europe",
+                q8: "Greece or Rome",
+                q9: "our ancestors",
+                q10: "Rome",
+                q11: "1915 to 1948",
+                q12: "Greece",
+                q13: "an essay/extract",
+                q14: "Mahatma Gandhi",
+                q15: "Indian civilization",
+                q16: "2 Oct, 1869",
+                q17: "moral being",
+                q18: "Mahatma Gandhi",
+                q19: "Civilization and Culture",
+                q20: "Mohan Das Karamchand Gandhi",
+                q21: "30 Jan, 1948",
+                q22: "spiritual leader",
+                q23: "Mahatma Gandhi",
+                q24: "1947",
+                q25: "Young India"
+            };
+
+            for (let i = 1; i <= 25; i++) {
+                const selectedAnswer = formData.get(`q${i}`);
+                const correctAnswer = correctAnswers[`q${i}`];
+                document.getElementById(`correct-q${i}`).style.display = 'block';
+                if (selectedAnswer === correctAnswer) {
+                    score++;
+                } else if (selectedAnswer) {
+                    document.getElementById(`correct-q${i}`).classList.add('incorrect-answer');
+                    document.getElementById(`correct-q${i}`).textContent = `Correct Answer: ${correctAnswer} (Your answer: ${selectedAnswer})`;
+                } else {
+                    document.getElementById(`correct-q${i}`).classList.add('incorrect-answer');
+                    document.getElementById(`correct-q${i}`).textContent = `Correct Answer: ${correctAnswer} (You did not answer)`;
+                }
+            }
+
+            const studentName = document.getElementById('studentName').value;
+            document.getElementById('result').textContent = `Quiz Completed! Your score: ${score} / 25`;
+            document.getElementById('result').style.display = 'block';
+
+            // Prepare data for CSV
+            const csvData = `Name,Score\n${studentName},${score}\n`;
+
+            // Download CSV file
+            const filename = 'result.csv';
+            const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    </script>
+</body>
+</html>
