@@ -3,398 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indian Civilization and Culture Online Test | Set-I</title>
+    <title>Indian Civilization and Culture Online Test</title>
     <style>
         body {
             font-family: sans-serif;
-            line-height: 1.6;
             margin: 20px;
-            background-color: #f4f4f4;
-        }
-        .quiz-container {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         #timer {
-            position: fixed; /* Or sticky if preferred */
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
+            text-align: center;
             font-size: 1.5em;
+            margin-bottom: 20px;
             font-weight: bold;
-            background-color: #e0e0e0;
-            padding: 5px 15px;
-            border-radius: 5px;
-            z-index: 1000;
+        }
+        .question {
+            margin-bottom: 20px;
             border: 1px solid #ccc;
-        }
-        .intro-text {
-            font-size: 0.9em;
-            color: #555;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-        }
-        .question-block {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        .question-block p {
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .options label {
-            display: block;
-            margin-bottom: 8px;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 4px;
-            transition: background-color 0.2s ease-in-out;
-        }
-        .options label:hover {
-            background-color: #f0f0f0;
-        }
-        .options input[type="radio"] {
-            margin-right: 10px;
-        }
-        #submitBtn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 20px;
-        }
-        #submitBtn:hover {
-            background-color: #0056b3;
-        }
-        #submitBtn:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-        #result {
-            margin-top: 30px;
-            font-size: 1.2em;
-            font-weight: bold;
             padding: 15px;
-            background-color: #e7f3fe;
-            border-left: 6px solid #2196F3;
-            border-radius: 4px;
+            border-radius: 5px;
         }
-        .correct-answer-display {
-            font-style: italic;
-            /* color: green; */ /* Color set dynamically */
-            font-weight: bold;
+        .options {
             margin-top: 10px;
-            padding-left: 25px; /* Indent under options */
         }
-        .user-answer-correct {
-             background-color: #d4edda; /* Light green */
-             border: 1px solid #c3e6cb;
-        }
-         .user-answer-incorrect {
-             background-color: #f8d7da; /* Light red */
-             border: 1px solid #f5c6cb;
-        }
-        .name-input-section {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .name-input-section label {
+        .option {
             display: block;
             margin-bottom: 5px;
-            font-weight: bold;
         }
-        .name-input-section input[type="text"] {
-            width: calc(100% - 22px); /* Adjust for padding/border */
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+        button#submitBtn {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .correct-answer {
+            color: green;
+            font-style: italic;
+        }
+        .incorrect-answer {
+            color: red;
+            font-style: italic;
         }
     </style>
 </head>
-<body oncontextmenu="return false;"> <div id="timer">25:00</div>
+<body>
+    <div id="timer"></div>
+    <h1>Indian Civilization and Culture Online Test</h1>
+    <form id="quizForm">
+        <label for="studentName">Enter your name:</label>
+        <input type="text" id="studentName" name="studentName" required><br><br>
 
-    <div class="quiz-container">
-        <h1>Indian Civilization and Culture Online Test | Set-I</h1>
-        <div class="intro-text">
-            This Online Test belongs to Bihar Board > English 100 Marks > Rainbow-XII : Part-2 Book > Prose Lesson-1
+        <div class="question">
+            <p>1. Pharaohs were rulers of ancient ..............</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q1" value="Egypt">Egypt</label>
+                <label class="option"><input type="radio" name="q1" value="Russia">Russia</label>
+                <label class="option"><input type="radio" name="q1" value="Greece">Greece</label>
+                <label class="option"><input type="radio" name="q1" value="India">India</label>
+            </div>
+            <p id="correct-q1" style="display:none;">Correct Answer: Egypt</p>
         </div>
 
-        <div class="name-input-section">
-            <label for="studentName">Enter Your Name:</label>
-            <input type="text" id="studentName" name="studentName" required placeholder="Your Full Name">
+        <div class="question">
+            <p>2. The might of ................. was broken.</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q2" value="Pharaohs">Pharaohs</label>
+                <label class="option"><input type="radio" name="q2" value="Japan">Japan</label>
+                <label class="option"><input type="radio" name="q2" value="Italy">Italy</label>
+                <label class="option"><input type="radio" name="q2" value="None of these">None of these</label>
+            </div>
+            <p id="correct-q2" style="display:none;">Correct Answer: Pharaohs</p>
         </div>
 
-        <form id="quizForm">
-
-            <div class="question-block" id="q1-block">
-                <p><strong>Question 1:</strong> Pharaohs were rulers of ancient ...............</p>
-                <div class="options">
-                    <label><input type="radio" name="q1" value="a"> A) Egypt</label>
-                    <label><input type="radio" name="q1" value="b"> B) Russia</label>
-                    <label><input type="radio" name="q1" value="c"> C) Greece</label>
-                    <label><input type="radio" name="q1" value="d"> D) India</label>
-                </div>
+        <div class="question">
+            <p>3. Mahatma Gandhi successfully used the chief weapons against the ..............</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q3" value="School rule">School rule</label>
+                <label class="option"><input type="radio" name="q3" value="Social Rule">Social Rule</label>
+                <label class="option"><input type="radio" name="q3" value="British rule">British rule</label>
+                <label class="option"><input type="radio" name="q3" value="Home rule">Home rule</label>
             </div>
+            <p id="correct-q3" style="display:none;">Correct Answer: British rule</p>
+        </div>
 
-            <div class="question-block" id="q2-block">
-                <p><strong>Question 2:</strong> The might of ................. was broken.</p>
-                <div class="options">
-                    <label><input type="radio" name="q2" value="a"> A) Pharaohs</label>
-                    <label><input type="radio" name="q2" value="b"> B) Japan</label>
-                    <label><input type="radio" name="q2" value="c"> C) Italy</label>
-                    <label><input type="radio" name="q2" value="d"> D) None of these</label>
-                </div>
+        <div class="question">
+            <p>4. Who was the author of "Young India"?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q4" value="Martin Luther King, Jr.">Martin Luther King, Jr.</label>
+                <label class="option"><input type="radio" name="q4" value="Mahatma Gandhi">Mahatma Gandhi</label>
+                <label class="option"><input type="radio" name="q4" value="Manohar Malgonkar">Manohar Malgonkar</label>
+                <label class="option"><input type="radio" name="q4" value="Bertrand Russell">Bertrand Russell</label>
             </div>
+            <p id="correct-q4" style="display:none;">Correct Answer: Mahatma Gandhi</p>
+        </div>
 
-            <div class="question-block" id="q3-block">
-                 <p><strong>Question 3:</strong> Mahatma Gandhi successfully used the chief weapons against the ..............</p>
-                <div class="options">
-                    <label><input type="radio" name="q3" value="a"> A) School rule</label>
-                    <label><input type="radio" name="q3" value="b"> B) Social Rule</label>
-                    <label><input type="radio" name="q3" value="c"> C) British rule</label>
-                    <label><input type="radio" name="q3" value="d"> D) Home rule</label>
-                </div>
+        <div class="question">
+            <p>5. Who imagines to avoid the mistakes of Greece and Rome?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q5" value="none of these">none of these</label>
+                <label class="option"><input type="radio" name="q5" value="Europeans">Europeans</label>
+                <label class="option"><input type="radio" name="q5" value="Indians">Indians</label>
+                <label class="option"><input type="radio" name="q5" value="Americans">Americans</label>
             </div>
+            <p id="correct-q5" style="display:none;">Correct Answer: Indians</p>
+        </div>
 
-             <div class="question-block" id="q4-block">
-                 <p><strong>Question 4:</strong> Who was the author of "Young India"?</p>
-                <div class="options">
-                    <label><input type="radio" name="q4" value="a"> A) Martin Luther King, Jr.</label>
-                    <label><input type="radio" name="q4" value="b"> B) Mahatma Gandhi</label>
-                    <label><input type="radio" name="q4" value="c"> C) Manohar Malgonkar</label>
-                    <label><input type="radio" name="q4" value="d"> D) Bertrand Russell</label>
-                </div>
+        <div class="question">
+            <p>6. Gandhiji used as the chief weapons—</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q6" value="guns">guns</label>
+                <label class="option"><input type="radio" name="q6" value="nuclear weapons">nuclear weapons</label>
+                <label class="option"><input type="radio" name="q6" value="truth and non-violence">truth and non-violence</label>
+                <label class="option"><input type="radio" name="q6" value="swords">swords</label>
             </div>
+            <p id="correct-q6" style="display:none;">Correct Answer: truth and non-violence</p>
+        </div>
 
-            <div class="question-block" id="q5-block">
-                 <p><strong>Question 5:</strong> Who imagines to avoid the mistakes of Greece and Rome?</p>
-                <div class="options">
-                    <label><input type="radio" name="q5" value="a"> A) none of these</label>
-                    <label><input type="radio" name="q5" value="b"> B) Europeans</label>
-                    <label><input type="radio" name="q5" value="c"> C) Indians</label>
-                    <label><input type="radio" name="q5" value="d"> D) Americans</label>
-                </div>
+        <div class="question">
+            <p>7. Whom people learn their lessons from the writings of Greece or Rome?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q7" value="China">China</label>
+                <label class="option"><input type="radio" name="q7" value="India">India</label>
+                <label class="option"><input type="radio" name="q7" value="Nepal">Nepal</label>
+                <label class="option"><input type="radio" name="q7" value="Europe">Europe</label>
             </div>
+            <p id="correct-q7" style="display:none;">Correct Answer: Europe</p>
+        </div>
 
-             <div class="question-block" id="q6-block">
-                <p><strong>Question 6:</strong> Gandhiji used as the chief weapons—</p>
-                <div class="options">
-                    <label><input type="radio" name="q6" value="a"> A) guns</label>
-                    <label><input type="radio" name="q6" value="b"> B) nuclear weapons</label>
-                    <label><input type="radio" name="q6" value="c"> C) truth and non-violence</label>
-                    <label><input type="radio" name="q6" value="d"> D) swords</label>
-                </div>
+        <div class="question">
+            <p>8. The people of Europe learn their lessons from the writings of the men of .................</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q8" value="Greece or Rome">Greece or Rome</label>
+                <label class="option"><input type="radio" name="q8" value="Greece or America">Greece or America</label>
+                <label class="option"><input type="radio" name="q8" value="None of these">None of these</label>
+                <label class="option"><input type="radio" name="q8" value="Italy or Japan">Italy or Japan</label>
             </div>
+            <p id="correct-q8" style="display:none;">Correct Answer: Greece or Rome</p>
+        </div>
 
-            <div class="question-block" id="q7-block">
-                <p><strong>Question 7:</strong> Whom people learn their lessons from the writings of Greece or Rome?</p>
-                <div class="options">
-                    <label><input type="radio" name="q7" value="a"> A) China</label>
-                    <label><input type="radio" name="q7" value="b"> B) India</label>
-                    <label><input type="radio" name="q7" value="c"> C) Nepal</label>
-                    <label><input type="radio" name="q7" value="d"> D) Europe</label>
-                </div>
+        <div class="question">
+            <p>9. Nothing can equal the seeds sown by ..................</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q9" value="our ancestors">our ancestors</label>
+                <label class="option"><input type="radio" name="q9" value="our leaders">our leaders</label>
+                <label class="option"><input type="radio" name="q9" value="our teachers">our teachers</label>
+                <label class="option"><input type="radio" name="q9" value="none of these">none of these</label>
             </div>
+            <p id="correct-q9" style="display:none;">Correct Answer: our ancestors</p>
+        </div>
 
-            <div class="question-block" id="q8-block">
-                <p><strong>Question 8:</strong> The people of Europe learn their lessons from the writings of the men of .................</p>
-                <div class="options">
-                    <label><input type="radio" name="q8" value="a"> A) Greece or Rome</label>
-                    <label><input type="radio" name="q8" value="b"> B) Greece or America</label>
-                    <label><input type="radio" name="q8" value="c"> C) None of these</label>
-                    <label><input type="radio" name="q8" value="d"> D) Italy or Japan</label>
-                </div>
+        <div class="question">
+            <p>10. Who does not exist longer in their former glory?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q10" value="USA">USA</label>
+                <label class="option"><input type="radio" name="q10" value="Rome">Rome</label>
+                <label class="option"><input type="radio" name="q10" value="Italy">Italy</label>
+                <label class="option"><input type="radio" name="q10" value="China">China</label>
             </div>
+            <p id="correct-q10" style="display:none;">Correct Answer: Rome</p>
+        </div>
 
-            <div class="question-block" id="q9-block">
-                <p><strong>Question 9:</strong> Nothing can equal the seeds sown by ..................</p>
-                <div class="options">
-                    <label><input type="radio" name="q9" value="a"> A) our ancestors</label>
-                    <label><input type="radio" name="q9" value="b"> B) our leaders</label>
-                    <label><input type="radio" name="q9" value="c"> C) our teachers</label>
-                    <label><input type="radio" name="q9" value="d"> D) none of these</label>
-                </div>
+        <div class="question">
+            <p>11. Gandhiji completely dominated Indian politics from ....................</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q11" value="1920 to 1947">1920 to 1947</label>
+                <label class="option"><input type="radio" name="q11" value="1915 to 1948">1915 to 1948</label>
+                <label class="option"><input type="radio" name="q11" value="1946 to 1947">1946 to 1947</label>
+                <label class="option"><input type="radio" name="q11" value="1921 to 1930">1921 to 1930</label>
             </div>
+            <p id="correct-q11" style="display:none;">Correct Answer: 1915 to 1948</p>
+        </div>
 
-            <div class="question-block" id="q10-block">
-                <p><strong>Question 10:</strong> Who does not exist longer in their former glory?</p>
-                <div class="options">
-                    <label><input type="radio" name="q10" value="a"> A) USA</label>
-                    <label><input type="radio" name="q10" value="b"> B) Rome</label>
-                    <label><input type="radio" name="q10" value="c"> C) Italy</label>
-                    <label><input type="radio" name="q10" value="d"> D) China</label>
-                </div>
+        <div class="question">
+            <p>12. The people of Europe are inspired by .................. and Roman writers.</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q12" value="British">British</label>
+                <label class="option"><input type="radio" name="q12" value="Indian">Indian</label>
+                <label class="option"><input type="radio" name="q12" value="Greece">Greece</label>
+                <label class="option"><input type="radio" name="q12" value="French">French</label>
             </div>
+            <p id="correct-q12" style="display:none;">Correct Answer: Greece</p>
+        </div>
 
-             <div class="question-block" id="q11-block">
-                <p><strong>Question 11:</strong> Gandhiji completely dominated Indian politics from ....................</p>
-                <div class="options">
-                    <label><input type="radio" name="q11" value="a"> A) 1920 to 1947</label>
-                    <label><input type="radio" name="q11" value="b"> B) 1915 to 1948</label>
-                    <label><input type="radio" name="q11" value="c"> C) 1946 to 1947</label>
-                    <label><input type="radio" name="q11" value="d"> D) 1921 to 1930</label>
-                </div>
+        <div class="question">
+            <p>13. "Indian Civilization and Culture" is ............</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q13" value="an essay/extract">an essay/extract</label>
+                <label class="option"><input type="radio" name="q13" value="a story">a story</label>
+                <label class="option"><input type="radio" name="q13" value="a drama">a drama</label>
+                <label class="option"><input type="radio" name="q13" value="a poem">a poem</label>
             </div>
+            <p id="correct-q13" style="display:none;">Correct Answer: an essay/extract</p>
+        </div>
 
-            <div class="question-block" id="q12-block">
-                <p><strong>Question 12:</strong> The people of Europe are inspired by .................. and Roman writers.</p>
-                <div class="options">
-                    <label><input type="radio" name="q12" value="a"> A) British</label>
-                    <label><input type="radio" name="q12" value="b"> B) Indian</label>
-                    <label><input type="radio" name="q12" value="c"> C) Greece</label> <label><input type="radio" name="q12" value="d"> D) French</label>
-                </div>
+        <div class="question">
+            <p>14. Who was popularly known as "Bapu" or "the Father of Nation"?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q14" value="Mahatma Gandhi">Mahatma Gandhi</label>
+                <label class="option"><input type="radio" name="q14" value="Dorothy L. Sayers">Dorothy L. Sayers</label>
+                <label class="option"><input type="radio" name="q14" value="Anton Chekhov">Anton Chekhov</label>
+                <label class="option"><input type="radio" name="q14" value="Dr Zakir Hussain">Dr Zakir Hussain</label>
             </div>
+            <p id="correct-q14" style="display:none;">Correct Answer: Mahatma Gandhi</p>
+        </div>
 
-            <div class="question-block" id="q13-block">
-                <p><strong>Question 13:</strong> "Indian Civilization and Culture" is ............</p>
-                <div class="options">
-                    <label><input type="radio" name="q13" value="a"> A) an essay/extract</label>
-                    <label><input type="radio" name="q13" value="b"> B) a story</label>
-                    <label><input type="radio" name="q13" value="c"> C) a drama</label>
-                    <label><input type="radio" name="q13" value="d"> D) a poem</label>
-                </div>
+        <div class="question">
+            <p>15. Which civilization is not to be beaten in the world?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q15" value="Western civilization">Western civilization</label>
+                <label class="option"><input type="radio" name="q15" value="Eastern civilization">Eastern civilization</label>
+                <label class="option"><input type="radio" name="q15" value="None of these">None of these</label>
+                <label class="option"><input type="radio" name="q15" value="Indian civilization">Indian civilization</label>
             </div>
+            <p id="correct-q15" style="display:none;">Correct Answer: Indian civilization</p>
+        </div>
 
-            <div class="question-block" id="q14-block">
-                <p><strong>Question 14:</strong> Who was popularly known as "Bapu" or "the Father of Nation"?</p>
-                <div class="options">
-                    <label><input type="radio" name="q14" value="a"> A) Mahatma Gandhi</label>
-                    <label><input type="radio" name="q14" value="b"> B) Dorothy L. Sayers</label>
-                    <label><input type="radio" name="q14" value="c"> C) Anton Chekhov</label>
-                    <label><input type="radio" name="q14" value="d"> D) Dr Zakir Hussain</label>
-                </div>
+        <div class="question">
+            <p>16. When was Gandhiji born?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q16" value="2 Oct, 1866">2 Oct, 1866</label>
+                <label class="option"><input type="radio" name="q16" value="2 Oct, 1927">2 Oct, 1927</label>
+                <label class="option"><input type="radio" name="q16" value="2 Oct, 1863">2 Oct, 1863</label>
+                <label class="option"><input type="radio" name="q16" value="2 Oct, 1869">2 Oct, 1869</label>
             </div>
+            <p id="correct-q16" style="display:none;">Correct Answer: 2 Oct, 1869</p>
+        </div>
 
-            <div class="question-block" id="q15-block">
-                <p><strong>Question 15:</strong> Which civilization is not to be beaten in the world?</p>
-                <div class="options">
-                    <label><input type="radio" name="q15" value="a"> A) Western civilization</label>
-                    <label><input type="radio" name="q15" value="b"> B) Eastern civilization</label>
-                    <label><input type="radio" name="q15" value="c"> C) None of these</label>
-                    <label><input type="radio" name="q15" value="d"> D) Indian civilization</label>
-                </div>
+        <div class="question">
+            <p>17. Indian Civilization elevates the ..................</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q17" value="none of these">none of these</label>
+                <label class="option"><input type="radio" name="q17" value="human being">human being</label>
+                <label class="option"><input type="radio" name="q17" value="moral being">moral being</label>
+                <label class="option"><input type="radio" name="q17" value="immoral being">immoral being</label>
             </div>
+            <p id="correct-q17" style="display:none;">Correct Answer: moral being</p>
+        </div>
 
-            <div class="question-block" id="q16-block">
-                <p><strong>Question 16:</strong> When was Gandhiji born?</p>
-                <div class="options">
-                    <label><input type="radio" name="q16" value="a"> A) 2 Oct, 1866</label>
-                    <label><input type="radio" name="q16" value="b"> B) 2 Oct, 1927</label>
-                    <label><input type="radio" name="q16" value="c"> C) 2 Oct, 1863</label>
-                    <label><input type="radio" name="q16" value="d"> D) 2 Oct, 1869</label>
-                </div>
+        <div class="question">
+            <p>18. Indian Civilization and Culture has been written by ……………</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q18" value="Martin Luther King, Jr.">Martin Luther King, Jr.</label>
+                <label class="option"><input type="radio" name="q18" value="Manohar Malgonkar">Manohar Malgonkar</label>
+                <label class="option"><input type="radio" name="q18" value="Mahatma Gandhi">Mahatma Gandhi</label>
+                <label class="option"><input type="radio" name="q18" value="Shiga Naoya">Shiga Naoya</label>
             </div>
+            <p id="correct-q18" style="display:none;">Correct Answer: Mahatma Gandhi</p>
+        </div>
 
-            <div class="question-block" id="q17-block">
-                <p><strong>Question 17:</strong> Indian Civilization elevates the ..................</p>
-                <div class="options">
-                    <label><input type="radio" name="q17" value="a"> A) none of these</label>
-                    <label><input type="radio" name="q17" value="b"> B) human being</label>
-                    <label><input type="radio" name="q17" value="c"> C) immoral being</label>
-                    <label><input type="radio" name="q17" value="d"> D) moral being</label>
-                </div>
+        <div class="question">
+            <p>19. In his essay, Mahatma Gandhi deals in ..................</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q19" value="None of these">None of these</label>
+                <label class="option"><input type="radio" name="q19" value="Civilization and Culture">Civilization and Culture</label>
+                <label class="option"><input type="radio" name="q19" value="Customs and Traditions">Customs and Traditions</label>
+                <label class="option"><input type="radio" name="q19" value="Poverty and Unemployment">Poverty and Unemployment</label>
             </div>
+            <p id="correct-q19" style="display:none;">Correct Answer: Civilization and Culture</p>
+        </div>
 
-            <div class="question-block" id="q18-block">
-                <p><strong>Question 18:</strong> Indian Civilization and Culture has been written by ……………</p>
-                <div class="options">
-                    <label><input type="radio" name="q18" value="a"> A) Martin Luther King, Jr.</label>
-                    <label><input type="radio" name="q18" value="b"> B) Manohar Malgonkar</label>
-                    <label><input type="radio" name="q18" value="c"> C) Mahatma Gandhi</label>
-                    <label><input type="radio" name="q18" value="d"> D) Shiga Naoya</label>
-                </div>
+        <div class="question">
+            <p>20. What was the full name of Mahatma Gandhi?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q20" value="Mohan Das Karam Gandhi">Mohan Das Karam Gandhi</label>
+                <label class="option"><input type="radio" name="q20" value="Motilal Das Karamchand Gandhi">Motilal Das Karamchand Gandhi</label>
+                <label class="option"><input type="radio" name="q20" value="Mohan Das Karamchand Gandhi">Mohan Das Karamchand Gandhi</label>
+                <label class="option"><input type="radio" name="q20" value="Madan Das Karamchand Gandhi">Madan Das Karamchand Gandhi</label>
             </div>
+            <p id="correct-q20" style="display:none;">Correct Answer: Mohan Das Karamchand Gandhi</p>
+        </div>
 
-            <div class="question-block" id="q19-block">
-                <p><strong>Question 19:</strong> In his essay, Mahatma Gandhi deals in ..................</p>
-                <div class="options">
-                    <label><input type="radio" name="q19" value="a"> A) None of these</label>
-                    <label><input type="radio" name="q19" value="b"> B) Civilization and Culture</label>
-                    <label><input type="radio" name="q19" value="c"> C) Customs and Traditions</label>
-                    <label><input type="radio" name="q19" value="d"> D) Poverty and Unemployment</label>
-                </div>
+        <div class="question">
+            <p>21. Gandhiji died at the hands of fanatic on .....................</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q21" value="26 Jan, 1947">26 Jan, 1947</label>
+                <label class="option"><input type="radio" name="q21" value="2 Oct, 1947">2 Oct, 1947</label>
+                <label class="option"><input type="radio" name="q21" value="15 Aug, 1950">15 Aug, 1950</label>
+                <label class="option"><input type="radio" name="q21" value="30 Jan, 1948">30 Jan, 1948</label>
             </div>
+            <p id="correct-q21" style="display:none;">Correct Answer: 30 Jan, 1948</p>
+        </div>
 
-            <div class="question-block" id="q20-block">
-                <p><strong>Question 20:</strong> What was the full name of Mahatma Gandhi?</p>
-                <div class="options">
-                    <label><input type="radio" name="q20" value="a"> A) Mohan Das Karam Gandhi</label>
-                    <label><input type="radio" name="q20" value="b"> B) Motilal Das Karamchand Gandhi</label>
-                    <label><input type="radio" name="q20" value="c"> C) Mohan Das Karamchand Gandhi</label>
-                    <label><input type="radio" name="q20" value="d"> D) Madan Das Karamchand Gandhi</label>
-                </div>
+        <div class="question">
+            <p>22. Mahatma Gandhi was more a ..................... than a politician.</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q22" value="group leader">group leader</label>
+                <label class="option"><input type="radio" name="q22" value="politician leader">politician leader</label>
+                <label class="option"><input type="radio" name="q22" value="none of these">none of these</label>
+                <label class="option"><input type="radio" name="q22" value="spiritual leader">spiritual leader</label>
             </div>
+            <p id="correct-q22" style="display:none;">Correct Answer: spiritual leader</p>
+        </div>
 
-             <div class="question-block" id="q21-block">
-                <p><strong>Question 21:</strong> Gandhiji died at the hands of fanatic on .....................</p>
-                <div class="options">
-                    <label><input type="radio" name="q21" value="a"> A) 26 Jan, 1947</label>
-                    <label><input type="radio" name="q21" value="b"> B) 2 Oct, 1947</label>
-                    <label><input type="radio" name="q21" value="c"> C) 15 Aug, 1950</label>
-                    <label><input type="radio" name="q21" value="d"> D) 30 Jan, 1948</label>
-                </div>
+        <div class="question">
+            <p>23. "My Experiments with Truth" was written by ...............</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q23" value="Manohar Malgonkar">Manohar Malgonkar</label>
+                <label class="option"><input type="radio" name="q23" value="Mahatma Gandhi">Mahatma Gandhi</label>
+                <label class="option"><input type="radio" name="q23" value="Dr Zakir Hussain">Dr Zakir Hussain</label>
+                <label class="option"><input type="radio" name="q23" value="Martin Luther King, Jr.">Martin Luther King, Jr.</label>
             </div>
+            <p id="correct-q23" style="display:none;">Correct Answer: Mahatma Gandhi</p>
+        </div>
 
-             <div class="question-block" id="q22-block">
-                <p><strong>Question 22:</strong> Mahatma Gandhi was more a ..................... than a politician.</p>
-                <div class="options">
-                    <label><input type="radio" name="q22" value="a"> A) group leader</label>
-                    <label><input type="radio" name="q22" value="b"> B) politician leader</label>
-                    <label><input type="radio" name="q22" value="c"> C) none of these</label>
-                    <label><input type="radio" name="q22" value="d"> D) spiritual leader</label>
-                </div>
+        <div class="question">
+            <p>24. India gained independence—</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q24" value="1947">1947</label>
+                <label class="option"><input type="radio" name="q24" value="1948">1948</label>
+                <label class="option"><input type="radio" name="q24" value="1915">1915</label>
+                <label class="option"><input type="radio" name="q24" value="1949">1949</label>
             </div>
+            <p id="correct-q24" style="display:none;">Correct Answer: 1947</p>
+        </div>
 
-            <div class="question-block" id="q23-block">
-                <p><strong>Question 23:</strong> "My Experiments with Truth" was written by ...............</p>
-                <div class="options">
-                    <label><input type="radio" name="q23" value="a"> A) Manohar Malgonkar</label>
-                    <label><input type="radio" name="q23" value="b"> B) Mahatma Gandhi</label>
-                    <label><input type="radio" name="q23" value="c"> C) Dr Zakir Hussain</label>
-                    <label><input type="radio" name="q23" value="d"> D) Martin Luther King, Jr.</label>
-                </div>
+        <div class="question">
+            <p>25. Mahatma Gandhi wrote different articles for ......................</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q25" value="The Times of India">The Times of India</label>
+                <label class="option"><input type="radio" name="q25" value="The Hindu">The Hindu</label>
+                <label class="option"><input type="radio" name="q25" value="The Blitzed">The Blitzed</label>
+                <label class="option"><input type="radio" name="q25" value="Young India">Young India</label>
             </div>
+            <p id="correct-q25" style="display:none;">Correct Answer: Young India</p>
+        </div>
 
-             <div class="question-block" id="q24-block">
-                <p><strong>Question 24:</strong> India gained independence—</p>
-                <div class="options">
-                    <label><input type="radio" name="q24" value="a"> A) None of these</label> <label><input type="radio" name="q24" value="b"> B) 1948</label>
-                    <label><input type="radio" name="q24" value="c"> C) 1915</label>
-                    <label><input type="radio" name="q24" value="d"> D) 1949</label>
-                </div>
-            </div>
+        <button type="button" id="submitBtn">Submit Quiz</button>
+    </form>
 
-            <div class="question-block" id="q25-block">
-                 <p><strong>Question 25:</strong> Mahatma Gandhi wrote different articles for ......................</p>
-                <div class="options">
-                    <label><input type="radio" name="q25" value="a"> A) The Times of India</label>
-                    <label><input type="radio" name="q25" value="b"> B) The Hindu</label>
-                    <label><input type="radio" name="q25" value="c"> C) The Blitzed</label>
-                    <label><input type="radio" name="q25" value="d"> D) Young India</label>
-                </div>
-            </div>
-
-            <button type="submit" id="submitBtn">Submit Answers</button>
-        </form>
-
-        <div id="result"></div>
-    </div>
+    <div id="result" style="display:none;"></div>
 
     <script>
-        const quizForm = document.getElementById('quizForm');
-        const su
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+        let submitClicked = false;
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+            timeLeft--;
+ 
