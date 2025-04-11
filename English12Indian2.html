@@ -1,490 +1,297 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indian Beauty Quiz</title>
-    <style>
-        body {
-            font-family: sans-serif;
-        }
-        #timer {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.2em;
-            font-weight: bold;
-            color: navy;
-        }
-        .question {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .options label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        #submit-button {
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        #submit-button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-        #results {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        .correct-answer {
-            color: green;
-            font-weight: bold;
-        }
-        .incorrect-answer {
-            color: red;
-            font-weight: bold;
-        }
-    </style>
+<title>MCQ Test</title>
+<style>
+  body {
+    font-family: sans-serif;
+  }
+  #timer {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  .question {
+    margin-bottom: 20px;
+  }
+  .options label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  #submitBtn {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  #results {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  .correct-answer {
+    color: green;
+    font-weight: normal;
+  }
+  .incorrect-answer {
+    color: red;
+    font-weight: normal;
+  }
+</style>
 </head>
 <body>
-    <div id="timer"></div>
-    <h1>Indian Beauty Quiz</h1>
-    <p>Indian beauty is the <b>eternal</b> anchor of our hope.</p>
+  <div id="timer"></div>
+  <h1>MCQ Test</h1>
+  <form id="quizForm">
+    <div id="questionsContainer">
+      </div>
+    <button type="submit" id="submitBtn">Submit Answers</button>
+  </form>
+  <div id="results" style="display: none;"></div>
 
-    <label for="studentName">Enter your name:</label>
-    <input type="text" id="studentName" placeholder="Your Name" required><br><br>
+  <script>
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
 
-    <form id="quiz-form">
-        <div class="question">
-            <p>1. Which iconic monument is a symbol of love and is located in India?</p>
-            <div class="options">
-                <label><input type="radio" name="q1" value="a"> a) Taj Mahal</label>
-                <label><input type="radio" name="q1" value="b"> b) Great Wall of China</label>
-                <label><input type="radio" name="q1" value="c"> c) Eiffel Tower</label>
-                <label><input type="radio" name="q1" value="d"> d) Statue of Liberty</label>
-            </div>
-        </div>
+    let timerInterval;
+    let timeLeft = 25 * 60; // 25 minutes in seconds
 
-        <div class="question">
-            <p>2. What is the classical dance form originating from Tamil Nadu?</p>
-            <div class="options">
-                <label><input type="radio" name="q2" value="a"> a) Kathak</label>
-                <label><input type="radio" name="q2" value="b"> b) Bharatanatyam</label>
-                <label><input type="radio" name="q2" value="c"> c) Odissi</label>
-                <label><input type="radio" name="q2" value="d"> d) Kuchipudi</label>
-            </div>
-        </div>
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        submitAnswers();
+      }
+      timeLeft--;
+    }
 
-        <div class="question">
-            <p>3. Which river is considered the holiest river in India?</p>
-            <div class="options">
-                <label><input type="radio" name="q3" value="a"> a) Yamuna</label>
-                <label><input type="radio" name="q3" value="b"> b) Ganga</label>
-                <label><input type="radio" name="q3" value="c"> c) Indus</label>
-                <label><input type="radio" name="q3" value="d"> d) Brahmaputra</label>
-            </div>
-        </div>
+    timerInterval = setInterval(updateTimer, 1000);
 
-        <div class="question">
-            <p>4. What is the traditional Indian garment worn by women?</p>
-            <div class="options">
-                <label><input type="radio" name="q4" value="a"> a) Kimono</label>
-                <label><input type="radio" name="q4" value="b"> b) Saree</label>
-                <label><input type="radio" name="q4" value="c"> c) Hanbok</label>
-                <label><input type="radio" name="q4" value="d"> d) Dirndl</label>
-            </div>
-        </div>
+    const questions = [
+      {
+        question: "Who set a limit to our indulgences?",
+        options: ["our fathers", "our ancestors/forefathers", "our mothers", "our brothers"],
+        correctAnswer: "our ancestors/forefathers"
+      },
+      {
+        question: "People in ancient days were satisfied with .................",
+        options: ["cities", "none of these", "towns", "mega cities"],
+        correctAnswer: "none of these"
+      },
+      {
+        question: "Indians people are so ................",
+        options: ["civilized, ignorant and poor", "none of these", "uncivilized, ignorant and stolid", "educated, ignorant and stolid"],
+        correctAnswer: "none of these"
+      },
+      {
+        question: "What we have tested and found true on .................",
+        options: ["the merit of experience", "none of these", "the analysis of experience", "the anvil of experience"],
+        correctAnswer: "the merit of experience"
+      },
+      {
+        question: "Civilization points out to man ..................",
+        options: ["the path of failure", "the path of duty", "the path of success", "the path  of discipline"],
+        correctAnswer: "the path of duty"
+      },
+      {
+        question: "The charge against India is that .......................",
+        options: ["her people are so educated, ignorant and stolid", "her people are so uncivilized, ignorant and stolid", "her people are so civilized, ignorant and stolid", "her people are so intelligent, ignorant and stolid"],
+        correctAnswer: "her people are so uncivilized, ignorant and stolid"
+      },
+      {
+        question: "We have had no system of ................... competition.",
+        options: ["death-corroding", "life-corroding", "luxuries and pleasures", "birth-corroding"],
+        correctAnswer: "life-corroding"
+      },
+      {
+        question: "................... were satisfied with small villages.",
+        options: ["Our ancestors", "Japanese", "Our neighbors", "Our Fathers"],
+        correctAnswer: "Our ancestors"
+      },
+      {
+        question: "India's glory is that it .....................",
+        options: ["none of these", "immovable", "movable", "both a and b"],
+        correctAnswer: "immovable"
+      },
+      {
+        question: "We dare not change what—",
+        options: ["none of these", "we have found in our life", "we have tested and found true on  the anvil of experience.", "we have tested and found false on the anvil of experience"],
+        correctAnswer: "we have tested and found true on  the anvil of experience."
+      },
+      {
+        question: "Happiness was largely a .....................",
+        options: ["physical condition", "none of these", "mental condition", "pitiable condition"],
+        correctAnswer: "mental condition"
+      },
+      {
+        question: "Our ancestors dissuaded us from ...................",
+        options: ["luxuries and pleasures", "politics", "spirituality", "morality"],
+        correctAnswer: "luxuries and pleasures"
+      },
+      {
+        question: "Our forefather set a limit to our indulgences because—",
+        options: ["they wanted to do so", "they saw that happiness was largely a mental condition", "they saw that happiness was not largely a mental condition", "they saw that we are enjoying more and more"],
+        correctAnswer: "they saw that happiness was largely a mental condition"
+      },
+      {
+        question: "To observe morality is to attain mastery over—",
+        options: ["economical growth", "our hands and our feet", "our minds and our passions", "our minds and our emotions"],
+        correctAnswer: "our minds and our passions"
+      },
+      {
+        question: "A man is not necessarily happy because he is .................",
+        options: ["poor", "rich", "doctor", "leader"],
+        correctAnswer: "rich"
+      },
+      {
+        question: "We noticed that mind is a ......................",
+        options: ["restless bird", "cute bird", "beautiful bird", "angry bird"],
+        correctAnswer: "restless bird"
+      },
+      {
+        question: "Our real happiness and health consisted in a proper use of our—",
+        options: ["hands and mouth", "hands and feet", "hands and mind", "eyes and nose"],
+        correctAnswer: "hands and mind"
+      },
+      {
+        question: "Our ancestors were satisfied with ..................",
+        options: ["small villages", "small carts", "big towns", "small houses"],
+        correctAnswer: "small villages"
+      },
+      {
+        question: "Our forefathers did not invent machinery because—",
+        options: ["they would have made us lazy", "they would have made us proud", "they would have made us smart", "they would made us ignorant"],
+        correctAnswer: "they would have made us lazy"
+      },
+      {
+        question: "A man is not necessarily unhappy because he is ................",
+        options: ["poor", "doctor", "rich", "leader"],
+        correctAnswer: "poor"
+      },
+      {
+        question: "Mind is a restless bird which always remains ..................",
+        options: ["thirsty", "hungry", "unsatisfied", "sick"],
+        correctAnswer: "unsatisfied"
+      },
+      {
+        question: "Which still remains unsatisfied?",
+        options: ["hand", "skin", "mind", "all of the above"],
+        correctAnswer: "mind"
+      },
+      {
+        question: "According to Mahatma Gandhi, Happiness is largely a .....................",
+        options: ["physical condition", "mental condition", "pitiable condition", "none of these"],
+        correctAnswer: "mental condition"
+      },
+      {
+        question: "The Gujarati equivalent for civilization means—",
+        options: ["good conduct", "bad conduct", "excellent conduct", "super conduct"],
+        correctAnswer: "good conduct"
+      },
+      {
+        question: "Indian beauty is the ................. anchor of our hope.",
+        options: ["major anchor", "link anchor", "none of these", "sheet anchor"],
+        correctAnswer: "sheet anchor"
+      }
+    ];
 
-        <div class="question">
-            <p>5. Which Indian festival is known as the "Festival of Lights"?</p>
-            <div class="options">
-                <label><input type="radio" name="q5" value="a"> a) Holi</label>
-                <label><input type="radio" name="q5" value="b"> b) Diwali</label>
-                <label><input type="radio" name="q5" value="c"> c) Dussehra</label>
-                <label><input type="radio" name="q5" value="d"> d) Raksha Bandhan</label>
-            </div>
-        </div>
+    const questionsContainer = document.getElementById('questionsContainer');
+    const resultsDiv = document.getElementById('results');
+    const submitBtn = document.getElementById('submitBtn');
+    let submitted = false;
 
-        <div class="question">
-            <p>6. Who is known as the "Father of the Nation" in India?</p>
-            <div class="options">
-                <label><input type="radio" name="q6" value="a"> a) Jawaharlal Nehru</label>
-                <label><input type="radio" name="q6" value="b"> b) Mahatma Gandhi</label>
-                <label><input type="radio" name="q6" value="c"> c) Sardar Vallabhbhai Patel</label>
-                <label><input type="radio" name="q6" value="d"> d) Subhas Chandra Bose</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>7. Which mountain range is the highest in India and the world?</p>
-            <div class="options">
-                <label><input type="radio" name="q7" value="a"> a) Andes</label>
-                <label><input type="radio" name="q7" value="b"> b) Himalayas</label>
-                <label><input type="radio" name="q7" value="c"> c) Rockies</label>
-                <label><input type="radio" name="q7" value="d"> d) Alps</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>8. What is the national animal of India?</p>
-            <div class="options">
-                <label><input type="radio" name="q8" value="a"> a) Lion</label>
-                <label><input type="radio" name="q8" value="b"> b) Tiger</label>
-                <label><input type="radio" name="q8" value="c"> c) Elephant</label>
-                <label><input type="radio" name="q8" value="d"> d) Leopard</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>9. Which famous Indian poet wrote the national anthem "Jana Gana Mana"?</p>
-            <div class="options">
-                <label><input type="radio" name="q9" value="a"> a) Rabindranath Tagore</label>
-                <label><input type="radio" name="q9" value="b"> b) Mahatma Gandhi</label>
-                <label><input type="radio" name="q9" value="c"> c) Jawaharlal Nehru</label>
-                <label><input type="radio" name="q9" value="d"> d) Sarojini Naidu</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>10. What is the popular Indian beverage made from tea, milk, and spices?</p>
-            <div class="options">
-                <label><input type="radio" name="q10" value="a"> a) Coffee</label>
-                <label><input type="radio" name="q10" value="b"> b) Chai</label>
-                <label><input type="radio" name="q10" value="c"> c) Lassi</label>
-                <label><input type="radio" name="q10" value="d"> d) Nimbu Pani</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>11. Which ancient Indian civilization flourished along the Indus River?</p>
-            <div class="options">
-                <label><input type="radio" name="q11" value="a"> a) Mauryan Empire</label>
-                <label><input type="radio" name="q11" value="b"> b) Indus Valley Civilization</label>
-                <label><input type="radio" name="q11" value="c"> c) Gupta Empire</label>
-                <label><input type="radio" name="q11" value="d"> d) Mughal Empire</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>12. What is the vibrant and colorful folk dance from Gujarat?</p>
-            <div class="options">
-                <label><input type="radio" name="q12" value="a"> a) Bhangra</label>
-                <label><input type="radio" name="q12" value="b"> b) Garba</label>
-                <label><input type="radio" name="q12" value="c"> c) Kathakali</label>
-                <label><input type="radio" name="q12" value="d"> d) Lavani</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>13. Which Indian city is known as the "Pink City"?</p>
-            <div class="options">
-                <label><input type="radio" name="q13" value="a"> a) Mumbai</label>
-                <label><input type="radio" name="q13" value="b"> b) Jaipur</label>
-                <label><input type="radio" name="q13" value="c"> c) Kolkata</label>
-                <label><input type="radio" name="q13" value="d"> d) Chennai</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>14. What is the traditional Indian system of medicine?</p>
-            <div class="options">
-                <label><input type="radio" name="q14" value="a"> a) Ayurveda</label>
-                <label><input type="radio" name="q14" value="b"> b) Homeopathy</label>
-                <label><input type="radio" name="q14" value="c"> c) Allopathy</label>
-                <label><input type="radio" name="q14" value="d"> d) Naturopathy</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>15. Which Indian spice is known as the "Queen of Spices"?</p>
-            <div class="options">
-                <label><input type="radio" name="q15" value="a"> a) Turmeric</label>
-                <label><input type="radio" name="q15" value="b"> b) Cardamom</label>
-                <label><input type="radio" name="q15" value="c"> c) Cumin</label>
-                <label><input type="radio" name="q15" value="d"> d) Chili</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>16. Which Indian state is famous for its backwaters and houseboat tourism?</p>
-            <div class="options">
-                <label><input type="radio" name="q16" value="a"> a) Goa</label>
-                <label><input type="radio" name="q16" value="b"> b) Kerala</label>
-                <label><input type="radio" name="q16" value="c"> c) Rajasthan</label>
-                <label><input type="radio" name="q16" value="d"> d) Maharashtra</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>17. What is the name of the Indian Parliament?</p>
-            <div class="options">
-                <label><input type="radio" name="q17" value="a"> a) Congress</label>
-                <label><input type="radio" name="q17" value="b"> b) Lok Sabha</label>
-                <label><input type="radio" name="q17" value="c"> c) Sansad</label>
-                <label><input type="radio" name="q17" value="d"> d) Vidhan Sabha</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>18. Which Indian festival celebrates the bond between brothers and sisters?</p>
-            <div class="options">
-                <label><input type="radio" name="q18" value="a"> a) Holi</label>
-                <label><input type="radio" name="q18" value="b"> b) Diwali</label>
-                <label><input type="radio" name="q18" value="c"> c) Raksha Bandhan</label>
-                <label><input type="radio" name="q18" value="d"> d) Navratri</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>19. What is the currency of India?</p>
-            <div class="options">
-                <label><input type="radio" name="q19" value="a"> a) Rupee</label>
-                <label><input type="radio" name="q19" value="b"> b) Dollar</label>
-                <label><input type="radio" name="q19" value="c"> c) Euro</label>
-                <label><input type="radio" name="q19" value="d"> d) Yen</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>20. Which Indian city is known as the "Silicon Valley of India"?</p>
-            <div class="options">
-                <label><input type="radio" name="q20" value="a"> a) Hyderabad</label>
-                <label><input type="radio" name="q20" value="b"> b) Chennai</label>
-                <label><input type="radio" name="q20" value="c"> c) Bengaluru</label>
-                <label><input type="radio" name="q20" value="d"> d) Pune</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>21. Which Indian classical dance form is known for its elaborate makeup and costumes?</p>
-            <div class="options">
-                <label><input type="radio" name="q21" value="a"> a) Manipuri</label>
-                <label><input type="radio" name="q21" value="b"> b) Kathakali</label>
-                <label><input type="radio" name="q21" value="c"> c) Sattriya</label>
-                <label><input type="radio" name="q21" value="d"> d) Mohiniyattam</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>22. What is the national flower of India?</p>
-            <div class="options">
-                <label><input type="radio" name="q22" value="a"> a) Rose</label>
-                <label><input type="radio" name="q22" value="b"> b) Lotus</label>
-                <label><input type="radio" name="q22" value="c"> c) Marigold</label>
-                <label><input type="radio" name="q22" value="d"> d) Sunflower</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>23. Which Indian state is famous for its tea plantations?</p>
-            <div class="options">
-                <label><input type="radio" name="q23" value="a"> a) Darjeeling (West Bengal)</label>
-                <label><input type="radio" name="q23" value="b"> b) Assam</label>
-                <label><input type="radio" name="q23" value="c"> c) Kerala</label>
-                <label><input type="radio" name="q23" value="d"> d) Tamil Nadu</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>24. What is the name of the longest river in India?</p>
-            <div class="options">
-                <label><input type="radio" name="q24" value="a"> a) Indus</label>
-                <label><input type="radio" name="q24" value="b"> b) Ganga</label>
-                <label><input type="radio" name="q24" value="c"> c) Brahmaputra</label>
-                <label><input type="radio" name="q24" value="d"> d) Godavari</label>
-            </div>
-        </div>
-
-        <div class="question">
-            <p>25. Which Indian festival is celebrated to mark the arrival of spring?</p>
-            <div class="options">
-                <label><input type="radio" name="q25" value="a"> a) Diwali</label>
-                <label><input type="radio" name="q25" value="b"> b) Holi</label>
-                <label><input type="radio" name="q25" value="c"> c) Dussehra</label>
-                <label><input type="radio" name="q25" value="d"> d) Pongal</label>
-            </div>
-        </div>
-
-        <button type="submit" id="submit-button">Submit Answers</button>
-    </form>
-
-    <div id="results" style="display: none;">
-        <h2>Quiz Results</h2>
-        <p>Your Name: <span id="student-name-display"></span></p>
-        <p>Your Score: <span id="score"></span> / 25</p>
-        <h3>Answers:</h3>
-        <ul id="answer-details"></ul>
-        <button id="download-button" style="display: none;">Download Results</button>
-    </div>
-
-    <script>
-        // Disable right-click
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
+    function displayQuestions() {
+      questions.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+        questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+        const optionsDiv = document.createElement('div');
+        optionsDiv.classList.add('options');
+        q.options.forEach((option, optionIndex) => {
+          const inputId = `question-${index}-option-${optionIndex}`;
+          optionsDiv.innerHTML += `
+            <label>
+              <input type="radio" name="question-${index}" value="${option}" id="${inputId}">
+              ${option}
+            </label>
+          `;
         });
+        questionDiv.appendChild(optionsDiv);
+        questionsContainer.appendChild(questionDiv);
+      });
+    }
 
-        const timerDisplay = document.getElementById('timer');
-        const quizForm = document.getElementById('quiz-form');
-        const submitButton = document.getElementById('submit-button');
-        const resultsDiv = document.getElementById('results');
-        const scoreDisplay = document.getElementById('score');
-        const answerDetailsList = document.getElementById('answer-details');
-        const studentNameInput = document.getElementById('studentName');
-        const studentNameDisplay = document.getElementById('student-name-display');
-        const downloadButton = document.getElementById('download-button');
+    displayQuestions();
 
-        let timerInterval;
-        let timeLeft = 25 * 60; // 25 minutes in seconds
-        let submitted = false;
+    async function downloadCSV(filename, csvData) {
+      const blob = new Blob([csvData], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }
 
-        const correctAnswers = {
-            q1: 'a',
-            q2: 'b',
-            q3: 'b',
-            q4: 'b',
-            q5: 'b',
-            q6: 'b',
-            q7: 'b',
-            q8: 'b',
-            q9: 'a',
-            q10: 'b',
-            q11: 'b',
-            q12: 'b',
-            q13: 'b',
-            q14: 'a',
-            q15: 'b',
-            q16: 'b',
-            q17: 'c',
-            q18: 'c',
-            q19: 'a',
-            q20: 'c',
-            q21: 'b',
-            q22: 'b',
-            q23: 'b',
-            q24: 'b',
-            q25: 'b'
-        };
+    async function submitAnswers() {
+      if (submitted) {
+        return;
+      }
+      submitted = true;
+      clearInterval(timerInterval);
+      submitBtn.disabled = true;
 
-        function updateTimer() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                if (!submitted) {
-                    submitQuiz();
-                }
-            }
-            timeLeft--;
+      const studentName = prompt("Please enter your name:");
+      if (!studentName) {
+        alert("Name is required to save the result.");
+        submitBtn.disabled = false;
+        submitted = false;
+        timerInterval = setInterval(updateTimer, 1000);
+        return;
+      }
+
+      let score = 0;
+      const userAnswers = [];
+
+      questions.forEach((q, index) => {
+        const selectedOption = document.querySelector(`input[name="question-${index}"]:checked`);
+        const userAnswer = selectedOption ? selectedOption.value : null;
+        userAnswers.push(userAnswer);
+        const questionDiv = questionsContainer.children[index];
+        const correctAnswerElement = document.createElement('p');
+        correctAnswerElement.innerHTML = `Correct Answer: <span class="correct-answer">${q.correctAnswer}</span>`;
+        questionDiv.appendChild(correctAnswerElement);
+
+        if (userAnswer === q.correctAnswer) {
+          score++;
+        } else if (userAnswer) {
+          const incorrectAnswerElement = document.createElement('p');
+          incorrectAnswerElement.innerHTML = `Your Answer: <span class="incorrect-answer">${userAnswer}</span>`;
+          questionDiv.appendChild(incorrectAnswerElement);
+        } else {
+          const notAnsweredElement = document.createElement('p');
+          notAnsweredElement.innerHTML = `Your Answer: <span class="incorrect-answer">Not Answered</span>`;
+          questionDiv.appendChild(notAnsweredElement);
         }
+      });
 
-        function startTimer() {
-            timerInterval = setInterval(updateTimer, 1000);
-        }
+      resultsDiv.textContent = `Your Score: ${score} out of ${questions.length}`;
+      resultsDiv.style.display = 'block';
 
-        startTimer();
+      const csvData = `Name,Score\n"${studentName}",${score}\n`;
+      await downloadCSV('result.csv', csvData);
+    }
 
-        quizForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (!submitted) {
-                submitQuiz();
-            }
-        });
-
-        function submitQuiz() {
-            submitted = true;
-            clearInterval(timerInterval);
-            submitButton.disabled = true;
-
-            const studentName = studentNameInput.value.trim();
-            studentNameDisplay.textContent = studentName;
-            let score = 0;
-            const answers = {};
-
-            for (let i = 1; i <= 25; i++) {
-                const questionName = `q${i}`;
-                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-                if (selectedOption) {
-                    answers[questionName] = selectedOption.value;
-                    if (answers[questionName] === correctAnswers[questionName]) {
-                        score++;
-                    }
-                } else {
-                    answers[questionName] = null; // No answer selected
-                }
-            }
-
-            scoreDisplay.textContent = score;
-            resultsDiv.style.display = 'block';
-
-            // Display correct answers
-            answerDetailsList.innerHTML = '';
-            for (let i = 1; i <= 25; i++) {
-                const questionName = `q${i}`;
-                const listItem = document.createElement('li');
-                listItem.textContent = `Question ${i}: `;
-                if (answers[questionName]) {
-                    listItem.textContent += `Your answer: ${answers[questionName].toUpperCase()} `;
-                    if (answers[questionName] === correctAnswers[questionName]) {
-                        listItem.classList.add('correct-answer');
-                    } else {
-                        listItem.classList.add('incorrect-answer');
-                        listItem.textContent += `(Correct answer: ${correctAnswers[questionName].toUpperCase()})`;
-                    }
-                } else {
-                    listItem.textContent += `You did not answer. (Correct answer: ${correctAnswers[questionName].toUpperCase()})`;
-                    listItem.classList.add('incorrect-answer');
-                }
-                answerDetailsList.appendChild(listItem);
-            }
-
-            // Generate CSV content
-            const csvContent = `Student Name,Score\n"${studentName}",${score}\n`;
-
-            // Trigger download
-            const filename = 'result.csv';
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            if (link.download !== undefined) {
-                const url = URL.createObjectURL(blob);
-                link.setAttribute('href', url);
-                link.setAttribute('download', filename);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } else {
-                // Fallback for browsers that don't support the download attribute
-                window.open('data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent));
-            }
-
-            downloadButton.style.display = 'block';
-            downloadButton.addEventListener('click', () => {
-                const link = document.createElement('a');
-                if (link.download !== undefined) {
-                    const url = URL.createObjectURL(blob);
-                    link.setAttribute('href', url);
-                    link.setAttribute('download', filename);
-                    link.style.visibility = 'hidden';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                } else {
-                    window.open('data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent));
-                }
-            });
-        }
-    </script>
+    document.getElementById('quizForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      submitAnswers();
+    });
+  </script>
 </body>
 </html>
