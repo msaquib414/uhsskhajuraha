@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Class 12 Math - Sets MCQ Test</title>
+<style>
+  body {
+    font-family: sans-serif;
+  }
+  #timer {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  .question {
+    margin-bottom: 20px;
+  }
+  .options label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  #submitBtn {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  #results {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  .correct-answer {
+    color: green;
+    font-weight: normal;
+  }
+  .incorrect-answer {
+    color: red;
+    font-weight: normal;
+  }
+</style>
+</head>
+<body>
+  <div id="timer"></div>
+  <h1>Class 12 Math - Sets MCQ Test</h1>
+  <form id="quizForm">
+    <div id="questionsContainer">
+      </div>
+    <button type="submit" id="submitBtn">Submit Answers</button>
+  </form>
+  <div id="results" style="display: none;"></div>
+
+  <script>
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+
+    let timerInterval;
+    let timeLeft = 25 * 60; // 25 minutes in seconds
+
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        submitAnswers();
+      }
+      timeLeft--;
+    }
+
+    timerInterval = setInterval(updateTimer, 1000);
+
+    const questions = [
+      {
+        question: "If A = {1, 2, 4, 5} and B = {2, 3, 5, 6}, then (A - B) ∪ (B - A) is:",
+        options: ["{1, 3, 4, 6}", "{2, 5}", "{1, 2, 3, 4, 5, 6}", "{ }"],
+        correctAnswer: "{1, 3, 4, 6}"
+      },
+      {
+        question: "If U = {1, 2, 3, 4, 5}, A = {1, 3}, B = {2, 4}, then (A ∪ B)' is:",
+        options: ["{1, 2, 3, 4}", "{5}", "{ }", "{1, 3, 2, 4, 5}"],
+        correctAnswer: "{5}"
+      },
+      {
+        question: "Which of the following represents the shaded region in the Venn diagram where A and B are two overlapping sets? (Assuming shaded region is A ∩ B)",
+        options: ["A ∪ B", "A ∩ B", "A - B", "B - A"],
+        correctAnswer: "A ∩ B"
+      },
+      {
+        question: "If n(A) = 25, n(B) = 20, and n(A ∪ B) = 35, then n(A ∩ B) is:",
+        options: ["10", "15", "5", "20"],
+        correctAnswer: "10"
+      },
+      {
+        question: "If A = {x : x is a prime number less than 10} and B = {x : x is an odd natural number less than 10}, then A ∩ B is:",
+        options: ["{2, 3, 5, 7}", "{1, 3, 5, 7, 9}", "{3, 5, 7}", "{ }"],
+        correctAnswer: "{3, 5, 7}"
+      },
+      {
+        question: "Let A and B be two sets. If A ∪ B = A, then:",
+        options: ["B ⊆ A", "A ⊆ B", "A = B", "A ∩ B = ∅"],
+        correctAnswer: "B ⊆ A"
+      },
+      {
+        question: "Let A and B be two sets. If A ∩ B = B, then:",
+        options: ["B ⊆ A", "A ⊆ B", "A = B", "A ∪ B = ∅"],
+        correctAnswer: "A ⊆ B"
+      },
+      {
+        question: "The number of elements in the power set of the set {a, b, c} is:",
+        options: ["3", "6", "8", "9"],
+        correctAnswer: "8"
+      },
+      {
+        question: "If A = {1, 2}, B = {3, 4}, then A × B is:",
+        options: ["{(1, 3), (1, 4), (2, 3), (2, 4)}", "{(3, 1), (4, 1), (3, 2), (4, 2)}", "{(1, 3), (2, 4)}", "{(3, 1), (4, 2)}"],
+        correctAnswer: "{(1, 3), (1, 4), (2, 3), (2, 4)}"
+      },
+      {
+        question: "If A has 2 elements and B has 3 elements, then the number of relations from A to B is:",
+        options: ["5", "6", "2<sup>3</sup> = 8", "2<sup>6</sup> = 64"],
+        correctAnswer: "2<sup>6</sup> = 64"
+      },
+      {
+        question: "Which of the following is a singleton set?",
+        options: ["{ }", "{1, 2}", "{0}", "{x : x is an even prime number}"],
+        correctAnswer: "{x : x is an even prime number}"
+      },
+      {
+        question: "If A = {1, 2, 3}, then the number of proper subsets of A is:",
+        options: ["3", "8", "7", "6"],
+        correctAnswer: "7"
+      },
+      {
+        question: "For any set A, A ∪ A' is equal to:",
+        options: ["A", "A'", "U (Universal Set)", "∅"],
+        correctAnswer: "U (Universal Set)"
+      },
+      {
+        question: "For any set A, A ∩ A' is equal to:",
+        options: ["A", "A'", "U", "∅"],
+        correctAnswer: "∅"
+      },
+      {
+        question: "If A - B = A, then:",
+        options: ["B ⊆ A", "A ⊆ B", "A ∩ B = ∅", "A = B"],
+        correctAnswer: "A ∩ B = ∅"
+      },
+      {
+        question: "If B - A = B, then:",
+        options: ["A ⊆ B", "B ⊆ A", "A ∩ B = ∅", "A = B"],
+        correctAnswer: "A ∩ B = ∅"
+      },
+      {
+        question: "In a group of 100 people, 72 can speak English and 43 can speak French. How many can speak both English and French?",
+        options: ["15", "25", "30", "40"],
+        correctAnswer: "15"
+      },
+      {
+        question: "If n(A) = 20, n(B) = 30, and n(A ∪ B) = 40, then n(A ∩ B) is:",
+        options: ["10", "50", "70", "0"],
+        correctAnswer: "10"
+      },
+      {
+        question: "The complement of the universal set U is:",
+        options: ["U", "∅", "{0}", "None of these"],
+        correctAnswer: "∅"
+      },
+      {
+        question: "The complement of the empty set ∅ is:",
+        options: ["U", "∅", "{0}", "None of these"],
+        correctAnswer: "U"
+      },
+      {
+        question: "If A ⊆ B and B ⊆ C, then:",
+        options: ["A ⊆ C", "C ⊆ A", "A = B = C", "A ∩ C = ∅"],
+        correctAnswer: "A ⊆ C"
+      },
+      {
+        question: "Which of the following is an example of a finite set?",
+        options: ["{x : x ∈ R}", "{x : x ∈ Z}", "{x : x is a prime number}", "{x : x is a natural number less than 100}"],
+        correctAnswer: "{x : x is a natural number less than 100}"
+      },
+      {
+        question: "Which of the following is an example of an infinite set?",
+        options: ["{x : x is a whole number less than 10}", "{x : x is an integer between -5 and 5}", "{x : x is a rational number between 0 and 1}", "{x : x is a natural number less than 20}"],
+        correctAnswer: "{x : x is a rational number between 0 and 1}"
+      },
+      {
+        question: "If A = {1, 2, 3}, B = {3, 4}, C = {4, 5, 6}, then A ∪ (B ∩ C) is:",
+        options: ["{1, 2, 3, 4}", "{3, 4}", "{1, 2, 3, 4, 5, 6}", "{4}"],
+        correctAnswer: "{1, 2, 3, 4}"
+      },
+      {
+        question: "If A = {1, 2, 3}, B = {3, 4}, C = {4, 5, 6}, then A ∩ (B ∪ C) is:",
+        options: ["{3}", "{1, 2, 3, 4, 5, 6}", "{3, 4}", "{ }"],
+        correctAnswer: "{3}"
+      }
+    ];
+
+    const questionsContainer = document.getElementById('questionsContainer');
+    const resultsDiv = document.getElementById('results');
+    const submitBtn = document.getElementById('submitBtn');
+    let submitted = false;
+
+    function displayQuestions() {
+      questions.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+        questionDiv.innerHTML = `<p>${index + 1}. ${q.question}</p>`;
+        const optionsDiv = document.createElement('div');
+        optionsDiv.classList.add('options');
+        q.options.forEach((option, optionIndex) => {
+          const inputId = `question-${index}-option-${optionIndex}`;
+          optionsDiv.innerHTML += `
+            <label>
+              <input type="radio" name="question-${index}" value="${option}" id="${inputId}">
+              ${option}
+            </label>
+          `;
+        });
+        questionDiv.appendChild(optionsDiv);
+        questionsContainer.appendChild(questionDiv);
+      });
+    }
+
+    displayQuestions();
+
+    async function downloadCSV(filename, csvData) {
+      const blob = new Blob([csvData], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }
+
+    async function submitAnswers() {
+      if (submitted) {
+        return;
+      }
+      submitted = true;
+      clearInterval(timerInterval);
+      submitBtn.disabled = true;
+
+      const studentName = prompt("Please enter your name:");
+      if (!studentName) {
+        alert("Name is required to save the result.");
+        submitBtn.disabled = false;
+        submitted = false;
+        timerInterval = setInterval(updateTimer, 1000);
+        return;
+      }
+
+      let score = 0;
+      const userAnswers = [];
+
+      questions.forEach((q, index) => {
+        const selectedOption = document.querySelector(`input[name="question-${index}"]:checked`);
+        const userAnswer = selectedOption ? selectedOption.value : null;
+        userAnswers.push(userAnswer);
+        const questionDiv = questionsContainer.children[index];
+        const correctAnswerElement = document.createElement('p');
+        correctAnswerElement.innerHTML = `Correct Answer: <span class="correct-answer">${q.correctAnswer}</span>`;
+        questionDiv.appendChild(correctAnswerElement);
+
+        if (userAnswer === q.correctAnswer) {
+          score++;
+        } else if (userAnswer) {
+          const incorrectAnswerElement = document.createElement('p');
+          incorrectAnswerElement.innerHTML = `Your Answer: <span class="incorrect-answer">${userAnswer}</span>`;
+          questionDiv.appendChild(incorrectAnswerElement);
+        } else {
+          const notAnsweredElement = document.createElement('p');
+          notAnsweredElement.innerHTML = `Your Answer: <span class="incorrect-answer">Not Answered</span>`;
+          questionDiv.appendChild(notAnsweredElement);
+        }
+      });
+
+      resultsDiv.textContent = `Your Score: ${score} out of ${questions.length}`;
+      resultsDiv.style.display = 'block';
+
+      const csvData = `Name,Score\n"${studentName}",${score}\n`;
+      await downloadCSV('result.csv', csvData);
+    }
+
+    document.getElementById('quizForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      submitAnswers();
+    });
+  </script>
+</body>
+</html>
