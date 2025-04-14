@@ -1,309 +1,266 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>मानव भूगोल प्रश्नोत्तरी</title>
-    <style>
-        body {
-            font-family: sans-serif;
-        }
-        #timer {
-            text-align: center;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-        .question {
-            margin-bottom: 15px;
-        }
-        .options label {
-            display: block;
-            margin-left: 20px;
-        }
-        #submitBtn {
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-        }
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .correct-answer {
-            color: green;
-            font-style: italic;
-        }
-    </style>
+<title>मानव भूगोल MCQ</title>
+<style>
+  body {
+    font-family: sans-serif;
+  }
+  #timer {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+    font-weight: bold;
+    color: red;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000;
+  }
+  .question {
+    margin-bottom: 20px;
+  }
+  .options label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  #results {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  .correct-answer {
+    color: green;
+    font-weight: normal;
+  }
+  .incorrect-answer {
+    color: red;
+    font-weight: normal;
+  }
+  button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+</style>
 </head>
-<body oncontextmenu="return false;">
-    <div id="timer"></div>
-    <div id="nameInput">
-        <label for="studentName">अपना नाम दर्ज करें:</label>
-        <input type="text" id="studentName" required>
+<body>
+
+<div id="timer"></div>
+
+<h2>मानव भूगोल MCQ</h2>
+
+<form id="quizForm">
+  <div>
+    <label for="studentName">छात्र का नाम:</label>
+    <input type="text" id="studentName" required>
+  </div>
+  <hr>
+
+  <div class="question">
+    <p>प्रश्‍न 1. मानव भूगोल किसका अध्ययन है?</p>
+    <div class="options">
+      <label><input type="radio" name="q1" value="a"> (a) प्रकृति और मानव के संबंधों का</label>
+      <label><input type="radio" name="q1" value="b"> (b) जनसंख्या का</label>
+      <label><input type="radio" name="q1" value="c"> (c) नगरों का</label>
+      <label><input type="radio" name="q1" value="d"> (d) उद्योगों का</label>
     </div>
-    <div id="quiz">
-        </div>
-    <button id="submitBtn" onclick="submitQuiz()" disabled>जमा करें</button>
-    <div id="result"></div>
+    <p id="correct-q1" style="display:none;">सही उत्तर: <span class="correct-answer">(a) प्रकृति और मानव के संबंधों का</span></p>
+  </div>
 
-    <script>
-        const questions = [
-            {
-                question: "प्रश्‍न 1. मानव भूगोल किसका अध्ययन है?",
-                options: ["प्रकृति और मानव के संबंधों का", "जनसंख्या का", "नगरों का", "उद्योगों का"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 2. मानव भूगोल के अंतर्गत कौन सा क्षेत्र नहीं आता है?",
-                options: ["नगरीय भूगोल", "आर्थिक भूगोल", "समुद्री भूगोल", "सामाजिक भूगोल"],
-                correctAnswer: "c"
-            },
-            {
-                question: "प्रश्‍न 3. संसाधन भूगोल किसका अध्ययन करता है?",
-                options: ["संसाधनों का", "जनसंख्या का", "नगरों का", "राजनीतिक प्रक्रियाओं का"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 4. किस विचारधारा के समर्थक रेटजेल और हम्बोल्ट थे?",
-                options: ["नियतिवाद", "संभववाद", "नव निश्चयवाद", "विज्ञानवाद"],
-                correctAnswer: "b"
-            },
-            {
-                question: "प्रश्‍न 5. संभववाद के समर्थक कौन थे?",
-                options: ["रेटजेल", "विडाल डी ला ब्लाश", "ग्रिफिथ टेलर", "हम्बोल्ट"],
-                correctAnswer: "b"
-            },
-            {
-                question: "प्रश्‍न 6. नव निश्चयवाद विचारधारा को क्या और कहा जाता है?",
-                options: ["स्वतंत्रता विचारधारा", "संभावनावाद", "रुको और जाओ निश्चयवाद", "भौगोलिक निश्चयवाद"],
-                correctAnswer: "c"
-            },
-            {
-                question: "प्रश्‍न 7. प्रारंभिक मानव किसके अनुसार जीवन व्यतीत करता था?",
-                options: ["प्रकृति", "प्रौद्योगिकी", "विज्ञान", "धर्म"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 8. मानव ने आग की खोज में किसका प्रयोग किया?",
-                options: ["घर्षण और ऊष्मा", "वायु गति", "प्रौद्योगिकी", "अनुवांशिकी"],
-                correctAnswer: "d"
-            },
-            {
-                question: "प्रश्‍न 9. विद्यमान समय में मानव किस पर निर्भर रहता है?",
-                options: ["प्रौद्योगिकी", "प्रकृति", "उद्योग", "समाज"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 10. विडाल डी ला ब्लाश के अनुसार मनुष्य ने किसे विकसित किया?",
-                options: ["प्रौद्योगिकी", "विज्ञान", "कृषि", "कला"],
-                correctAnswer: "b"
-            },
-            {
-                question: "प्रश्‍न 11. नव निश्चयवाद के अनुसार मानव किसका पालन करता है?",
-                options: ["प्राकृतिक नियमों", "सामाजिक नियमों", "धार्मिक नियमों", "कानूनी नियमों"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 12. प्रौद्योगिकी का विकास किसके अध्ययन के बाद हुआ?",
-                options: ["प्रकृति के नियमों", "सामाजिक प्रक्रियाओं", "आर्थिक नियमों", "राजनीतिक विचारों"],
-                correctAnswer: "c"
-            },
-            {
-                question: "प्रश्‍न 13. प्रारंभिक मानव किससे डरता था?",
-                options: ["प्रकृति की प्रचंडता से", "युद्ध से", "समाज से", "प्रौद्योगिकी से"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 14. नियतिवाद किस पर आधारित है?",
-                options: ["प्रकृति के नियंत्रण पर", "मानव स्वतंत्रता पर", "प्रौद्योगिकी के विकास पर", "राजनीतिक सत्ता पर"],
-                correctAnswer: "d"
-            },
-            {
-                question: "प्रश्‍न 15. मानव भूगोल का कौन सा उपक्षेत्र कृषि से संबंधित है?",
-                options: ["कृषि भूगोल", "जनसांख्यिकी भूगोल", "आर्थिक भूगोल", "सामाजिक भूगोल"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 16. नव निश्चयवाद के समर्थक कौन थे?",
-                options: ["ग्रिफिथ टेलर", "विडाल डी ला ब्लाश", "हम्बोल्ट", "रेटजेल"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 17. प्रौद्योगिकी के विकास के बाद क्या किया गया?",
-                options: ["अस्पतालों और नगरों का निर्माण", "सामाजिक नियम बनाए गए", "धर्म का विकास हुआ", "राजनीति का विकास हुआ"],
-                correctAnswer: "b"
-            },
-            {
-                question: "प्रश्‍न 18. डीएनए और अनुवांशिकी का अध्ययन किसके लिए उपयोगी है?",
-                options: ["बीमारियों पर विजय पाने में", "आग की खोज में", "वाहन बनाने में", "सामाजिक नियमों के अध्ययन में"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 19. प्रारंभिक मानव की कौन सी अवस्था थी?",
-                options: ["आदिम अवस्था", "आधुनिक अवस्था", "प्राचीन अवस्था", "वैज्ञानिक अवस्था"],
-                correctAnswer: "c"
-            },
-            {
-                question: "प्रश्‍न 20. मानव भूगोल का अध्ययन किसके बारे में जानकारी प्रदान करता है?",
-                options: ["मानव और प्रकृति के संबंधों के बारे में", "उद्योगों के विकास के बारे में", "राजनीतिक विचारों के बारे में", "धार्मिक मान्यताओं के बारे में"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 21. संभववाद के अनुसार मानव ने क्या किया?",
-                options: ["प्रकृति में परिवर्तन", "प्रकृति का पालन", "सामाजिक नियम बनाए", "आर्थिक नियमों का विकास"],
-                correctAnswer: "d"
-            },
-            {
-                question: "प्रश्‍न 22. नियतिवाद के किस चरण में मानव विकास कम था?",
-                options: ["प्रारंभिक", "मध्य", "आधुनिक", "प्राचीन"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 23. प्रौद्योगिकी के विकास के बाद मानव ने क्या किया?",
-                options: ["प्राकृतिक संसाधनों का उपयोग", "सामाजिक नियम बनाए", "धार्मिक अनुष्ठान किए", "राजनीतिक सुधार किए"],
-                correctAnswer: "b"
-            },
-            {
-                question: "प्रश्‍न 24. नव निश्चयवाद किसका मिश्रण है?",
-                options: ["नियतिवाद और संभववाद", "धार्मिकता और वैज्ञानिकता", "समाजवाद और पूंजीवाद", "राजनीति और अर्थशास्त्र"],
-                correctAnswer: "a"
-            },
-            {
-                question: "प्रश्‍न 25. मानव ने किसकी मदद से तेज गति वाले वाहन बनाए?",
-                options: ["वायु गति के नियम", "जलवायु के अध्ययन", "सामाजिक नियमों", "धार्मिक मान्यताओं"],
-                correctAnswer: "c"
-            }
-        ];
+  <div class="question">
+    <p>प्रश्‍न 2. मानव भूगोल के अंतर्गत कौन सा क्षेत्र नहीं आता है?</p>
+    <div class="options">
+      <label><input type="radio" name="q2" value="a"> (a) नगरीय भूगोल</label>
+      <label><input type="radio" name="q2" value="b"> (b) आर्थिक भूगोल</label>
+      <label><input type="radio" name="q2" value="c"> (c) समुद्री भूगोल</label>
+      <label><input type="radio" name="q2" value="d"> (d) सामाजिक भूगोल</label>
+    </div>
+    <p id="correct-q2" style="display:none;">सही उत्तर: <span class="correct-answer">(c) समुद्री भूगोल</span></p>
+  </div>
 
-        const quizContainer = document.getElementById('quiz');
-        const resultContainer = document.getElementById('result');
-        const submitBtn = document.getElementById('submitBtn');
-        const nameInput = document.getElementById('studentName');
-        const timerDisplay = document.getElementById('timer');
+  <div class="question">
+    <p>प्रश्‍न 3. संसाधन भूगोल किसका अध्ययन करता है?</p>
+    <div class="options">
+      <label><input type="radio" name="q3" value="a"> (a) संसाधनों का</label>
+      <label><input type="radio" name="q3" value="b"> (b) जनसंख्या का</label>
+      <label><input type="radio" name="q3" value="c"> (c) नगरों का</label>
+      <label><input type="radio" name="q3" value="d"> (d) राजनीतिक प्रक्रियाओं का</label>
+    </div>
+    <p id="correct-q3" style="display:none;">सही उत्तर: <span class="correct-answer">(a) संसाधनों का</span></p>
+  </div>
 
-        let currentQuestion = 0;
-        let score = 0;
-        let timeLeft = 25 * 60; // 25 minutes in seconds
-        let timerInterval;
-        let submitted = false;
+  <div class="question">
+    <p>प्रश्‍न 4. किस विचारधारा के समर्थक रेटजेल और हम्बोल्ट थे?</p>
+    <div class="options">
+      <label><input type="radio" name="q4" value="a"> (a) नियतिवाद</label>
+      <label><input type="radio" name="q4" value="b"> (b) संभववाद</label>
+      <label><input type="radio" name="q4" value="c"> (c) नव निश्चयवाद</label>
+      <label><input type="radio" name="q4" value="d"> (d) विज्ञानवाद</label>
+    </div>
+    <p id="correct-q4" style="display:none;">सही उत्तर: <span class="correct-answer">(a) नियतिवाद</span></p>
+  </div>
 
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    submitQuiz();
-                }
-                timeLeft--;
-            }, 1000);
-        }
+  <div class="question">
+    <p>प्रश्‍न 5. संभववाद के समर्थक कौन थे?</p>
+    <div class="options">
+      <label><input type="radio" name="q5" value="a"> (a) रेटजेल</label>
+      <label><input type="radio" name="q5" value="b"> (b) विडाल डी ला ब्लाश</label>
+      <label><input type="radio" name="q5" value="c"> (c) ग्रिफिथ टेलर</label>
+      <label><input type="radio" name="q5" value="d"> (d) हम्बोल्ट</label>
+    </div>
+    <p id="correct-q5" style="display:none;">सही उत्तर: <span class="correct-answer">(b) विडाल डी ला ब्लाश</span></p>
+  </div>
 
-        function displayQuestions() {
-            questions.forEach((questionData, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.classList.add('question');
-                questionDiv.innerHTML = `<p>${questionData.question}</p>`;
-                const optionsDiv = document.createElement('div');
-                optionsDiv.classList.add('options');
-                questionData.options.forEach((option, optionIndex) => {
-                    const optionLetter = String.fromCharCode(97 + optionIndex); // a, b, c, d
-                    optionsDiv.innerHTML += `
-                        <label>
-                            <input type="radio" name="question${index}" value="${optionLetter}">
-                            (${optionLetter}) ${option}
-                        </label>
-                    `;
-                });
-                questionDiv.appendChild(optionsDiv);
-                quizContainer.appendChild(questionDiv);
-            });
-            submitBtn.disabled = false;
-        }
+  <div class="question">
+    <p>प्रश्‍न 6. नव निश्चयवाद विचारधारा को क्या और कहा जाता है?</p>
+    <div class="options">
+      <label><input type="radio" name="q6" value="a"> (a) स्वतंत्रता विचारधारा</label>
+      <label><input type="radio" name="q6" value="b"> (b) संभावनावाद</label>
+      <label><input type="radio" name="q6" value="c"> (c) रुको और जाओ निश्चयवाद</label>
+      <label><input type="radio" name="q6" value="d"> (d) भौगोलिक निश्चयवाद</label>
+    </div>
+    <p id="correct-q6" style="display:none;">सही उत्तर: <span class="correct-answer">(c) रुको और जाओ निश्चयवाद</span></p>
+  </div>
 
-        function submitQuiz() {
-            if (submitted) {
-                return;
-            }
-            submitted = true;
-            clearInterval(timerInterval);
-            score = 0;
-            const userAnswers = {};
-            questions.forEach((questionData, index) => {
-                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
-                if (selectedOption) {
-                    userAnswers[index] = selectedOption.value;
-                    if (selectedOption.value === questionData.correctAnswer) {
-                        score++;
-                    }
-                    // Display correct answer
-                    const correctAnswerElement = document.createElement('p');
-                    correctAnswerElement.classList.add('correct-answer');
-                    const correctAnswerLetter = questionData.correctAnswer;
-                    const correctAnswerText = questionData.options[correctAnswerLetter.charCodeAt(0) - 97];
-                    correctAnswerElement.textContent = `सही उत्तर: (${correctAnswerLetter}) ${correctAnswerText}`;
-                    document.querySelectorAll('.question')[index].appendChild(correctAnswerElement);
-                } else {
-                    // Display correct answer even if not answered
-                    const correctAnswerElement = document.createElement('p');
-                    correctAnswerElement.classList.add('correct-answer');
-                    const correctAnswerLetter = questionData.correctAnswer;
-                    const correctAnswerText = questionData.options[correctAnswerLetter.charCodeAt(0) - 97];
-                    correctAnswerElement.textContent = `सही उत्तर: (${correctAnswerLetter}) ${correctAnswerText}`;
-                    document.querySelectorAll('.question')[index].appendChild(correctAnswerElement);
-                }
-                // Disable all radio buttons for this question
-                const radioButtons = document.querySelectorAll(`input[name="question${index}"]`);
-                radioButtons.forEach(radio => {
-                    radio.disabled = true;
-                });
-            });
+  <div class="question">
+    <p>प्रश्‍न 7. प्रारंभिक मानव किसके अनुसार जीवन व्यतीत करता था?</p>
+    <div class="options">
+      <label><input type="radio" name="q7" value="a"> (a) प्रकृति</label>
+      <label><input type="radio" name="q7" value="b"> (b) प्रौद्योगिकी</label>
+      <label><input type="radio" name="q7" value="c"> (c) विज्ञान</label>
+      <label><input type="radio" name="q7" value="d"> (d) धर्म</label>
+    </div>
+    <p id="correct-q7" style="display:none;">सही उत्तर: <span class="correct-answer">(a) प्रकृति</span></p>
+  </div>
 
-            resultContainer.textContent = `आपका स्कोर: ${score} / ${questions.length}`;
-            submitBtn.disabled = true;
+  <div class="question">
+    <p>प्रश्‍न 8. मानव ने आग की खोज में किसका प्रयोग किया?</p>
+    <div class="options">
+      <label><input type="radio" name="q8" value="a"> (a) घर्षण और ऊष्मा</label>
+      <label><input type="radio" name="q8" value="b"> (b) वायु गति</label>
+      <label><input type="radio" name="q8" value="c"> (c) प्रौद्योगिकी</label>
+      <label><input type="radio" name="q8" value="d"> (d) अनुवांशिकी</label>
+    </div>
+    <p id="correct-q8" style="display:none;">सही उत्तर: <span class="correct-answer">(a) घर्षण और ऊष्मा</span></p>
+  </div>
 
-            const studentName = nameInput.value.trim();
-            if (studentName) {
-                saveAndDownloadResults(studentName, score);
-            } else {
-                alert("कृपया अपना नाम दर्ज करें।");
-            }
-        }
+  <div class="question">
+    <p>प्रश्‍न 9. विद्यमान समय में मानव किस पर निर्भर रहता है?</p>
+    <div class="options">
+      <label><input type="radio" name="q9" value="a"> (a) प्रौद्योगिकी</label>
+      <label><input type="radio" name="q9" value="b"> (b) प्रकृति</label>
+      <label><input type="radio" name="q9" value="c"> (c) उद्योग</label>
+      <label><input type="radio" name="q9" value="d"> (d) समाज</label>
+    </div>
+    <p id="correct-q9" style="display:none;">सही उत्तर: <span class="correct-answer">(a) प्रौद्योगिकी</span></p>
+  </div>
 
-        function saveAndDownloadResults(name, score) {
-            const csvData = `नाम,स्कोर\n${name},${score}\n`;
-            const filename = 'result.csv';
-            const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+  <div class="question">
+    <p>प्रश्‍न 10. विडाल डी ला ब्लाश के अनुसार मनुष्य ने किसे विकसित किया?</p>
+    <div class="options">
+      <label><input type="radio" name="q10" value="a"> (a) प्रौद्योगिकी</label>
+      <label><input type="radio" name="q10" value="b"> (b) विज्ञान</label>
+      <label><input type="radio" name="q10" value="c"> (c) कृषि</label>
+      <label><input type="radio" name="q10" value="d"> (d) कला</label>
+    </div>
+    <p id="correct-q10" style="display:none;">सही उत्तर: <span class="correct-answer">(a) प्रौद्योगिकी</span></p>
+  </div>
 
-            if (navigator.msSaveBlob) { // IE 10+
-                navigator.msSaveBlob(blob, filename);
-            } else {
-                const link = document.createElement("a");
-                if (link.download !== undefined) { // Browsers that support HTML5 download attribute
-                    const url = URL.createObjectURL(blob);
-                    link.setAttribute("href", url);
-                    link.setAttribute("download", filename);
-                    link.style.visibility = 'hidden';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
-            }
-        }
+  <div class="question">
+    <p>प्रश्‍न 11. नव निश्चयवाद के अनुसार मानव किसका पालन करता है?</p>
+    <div class="options">
+      <label><input type="radio" name="q11" value="a"> (a) प्राकृतिक नियमों</label>
+      <label><input type="radio" name="q11" value="b"> (b) सामाजिक नियमों</label>
+      <label><input type="radio" name="q11" value="c"> (c) धार्मिक नियमों</label>
+      <label><input type="radio" name="q11" value="d"> (d) कानूनी नियमों</label>
+    </div>
+    <p id="correct-q11" style="display:none;">सही उत्तर: <span class="correct-answer">(a) प्राकृतिक नियमों</span></p>
+  </div>
 
-        // Wait for name input before displaying questions and starting timer
-        nameInput.addEventListener('change', function() {
-            if (nameInput.value.trim() !== "") {
-                displayQuestions();
-                startTimer();
-                nameInput.disabled = true; // Disable name input after entering
-            }
-        });
+  <div class="question">
+    <p>प्रश्‍न 12. प्रौद्योगिकी का विकास किसके अध्ययन के बाद हुआ?</p>
+    <div class="options">
+      <label><input type="radio" name="q12" value="a"> (a) प्रकृति के नियमों</label>
+      <label><input type="radio" name="q12" value="b"> (b) सामाजिक प्रक्रियाओं</label>
+      <label><input type="radio" name="q12" value="c"> (c) आर्थिक नियमों</label>
+      <label><input type="radio" name="q12" value="d"> (d) राजनीतिक विचारों</label>
+    </div>
+    <p id="correct-q12" style="display:none;">सही उत्तर: <span class="correct-answer">(a) प्रकृति के नियमों</span></p>
+  </div>
 
-        // Initial timer display
-        const initialMinutes = Math.floor(timeLeft / 60);
-        const initialSeconds = timeLeft % 60;
-        timerDisplay.textContent = `${String(initialMinutes).padStart(2, '0')}:${String(initialSeconds).padStart(2, '0')}`;
+  <div class="question">
+    <p>प्रश्‍न 13. प्रारंभिक मानव किससे डरता था?</p>
+    <div class="options">
+      <label><input type="radio" name="q13" value="a"> (a) प्रकृति की प्रचंडता से</label>
+      <label><input type="radio" name="q13" value="b"> (b) युद्ध से</label>
+      <label><input type="radio" name="q13" value="c"> (c) समाज से</label>
+      <label><input type="radio" name="q13" value="d"> (d) प्रौद्योगिकी से</label>
+    </div>
+    <p id="correct-q13" style="display:none;">सही उत्तर: <span class="correct-answer">(a) प्रकृति की प्रचंडता से</span></p>
+  </div>
 
-    </script>
-</body>
-</html>
+  <div class="question">
+    <p>प्रश्‍न 14. नियतिवाद किस पर आधारित है?</p>
+    <div class="options">
+      <label><input type="radio" name="q14" value="a"> (a) प्रकृति के नियंत्रण पर</label>
+      <label><input type="radio" name="q14" value="b"> (b) मानव स्वतंत्रता पर</label>
+      <label><input type="radio" name="q14" value="c"> (c) प्रौद्योगिकी के विकास पर</label>
+      <label><input type="radio" name="q14" value="d"> (d) राजनीतिक सत्ता पर</label>
+    </div>
+    <p id="correct-q14" style="display:none;">सही उत्तर: <span class="correct-answer">(a) प्रकृति के नियंत्रण पर</span></p>
+  </div>
+
+  <div class="question">
+    <p>प्रश्‍न 15. मानव भूगोल का कौन सा उपक्षेत्र कृषि से संबंधित है?</p>
+    <div class="options">
+      <label><input type="radio" name="q15" value="a"> (a) कृषि भूगोल</label>
+      <label><input type="radio" name="q15" value="b"> (b) जनसांख्यिकी भूगोल</label>
+      <label><input type="radio" name="q15" value="c"> (c) आर्थिक भूगोल</label>
+      <label><input type="radio" name="q15" value="d"> (d) सामाजिक भूगोल</label>
+    </div>
+    <p id="correct-q15" style="display:none;">सही उत्तर: <span class="correct-answer">(a) कृषि भूगोल</span></p>
+  </div>
+
+  <div class="question">
+    <p>प्रश्‍न 16. नव निश्चयवाद के समर्थक कौन थे?</p>
+    <div class="options">
+      <label><input type="radio" name="q16" value="a"> (a) ग्रिफिथ टेलर</label>
+      <label><input type="radio" name="q16" value="b"> (b) विडाल डी ला ब्लाश</label>
+      <label><input type="radio" name="q16" value="c"> (c) हम्बोल्ट</label>
+      <label><input type="radio" name="q16" value="d"> (d) रेटजेल</label>
+    </div>
+    <p id="correct-q16" style="display:none;">सही उत्तर: <span class="correct-answer">(a) ग्रिफिथ टेलर</span></p>
+  </div>
+
+  <div class="question">
+    <p>प्रश्‍न 17. प्रौद्योगिकी के विकास के बाद क्या किया गया?</p>
+    <div class="options">
+      <label><input type="radio" name="q17" value="a"> (a) अस्पतालों और नगरों का निर्माण</label>
+      <label><input type="radio" name="q17" value="b"> (b) सामाजिक नियम बनाए गए</label>
+      <label><input type="radio" name="q17" value="c"> (c) धर्म का विकास हुआ</label>
+      <label><input type="radio" name="q17" value="d"> (d) राजनीति का विकास हुआ</label>
+    </div>
+    <p id="correct-q17" style="display:none;">सही उत्तर: <span class="correct-answer">(a) अस्पतालों और नगरों का निर्माण</span></p>
+  </div>
+
+  <div class="question">
+    <p>प्रश्‍न 18. डीएनए और अनुवांशिकी का अध्ययन किसके लिए उपयोगी है?</p>
+    <div class="options">
+      <label><input type="radio" name="q18" value="a"> (a) बीमारियों पर विजय पाने में</label>
+      <label><input type="radio" name="q18" value="b"> (b) आग की खोज में</label>
+      <label><input type="radio" name="q18" value="c"> (c) वाहन बनाने में</label>
+      <label><input type="radio" name="q18" value="d"> (d) सामाजिक नियमों के अध्ययन में</label>
+    </div>
+    <p id="correct-q18" style="display:none;">सही उत्तर: <span class="correct-answer">(a) बीमारियों पर विजय पाने में</span></p>
+  </div>
+
+  <div class="question">
+    <p>प्रश्‍न 19. प्रारंभिक मानव की कौन सी अवस्था थी?</p>
+    <div class="options">
+      <label><input type="radio" name="q19" value="a"> (a) आदिम अवस्था</label>
+      <label><input type="radio" name="q19" value="b"> (b) आधुनिक अवस्था</label>
+      <label><input type="radio" name="q19" value="c"> (c) प्राचीन अवस्था</label>
+      <label><input type="radio" name="q19" value="d">
