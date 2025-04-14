@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>भारतीय जनगणना प्रश्नोत्तरी</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif, Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+            /* Disable text selection */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        #timer {
+            position: fixed; /* Fix position relative to viewport */
+            top: 10px; /* Distance from top */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%); /* Adjust for exact centering */
+            background-color: #e74c3c;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            z-index: 1000; /* Ensure it stays on top */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-block p {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+        .options label:hover {
+            background-color: #f0f0f0;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        #submitBtn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        #submitBtn:hover {
+            background-color: #27ae60;
+        }
+        #submitBtn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        #resultSection {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #eafaf1;
+            border: 1px solid #2ecc71;
+            border-radius: 5px;
+            text-align: center;
+        }
+        #resultSection p {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .correct-answer {
+            display: none; /* Hidden initially */
+            font-weight: bold;
+            color: #2ecc71; /* Green */
+            margin-left: 15px;
+            font-size: 0.95em;
+        }
+         .user-answer.correct {
+            color: green;
+            font-weight: bold;
+        }
+        .user-answer.incorrect {
+            color: red;
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+
+        /* Initial State Sections */
+        #nameSection {
+            text-align: center;
+             margin-bottom: 20px;
+        }
+         #nameSection label {
+             display: block;
+             margin-bottom: 10px;
+             font-weight: bold;
+         }
+         #nameSection input[type="text"]{
+            padding: 10px;
+            width: 60%;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+         }
+         #startBtn {
+             padding: 10px 20px;
+             background-color: #3498db;
+             color: white;
+             border: none;
+             border-radius: 4px;
+             cursor: pointer;
+             font-size: 1em;
+         }
+         #startBtn:hover {
+             background-color: #2980b9;
+         }
+
+        #quizSection, #resultSection {
+            display: none; /* Hide initially */
+        }
+        #studentNameDisplay {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer">25:00</div>
+
+    <div class="quiz-container">
+        <h1>भारतीय जनगणना प्रश्नोत्तरी</h1>
+
+        <div id="nameSection">
+            <label for="studentNameInput">कृपया अपना नाम दर्ज करें:</label>
+            <input type="text" id="studentNameInput" placeholder="आपका नाम">
+            <button id="startBtn">प्रश्नोत्तरी शुरू करें</button>
+        </div>
+
+        <div id="quizSection">
+             <h2 id="studentNameDisplay"></h2>
+            <form id="quizForm">
+
+                <div class="question-block">
+                    <p>प्रश्न 1. भारत की पहली जनगणना हुई ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="a"> 1857 में</label>
+                        <label><input type="radio" name="q1" value="b"> 1888 में</label>
+                        <label><input type="radio" name="q1" value="c"> 1872 में</label>
+                        <label><input type="radio" name="q1" value="d"> 1851 में</label>
+                    </div>
+                    <span class="correct-answer" id="ca1"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 2. भारत की पहली सम्पूर्ण जनगणना हुई ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="a"> 1881 में</label>
+                        <label><input type="radio" name="q2" value="b"> 1872 में</label>
+                        <label><input type="radio" name="q2" value="c"> 1857 में</label>
+                        <label><input type="radio" name="q2" value="d"> 1877 में</label>
+                    </div>
+                     <span class="correct-answer" id="ca2"></span>
+                </div>
+
+                 <div class="question-block">
+                    <p>प्रश्न 3. भारत का कुल जनसंख्या घनत्व है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="a"> 300 व्यक्ति प्रति वर्ग किलोमीटर</label>
+                        <label><input type="radio" name="q3" value="b"> 382 व्यक्ति प्रति वर्ग किलोमीटर</label>
+                        <label><input type="radio" name="q3" value="c"> 400 व्यक्ति प्रति वर्ग किलोमीटर</label>
+                        <label><input type="radio" name="q3" value="d"> इनमे से कोई नहीं</label>
+                    </div>
+                    <span class="correct-answer" id="ca3"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 4. अरुणाचल प्रदेश में कम से कम जनसंख्या घनत्व है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q4" value="a"> 30 व्यक्ति प्रति वर्ग किलोमीटर</label>
+                        <label><input type="radio" name="q4" value="b"> 38 व्यक्ति प्रति वर्ग किलोमीटर</label>
+                        <label><input type="radio" name="q4" value="c"> 40 व्यक्ति प्रति वर्ग किलोमीटर</label>
+                        <label><input type="radio" name="q4" value="d"> 17 व्यक्ति प्रति वर्ग किलोमीटर</label>
+                    </div>
+                    <span class="correct-answer" id="ca4"></span>
+                </div>
+
+                 <div class="question-block">
+                    <p>प्रश्न 5. भारत का सबसे अधिक जनसंख्या वाला राज्य है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q5" value="a"> महाराष्ट्र</label>
+                        <label><input type="radio" name="q5" value="b"> राजस्थान</label>
+                        <label><input type="radio" name="q5" value="c"> उत्तर प्रदेश</label>
+                        <label><input type="radio" name="q5" value="d"> पंजाब</label>
+                    </div>
+                    <span class="correct-answer" id="ca5"></span>
+                </div>
+
+                 <div class="question-block">
+                    <p>प्रश्न 6. भारत का सबसे कम जनसंख्या वाला राज्य है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q6" value="a"> उत्तरप्रदेश</label>
+                        <label><input type="radio" name="q6" value="b"> तमिलनाडु</label>
+                        <label><input type="radio" name="q6" value="c"> कर्नाटक</label>
+                        <label><input type="radio" name="q6" value="d"> सिक्किम</label>
+                    </div>
+                    <span class="correct-answer" id="ca6"></span>
+                </div>
+
+                 <div class="question-block">
+                    <p>प्रश्न 7. भारत का सबसे कम जनसंख्या घनत्व वाला राज्य है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q7" value="a"> अरूणाचल प्रदेश</label> <label><input type="radio" name="q7" value="b"> पंजाब</label>
+                        <label><input type="radio" name="q7" value="c"> गुजरात</label>
+                        <label><input type="radio" name="q7" value="d"> हिमाचल प्रदेश</label>
+                    </div>
+                    <span class="correct-answer" id="ca7"></span>
+                </div>
+
+                 <div class="question-block">
+                    <p>प्रश्न 8. सबसे अधिक जनसंख्या घनत्व वाला राज्य है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q8" value="a"> मध्यप्रदेश</label>
+                        <label><input type="radio" name="q8" value="b"> बिहार</label> <label><input type="radio" name="q8" value="c"> उत्तरप्रदेश</label>
+                        <label><input type="radio" name="q8" value="d"> केरल</label>
+                    </div>
+                     <span class="correct-answer" id="ca8"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 9. भारत का सबसे अधिक लिंगानुपात वाला राज्य है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q9" value="a"> तमिलनाडु</label>
+                        <label><input type="radio" name="q9" value="b"> केरल</label>
+                        <label><input type="radio" name="q9" value="c"> पंजाब </label>
+                        <label><input type="radio" name="q9" value="d"> हरियाणा</label>
+                    </div>
+                     <span class="correct-answer" id="ca9"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 10. भारत का सबसे कम लिंगानुपात वाला राज्य है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q10" value="a"> केरल</label>
+                        <label><input type="radio" name="q10" value="b"> पंजाब </label>
+                        <label><input type="radio" name="q10" value="c"> मध्यप्रदेश</label>
+                        <label><input type="radio" name="q10" value="d"> हरियाणा</label> </div>
+                     <span class="correct-answer" id="ca10"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 11. वह राज्य जहां 2011 में ग्रामीण जनसंख्या का प्रतिशत सर्वाधिक था ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q11" value="a"> हिमाचल प्रदेश</label> <label><input type="radio" name="q11" value="b"> महाराष्ट्र</label>
+                        <label><input type="radio" name="q11" value="c"> गोआ </label>
+                        <label><input type="radio" name="q11" value="d"> उत्तर प्रदेश</label>
+                    </div>
+                    <span class="correct-answer" id="ca11"></span>
+                </div>
+
+                 <div class="question-block">
+                    <p>प्रश्न 12. वह राज्य जहां 2011 में नगरीय जनसंख्या का प्रतिशत सर्वाधिक था ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q12" value="a"> केरल</label>
+                        <label><input type="radio" name="q12" value="b"> बिहार </label>
+                        <label><input type="radio" name="q12" value="c"> ओडिसा </label>
+                        <label><input type="radio" name="q12" value="d"> गोआ</label>
+                    </div>
+                    <span class="correct-answer" id="ca12"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 13. वह केंद्रशासित प्रदेश जहां ग्रामीण जनसंख्या का प्रतिशत सर्वाधिक था ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q13" value="a"> चंडीगढ़</label>
+                        <label><input type="radio" name="q13" value="b"> अंडमान निकोबार द्वीप समूह</label>
+                        <label><input type="radio" name="q13" value="c"> दिल्ली</label>
+                        <label><input type="radio" name="q13" value="d"> इनमे से कोई नहीं</label>
+                    </div>
+                    <span class="correct-answer" id="ca13"></span>
+                </div>
+
+                 <div class="question-block">
+                    <p>प्रश्न 14. वह केंद्रशासित प्रदेश जहां नगरीय जनसंख्या का प्रतिशत सर्वाधिक था ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q14" value="a"> दिल्ली</label>
+                        <label><input type="radio" name="q14" value="b"> अंडमान निकोबार द्वीपसमूह</label>
+                        <label><input type="radio" name="q14" value="c"> चंडीगढ</label>
+                        <label><input type="radio" name="q14" value="d"> इनमे से कोई नहीं</label>
+                    </div>
+                    <span class="correct-answer" id="ca14"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 15. निम्नलिखित में से कौनसा एक समूह भारत मे विशालतम भाषाई समूह है ?</p>
+                    <div class="options">
+                         <label><input type="radio" name="q15" value="a"> चीनी-तिब्बती</label>
+                        <label><input type="radio" name="q15" value="b"> आस्ट्रिक</label>
+                        <label><input type="radio" name="q15" value="c"> भारतीय-आर्य</label>
+                        <label><input type="radio" name="q15" value="d"> द्रविड़</label>
+                    </div>
+                    <span class="correct-answer" id="ca15"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 16. निम्न में से किस अवधि को भारत की जनसंख्या की वृद्धि की स्थिर प्रावस्था कहा जाता है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q16" value="a"> 1911 से 1922</label>
+                        <label><input type="radio" name="q16" value="b"> 1901 से 1921</label>
+                        <label><input type="radio" name="q16" value="c"> 1905 से 1910</label>
+                        <label><input type="radio" name="q16" value="d"> इनमे से कोई नहीं</label>
+                    </div>
+                    <span class="correct-answer" id="ca16"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 17. निम्न में से किस अवधि को भारत की जनसंख्या के विस्फोट के नाम से जाना जाता है ?</p>
+                    <div class="options">
+                         <label><input type="radio" name="q17" value="a"> 1921 से 1951</label>
+                        <label><input type="radio" name="q17" value="b"> 1910 से 1920</label>
+                        <label><input type="radio" name="q17" value="c"> 1901 से 1921</label>
+                        <label><input type="radio" name="q17" value="d"> 1951 से 1981</label> </div>
+                     <span class="correct-answer" id="ca17"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 18. 2011 की जनगणना के अनुसार भारत मे कितने गांव है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q18" value="a"> 20,0000</label>
+                        <label><input type="radio" name="q18" value="b"> 6,40,867</label>
+                        <label><input type="radio" name="q18" value="c"> 7,50,999</label>
+                        <label><input type="radio" name="q18" value="d"> 9,13,456</label>
+                    </div>
+                    <span class="correct-answer" id="ca18"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 19. निम्न में से किस राज्य में ईसाई जनसंख्या सर्वाधिक है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q19" value="a"> पंजाब</label>
+                        <label><input type="radio" name="q19" value="b"> हरियाणा </label>
+                        <label><input type="radio" name="q19" value="c"> राजस्थान</label>
+                        <label><input type="radio" name="q19" value="d"> गोआ</label>
+                    </div>
+                    <span class="correct-answer" id="ca19"></span>
+                </div>
+
+                 <div class="question-block">
+                    <p>प्रश्न 20. मुख्य श्रमिक वह व्यक्ति है जो एक वर्ष में ____ दिन काम करता है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q20" value="a"> 180 </label>
+                        <label><input type="radio" name="q20" value="b"> 183</label>
+                        <label><input type="radio" name="q20" value="c"> 185</label>
+                        <label><input type="radio" name="q20" value="d"> 187</label>
+                    </div>
+                    <span class="correct-answer" id="ca20"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 21. भारत मे किस सेक्टर के श्रमिकों का अनुपात बहुत बड़ा है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q21" value="a"> प्राथमिक</label>
+                        <label><input type="radio" name="q21" value="b"> द्वितीयक</label>
+                        <label><input type="radio" name="q21" value="c"> तृतीयक</label>
+                        <label><input type="radio" name="q21" value="d"> चतुर्थक</label>
+                    </div>
+                    <span class="correct-answer" id="ca21"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 22. सन 2011 की जनगणना के अनुसार भारत की जनसंख्या निम्नलिखित में से कौन सी है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q22" value="a"> 102.8 करोड़</label>
+                        <label><input type="radio" name="q22" value="b"> 121 करोड़ </label> <label><input type="radio" name="q22" value="c"> 111 करोड़</label>
+                        <label><input type="radio" name="q22" value="d"> 328 करोड़</label>
+                    </div>
+                    <span class="correct-answer" id="ca22"></span>
+                </div>
+
+                <div class="question-block">
+                    <p>प्रश्न 23. भारत के किस राज्य में बौद्ध जनसंख्या अधिक है ?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q23" value="a"> महाराष्ट्र</label>
+                        <label><input type="radio" name="q23" value="b"> हरियाणा </label>
+                        <label><input type="radio" name="q23" value="c"> पंजाब </label>
+                        <label><input type="radio" name="q23" value="d"> उत्तर प्रदेश</label>
+                    </div>
+                     <span class="correct-answer" id="ca23"></span>
+                </div>
+
+                <button type="submit" id="submitBtn">उत्तर जमा करें</button>
+            </form>
+        </div>
+
+        <div id="resultSection">
+            <h2>परिणाम</h2>
+            <p id="score"></p>
+        </div>
+    </div>
+
+    <script>
+        // Quiz data based on verified answers and shuffled options for better distribution
+        const quizData = [
+            { q: 1, a: 'c', text: "1872 में" },
+            { q: 2, a: 'a', text: "1881 में" },
+            { q: 3, a: 'b', text: "382 व्यक्ति प्रति वर्ग किलोमीटर" },
+            { q: 4, a: 'd', text: "17 व्यक्ति प्रति वर्ग किलोमीटर" },
+            { q: 5, a: 'c', text: "उत्तर प्रदेश" },
+            { q: 6, a: 'd', text: "सिक्किम" },
+            { q: 7, a: 'a', text: "अरूणाचल प्रदेश" }, // Shuffled
+            { q: 8, a: 'b', text: "बिहार" }, // Shuffled
+            { q: 9, a: 'b', text: "केरल" },
+            { q: 10, a: 'd', text: "हरियाणा" }, // Shuffled
+            { q: 11, a: 'a', text: "हिमाचल प्रदेश" }, // Shuffled
+            { q: 12, a: 'd', text: "गोआ" },
+            { q: 13, a: 'b', text: "अंडमान निकोबार द्वीप समूह" },
+            { q: 14, a: 'a', text: "दिल्ली" },
+            { q: 15, a: 'c', text: "भारतीय-आर्य" },
+            { q: 16, a: 'b', text: "1901 से 1921" },
+            { q: 17, a: 'd', text: "1951 से 1981" }, // Shuffled
+            { q: 18, a: 'b', text: "6,40,867" },
+            { q: 19, a: 'd', text: "गोआ" },
+            { q: 20, a: 'b', text: "183" },
+            { q: 21, a: 'a', text: "प्राथमिक" },
+            { q: 22, a: 'b', text: "121 करोड़ " }, // Shuffled
+            { q: 23, a: 'a', text: "महाराष्ट्र" }
+        ];
+
+
+        const nameSection = document.getElementById('nameSection');
+        const quizSection = document.getElementById('quizSection');
+        const resultSection = document.getElementById('resultSection');
+        const nameInput = document.getElementById('studentNameInput');
+        const startBtn = document.getElementById('startBtn');
+        const studentNameDisplay = document.getElementById('studentNameDisplay');
+        const quizForm = document.getElementById('quizForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+
+        let score = 0;
+        let studentName = '';
+        let submitted = false;
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function updateTimer() {
+            timeLeft--;
+            timerDisplay.textContent = formatTime(timeLeft);
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "समय समाप्त!";
+                submitQuiz(); // Auto-submit when time is up
+            }
+        }
+
+        function startTimer() {
+            timerDisplay.textContent = formatTime(timeLeft); // Initial display
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function startQuiz() {
+            studentName = nameInput.value.trim();
+            if (!studentName) {
+                alert("कृपया अपना नाम दर्ज करें।");
+                return;
+            }
+            studentNameDisplay.textContent = `विद्यार्थी: ${studentName}`;
+            nameSection.style.display = 'none';
+            quizSection.style.display = 'block';
+            submitBtn.disabled = false; // Ensure button is enabled at start
+            submitted = false; // Reset submitted state
+            startTimer();
+        }
+
+        function downloadCSV(data) {
+            // Add BOM for Excel UTF-8 compatibility
+            const BOM = "\uFEFF";
+            let csvContent = BOM + "data:text/csv;charset=utf-8,";
+
+            data.forEach(function(rowArray) {
+                // Escape commas within fields if necessary (though unlikely for name/score)
+                 let row = rowArray.map(field => `"${String(field).replace(/"/g, '""')}"`).join(",");
+                csvContent += row + "\r\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function submitQuiz(event) {
+            if (event) event.preventDefault(); // Prevent default form submission if triggered by form event
+
+            if (submitted) return; // Prevent multiple submissions
+            submitted = true;
+            submitBtn.disabled = true; // Disable button after clicking
+            clearInterval(timerInterval); // Stop the timer
+
+            score = 0; // Reset score before calculating
+
+            quizData.forEach(item => {
+                const questionNumber = item.q;
+                const correctAnswerLetter = item.a;
+                const correctAnswerText = item.text;
+
+                const selectedOption = quizForm.querySelector(`input[name="q${questionNumber}"]:checked`);
+                const correctAnswerSpan = document.getElementById(`ca${questionNumber}`);
+
+                if (selectedOption) {
+                    const userAnswer = selectedOption.value;
+                    const userLabel = selectedOption.parentElement; // Get the label associated with the selected radio
+
+                    if (userAnswer === correctAnswerLetter) {
+                        score++;
+                        userLabel.style.fontWeight = 'bold';
+                        userLabel.style.color = '#2ecc71'; // Green for correct
+                    } else {
+                        userLabel.style.fontWeight = 'bold';
+                        userLabel.style.color = '#e74c3c'; // Red for incorrect
+                        userLabel.style.textDecoration = 'line-through';
+                    }
+                }
+
+                // Always show the correct answer text after submission, regardless of whether user answered
+                correctAnswerSpan.textContent = `सही उत्तर: ${correctAnswerText}`;
+                correctAnswerSpan.style.display = 'inline'; // Show the span
+
+                // Disable all radio buttons for this question after submission
+                 const radioButtons = quizForm.querySelectorAll(`input[name="q${questionNumber}"]`);
+                 radioButtons.forEach(radio => radio.disabled = true);
+            });
+
+            scoreDisplay.textContent = `${studentName}, आपके कुल अंक: ${score} / ${quizData.length}`;
+            resultSection.style.display = 'block'; // Show results
+
+            // Prepare data for CSV
+             const csvData = [
+                 ["नाम", "कुल अंक"],
+                 [studentName, score]
+             ];
+             downloadCSV(csvData); // Trigger CSV download
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', startQuiz);
+        quizForm.addEventListener('submit', submitQuiz);
+
+        // Right-click disable is handled by the oncontextmenu attribute on the body tag
+
+    </script>
+
+</body>
+</html>
