@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>शरीर क्रिया विज्ञान MCQ परीक्षा</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            user-select: none; /* Prevent text selection */
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+            font-weight: bold;
+            color: navy;
+            padding: 10px;
+            background-color: lightyellow;
+            border: 1px solid gold;
+            border-radius: 5px;
+            z-index: 1000; /* Ensure it stays on top */
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        #submitBtn {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #submitBtn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .correct-answer-display {
+            font-weight: bold;
+            color: green;
+            display: none;
+        }
+        .incorrect-answer-display {
+            font-weight: bold;
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div id="timer">25:00</div>
+    <h1>शरीर क्रिया विज्ञान कक्षा 12 MCQ परीक्षा</h1>
+    <form id="quizForm">
+        <label for="studentName">छात्र का नाम:</label>
+        <input type="text" id="studentName" required><br><br>
+
+        <div class="question">
+            <p>1. मानव शरीर की सबसे बड़ी ग्रंथि कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="a"> a) अग्न्याशय</label>
+                <label><input type="radio" name="q1" value="b"> b) यकृत</label>
+                <label><input type="radio" name="q1" value="c"> c) थायरॉइड</label>
+                <label><input type="radio" name="q1" value="d"> d) अधिवृक्क</label>
+            </div>
+            <p class="correct-answer-display" >सही उत्तर: b) यकृत</p>
+        </div>
+
+        <div class="question">
+            <p>2. रक्त का pH मान कितना होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="a"> a) 6.5</label>
+                <label><input type="radio" name="q2" value="b"> b) 7.4</label>
+                <label><input type="radio" name="q2" value="c"> c) 8.0</label>
+                <label><input type="radio" name="q2" value="d"> d) 7.0</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) 7.4</p>
+        </div>
+
+        <div class="question">
+            <p>3. मानव हृदय में कितने कक्ष होते हैं?</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="a"> a) दो</label>
+                <label><input type="radio" name="q3" value="b"> b) तीन</label>
+                <label><input type="radio" name="q3" value="c"> c) चार</label>
+                <label><input type="radio" name="q3" value="d"> d) पांच</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) चार</p>
+        </div>
+
+        <div class="question">
+            <p>4. श्वसन प्रक्रिया का मुख्य उद्देश्य क्या है?</p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="a"> a) भोजन पचाना</label>
+                <label><input type="radio" name="q4" value="b"> b) रक्त संचारित करना</label>
+                <label><input type="radio" name="q4" value="c"> c) ऊर्जा उत्पादन के लिए ऑक्सीजन प्राप्त करना</label>
+                <label><input type="radio" name="q4" value="d"> d) अपशिष्ट उत्पादों को निकालना</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) ऊर्जा उत्पादन के लिए ऑक्सीजन प्राप्त करना</p>
+        </div>
+
+        <div class="question">
+            <p>5. निम्नलिखित में से कौन सा विटामिन रक्त के थक्के जमने में मदद करता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q5" value="a"> a) विटामिन ए</label>
+                <label><input type="radio" name="q5" value="b"> b) विटामिन बी</label>
+                <label><input type="radio" name="q5" value="c"> c) विटामिन के</label>
+                <label><input type="radio" name="q5" value="d"> d) विटामिन सी</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) विटामिन के</p>
+        </div>
+
+        <div class="question">
+            <p>6. मानव मस्तिष्क का कौन सा भाग स्मृति के लिए जिम्मेदार है?</p>
+            <div class="options">
+                <label><input type="radio" name="q6" value="a"> a) सेरिब्रम</label>
+                <label><input type="radio" name="q6" value="b"> b) सेरिबेलम</label>
+                <label><input type="radio" name="q6" value="c"> c) हिप्पोकैम्पस</label>
+                <label><input type="radio" name="q6" value="d"> d) मेडुला ओब्लोंगटा</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) हिप्पोकैम्पस</p>
+        </div>
+
+        <div class="question">
+            <p>7. इंसुलिन हार्मोन किस ग्रंथि द्वारा स्रावित होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q7" value="a"> a) थायरॉइड</label>
+                <label><input type="radio" name="q7" value="b"> b) अधिवृक्क</label>
+                <label><input type="radio" name="q7" value="c"> c) अग्न्याशय</label>
+                <label><input type="radio" name="q7" value="d"> d) पीयूष</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) अग्न्याशय</p>
+        </div>
+
+        <div class="question">
+            <p>8. मानव शरीर में कितनी पसलियाँ होती हैं?</p>
+            <div class="options">
+                <label><input type="radio" name="q8" value="a"> a) 10 जोड़े</label>
+                <label><input type="radio" name="q8" value="b"> b) 12 जोड़े</label>
+                <label><input type="radio" name="q8" value="c"> c) 14 जोड़े</label>
+                <label><input type="radio" name="q8" value="d"> d) 16 जोड़े</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) 12 जोड़े</p>
+        </div>
+
+        <div class="question">
+            <p>9. मूत्र का उत्पादन किस अंग द्वारा किया जाता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q9" value="a"> a) यकृत</label>
+                <label><input type="radio" name="q9" value="b"> b) गुर्दे</label>
+                <label><input type="radio" name="q9" value="c"> c) फेफड़े</label>
+                <label><input type="radio" name="q9" value="d"> d) हृदय</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) गुर्दे</p>
+        </div>
+
+        <div class="question">
+            <p>10. पाचन तंत्र का पहला भाग कौन सा है?</p>
+            <div class="options">
+                <label><input type="radio" name="q10" value="a"> a) पेट</label>
+                <label><input type="radio" name="q10" value="b"> b) छोटी आंत</label>
+                <label><input type="radio" name="q10" value="c"> c) मुंह</label>
+                <label><input type="radio" name="q10" value="d"> d) बड़ी आंत</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) मुंह</p>
+        </div>
+
+        <div class="question">
+            <p>11. मानव शरीर की सबसे छोटी हड्डी कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q11" value="a"> a) फीमर</label>
+                <label><input type="radio" name="q11" value="b"> b) टिबिया</label>
+                <label><input type="radio" name="q11" value="c"> c) स्टेपीज</label>
+                <label><input type="radio" name="q11" value="d"> d) उल्ना</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) स्टेपीज</p>
+        </div>
+
+        <div class="question">
+            <p>12. लाल रक्त कोशिकाओं का जीवनकाल लगभग कितना होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q12" value="a"> a) 20 दिन</label>
+                <label><input type="radio" name="q12" value="b"> b) 60 दिन</label>
+                <label><input type="radio" name="q12" value="c"> c) 120 दिन</label>
+                <label><input type="radio" name="q12" value="d"> d) 180 दिन</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) 120 दिन</p>
+        </div>
+
+        <div class="question">
+            <p>13. निम्नलिखित में से कौन सा एक आवश्यक खनिज है?</p>
+            <div class="options">
+                <label><input type="radio" name="q13" value="a"> a) ग्लूकोज</label>
+                <label><input type="radio" name="q13" value="b"> b) फ्रुक्टोज</label>
+                <label><input type="radio" name="q13" value="c"> c) कैल्शियम</label>
+                <label><input type="radio" name="q13" value="d"> d) सुक्रोज</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) कैल्शियम</p>
+        </div>
+
+        <div class="question">
+            <p>14. मानव शरीर में मांसपेशियों की कुल संख्या कितनी होती है?</p>
+            <div class="options">
+                <label><input type="radio" name="q14" value="a"> a) लगभग 206</label>
+                <label><input type="radio" name="q14" value="b"> b) लगभग 350</label>
+                <label><input type="radio" name="q14" value="c"> c) लगभग 639</label>
+                <label><input type="radio" name="q14" value="d"> d) लगभग 800</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) लगभग 639</p>
+        </div>
+
+        <div class="question">
+            <p>15. मानव कंकाल तंत्र का मुख्य कार्य क्या है?</p>
+            <div class="options">
+                <label><input type="radio" name="q15" value="a"> a) भोजन का पाचन</label>
+                <label><input type="radio" name="q15" value="b"> b) गैसों का आदान-प्रदान</label>
+                <label><input type="radio" name="q15" value="c"> c) शरीर को सहारा और सुरक्षा प्रदान करना</label>
+                <label><input type="radio" name="q15" value="d"> d) हार्मोन का उत्पादन</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) शरीर को सहारा और सुरक्षा प्रदान करना</p>
+        </div>
+
+        <div class="question">
+            <p>16. आँख का कौन सा भाग प्रकाश की मात्रा को नियंत्रित करता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q16" value="a"> a) लेंस</label>
+                <label><input type="radio" name="q16" value="b"> b) कॉर्निया</label>
+                <label><input type="radio" name="q16" value="c"> c) पुतली</label>
+                <label><input type="radio" name="q16" value="d"> d) रेटिना</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) पुतली</p>
+        </div>
+
+        <div class="question">
+            <p>17. निम्नलिखित में से कौन सा एक जल-विलेय विटामिन है?</p>
+            <div class="options">
+                <label><input type="radio" name="q17" value="a"> a) विटामिन ए</label>
+                <label><input type="radio" name="q17" value="b"> b) विटामिन डी</label>
+                <label><input type="radio" name="q17" value="c"> c) विटामिन सी</label>
+                <label><input type="radio" name="q17" value="d"> d) विटामिन ई</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) विटामिन सी</p>
+        </div>
+
+        <div class="question">
+            <p>18. मानव शरीर में सबसे लंबी हड्डी कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q18" value="a"> a) ह्यूमरस</label>
+                <label><input type="radio" name="q18" value="b"> b) फीमर</label>
+                <label><input type="radio" name="q18" value="c"> c) टिबिया</label>
+                <label><input type="radio" name="q18" value="d"> d) फाइबुला</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) फीमर</p>
+        </div>
+
+        <div class="question">
+            <p>19. लार में कौन सा एंजाइम पाया जाता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q19" value="a"> a) पेप्सिन</label>
+                <label><input type="radio" name="q19" value="b"> b) ट्रिप्सिन</label>
+                <label><input type="radio" name="q19" value="c"> c) एमाइलेज</label>
+                <label><input type="radio" name="q19" value="d"> d) लाइपेज</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) एमाइलेज</p>
+        </div>
+
+        <div class="question">
+            <p>20. मानव हृदय का औसत वजन लगभग कितना होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q20" value="a"> a) 150 ग्राम</label>
+                <label><input type="radio" name="q20" value="b"> b) 200 ग्राम</label>
+                <label><input type="radio" name="q20" value="c"> c) 300 ग्राम</label>
+                <label><input type="radio" name="q20" value="d"> d) 400 ग्राम</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) 300 ग्राम</p>
+        </div>
+
+        <div class="question">
+            <p>21. मानव शरीर में सबसे बड़ी धमनी कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q21" value="a"> a) फुफ्फुसीय धमनी</label>
+                <label><input type="radio" name="q21" value="b"> b) महाधमनी</label>
+                <label><input type="radio" name="q21" value="c"> c) कोरोनरी धमनी</label>
+                <label><input type="radio" name="q21" value="d"> d) कैरोटिड धमनी</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) महाधमनी</p>
+        </div>
+
+        <div class="question">
+            <p>22. कौन सा अंग पित्त रस का स्राव करता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q22" value="a"> a) अग्न्याशय</label>
+                <label><input type="radio" name="q22" value="b"> b) यकृत</label>
+                <label><input type="radio" name="q22" value="c"> c) गुर्दे</label>
+                <label><input type="radio" name="q22" value="d"> d) प्लीहा</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) यकृत</p>
+        </div>
+
+        <div class="question">
+            <p>23. मानव शरीर में गुणसूत्रों की संख्या कितनी होती है?</p>
+            <div class="options">
+                <label><input type="radio" name="q23" value="a"> a) 23</label>
+                <label><input type="radio" name="q23" value="b"> b) 46</label>
+                <label><input type="radio" name="q23" value="c"> c) 48</label>
+                <label><input type="radio" name="q23" value="d"> d) 24</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) 46</p>
+        </div>
+
+        <div class="question">
+            <p>24. निम्नलिखित में से कौन सा एक अंतःस्रावी ग्रंथि नहीं है?</p>
+            <div class="options">
+                <label><input type="radio" name="q24" value="a"> a) थायरॉइड</label>
+                <label><input type="radio" name="q24" value="b"> b) पीयूष</label>
+                <label><input type="radio" name="q24" value="c"> c) लार ग्रंथि</label>
+                <label><input type="radio" name="q24" value="d"> d) अधिवृक्क</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) लार ग्रंथि</p>
+        </div>
+
+        <div class="question">
+            <p>25. मानव त्वचा की सबसे बाहरी परत क्या कहलाती है?</p>
+            <div class="options">
+                <label><input type="radio" name="q25" value="a"> a) डर्मिस</label>
+                <label><input type="radio" name="q25" value="b"> b) एपिडर्मिस</label>
+                <label><input type="radio" name="q25" value="c"> c) हाइपोडर्मिस</label>
+                <label><input type="radio" name="q25" value="d"> d) एंडोडर्मिस</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) एपिडर्मिस</p>
+        </div>
+
+        <button type="submit" id="submitBtn">परीक्षा समाप्त करें</button>
+    </form>
+
+    <div id="result" style="display:none;"></div>
+
+    <script>
+        const quizForm = document.getElementById('quizForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultDiv = document.getElementById('result');
+        const timerDisplay = document.getElementById('timer');
+        const studentNameInput = document.getElementById('studentName');
+
+        let correctAnswers = {
+            q1: 'b', q2: 'b', q3: 'c', q4: 'c', q5: 'c',
+            q6: 'c', q7: 'c', q8: 'b', q9: 'b', q10: 'c',
+            q11: 'c', q12: 'c', q13: 'c', q14: 'c', q15: 'c',
+            q16: 'c', q17: 'c', q18: 'b', q19: 'c', q20: 'c',
+            q21: 'b', q22: 'b', q23: 'b', q24: 'c', q25: 'b'
+        };
+
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                timerDisplay.textContent = minutes + ':' + seconds;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz(); // End quiz if time runs out.
+                }
+            }, 1000);
+        }
+
+        // Function to calculate the score
+        function calculateScore() {
+            let score = 0;
+            const formData = new FormData(quizForm);
+
+            for (let question in correctAnswers) {
+                if (formData.get(question) === correctAnswers[question]) {
+                    score++;
+                }
+            }
+            return score;
+        }
+
+        // Function to display the result
+        function displayResult(score) {
+            resultDiv.innerHTML = `आपने ${score} / 25 अंक प्राप्त किए।`;
+            resultDiv.style.display = 'block';
+
+            // Show correct answers for each question
+            document.querySelectorAll('.question').forEach(questionElement => {
+                questionElement.querySelectorAll('.correct-answer-display').forEach(correctAnswerDisplay => {
+                    correctAnswerDisplay.style.display = 'block';
+                });
+                const selectedOption = new FormData(quizForm).get(questionElement.querySelector('input[type="radio"]').name);
+                if (selectedOption && selectedOption !== correctAnswers[questionElement.querySelector('input[type="radio"]').name]) {
+                    questionElement.querySelector(`input[value="${selectedOption}"]`).parentElement.style.color = 'red';
+                }
+            });
+        }
+
+        // Function to generate CSV content
+        function generateCSV(studentName, score) {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Student Name,Score\r\n";
+            csvContent += `${studentName},${score}\r\n`;
+            return csvContent;
+        }
+
+        // Function to download CSV file
+        function downloadCSV(csvContent, studentName) {
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `${studentName}_result.csv`);
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+            document.body.removeChild(link); // Clean up
+        }
+
+        // Function to handle the submit button click
+        function submitQuiz() {
+            if (submitBtn.disabled) return;
+
+            const studentName = document.getElementById('studentName').value.trim();
+            if (!studentName) {
+                alert("कृपया अपना नाम दर्ज करें!");
+                return;
+            }clearInterval(timerInterval);
+            submitBtn.disabled = true;
+            const score = calculateScore();
+            displayResult(score);
+            const csvContent = generateCSV(studentName, score);
+            downloadCSV(csvContent, studentName);
+        }
+
+        // Event listener for the submit button
+        submitBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent form from reloading the page
+            submitQuiz();
+        });
+
+        // Prevent right-click context menu
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+        // Start the timer when the page loads
+        startTimer();
+    </script>
+</body>
+</html>
+

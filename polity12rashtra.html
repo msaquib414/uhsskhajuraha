@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>राष्ट्र निर्माण की चुनौतियाँ - MCQ परीक्षा</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #timer-container {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 1.2em;
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            margin-top: 80px; /* Adjust for fixed timer */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .options li {
+            margin-bottom: 8px;
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        button[type="submit"] {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            display: block;
+            margin: 20px auto;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+
+        #result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #e6ffe6;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        #name-input-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #name-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        #start-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        #start-button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="timer-container">समय शेष: <span id="timer">25:00</span></div>
+
+    <div id="name-input-container">
+        <h2>अपना नाम दर्ज करें</h2>
+        <input type="text" id="name-input" placeholder="आपका नाम">
+        <button id="start-button">शुरू करें</button>
+    </div>
+
+    <div class="container hidden" id="quiz-container">
+        <h1>राष्ट्र निर्माण की चुनौतियाँ - MCQ परीक्षा</h1>
+        <form id="quiz-form">
+            <div class="question">
+                <p>1. स्वतंत्रता के बाद भारत के सामने सबसे बड़ी चुनौती क्या थी?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q1" value="a"> गरीबी उन्मूलन</label></li>
+                    <li><label><input type="radio" name="q1" value="b"> लोकतांत्रिक व्यवस्था स्थापित करना</label></li>
+                    <li><label><input type="radio" name="q1" value="c"> आर्थिक विकास</label></li>
+                    <li><label><input type="radio" name="q1" value="d"> सांप्रदायिक सद्भाव</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q1">सही उत्तर: (b) लोकतांत्रिक व्यवस्था स्थापित करना</p>
+            </div>
+
+            <div class="question">
+                <p>2. भारत के विभाजन का मुख्य कारण क्या था?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q2" value="a"> आर्थिक असमानता</label></li>
+                    <li><label><input type="radio" name="q2" value="b"> धार्मिक मतभेद</label></li>
+                    <li><label><input type="radio" name="q2" value="c"> राजनीतिक अस्थिरता</label></li>
+                    <li><label><input type="radio" name="q2" value="d"> सामाजिक पिछड़ापन</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q2">सही उत्तर: (b) धार्मिक मतभेद</p>
+            </div>
+
+            <div class="question">
+                <p>3. रियासतों के एकीकरण में किसने महत्वपूर्ण भूमिका निभाई?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q3" value="a"> महात्मा गांधी</label></li>
+                    <li><label><input type="radio" name="q3" value="b"> जवाहरलाल नेहरू</label></li>
+                    <li><label><input type="radio" name="q3" value="c"> सरदार वल्लभभाई पटेल</label></li>
+                    <li><label><input type="radio" name="q3" value="d"> डॉ. राजेंद्र प्रसाद</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q3">सही उत्तर: (c) सरदार वल्लभभाई पटेल</p>
+            </div>
+
+            <div class="question">
+                <p>4. संविधान सभा का अध्यक्ष कौन था?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q4" value="a"> बी. आर. अम्बेडकर</label></li>
+                    <li><label><input type="radio" name="q4" value="b"> जवाहरलाल नेहरू</label></li>
+                    <li><label><input type="radio" name="q4" value="c"> सरदार वल्लभभाई पटेल</label></li>
+                    <li><label><input type="radio" name="q4" value="d"> डॉ. राजेंद्र प्रसाद</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q4">सही उत्तर: (d) डॉ. राजेंद्र प्रसाद</p>
+            </div>
+
+            <div class="question">
+                <p>5. भारत में योजना आयोग की स्थापना कब हुई?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q5" value="a"> 1947</label></li>
+                    <li><label><input type="radio" name="q5" value="b"> 1950</label></li>
+                    <li><label><input type="radio" name="q5" value="c"> 1952</label></li>
+                    <li><label><input type="radio" name="q5" value="d"> 1956</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q5">सही उत्तर: (b) 1950</p>
+            </div>
+
+            <div class="question">
+                <p>6. प्रथम पंचवर्षीय योजना का मुख्य उद्देश्य क्या था?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q6" value="a"> औद्योगीकरण</label></li>
+                    <li><label><input type="radio" name="q6" value="b"> कृषि विकास</label></li>
+                    <li><label><input type="radio" name="q6" value="c"> गरीबी उन्मूलन</label></li>
+                    <li><label><input type="radio" name="q6" value="d"> शिक्षा का प्रसार</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q6">सही उत्तर: (b) कृषि विकास</p>
+            </div>
+
+            <div class="question">
+                <p>7. गुटनिरपेक्ष आंदोलन के जनक कौन थे?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q7" value="a"> महात्मा गांधी</label></li>
+                    <li><label><input type="radio" name="q7" value="b"> जवाहरलाल नेहरू</label></li>
+                    <li><label><input type="radio" name="q7" value="c"> इंदिरा गांधी</label></li>
+                    <li><label><input type="radio" name="q7" value="d"> राजीव गांधी</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q7">सही उत्तर: (b) जवाहरलाल नेहरू</p>
+            </div>
+
+            <div class="question">
+                <p>8. भारत में हरित क्रांति का जनक किसे माना जाता है?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q8" value="a"> वर्गीज कुरियन</label></li>
+                    <li><label><input type="radio" name="q8" value="b"> एम. एस. स्वामीनाथन</label></li>
+                    <li><label><input type="radio" name="q8" value="c"> नॉर्मन बोरलॉग</label></li>
+                    <li><label><input type="radio" name="q8" value="d"> अमृत्य सेन</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q8">सही उत्तर: (b) एम. एस. स्वामीनाथन</p>
+            </div>
+
+            <div class="question">
+                <p>9. भाषाई आधार पर गठित होने वाला पहला राज्य कौन सा था?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q9" value="a"> तमिलनाडु</label></li>
+                    <li><label><input type="radio" name="q9" value="b"> केरल</label></li>
+                    <li><label><input type="radio" name="q9" value="c"> आंध्र प्रदेश</label></li>
+                    <li><label><input type="radio" name="q9" value="d"> कर्नाटक</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q9">सही उत्तर: (c) आंध्र प्रदेश</p>
+            </div>
+
+            <div class="question">
+                <p>10. भारत ने अपना पहला परमाणु परीक्षण कब किया?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q10" value="a"> 1962</label></li>
+                    <li><label><input type="radio" name="q10" value="b"> 1965</label></li>
+                    <li><label><input type="radio" name="q10" value="c"> 1974</label></li>
+                    <li><label><input type="radio" name="q10" value="d"> 1998</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q10">सही उत्तर: (c) 1974</p>
+            </div>
+
+            <div class="question">
+                <p>11. 'श्वेत क्रांति' किससे संबंधित है?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q11" value="a"> अनाज उत्पादन</label></li>
+                    <li><label><input type="radio" name="q11" value="b"> दुग्ध उत्पादन</label></li>
+                    <li><label><input type="radio" name="q11" value="c"> मत्स्य उत्पादन</label></li>
+                    <li><label><input type="radio" name="q11" value="d"> उर्वरक उत्पादन</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q11">सही उत्तर: (b) दुग्ध उत्पादन</p>
+            </div>
+
+            <div class="question">
+                <p>12. भारत में आर्थिक सुधार कब शुरू हुए?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q12" value="a"> 1980 के दशक में</label></li>
+                    <li><label><input type="radio" name="q12" value="b"> 1990 के दशक में</label></li>
+                    <li><label><input type="radio" name="q12" value="c"> 2000 के दशक में</label></li>
+                    <li><label><input type="radio" name="q12" value="d"> 2010 के दशक में</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q12">सही उत्तर: (b) 1990 के दशक में</p>
+            </div>
+
+            <div class="question">
+                <p>13. सूचना का अधिकार अधिनियम (RTI) भारत में कब लागू हुआ?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q13" value="a"> 2002</label></li>
+                    <li><label><input type="radio" name="q13" value="b"> 2005</label></li>
+                    <li><label><input type="radio" name="q13" value="c"> 2008</label></li>
+                    <li><label><input type="radio" name="q13" value="d"> 2010</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q13">सही उत्तर: (b) 2005</p>
+            </div>
+
+            <div class="question">
+                <p>14. भारत के संविधान में कितने मौलिक कर्तव्य हैं?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q14" value="a"> 10</label></li>
+                    <li><label><input type="radio" name="q14" value="b"> 11</label></li>
+                    <li><label><input type="radio" name="q14" value="c"> 12</label></li>
+                    <li><label><input type="radio" name="q14" value="d"> 9</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q14">सही उत्तर: (b) 11</p>
+            </div>
+
+            <div class="question">
+                <p>15. 'योजना आयोग' को किस संस्था ने प्रतिस्थापित किया है?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q15" value="a"> वित्त आयोग</label></li>
+                    <li><label><input type="radio" name="q15" value="b"> नीति आयोग</label></li>
+                    <li><label><input type="radio" name="q15" value="c"> राष्ट्रीय विकास परिषद</label></li>
+                    <li><label><input type="radio" name="q15" value="d"> भारतीय रिजर्व बैंक</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q15">सही उत्तर: (b) नीति आयोग</p>
+            </div>
+
+            <div class="question">
+                <p>16. भारत में जीएसटी (वस्तु एवं सेवा कर) कब लागू हुआ?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q16" value="a"> 1 जुलाई 2016</label></li>
+                    <li><label><input type="radio" name="q16" value="b"> 1 जनवरी 2017</label></li>
+                    <li><label><input type="radio" name="q16" value="c"> 1 जुलाई 2017</label></li>
+                     <li><label><input type="radio" name="q16" value="d"> 1 जनवरी 2018</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q16">सही उत्तर: (c) 1 जुलाई 2017</p>
+            </div>
+
+            <div class="question">
+                <p>17. सर्व शिक्षा अभियान का उद्देश्य क्या है?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q17" value="a"> उच्च शिक्षा को बढ़ावा देना</label></li>
+                    <li><label><input type="radio" name="q17" value="b"> प्राथमिक शिक्षा को बढ़ावा देना</label></li>
+                    <li><label><input type="radio" name="q17" value="c"> महिला शिक्षा को बढ़ावा देना</label></li>
+                    <li><label><input type="radio" name="q17" value="d"> तकनीकी शिक्षा को बढ़ावा देना</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q17">सही उत्तर: (b) प्राथमिक शिक्षा को बढ़ावा देना</p>
+            </div>
+
+            <div class="question">
+                <p>18. 'मेक इन इंडिया' कार्यक्रम का मुख्य लक्ष्य क्या है?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q18" value="a"> कृषि उत्पादों का निर्यात बढ़ाना</label></li>
+                    <li><label><input type="radio" name="q18" value="b"> भारत में विनिर्माण को बढ़ावा देना</label></li>
+                    <li><label><input type="radio" name="q18" value="c"> सेवा क्षेत्र का विकास करना</label></li>
+                    <li><label><input type="radio" name="q18" value="d"> विदेशी निवेश को कम करना</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q18">सही उत्तर: (b) भारत में विनिर्माण को बढ़ावा देना</p>
+            </div>
+
+            <div class="question">
+                <p>19. स्वच्छ भारत अभियान किससे संबंधित है?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q19" value="a"> स्वच्छ ऊर्जा उत्पादन</label></li>
+                    <li><label><input type="radio" name="q19" value="b"> स्वच्छ पेयजल आपूर्ति</label></li>
+                    <li><label><input type="radio" name="q19" value="c"> स्वच्छता और सफाई</label></li>
+                    <li><label><input type="radio" name="q19" value="d"> स्वच्छ परिवहन</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q19">सही उत्तर: (c) स्वच्छता और सफाई</p>
+            </div>
+
+            <div class="question">
+                <p>20. भारत में नोटबंदी कब हुई थी?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q20" value="a"> 8 नवंबर 2014</label></li>
+                    <li><label><input type="radio" name="q20" value="b"> 8 नवंबर 2015</label></li>
+                    <li><label><input type="radio" name="q20" value="c"> 8 नवंबर 2016</label></li>
+                    <li><label><input type="radio" name="q20" value="d"> 8 नवंबर 2017</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q20">सही उत्तर: (c) 8 नवंबर 2016</p>
+            </div>
+
+            <div class="question">
+                <p>21. बेटी बचाओ, बेटी पढ़ाओ योजना का मुख्य उद्देश्य क्या है?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q21" value="a"> बाल विवाह रोकना</label></li>
+                    <li><label><input type="radio" name="q21" value="b"> कन्या भ्रूण हत्या रोकना और लड़कियों की शिक्षा को बढ़ावा देना</label></li>
+                    <li><label><input type="radio" name="q21" value="c"> दहेज प्रथा समाप्त करना</label></li>
+                    <li><label><input type="radio" name="q21" value="d"> महिला सशक्तिकरण को बढ़ावा देना</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q21">सही उत्तर: (b) कन्या भ्रूण हत्या रोकना और लड़कियों की शिक्षा को बढ़ावा देना</p>
+            </div>
+
+            <div class="question">
+                <p>22. प्रधानमंत्री जन धन योजना किससे संबंधित है?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q22" value="a"> आवास योजना</label></li>
+                    <li><label><input type="radio" name="q22" value="b"> वित्तीय समावेशन</label></li>
+                    <li><label><input type="radio" name="q22" value="c"> सिंचाई योजना</label></li>
+                    <li><label><input type="radio" name="q22" value="d"> रोजगार योजना</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q22">सही उत्तर: (b) वित्तीय समावेशन</p>
+            </div>
+
+             <div class="question">
+                <p>23. भारत में 'नीली क्रांति' किससे संबंधित है?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q23" value="a"> तिलहन उत्पादन</label></li>
+                    <li><label><input type="radio" name="q23" value="b"> खाद्यान्न उत्पादन</label></li>
+                    <li><label><input type="radio" name="q23" value="c"> मत्स्य उत्पादन</label></li>
+                    <li><label><input type="radio" name="q23" value="d"> दुग्ध उत्पादन</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q23">सही उत्तर: (c) मत्स्य उत्पादन</p>
+            </div>
+
+            <div class="question">
+                <p>24. राष्ट्रीय ग्रामीण रोजगार गारंटी अधिनियम (नरेगा) कब पारित किया गया था?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q24" value="a"> 2002</label></li>
+                    <li><label><input type="radio" name="q24" value="b"> 2005</label></li>
+                    <li><label><input type="radio" name="q24" value="c"> 2008</label></li>
+                    <li><label><input type="radio" name="q24" value="d"> 2010</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q24">सही उत्तर: (b) 2005</p>
+            </div>
+
+            <div class="question">
+                <p>25. भारत में सबसे बड़ा नियोक्ता कौन है?</p>
+                <ul class="options">
+                    <li><label><input type="radio" name="q25" value="a"> भारतीय रेलवे</label></li>
+                    <li><label><input type="radio" name="q25" value="b"> भारतीय सेना</label></li>
+                    <li><label><input type="radio" name="q25" value="c"> कृषि क्षेत्र</label></li>
+                    <li><label><input type="radio" name="q25" value="d"> सूचना प्रौद्योगिकी क्षेत्र</label></li>
+                </ul>
+                <p class="correct-answer hidden" id="correct-q25">सही उत्तर: (c) कृषि क्षेत्र</p>
+            </div>
+
+            <button type="submit" id="submit-button">परीक्षा समाप्त करें</button>
+        </form>
+        <div id="result-container" class="hidden">
+            <h2>परिणाम</h2>
+            <p>आपका नाम: <span id="student-name"></span></p>
+            <p>आपके अंक: <span id="final-marks"></span>/25</p>
+            <p>प्रतिशत: <span id="percentage"></span>%</p>
+        </div>
+    </div>
+
+    <script>
+        // Get references to elements
+        const nameInputContainer = document.getElementById('name-input-container');
+        const nameInput = document.getElementById('name-input');
+const startButton = document.getElementById('start-button');
+        const quizContainer = document.getElementById('quiz-container');
+        const quizForm = document.getElementById('quiz-form');
+        const timerDisplay = document.getElementById('timer');
+        const resultContainer = document.getElementById('result-container');
+        const studentNameDisplay = document.getElementById('student-name');
+        const finalMarksDisplay = document.getElementById('final-marks');
+        const percentageDisplay = document.getElementById('percentage');
+        const submitButton = document.getElementById('submit-button');
+
+        let studentName = '';
+        let timeLeft = 1500; // 25 minutes in seconds
+        let timerInterval;
+        let isSubmitButtonClicked = false;
+
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                } else {
+                    clearInterval(timerInterval);
+                    alert('समय समाप्त!');
+                    submitQuiz(); // End quiz if time runs out.
+                }
+            }, 1000);
+        }
+
+        // Function to submit the quiz
+        function submitQuiz() {
+            if (isSubmitButtonClicked) {
+                return; // Prevent multiple submissions
+            }
+            isSubmitButtonClicked = true;
+            clearInterval(timerInterval); // Stop the timer
+
+            let marks = 0;
+            const correctAnswers = {
+                q1: 'b', q2: 'b', q3: 'c', q4: 'd', q5: 'b',
+                q6: 'b', q7: 'b', q8: 'b', q9: 'c', q10: 'c',
+                q11: 'b', q12: 'b', q13: 'b', q14: 'b', q15: 'b',
+                q16: 'c', q17: 'b', q18: 'b', q19: 'c', q20: 'c',
+                q21: 'b', q22: 'b', q23: 'c', q24: 'b', q25: 'c'
+            };
+
+            const formData = new FormData(quizForm);
+
+            for (let question in correctAnswers) {
+                if (formData.get(question) === correctAnswers[question]) {
+                    marks++;
+                }
+            }
+
+            studentNameDisplay.textContent = studentName;
+            finalMarksDisplay.textContent = marks;
+            const percentage = (marks / 25) * 100;
+            percentageDisplay.textContent = percentage.toFixed(2);
+            resultContainer.classList.remove('hidden');
+
+            // Show correct answers
+            document.querySelectorAll('.correct-answer').forEach(answer => {
+                answer.classList.remove('hidden');
+            });
+            submitButton.disabled = true;
+
+
+            // Generate CSV data
+            const csvData = `Name,Marks,Percentage\n${studentName},${marks},${percentage}%`;
+
+            // Create a Blob
+            const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+
+            // Create a link and simulate click to download
+            const link = document.createElement("a");
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'result.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Event Listeners
+        startButton.addEventListener('click', () => {
+            studentName = nameInput.value.trim();
+            if (studentName === '') {
+                alert('कृपया अपना नाम दर्ज करें!');
+                return;
+            }
+            nameInputContainer.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            startTimer();
+        });
+
+        quizForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            submitQuiz();
+        });
+
+        // Disable right-click
+        document.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>
+

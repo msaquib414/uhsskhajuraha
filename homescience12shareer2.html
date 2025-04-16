@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>शरीर क्रिया विज्ञान MCQ परीक्षा</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            user-select: none; /* Prevent text selection */
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+            font-weight: bold;
+            color: navy;
+            padding: 10px;
+            background-color: lightyellow;
+            border: 1px solid gold;
+            border-radius: 5px;
+            z-index: 1000; /* Ensure it stays on top */
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        #submitBtn {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #submitBtn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        .correct-answer-display {
+            font-weight: bold;
+            color: green;
+            display: none;
+        }
+        .incorrect-answer-display {
+            font-weight: bold;
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div id="timer">25:00</div>
+    <h1>शरीर क्रिया विज्ञान कक्षा 12 MCQ परीक्षा</h1>
+    <form id="quizForm">
+        <label for="studentName">छात्र का नाम:</label>
+        <input type="text" id="studentName" required><br><br>
+
+        <div class="question">
+            <p>1. मानव शरीर में सबसे बड़ी हड्डी कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="a"> a) टिबिया</label>
+                <label><input type="radio" name="q1" value="b"> b) फीमर</label>
+                <label><input type="radio" name="q1" value="c"> c)radius</label>
+                <label><input type="radio" name="q1" value="d"> d) उल्ना</label>
+            </div>
+            <p class="correct-answer-display" >सही उत्तर: b) फीमर</p>
+        </div>
+
+        <div class="question">
+            <p>2. मानव शरीर में कितनी मांसपेशियां होती हैं?</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="a"> a) 206</label>
+                <label><input type="radio" name="q2" value="b"> b) 300</label>
+                <label><input type="radio" name="q2" value="c"> c) 639</label>
+                <label><input type="radio" name="q2" value="d"> d) 500</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) 639</p>
+        </div>
+
+        <div class="question">
+            <p>3. मानव मस्तिष्क का वजन लगभग कितना होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="a"> a) 1.5 kg</label>
+                <label><input type="radio" name="q3" value="b"> b) 1 kg</label>
+                <label><input type="radio" name="q3" value="c"> c) 2 kg</label>
+                <label><input type="radio" name="q3" value="d"> d) 500 gm</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: a) 1.5 kg</p>
+        </div>
+
+        <div class="question">
+            <p>4. मानव शरीर में सबसे छोटी हड्डी कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="a"> a) मेलियस</label>
+                <label><input type="radio" name="q4" value="b"> b) इनकस</label>
+                <label><input type="radio" name="q4" value="c"> c) स्टेप्स</label>
+                <label><input type="radio" name="q4" value="d"> d) टिबिया</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) स्टेप्स</p>
+        </div>
+
+        <div class="question">
+            <p>5. मानव शरीर का सामान्य तापमान कितना होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q5" value="a"> a) 36°C</label>
+                <label><input type="radio" name="q5" value="b"> b) 37°C</label>
+                <label><input type="radio" name="q5" value="c"> c) 38°C</label>
+                <label><input type="radio" name="q5" value="d"> d) 99°C</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) 37°C</p>
+        </div>
+
+        <div class="question">
+            <p>6. मानव हृदय एक मिनट में कितनी बार धड़कता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q6" value="a"> a) 60 बार</label>
+                <label><input type="radio" name="q6" value="b"> b) 72 बार</label>
+                <label><input type="radio" name="q6" value="c"> c) 80 बार</label>
+                <label><input type="radio" name="q6" value="d"> d) 90 बार</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) 72 बार</p>
+        </div>
+
+        <div class="question">
+            <p>7. मानव शरीर में रक्त की मात्रा कितनी होती है?</p>
+            <div class="options">
+                <label><input type="radio" name="q7" value="a"> a) 4-5 लीटर</label>
+                <label><input type="radio" name="q7" value="b"> b) 5-6 लीटर</label>
+                <label><input type="radio" name="q7" value="c"> c) 6-7 लीटर</label>
+                <label><input type="radio" name="q7" value="d"> d) 3-4 लीटर</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) 5-6 लीटर</p>
+        </div>
+
+        <div class="question">
+            <p>8. मानव शरीर में सबसे बड़ी ग्रंथि कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q8" value="a"> a) यकृत</label>
+                <label><input type="radio" name="q8" value="b"> b) अग्न्याशय</label>
+                <label><input type="radio" name="q8" value="c"> c) थायराइड</label>
+                <label><input type="radio" name="q8" value="d"> d) पिट्यूटरी</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: a) यकृत</p>
+        </div>
+
+        <div class="question">
+            <p>9. मानव शरीर में सबसे मजबूत हड्डी कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q9" value="a"> a) फीमर</label>
+                <label><input type="radio" name="q9" value="b"> b) टिबिया</label>
+                <label><input type="radio" name="q9" value="c"> c) जबड़ा</label>
+                <label><input type="radio" name="q9" value="d"> d) कशेरुका</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) जबड़ा</p>
+        </div>
+
+        <div class="question">
+            <p>10. मानव शरीर में कितने दाँत होते हैं?</p>
+            <div class="options">
+                <label><input type="radio" name="q10" value="a"> a) 28</label>
+                <label><input type="radio" name="q10" value="b"> b) 30</label>
+                <label><input type="radio" name="q10" value="c"> c) 32</label>
+                <label><input type="radio" name="q10" value="d"> d) 34</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) 32</p>
+        </div>
+
+        <div class="question">
+            <p>11. मानव शरीर में छोटी आंत की लंबाई कितनी होती है?</p>
+            <div class="options">
+                <label><input type="radio" name="q11" value="a"> a) 20 फीट</label>
+                <label><input type="radio" name="q11" value="b"> b) 23 फीट</label>
+                <label><input type="radio" name="q11" value="c"> c) 25 फीट</label>
+                <label><input type="radio" name="q11" value="d"> d) 18 फीट</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) 23 फीट</p>
+        </div>
+
+        <div class="question">
+            <p>12. मानव शरीर में बड़ी आंत की लंबाई कितनी होती है?</p>
+            <div class="options">
+                <label><input type="radio" name="q12" value="a"> a) 5 फीट</label>
+                <label><input type="radio" name="q12" value="b"> b) 6 फीट</label>
+                <label><input type="radio" name="q12" value="c"> c) 7 फीट</label>
+                <label><input type="radio" name="q12" value="d"> d) 4 फीट</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: a) 5 फीट</p>
+        </div>
+
+        <div class="question">
+            <p>13. मानव शरीर में कितनी हड्डियां होती हैं?</p>
+            <div class="options">
+                <label><input type="radio" name="q13" value="a"> a) 200</label>
+                <label><input type="radio" name="q13" value="b"> b) 206</label>
+                <label><input type="radio" name="q13" value="c"> c) 210</label>
+                <label><input type="radio" name="q13" value="d"> d) 212</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) 206</p>
+        </div>
+
+        <div class="question">
+            <p>14. मानव शरीर में कितने जोड़े पसलियां होती हैं?</p>
+            <div class="options">
+                <label><input type="radio" name="q14" value="a"> a) 10</label>
+                <label><input type="radio" name="q14" value="b"> b) 11</label>
+                <label><input type="radio" name="q14" value="c"> c) 12</label>
+                <label><input type="radio" name="q14" value="d"> d) 13</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) 12</p>
+        </div>
+
+        <div class="question">
+            <p>15. मानव शरीर में सबसे बड़ी धमनी कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q15" value="a"> a) महाधमनी</label>
+                <label><input type="radio" name="q15" value="b"> b) फुफ्फुसीय धमनी</label>
+                <label><input type="radio" name="q15" value="c"> c) कोरोनरी धमनी</label>
+                <label><input type="radio" name="q15" value="d"> d) कैरोटिड धमनी</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: a) महाधमनी</p>
+        </div>
+
+        <div class="question">
+            <p>16. मानव शरीर में सबसे बड़ी शिरा कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q16" value="a"> a) महाधमनी</label>
+                <label><input type="radio" name="q16" value="b"> b) फुफ्फुसीय शिरा</label>
+                <label><input type="radio" name="q16" value="c"> c) वेना कावा</label>
+                <label><input type="radio" name="q16" value="d"> d) कोरोनरी शिरा</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) वेना कावा</p>
+        </div>
+
+        <div class="question">
+            <p>17. मानव शरीर में सबसे बड़ी कोशिका कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q17" value="a"> a) तंत्रिका कोशिका</label>
+                <label><input type="radio" name="q17" value="b"> b) मांसपेशी कोशिका</label>
+                <label><input type="radio" name="q17" value="c"> c) अंडाणु</label>
+                <label><input type="radio" name="q17" value="d"> d) शुक्राणु</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: a) तंत्रिका कोशिका</p>
+        </div>
+
+        <div class="question">
+            <p>18. मानव शरीर में सबसे छोटी कोशिका कौन सी है?</p>
+            <div class="options">
+                <label><input type="radio" name="q18" value="a"> a) तंत्रिका कोशिका</label>
+                <label><input type="radio" name="q18" value="b"> b) मांसपेशी कोशिका</label>
+                <label><input type="radio" name="q18" value="c"> c) अंडाणु</label>
+                <label><input type="radio" name="q18" value="d"> d) शुक्राणु</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: d) शुक्राणु</p>
+        </div>
+
+        <div class="question">
+            <p>19. मानव शरीर में लाल रक्त कोशिकाओं का जीवनकाल कितना होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q19" value="a"> a) 20 दिन</label>
+                <label><input type="radio" name="q19" value="b"> b) 60 दिन</label>
+                <label><input type="radio" name="q19" value="c"> c) 120 दिन</label>
+                <label><input type="radio" name="q19" value="d"> d) 180 दिन</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) 120 दिन</p>
+        </div>
+
+        <div class="question">
+            <p>20. मानव शरीर में श्वेत रक्त कोशिकाओं का जीवनकाल कितना होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q20" value="a"> a) 2-3 दिन</label>
+                <label><input type="radio" name="q20" value="b"> b) 10-15 दिन</label>
+                <label><input type="radio" name="q20" value="c"> c) 20-30 दिन</label>
+                <label><input type="radio" name="q20" value="d"> d) कुछ घंटे</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) 10-15 दिन</p>
+        </div>
+
+        <div class="question">
+            <p>21. मानव शरीर में कौन सा अंग रक्त को शुद्ध करता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q21" value="a"> a) हृदय</label>
+                <label><input type="radio" name="q21" value="b"> b) गुर्दे</label>
+                <label><input type="radio" name="q21" value="c"> c) फेफड़े</label>
+                <label><input type="radio" name="q21" value="d"> d) यकृत</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: b) गुर्दे</p>
+        </div>
+
+        <div class="question">
+            <p>22. मानव शरीर में कौन सा अंग भोजन को पचाता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q22" value="a"> a) हृदय</label>
+                <label><input type="radio" name="q22" value="b"> b) गुर्दे</label>
+                <label><input type="radio" name="q22" value="c"> c) फेफड़े</label>
+                <label><input type="radio" name="q22" value="d"> d) आमाशय</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: d) आमाशय</p>
+        </div>
+
+        <div class="question">
+            <p>23. मानव शरीर में कौन सा अंग सांस लेने में मदद करता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q23" value="a"> a) हृदय</label>
+                <label><input type="radio" name="q23" value="b"> b) गुर्दे</label>
+                <label><input type="radio" name="q23" value="c"> c) फेफड़े</label>
+                <label><input type="radio" name="q23" value="d"> d) आमाशय</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) फेफड़े</p>
+        </div>
+
+        <div class="question">
+            <p>24. मानव शरीर में कौन सा अंग हार्मोन पैदा करता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q24" value="a"> a) हृदय</label>
+                <label><input type="radio" name="q24" value="b"> b) गुर्दे</label>
+                <label><input type="radio" name="q24" value="c"> c) अंतःस्रावी ग्रंथियां</label>
+                <label><input type="radio" name="q24" value="d"> d) आमाशय</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: c) अंतःस्रावी ग्रंथियां</p>
+        </div>
+
+        <div class="question">
+            <p>25. मानव शरीर में कौन सा अंग पित्त का उत्पादन करता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q25" value="a"> a) हृदय</label>
+                <label><input type="radio" name="q25" value="b"> b) गुर्दे</label>
+                <label><input type="radio" name="q25" value="c"> c) फेफड़े</label>
+                <label><input type="radio" name="q25" value="d"> d) यकृत</label>
+            </div>
+            <p class="correct-answer-display">सही उत्तर: d) यकृत</p>
+        </div>
+
+        <button type="submit" id="submitBtn">परीक्षा समाप्त करें</button>
+    </form>
+
+    <div id="result" style="display:none;"></div>
+
+    <script>
+        const quizForm = document.getElementById('quizForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultDiv = document.getElementById('result');
+        const timerDisplay = document.getElementById('timer');
+        const studentNameInput = document.getElementById('studentName');
+
+        let correctAnswers = {
+            q1: 'b', q2: 'c', q3: 'a', q4: 'c', q5: 'b',
+            q6: 'b', q7: 'b', q8: 'a', q9: 'c', q10: 'c',
+            q11: 'b', q12: 'a', q13: 'b', q14: 'c', q15: 'a',
+            q16: 'c', q17: 'a', q18: 'd', q19: 'c', q20: 'b',
+            q21: 'b', q22: 'd', q23: 'c', q24: 'c', q25: 'd'
+        };
+
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                timerDisplay.textContent = minutes + ':' + seconds;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz(); // End quiz if time runs out.
+                }
+            }, 1000);
+        }
+
+        // Function to calculate the score
+        function calculateScore() {
+            let score = 0;
+            const formData = new FormData(quizForm);
+
+            for (let question in correctAnswers) {
+                if (formData.get(question) === correctAnswers[question]) {
+                    score++;
+                }
+            }
+            return score;
+        }
+
+        // Function to display the result
+        function displayResult(score) {
+            resultDiv.innerHTML = `आपने ${score} / 25 अंक प्राप्त किए।`;
+            resultDiv.style.display = 'block';
+
+            // Show correct answers for each question
+            document.querySelectorAll('.question').forEach(questionElement => {
+                questionElement.querySelectorAll('.correct-answer-display').forEach(correctAnswerDisplay => {
+                    correctAnswerDisplay.style.display = 'block';
+                });
+                const selectedOption = new FormData(quizForm).get(questionElement.querySelector('input[type="radio"]').name);
+                if (selectedOption && selectedOption !== correctAnswers[questionElement.querySelector('input[type="radio"]').name]) {
+                    questionElement.querySelector(`input[value="${selectedOption}"]`).parentElement.style.color = 'red';
+                }
+            });
+        }
+
+        // Function to generate CSV content
+        function generateCSV(studentName, score) {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Student Name,Score\r\n";
+            csvContent += `${studentName},${score}\r\n`;
+            return csvContent;
+        }
+
+        // Function to download CSV file
+        function downloadCSV(csvContent, studentName) {
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `${studentName}_result.csv`);
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+            document.body.removeChild(link); // Clean up
+        }
+
+        // Function to handle the submit button click
+        function submitQuiz() {
+            if (submitBtn.disabled) return;
+
+            const studentName = document.getElementById('studentName').value.trim();
+            if (!studentName) {
+                alert("कृपया अपना नाम दर्ज करें!");
+                return;
+          

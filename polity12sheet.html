@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>शीत युद्ध का दौर - MCQ परीक्षा</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            z-index: 1000;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .options {
+            margin-top: 10px;
+        }
+        .option {
+            display: block;
+            margin-bottom: 8px;
+        }
+        button[type="submit"] {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+    <div id="timer">25:00</div>
+    <div class="container">
+        <h1>शीत युद्ध का दौर - MCQ परीक्षा - चोरी मत करो</h1>
+        <form id="quizForm">
+            <label for="studentName">छात्र का नाम:</label>
+            <input type="text" id="studentName" required><br><br>
+
+            <div class="question">
+                <p>1. शीत युद्ध कब शुरू हुआ?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q1" value="a"> a) 1939</label>
+                    <label class="option"><input type="radio" name="q1" value="b"> b) 1945</label>
+                    <label class="option"><input type="radio" name="q1" value="c"> c) 1950</label>
+                    <label class="option"><input type="radio" name="q1" value="d"> d) 1962</label>
+                </div>
+                <p class="correct-answer" id="correct-q1" style="display:none;">सही उत्तर: b) 1945</p>
+            </div>
+
+            <div class="question">
+                <p>2. शीत युद्ध किन दो मुख्य गुटों के बीच लड़ा गया?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q2" value="a"> a) जर्मनी और फ्रांस</label>
+                    <label class="option"><input type="radio" name="q2" value="b"> ब्रिटेन और रूस</label>
+                    <label class="option"><input type="radio" name="q2" value="c"> संयुक्त राज्य अमेरिका और सोवियत संघ</label>
+                    <label class="option"><input type="radio" name="q2" value="d"> चीन और जापान</label>
+                </div>
+                <p class="correct-answer" id="correct-q2" style="display:none;">सही उत्तर: c) संयुक्त राज्य अमेरिका और सोवियत संघ</p>
+            </div>
+
+            <div class="question">
+                <p>3. 'लौह परदा' शब्द किसने गढ़ा?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q3" value="a"> a) जोसेफ स्टालिन</label>
+                    <label class="option"><input type="radio" name="q3" value="b"> विंस्टन चर्चिल</label>
+                    <label class="option"><input type="radio" name="q3" value="c"> फ्रैंकलिन डी. रूजवेल्ट</label>
+                    <label class="option"><input type="radio" name="q3" value="d"> हैरी एस. ट्रूमैन</label>
+                </div>
+                <p class="correct-answer" id="correct-q3" style="display:none;">सही उत्तर: b) विंस्टन चर्चिल</p>
+            </div>
+
+            <div class="question">
+                <p>4. नाटो (NATO) कब स्थापित हुआ?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q4" value="a"> a) 1947</label>
+                    <label class="option"><input type="radio" name="q4" value="b"> b) 1949</label>
+                    <label class="option"><input type="radio" name="q4" value="c"> c) 1955</label>
+                    <label class="option"><input type="radio" name="q4" value="d"> d) 1961</label>
+                </div>
+                <p class="correct-answer" id="correct-q4" style="display:none;">सही उत्तर: b) 1949</p>
+            </div>
+
+            <div class="question">
+                <p>5. वारसा संधि किस वर्ष हुई?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q5" value="a"> a) 1949</label>
+                    <label class="option"><input type="radio" name="q5" value="b"> b) 1952</label>
+                    <label class="option"><input type="radio" name="q5" value="c"> c) 1955</label>
+                    <label class="option"><input type="radio" name="q5" value="d"> d) 1960</label>
+                </div>
+                <p class="correct-answer" id="correct-q5" style="display:none;">सही उत्तर: c) 1955</p>
+            </div>
+
+            <div class="question">
+                <p>6. बर्लिन की दीवार कब खड़ी की गई थी?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q6" value="a"> a) 1949</label>
+                    <label class="option"><input type="radio" name="q6" value="b"> b) 1953</label>
+                    <label class="option"><input type="radio" name="q6" value="c"> c) 1961</label>
+                    <label class="option"><input type="radio" name="q6" value="d"> d) 1965</label>
+                </div>
+                <p class="correct-answer" id="correct-q6" style="display:none;">सही उत्तर: c) 1961</p>
+            </div>
+
+            <div class="question">
+                <p>7. क्यूबा मिसाइल संकट किस वर्ष हुआ?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q7" value="a"> a) 1959</label>
+                    <label class="option"><input type="radio" name="q7" value="b"> b) 1962</label>
+                    <label class="option"><input type="radio" name="q7" value="c"> c) 1965</label>
+                    <label class="option"><input type="radio" name="q7" value="d"> d) 1968</label>
+                </div>
+                <p class="correct-answer" id="correct-q7" style="display:none;">सही उत्तर: b) 1962</p>
+            </div>
+
+            <div class="question">
+                <p>8. गुटनिरपेक्ष आंदोलन (NAM) का पहला शिखर सम्मेलन कहाँ हुआ था?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q8" value="a"> a) नई दिल्ली</label>
+                    <label class="option"><input type="radio" name="q8" value="b"> b) बेलग्रेड</label>
+                    <label class="option"><input type="radio" name="q8" value="c"> c) जकार्ता</label>
+                    <label class="option"><input type="radio" name="q8" value="d"> d) काहिरा</label>
+                </div>
+                <p class="correct-answer" id="correct-q8" style="display:none;">सही उत्तर: b) बेलग्रेड</p>
+            </div>
+
+            <div class="question">
+                <p>9. शीत युद्ध के दौरान अमेरिका ने कौन सा सैन्य गठबंधन बनाया?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q9" value="a"> a) वारसा संधि</label>
+                    <label class="option"><input type="radio" name="q9" value="b"> b) NATO</label>
+                    <label class="option"><input type="radio" name="q9" value="c"> c) गुटनिरपेक्ष आंदोलन</label>
+                    <label class="option"><input type="radio" name="q9" value="d"> d) इनमें से कोई नहीं</label>
+                </div>
+                <p class="correct-answer" id="correct-q9" style="display:none;">सही उत्तर: b) NATO</p>
+            </div>
+
+            <div class="question">
+                <p>10. सोवियत संघ का विघटन किस वर्ष हुआ?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q10" value="a"> a) 1985</label>
+                    <label class="option"><input type="radio" name="q10" value="b"> b) 1991</label>
+                    <label class="option"><input type="radio" name="q10" value="c"> c) 1995</label>
+                    <label class="option"><input type="radio" name="q10" value="d"> d) 2000</label>
+                </div>
+                <p class="correct-answer" id="correct-q10" style="display:none;">सही उत्तर: b) 1991</p>
+            </div>
+
+            <div class="question">
+                <p>11. 'डेटेंट' (Détente) का क्या अर्थ है?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q11" value="a"> a) पूर्ण युद्ध</label>
+                    <label class="option"><input type="radio" name="q11" value="b"> b) तनाव में कमी</label>
+                    <label class="option"><input type="radio" name="q11" value="c"> c) हथियारों की दौड़</label>
+                    <label class="option"><input type="radio" name="q11" value="d"> d) शीत युद्ध की समाप्ति</label>
+                </div>
+                <p class="correct-answer" id="correct-q11" style="display:none;">सही उत्तर: b) तनाव में कमी</p>
+            </div>
+
+            <div class="question">
+                <p>12. निम्नलिखित में से कौन गुटनिरपेक्ष आंदोलन के संस्थापक सदस्यों में से नहीं था?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q12" value="a"> a) जवाहरलाल नेहरू</label>
+                    <label class="option"><input type="radio" name="q12" value="b"> b) जोसिप ब्रोज़ टीटो</label>
+                    <label class="option"><input type="radio" name="q12" value="c"> c) गमाल अब्देल नासिर</label>
+                    <label class="option"><input type="radio" name="q12" value="d"> d) विंस्टन चर्चिल</label>
+                </div>
+                <p class="correct-answer" id="correct-q12" style="display:none;">सही उत्तर: d) विंस्टन चर्चिल</p>
+            </div>
+
+            <div class="question">
+                <p>13. शीत युद्ध के दौरान पूर्वी गठबंधन का नेतृत्व किसने किया?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q13" value="a"> a) संयुक्त राज्य अमेरिका</label>
+                    <label class="option"><input type="radio" name="q13" value="b"> b) सोवियत संघ</label>
+                    <label class="option"><input type="radio" name="q13" value="c"> c) ब्रिटेन</label>
+                    <label class="option"><input type="radio" name="q13" value="d"> d) फ्रांस</label>
+                </div>
+                <p class="correct-answer" id="correct-q13" style="display:none;">सही उत्तर: b) सोवियत संघ</p>
+            </div>
+
+            <div class="question">
+                <p>14. किस घटना को शीत युद्ध का चरमोत्कर्ष माना जाता है?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q14" value="a"> a) बर्लिन की दीवार का निर्माण</label>
+                    <label class="option"><input type="radio" name="q14" value="b"> b) कोरियाई युद्ध</label>
+                    <label class="option"><input type="radio" name="q14" value="c"> c) क्यूबा मिसाइल संकट</label>
+                    <label class="option"><input type="radio" name="q14" value="d"> d) वियतनाम युद्ध</label>
+                </div>
+                <p class="correct-answer" id="correct-q14" style="display:none;">सही उत्तर: c) क्यूबा मिसाइल संकट</p>
+            </div>
+
+            <div class="question">
+                <p>15. 'दूसरी दुनिया' से क्या तात्पर्य है?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q15" value="a"> a) विकसित पश्चिमी देश</label>
+                    <label class="option"><input type="radio" name="q15" value="b"> b) समाजवादी देश</label>
+                    <label class="option"><input type="radio" name="q15" value="c"> c) विकासशील देश</label>
+                    <label class="option"><input type="radio" name="q15" value="d"> d) गुटनिरपेक्ष देश</label>
+                </div>
+                <p class="correct-answer" id="correct-q15" style="display:none;">सही उत्तर: b) समाजवादी देश</p>
+            </div>
+
+            <div class="question">
+                <p>16. शीत युद्ध के बाद कौन सा देश एकमात्र महाशक्ति के रूप में उभरा?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q16" value="a"> a) रूस</label>
+                    <label class="option"><input type="radio" name="q16" value="b"> b) चीन</label>
+                    <label class="option"><input type="radio" name="q16" value="c"> c) संयुक्त राज्य अमेरिका</label>
+                    <label class="option"><input type="radio" name="q16" value="d"> d) फ्रांस</label>
+                </div>
+                <p class="correct-answer" id="correct-q16" style="display:none;">सही उत्तर: c) संयुक्त राज्य अमेरिका</p>
+            </div>
+
+            <div class="question">
+                <p>17. 'ग्लासनोस्त' और 'पेरेस्त्रोइका' की नीतियां किसने शुरू कीं?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q17" value="a"> a) लियोनिद ब्रेजनेव</label>
+                    <label class="option"><input type="radio" name="q17" value="b"> b) यूरी आंद्रोपोव</label>
+                    <label class="option"><input type="radio" name="q17" value="c"> c) मिखाइल गोर्बाचेव</label>
+                    <label class="option"><input type="radio" name="q17" value="d"> d) निकिता ख्रुश्चेव</label>
+                </div>
+                <p class="correct-answer" id="correct-q17" style="display:none;">सही उत्तर: c) मिखाइल गोर्बाचेव</p>
+            </div>
+
+            <div class="question">
+                <p>18. किस वर्ष बर्लिन की दीवार गिराई गई?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q18" value="a"> a) 1987</label>
+                    <label class="option"><input type="radio" name="q18" value="b"> b) 1989</label>
+                    <label class="option"><input type="radio" name="q18" value="c"> c) 1991</label>
+                    <label class="option"><input type="radio" name="q18" value="d"> d) 1993</label>
+                </div>
+                <p class="correct-answer" id="correct-q18" style="display:none;">सही उत्तर: b) 1989</p>
+            </div>
+
+            <div class="question">
+                <p>19. शीत युद्ध के दौरान 'पहली दुनिया' किसे कहा जाता था?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q19" value="a"> a) समाजवादी देश</label>
+                    <label class="option"><input type="radio" name="q19" value="b"> b) पूंजीवादी देश</label>
+                    <label class="option"><input type="radio" name="q19" value="c"> c) विकासशील देश</label>
+                    <label class="option"><input type="radio" name="q19" value="d"> d) गुटनिरपेक्ष देश</label>
+                </div>
+                <p class="correct-answer" id="correct-q19" style="display:none;">सही उत्तर: b) पूंजीवादी देश</p>
+            </div>
+
+            <div class="question">
+                <p>20. कोरियाई युद्ध कब से कब तक चला?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q20" value="a"> a) 1950-1953</label>
+                    <label class="option"><input type="radio" name="q20" value="b"> b) 1955-1958</label>
+                    <label class="option"><input type="radio" name="q20" value="c"> c) 1960-1963</label>
+                    <label class="option"><input type="radio" name="q20" value="d"> d) 1965-1968</label>
+                </div>
+                <p class="correct-answer" id="correct-q20" style="display:none;">सही उत्तर: a) 1950-1953</p>
+            </div>
+
+            <div class="question">
+                <p>21. शीत युद्ध का मुख्य परिणाम क्या था?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q21" value="a"> a) संयुक्त राष्ट्र का कमजोर होना</label>
+                    <label class="option"><input type="radio" name="q21" value="b"> b) दो महाशक्तियों का उदय</label>
+                    <label class="option"><input type="radio" name="q21" value="c"> c) उपनिवेशवाद का विस्तार</label>
+                    <label class="option"><input type="radio" name="q21" value="d"> d) लोकतंत्र का पतन</label>
+                </div>
+                <p class="correct-answer" id="correct-q21" style="display:none;">सही उत्तर: b) दो महाशक्तियों का उदय</p>
+            </div>
+
+            <div class="question">
+                <p>22. निम्नलिखित में से कौन सा देश नाटो का सदस्य नहीं था?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q22" value="a"> a) संयुक्त राज्य अमेरिका</label>
+                    <label class="option"><input type="radio" name="q22" value="b"> b) कनाडा</label>
+                    <label class="option"><input type="radio" name="q22" value="c"> c) फ्रांस</label>
+                    <label class="option"><input type="radio" name="q22" value="d"> d) पोलैंड</label>
+                </div>
+                <p class="correct-answer" id="correct-q22" style="display:none;">सही उत्तर: d) पोलैंड</p>
+            </div>
+
+            <div class="question">
+                <p>23. शीत युद्ध के दौरान सोवियत संघ द्वारा बनाया गया सैन्य गठबंधन कौन सा था?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q23" value="a"> a) नाटो</label>
+                    <label class="option"><input type="radio" name="q23" value="b"> b) सीटो (SEATO)</label>
+                    <label class="option"><input type="radio" name="q23" value="c"> c) वारसा संधि</label>
+                    <label class="option"><input type="radio" name="q23" value="d"> d) सेंटो (CENTO)</label>
+                </div>
+                <p class="correct-answer" id="correct-q23" style="display:none;">सही उत्तर: c) वारसा संधि</p>
+            </div>
+
+            <div class="question">
+                <p>24. वियतनाम युद्ध कब समाप्त हुआ?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q24" value="a"> a) 1969</label>
+                    <label class="option"><input type="radio" name="q24" value="b"> b) 1973</label>
+                    <label class="option"><input type="radio" name="q24" value="c"> c) 1975</label>
+                    <label class="option"><input type="radio" name="q24" value="d"> d) 1979</label>
+                </div>
+                <p class="correct-answer" id="correct-q24" style="display:none;">सही उत्तर: c) 1975</p>
+            </div>
+
+            <div class="question">
+                <p>25. गुटनिरपेक्ष आंदोलन का उद्देश्य क्या था?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q25" value="a"> a) सैन्य गठबंधन बनाना</label>
+                    <label class="option"><input type="radio" name="q25" value="b"> b) दोनों महाशक्तियों का समर्थन करना</label>
+                    <label class="option"><input type="radio" name="q25" value="c"> c) किसी भी सैन्य गुट में शामिल न होना</label>
+                    <label class="option"><input type="radio" name="q25" value="d"> d) उपनिवेशवाद का समर्थन करना</label>
+                </div>
+                <p class="correct-answer" id="correct-q25" style="display:none;">सही उत्तर: c) किसी भी सैन्य गुट में शामिल न होना</p>
+            </div>
+
+            <button type="submit">जमा करें</button>
+        </form>
+
+        <div id="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+        const timerDisplay = document.getElementById('timer');
+        const quizForm = document.getElementById('quizForm');
+        const resultDiv = document.getElementById('result');
+        const correctAnswers = {
+            q1: 'b', q2: 'c', q3: 'b', q4: 'b', q5: 'c',
+            q6: 'c', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
+            q11: 'b', q12: 'd', q13: 'b', q14: 'c', q15: 'b',
+            q16: 'c', q17: 'c', q18: 'b', q19: 'b', q20: 'a',
+            q21: 'b', q22: 'd', q23: 'c', q24: 'c', q25: 'c'
+        };
+        let submitted = false;
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+            timeLeft--;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        startTimer();
+
+        quizForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            if (!submitted) {
+                submitQuiz();
+                submitted = true;
+            } else {
+                alert('आप पहले ही जमा कर चुके हैं!');
+            }
+        });
+
+        function submitQuiz() {
+            clearInterval(timerInterval);
+            const formData = new FormData(quizForm);
+            let score = 0;
+            const studentName = formData.get('studentName');
+            let csvData = 'नाम,अंक\n';
+            csvData += `${studentName},`;
+
+            for (let i = 1; i <= 25; i++) {
+                const questionName = `q${i}`;
+                const selectedAnswer = formData.get(questionName);
+                const correctAnswer = correctAnswers[questionName];
+                const correctAnswerElement = document.getElementById(`correct-${questionName}`);
+                correctAnswerElement.style.display = 'block';
+
+                if (selectedAnswer === correctAnswer) {
+                    score++;
+                }
+            }
+
+            resultDiv.textContent = `आपका स्कोर: ${score} / 25`;
+            resultDiv.style.display = 'block';
+            csvData += `${score}\n`;
+
+            downloadCSV(csvData, 'result.csv');
+        }
+
+        function downloadCSV(csv, filename) {
+            const csvFile = new Blob([csv], { type: 'text/csv' });
+            const downloadLink = document.createElement('a');
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = 'none';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    </script>
+</body>
+</html>
