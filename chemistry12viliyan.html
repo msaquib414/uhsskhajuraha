@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>विलयन रसायन विज्ञान MCQ परीक्षा</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            z-index: 1000;
+        }
+        .question {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        button[type="submit"] {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: red;
+        }
+        #name-input-container {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer">25:00</div>
+
+    <div id="name-input-container">
+        <label for="studentName">छात्र का नाम:</label>
+        <input type="text" id="studentName" required>
+        <button onclick="startQuiz()">प्रारंभ करें</button>
+    </div>
+
+    <form id="quiz-form" style="display:none;">
+        <div class="question">
+            <p>1. निम्नलिखित में से कौन सा सांद्रता इकाई तापमान पर निर्भर नहीं करती है?</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="a"> (a) मोलरता</label>
+                <label><input type="radio" name="q1" value="b"> (b) मोललता</label>
+                <label><input type="radio" name="q1" value="c"> (c) नॉर्मलता</label>
+                <label><input type="radio" name="q1" value="d"> (d) आयतन प्रतिशत</label>
+            </div>
+            <p id="correct-q1" style="display:none;">सही उत्तर: (b) मोललता</p>
+        </div>
+
+        <div class="question">
+            <p>2. एक विलयन जिसमें विलेय की अधिकतम मात्रा घुली हुई हो, उसे क्या कहते हैं?</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="a"> (a) असंतृप्त विलयन</label>
+                <label><input type="radio" name="q2" value="b"> (b) संतृप्त विलयन</label>
+                <label><input type="radio" name="q2" value="c"> (c) अतिसंतृप्त विलयन</label>
+                <label><input type="radio" name="q2" value="d"> (d) तनु विलयन</label>
+            </div>
+            <p id="correct-q2" style="display:none;">सही उत्तर: (b) संतृप्त विलयन</p>
+        </div>
+
+        <div class="question">
+            <p>3. हेनरी का नियम निम्नलिखित में से किसके बीच संबंध बताता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="a"> (a) गैस की घुलनशीलता और तापमान</label>
+                <label><input type="radio" name="q3" value="b"> (b) गैस की घुलनशीलता और दाब</label>
+                <label><input type="radio" name="q3" value="c"> (c) वाष्प दाब और तापमान</label>
+                <label><input type="radio" name="q3" value="d"> (d) क्वथनांक और दाब</label>
+            </div>
+            <p id="correct-q3" style="display:none;">सही उत्तर: (b) गैस की घुलनशीलता और दाब</p>
+        </div>
+
+        <div class="question">
+            <p>4. राउल्ट का नियम किससे संबंधित है?</p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="a"> (a) हिमांक का अवनमन</label>
+                <label><input type="radio" name="q4" value="b"> (b) क्वथनांक का उन्नयन</label>
+                <label><input type="radio" name="q4" value="c"> (c) परासरण दाब</label>
+                <label><input type="radio" name="q4" value="d"> (d) वाष्प दाब का आपेक्षिक अवनमन</label>
+            </div>
+            <p id="correct-q4" style="display:none;">सही उत्तर: (d) वाष्प दाब का आपेक्षिक अवनमन</p>
+        </div>
+
+        <div class="question">
+            <p>5. असामान्य आणविक द्रव्यमान प्रदर्शित करने वाले विलयन कहलाते हैं:</p>
+            <div class="options">
+                <label><input type="radio" name="q5" value="a"> (a) आदर्श विलयन</label>
+                <label><input type="radio" name="q5" value="b"> (b) अनादर्श विलयन</label>
+                <label><input type="radio" name="q5" value="c"> (c) समपरासारी विलयन</label>
+                <label><input type="radio" name="q5" value="d"> (d) अतिपरासारी विलयन</label>
+            </div>
+            <p id="correct-q5" style="display:none;">सही उत्तर: (b) अनादर्श विलयन</p>
+        </div>
+
+        <div class="question">
+            <p>6. निम्नलिखित में से कौन सा अणुसंख्य गुणधर्म नहीं है?</p>
+            <div class="options">
+                <label><input type="radio" name="q6" value="a"> (a) परासरण दाब</label>
+                <label><input type="radio" name="q6" value="b"> (b) क्वथनांक का उन्नयन</label>
+                <label><input type="radio" name="q6" value="c"> (c) हिमांक का अवनमन</label>
+                <label><input type="radio" name="q6" value="d"> (d) पृष्ठ तनाव</label>
+            </div>
+            <p id="correct-q6" style="display:none;">सही उत्तर: (d) पृष्ठ तनाव</p>
+        </div>
+
+        <div class="question">
+            <p>7. किसी विलयन का परासरण दाब किस पर निर्भर करता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q7" value="a"> (a) केवल विलायक की प्रकृति</label>
+                <label><input type="radio" name="q7" value="b"> (b) केवल विलेय की प्रकृति</label>
+                <label><input type="radio" name="q7" value="c"> (c) विलेय के कणों की संख्या</label>
+                <label><input type="radio" name="q7" value="d"> (d) विलयन का आयतन</label>
+            </div>
+            <p id="correct-q7" style="display:none;">सही उत्तर: (c) विलेय के कणों की संख्या</p>
+        </div>
+
+        <div class="question">
+            <p>8. वांट हॉफ कारक (i) का मान वियोजन के लिए क्या होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q8" value="a"> (a) i < 1</label>
+                <label><input type="radio" name="q8" value="b"> (b) i = 1</label>
+                <label><input type="radio" name="q8" value="c"> (c) i > 1</label>
+                <label><input type="radio" name="q8" value="d"> (d) i = 0</label>
+            </div>
+            <p id="correct-q8" style="display:none;">सही उत्तर: (c) i > 1</p>
+        </div>
+
+        <div class="question">
+            <p>9. 0.1 M ग्लूकोज विलयन की तुलना में 0.1 M मैग्नीशियम क्लोराइड (MgCl₂) विलयन का हिमांक अवनमन होगा:</p>
+            <div class="options">
+                <label><input type="radio" name="q9" value="a"> (a) समान</label>
+                <label><input type="radio" name="q9" value="b"> (b) लगभग दोगुना</label>
+                <label><input type="radio" name="q9" value="c"> (c) लगभग तिगुना</label>
+                <label><input type="radio" name="q9" value="d"> (d) आधा</label>
+            </div>
+            <p id="correct-q9" style="display:none;">सही उत्तर: (c) लगभग तिगुना</p>
+        </div>
+
+        <div class="question">
+            <p>10. निम्नलिखित में से कौन सा जलीय विलयन उच्चतम क्वथनांक प्रदर्शित करेगा?</p>
+            <div class="options">
+                <label><input type="radio" name="q10" value="a"> (a) 0.1 M ग्लूकोज</label>
+                <label><input type="radio" name="q10" value="b"> (b) 0.1 M NaCl</label>
+                <label><input type="radio" name="q10" value="c"> (c) 0.1 M BaCl₂</label>
+                <label><input type="radio" name="q10" value="d"> (d) 0.1 M यूरिया</label>
+            </div>
+            <p id="correct-q10" style="display:none;">सही उत्तर: (c) 0.1 M BaCl₂</p>
+        </div>
+
+        <div class="question">
+            <p>11. एक आदर्श विलयन वह है जो पालन करता है:</p>
+            <div class="options">
+                <label><input type="radio" name="q11" value="a"> (a) केवल राउल्ट का नियम</label>
+                <label><input type="radio" name="q11" value="b"> (b) केवल हेनरी का नियम</label>
+                <label><input type="radio" name="q11" value="c"> (c) राउल्ट और हेनरी दोनों के नियम</label>
+                <label><input type="radio" name="q11" value="d"> (d) न तो राउल्ट और न ही हेनरी का नियम</label>
+            </div>
+            <p id="correct-q11" style="display:none;">सही उत्तर: (a) केवल राउल्ट का नियम</p>
+        </div>
+
+        <div class="question">
+            <p>12. जब एक अवाष्पशील विलेय को विलायक में घोला जाता है, तो विलायक का वाष्प दाब:</p>
+            <div class="options">
+                <label><input type="radio" name="q12" value="a"> (a) बढ़ जाता है</label>
+                <label><input type="radio" name="q12" value="b"> (b) घट जाता है</label>
+                <label><input type="radio" name="q12" value="c"> (c) अपरिवर्तित रहता है</label>
+                <label><input type="radio" name="q12" value="d"> (d) पहले बढ़ता है फिर घटता है</label>
+            </div>
+            <p id="correct-q12" style="display:none;">सही उत्तर: (b) घट जाता है</p>
+        </div>
+
+        <div class="question">
+            <p>13. मोललता को किस प्रकार व्यक्त किया जाता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q13" value="a"> (a) विलेय के मोलों की संख्या / विलयन का आयतन (लीटर में)</label>
+                <label><input type="radio" name="q13" value="b"> (b) विलेय के मोलों की संख्या / विलायक का द्रव्यमान (किलोग्राम में)</label>
+                <label><input type="radio" name="q13" value="c"> (c) विलेय का द्रव्यमान / विलयन का द्रव्यमान</label>
+                <label><input type="radio" name="q13" value="d"> (d) विलेय का द्रव्यमान / विलायक का आयतन</label>
+            </div>
+            <p id="correct-q13" style="display:none;">सही उत्तर: (b) विलेय के मोलों की संख्या / विलायक का द्रव्यमान (किलोग्राम में)</p>
+        </div>
+
+        <div class="question">
+            <p>14. निम्न में से कौन सा कोलिगेटिव गुणधर्म है?</p>
+            <div class="options">
+                <label><input type="radio" name="q14" value="a"> (a) श्यानता</label>
+                <label><input type="radio" name="q14" value="b"> (b) पृष्ठ तनाव</label>
+                <label><input type="radio" name="q14" value="c"> (c) विद्युत चालकता</label>
+                <label><input type="radio" name="q14" value="d"> (d) परासरण दाब</label>
+            </div>
+            <p id="correct-q14" style="display:none;">सही उत्तर: (d) परासरण दाब</p>
+        </div>
+
+        <div class="question">
+            <p>15. विलयन के क्वथनांक में उन्नयन किसके समानुपाती होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q15" value="a"> (a) विलेय का मोल प्रभाज</label>
+                <label><input type="radio" name="q15" value="b"> (b) विलायक का मोल प्रभाज</label>
+                <label><input type="radio" name="q15" value="c"> (c) विलयन की मोलरता</label>
+                <label><input type="radio" name="q15" value="d"> (d) विलयन की मोललता</label>
+            </div>
+            <p id="correct-q15" style="display:none;">सही उत्तर: (d) विलयन की मोललता</p>
+        </div>
+
+        <div class="question">
+            <p>16. निम्नलिखित में से कौन सा अनादर्श विलयन का उदाहरण है?</p>
+            <div class="options">
+                <label><input type="radio" name="q16" value="a"> (a) बेंजीन और टोल्यूनि</label>
+                <label><input type="radio" name="q16" value="b"> (b) क्लोरोफॉर्म और एसीटोन</label>
+                <label><input type="radio" name="q16" value="c"> (c) एथिल ब्रोमाइड और एथिल आयोडाइड</label>
+                <label><input type="radio" name="q16" value="d"> (d) n-हेप्टेन और n-ऑक्टेन</label>
+            </div>
+            <p id="correct-q16" style="display:none;">सही उत्तर: (b) क्लोरोफॉर्म और एसीटोन</p>
+        </div>
+
+        <div class="question">
+            <p>17. समपरासारी विलयनों में क्या समान होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q17" value="a"> (a) सांद्रता</label>
+                <label><input type="radio" name="q17" value="b"> (b) क्वथनांक</label
+                <label><input type="radio" name="q17" value="c"> (c) हिमांक</label>
+                <label><input type="radio" name="q17" value="d"> (d) वाष्प दाब</label>
+            </div>
+            <p id="correct-q17" style="display:none;">सही उत्तर: (a) सांद्रता</p>
+        </div>
+
+        <div class="question">
+            <p>18. निम्नलिखित में से कौन सा विलयन का अणुसंख्य गुणधर्म है?</p>
+            <div class="options">
+                <label><input type="radio" name="q18" value="a"> (a) पृष्ठ तनाव</label>
+                <label><input type="radio" name="q18" value="b"> (b) श्यानता</label>
+                <label><input type="radio" name="q18" value="c"> (c) परासरण दाब</label>
+                <label><input type="radio" name="q18" value="d"> (d) रंग</label>
+            </div>
+            <p id="correct-q18" style="display:none;">सही उत्तर: (c) परासरण दाब</p>
+        </div>
+
+         <div class="question">
+            <p>19. निम्न में से कौन राउल्ट के नियम का पालन करता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q19" value="a"> (a) आदर्श विलयन</label>
+                <label><input type="radio" name="q19" value="b"> (b) अनादर्श विलयन</label>
+                <label><input type="radio" name="q19" value="c"> (c) कोलाइडल विलयन</label>
+                <label><input type="radio" name="q19" value="d"> (d) निलंबन</label>
+            </div>
+            <p id="correct-q19" style="display:none;">सही उत्तर: (a) आदर्श विलयन</p>
+        </div>
+
+        <div class="question">
+            <p>20. विलयन में विलेय की मात्रा कम होने पर यह कहलाता है:</p>
+            <div class="options">
+                <label><input type="radio" name="q20" value="a"> (a) सांद्रित विलयन</label>
+                <label><input type="radio" name="q20" value="b"> (b) तनु विलयन</label>
+                 <label><input type="radio" name="q20" value="c"> (c) संतृप्त विलयन</label>
+                <label><input type="radio" name="q20" value="d"> (d) अतिसंतृप्त विलयन</label>
+            </div>
+            <p id="correct-q20" style="display:none;">सही उत्तर: (b) तनु विलयन</p>
+        </div>
+
+         <div class="question">
+            <p>21. निम्न में से कौन तापमान से प्रभावित नहीं होता है?</p>
+            <div class="options">
+                <label><input type="radio" name="q21" value="a"> (a) मोलरता</label>
+                <label><input type="radio" name="q21" value="b"> (b) मोललता</label>
+                <label><input type="radio" name="q21" value="c"> (c) नॉर्मलता</label>
+                <label><input type="radio" name="q21" value="d"> (d) फॉर्मलता</label>
+            </div>
+             <p id="correct-q21" style="display:none;">सही उत्तर: (b) मोललता</p>
+        </div>
+
+        <div class="question">
+             <p>22. वाष्प दाब में आपेक्षिक अवनमन एक ____ गुणधर्म है।</p>
+             <div class="options">
+                 <label><input type="radio" name="q22" value="a"> (a) अणुसंख्यक</label>
+                 <label><input type="radio" name="q22" value="b"> (b) संरचनात्मक</label>
+                 <label><input type="radio" name="q22" value="c"> (c) योगात्मक</label>
+                 <label><input type="radio" name="q22" value="d"> (d) रासायनिक</label>
+             </div>
+             <p id="correct-q22" style="display:none;">सही उत्तर: (a) अणुसंख्यक</p>
+         </div>
+
+         <div class="question">
+             <p>23. विलयन का वह गुण जो केवल विलायक के अणुओं की संख्या पर निर्भर करता है, कहलाता है:</p>
+             <div class="options">
+                 <label><input type="radio" name="q23" value="a"> (a) अणुसंख्यक गुणधर्म</label>
+                 <label><input type="radio" name="q23" value="b"> (b) संरचनात्मक गुणधर्म</label>
+                 <label><input type="radio" name="q23" value="c"> (c) योगात्मक गुणधर्म</label>
+                 <label><input type="radio" name="q23" value="d"> (d) रासायनिक गुणधर्म</label>
+             </div>
+             <p id="correct-q23" style="display:none;">सही उत्तर: (a) अणुसंख्यक गुणधर्म</p>
+         </div>
+
+         <div class="question">
+             <p>24. निम्नलिखित में से कौन सा विलयन का अणुसंख्यक गुणधर्म है?</p>
+             <div class="options">
+                 <label><input type="radio" name="q24" value="a"> (a) क्वथनांक</label>
+                 <label><input type="radio" name="q24" value="b"> (b) हिमांक</label>
+                 <label><input type="radio" name="q24" value="c"> (c) परासरण दाब</label>
+                 <label><input type="radio" name="q24" value="d"> (d) घनत्व</label>
+             </div>
+             <p id="correct-q24" style="display:none;">सही उत्तर: (c) परासरण दाब</p>
+         </div>
+
+         <div class="question">
+             <p>25. निम्न में से कौन सा विलयन का अणुसंख्यक गुणधर्म है?</p>
+             <div class="options">
+                 <label><input type="radio" name="q25" value="a"> (a) पृष्ठ तनाव</label>
+                 <label><input type="radio" name="q25" value="b"> (b) श्यानता</label>
+                 <label><input type="radio" name="q25" value="c"> (c) परासरण दाब</label>
+                 <label><input type="radio" name="q25" value="d"> (d) चालकता</label>
+             </div>
+             <p id="correct-q25" style="display:none;">सही उत्तर: (c) परासरण दाब</p>
+         </div>
+
+        <button type="submit" onclick="submitQuiz()">जमा करें</button>
+    </form>
+
+    <div id="result" style="display:none;"></div>
+
+    <script>
+        let timeLeft = 1500; // 25 minutes in seconds
+        let timerInterval;
+        let isSubmitted = false;
+        let studentName = '';
+
+        function startQuiz() {
+            studentName = document.getElementById('studentName').value;
+            if (studentName.trim() === '') {
+                alert('कृपया अपना नाम दर्ज करें।');
+                return;
+            }
+            document.getElementById('name-input-container').style.display = 'none';
+            document.getElementById('quiz-form').style.display = 'block';
+            startTimer();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(function () {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                if (seconds < 10) {
+                    seconds = '0' + seconds;
+                }
+                document.getElementById('timer').textContent = minutes + ':' + seconds;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        function submitQuiz() {
+            if (isSubmitted) {
+                return;
+            }
+            isSubmitted = true;
+            clearInterval(timerInterval);
+
+            let score = 0;
+            for (let i = 1; i <= 25; i++) {
+                let selectedOption = document.querySelector('input[name="q' + i + '"]:checked');
+                let correctAnswerId = 'correct-q' + i;
+                document.getElementById(correctAnswerId).style.display = 'block'; // Show correct answer
+
+                if (selectedOption && selectedOption.value === document.getElementById(correctAnswerId).textContent.slice(-1)) {
+                    score++;
+                } else if (selectedOption) {
+                    selectedOption.parentElement.classList.add('incorrect-answer'); // Mark incorrect
+                }
+            }
+
+            let resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'आपने 25 में से ' + score + ' अंक प्राप्त किए।';
+            resultDiv.style.display = 'block';
+
+            downloadResult(studentName, score);
+        }
+
+        function downloadResult(name, marks) {
+            let csvContent = "data:text/csv;charset=utf-8," +
+                "Student Name,Marks\r\n" +
+                name + "," + marks;
+
+            let encodedUri = encodeURI(csvContent);
+            let link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link); // Required for Firefox
+
+            link.click();
+        }
+
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
