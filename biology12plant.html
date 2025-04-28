@@ -1,1 +1,650 @@
 
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>पादपों में जनन - Class 12 MCQ Test</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .timer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            font-size: 1.5em;
+            z-index: 1000;
+        }
+        .container {
+            max-width: 800px;
+            margin: 60px auto 20px auto; /* Add margin to account for fixed timer */
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .question p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .options input[type="radio"] {
+            margin-right: 8px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .submit-btn:hover:not(:disabled) {
+            background-color: #4cae4c;
+        }
+        .submit-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9e9e9;
+            border-radius: 5px;
+            display: none; /* Initially hidden */
+        }
+        .correct-answer {
+            margin-top: 5px;
+            font-weight: bold;
+            color: green;
+        }
+        .incorrect-answer {
+            margin-top: 5px;
+            font-weight: bold;
+            color: red;
+        }
+        .user-answer {
+            font-style: italic;
+        }
+        .name-input {
+             margin-bottom: 20px;
+             padding: 10px;
+             width: calc(100% - 22px);
+             border: 1px solid #ddd;
+             border-radius: 5px;
+             font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="timer" id="timer">25:00</div>
+
+    <div class="container">
+        <h1>पादपों में जनन (Plant Reproduction) - Class 12 MCQ</h1>
+
+        <label for="studentName">छात्र/छात्रा का नाम:</label><br>
+        <input type="text" id="studentName" class="name-input" required><br><br>
+
+        <form id="quizForm">
+            <div class="question">
+                <p>1. अलैंगिक जनन द्वारा उत्पन्न संतति को क्या कहते हैं?</p>
+                <div class="options">
+                    <input type="radio" id="q1a" name="q1" value="a">
+                    <label for="q1a">(a) ऑफस्प्रिंग</label><br>
+                    <input type="radio" id="q1b" name="q1" value="b">
+                    <label for="q1b">(b) क्लोन</label><br>
+                    <input type="radio" id="q1c" name="q1" value="c">
+                    <label for="q1c">(c) सोमाक्लोन</label><br>
+                    <input type="radio" id="q1d" name="q1" value="d">
+                    <label for="q1d">(d) दोनों (a) और (c)</label>
+                </div>
+                <div class="result-info" style="display: none;"></div>
+            </div>
+
+            <div class="question">
+                <p>2. द्विखंडन किसमें पाया जाता है?</p>
+                <div class="options">
+                    <input type="radio" id="q2a" name="q2" value="a">
+                    <label for="q2a">(a) अमीबा</label><br>
+                    <input type="radio" id="q2b" name="q2" value="b">
+                    <label for="q2b">(b) पैरामीशियम</label><br>
+                    <input type="radio" id="q2c" name="q2" value="c">
+                    <label for="q2c">(c) यूग्लीना</label><br>
+                    <input type="radio" id="q2d" name="q2" value="d">
+                    <label for="q2d">(d) उपरोक्त सभी</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+            <div class="question">
+                <p>3. मुकुलन द्वारा जनन किसमें होता है?</p>
+                <div class="options">
+                    <input type="radio" id="q3a" name="q3" value="a">
+                    <label for="q3a">(a) अमीबा</label><br>
+                    <input type="radio" id="q3b" name="q3" value="b">
+                    <label for="q3b">(b) यीस्ट</label><br>
+                    <input type="radio" id="q3c" name="q3" value="c">
+                    <label for="q3c">(c) प्लेनेरिया</label><br>
+                    <input type="radio" id="q3d" name="q3" value="d">
+                    <label for="q3d">(d) स्पाइरोगाइरा</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+            <div class="question">
+                <p>4. पत्तियों द्वारा कायिक प्रवर्धन किसमें होता है?</p>
+                <div class="options">
+                    <input type="radio" id="q4a" name="q4" value="a">
+                    <label for="q4a">(a) आलू</label><br>
+                    <input type="radio" id="q4b" name="q4" value="b">
+                    <label for="q4b">(b) अदरक</label><br>
+                    <input type="radio" id="q4c" name="q4" value="c">
+                    <label for="q4c">(c) ब्रायोफिलम</label><br>
+                    <input type="radio" id="q4d" name="q4" value="d">
+                    <label for="q4d">(d) केला</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+            <div class="question">
+                <p>5. पुंकेसर किसका प्रतिनिधित्व करता है?</p>
+                <div class="options">
+                    <input type="radio" id="q5a" name="q5" value="a">
+                    <label for="q5a">(a) मादा जननांग</label><br>
+                    <input type="radio" id="q5b" name="q5" value="b">
+                    <label for="q5b">(b) नर जननांग</label><br>
+                    <input type="radio" id="q5c" name="q5" value="c">
+                    <label for="q5c">(c) सहायक अंग</label><br>
+                    <input type="radio" id="q5d" name="q5" value="d">
+                    <label for="q5d">(d) उपरोक्त में से कोई नहीं</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+            <div class="question">
+                <p>6. परागकोष में क्या पाया जाता है?</p>
+                <div class="options">
+                    <input type="radio" id="q6a" name="q6" value="a">
+                    <label for="q6a">(a) बीजांड</label><br>
+                    <input type="radio" id="q6b" name="q6" value="b">
+                    <label for="q6b">(b) परागकण</label><br>
+                    <input type="radio" id="q6c" name="q6" value="c">
+                    <label for="q6c">(c) अंडाशय</label><br>
+                    <input type="radio" id="q6d" name="q6" value="d">
+                    <label for="q6d">(d) वर्तिकाग्र</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+            <div class="question">
+                <p>7. परागकणों का वर्तिकाग्र तक स्थानांतरण क्या कहलाता है?</p>
+                <div class="options">
+                    <input type="radio" id="q7a" name="q7" value="a">
+                    <label for="q7a">(a) निषेचन</label><br>
+                    <input type="radio" id="q7b" name="q7" value="b">
+                    <label for="q7b">(b) परागण</label><br>
+                    <input type="radio" id="q7c" name="q7" value="c">
+                    <label for="q7c">(c) बीजांकुरण</label><br>
+                    <input type="radio" id="q7d" name="q7" value="d">
+                    <label for="q7d">(d) कायिक प्रवर्धन</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>8. वायु परागण किसमें होता है?</p>
+                <div class="options">
+                    <input type="radio" id="q8a" name="q8" value="a">
+                    <label for="q8a">(a) मक्का</label><br>
+                    <input type="radio" id="q8b" name="q8" value="b">
+                    <label for="q8b">(b) घास</label><br>
+                    <input type="radio" id="q8c" name="q8" value="c">
+                    <label for="q8c">(c) गेहूं</label><br>
+                    <input type="radio" id="q8d" name="q8" value="d">
+                    <label for="q8d">(d) उपरोक्त सभी</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>9. जल परागण किसमें सामान्य है?</p>
+                <div class="options">
+                    <input type="radio" id="q9a" name="q9" value="a">
+                    <label for="q9a">(a) जलीय पौधे</label><br>
+                    <input type="radio" id="q9b" name="q9" value="b">
+                    <label for="q9b">(b) मरुस्थलीय पौधे</label><br>
+                    <input type="radio" id="q9c" name="q9" value="c">
+                    <label for="q9c">(c) पर्वतीय पौधे</label><br>
+                    <input type="radio" id="q9d" name="q9" value="d">
+                    <label for="q9d">(d) इनमें से कोई नहीं</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>10. निषेचन के बाद अंडाशय किसमें विकसित होता है?</p>
+                <div class="options">
+                    <input type="radio" id="q10a" name="q10" value="a">
+                    <label for="q10a">(a) बीज</label><br>
+                    <input type="radio" id="q10b" name="q10" value="b">
+                    <label for="q10b">(b) फल</label><br>
+                    <input type="radio" id="q10c" name="q10" value="c">
+                    <label for="q10c">(c) भ्रूण</label><br>
+                    <input type="radio" id="q10d" name="q10" value="d">
+                    <label for="q10d">(d) भ्रूणपोष</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>11. निषेचन के बाद बीजांड किसमें विकसित होता है?</p>
+                <div class="options">
+                    <input type="radio" id="q11a" name="q11" value="a">
+                    <label for="q11a">(a) फल</label><br>
+                    <input type="radio" id="q11b" name="q11" value="b">
+                    <label for="q11b">(b) बीज</label><br>
+                    <input type="radio" id="q11c" name="q11" value="c">
+                    <label for="q11c">(c) भ्रूण</label><br>
+                    <input type="radio" id="q11d" name="q11" value="d">
+                    <label for="q11d">(d) भ्रूणपोष</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>12. दोहरा निषेचन (Double Fertilization) किसमें पाया जाता है?</p>
+                <div class="options">
+                    <input type="radio" id="q12a" name="q12" value="a">
+                    <label for="q12a">(a) शैवाल</label><br>
+                    <input type="radio" id="q12b" name="q12" value="b">
+                    <label for="q12b">(b) कवक</label><br>
+                    <input type="radio" id="q12c" name="q12" value="c">
+                    <label for="q12c">(c) आवृतबीजी (Angiosperms)</label><br>
+                    <input type="radio" id="q12d" name="q12" value="d">
+                    <label for="q12d">(d) अनावृतबीजी (Gymnosperms)</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>13. भ्रूणपोष (Endosperm) कैसा होता है?</p>
+                <div class="options">
+                    <input type="radio" id="q13a" name="q13" value="a">
+                    <label for="q13a">(a) अगुणित (Haploid)</label><br>
+                    <input type="radio" id="q13b" name="q13" value="b">
+                    <label for="q13b">(b) द्विगुणित (Diploid)</label><br>
+                    <input type="radio" id="q13c" name="q13" value="c">
+                    <label for="q13c">(c) त्रिगुणित (Triploid)</label><br>
+                    <input type="radio" id="q13d" name="q13" value="d">
+                    <label for="q13d">(d) बहुगुणित (Polyploid)</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>14. सत्य फल (True fruit) किसमें विकसित होता है?</p>
+                <div class="options">
+                    <input type="radio" id="q14a" name="q14" value="a">
+                    <label for="q14a">(a) अंडाशय</label><br>
+                    <input type="radio" id="q14b" name="q14" value="b">
+                    <label for="q14b">(b) पुष्पासन</label><br>
+                    <input type="radio" id="q14c" name="q14" value="c">
+                    <label for="q14c">(c) बाह्यदलपुंज</label><br>
+                    <input type="radio" id="q14d" name="q14" value="d">
+                    <label for="q14d">(d) उपरोक्त सभी</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>15. आभासी फल (False fruit) का उदाहरण है:</p>
+                <div class="options">
+                    <input type="radio" id="q15a" name="q15" value="a">
+                    <label for="q15a">(a) आम</label><br>
+                    <input type="radio" id="q15b" name="q15" value="b">
+                    <label for="q15b">(b) सेब</label><br>
+                    <input type="radio" id="q15c" name="q15" value="c">
+                    <label for="q15c">(c) केला</label><br>
+                    <input type="radio" id="q15d" name="q15" value="d">
+                    <label for="q15d">(d) टमाटर</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>16. अनिषेकफलन (Parthenocarpy) क्या है?</p>
+                <div class="options">
+                    <input type="radio" id="q16a" name="q16" value="a">
+                    <label for="q16a">(a) बिना निषेचन के फल का बनना</label><br>
+                    <input type="radio" id="q16b" name="q16" value="b">
+                    <label for="q16b">(b) बिना निषेचन के बीज का बनना</label><br>
+                    <input type="radio" id="q16c" name="q16" value="c">
+                    <label for="q16c">(c) कायिक प्रवर्धन द्वारा पौधे का बनना</label><br>
+                    <input type="radio" id="q16d" name="q16" value="d">
+                    <label for="q16d">(d) उपरोक्त में से कोई नहीं</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>17. बीजांड का वह स्थान जहाँ बीजांडकाय, बीजांडवृंत से जुड़ा होता है?</p>
+                <div class="options">
+                    <input type="radio" id="q17a" name="q17" value="a">
+                    <label for="q17a">(a) निभाग (Chalaza)</label><br>
+                    <input type="radio" id="q17b" name="q17" value="b">
+                    <label for="q17b">(b) नाभिका (Hilum)</label><br>
+                    <input type="radio" id="q17c" name="q17" value="c">
+                    <label for="q17c">(c) अंडद्वार (Micropyle)</label><br>
+                    <input type="radio" id="q17d" name="q17" value="d">
+                    <label for="q17d">(d) अध्यावरण (Integument)</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>18. परागकण की बाह्य भित्ति (Exine) किसकी बनी होती है?</p>
+                <div class="options">
+                    <input type="radio" id="q18a" name="q18" value="a">
+                    <label for="q18a">(a) सेलुलोज</label><br>
+                    <input type="radio" id="q18b" name="q18" value="b">
+                    <label for="q18b">(b) पेक्टिन</label><br>
+                    <input type="radio" id="q18c" name="q18" value="c">
+                    <label for="q18c">(c) स्पोरोपोलेनिन (Sporopollenin)</label><br>
+                    <input type="radio" id="q18d" name="q18" value="d">
+                    <label for="q18d">(d) लिग्निन</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>19. स्वपरागण (Self-pollination) को रोकने के लिए पौधे में पाए जाने वाले अनुकूलन हैं:</p>
+                <div class="options">
+                    <input type="radio" id="q19a" name="q19" value="a">
+                    <label for="q19a">(a) उभयलिंगीता (Bisexuality)</label><br>
+                    <input type="radio" id="q19b" name="q19" value="b">
+                    <label for="q19b">(b) एकलिंगीता (Unisexuality)</label><br>
+                    <input type="radio" id="q19c" name="q19" value="c">
+                    <label for="q19c">(c) स्व-अयोग्यता (Self-incompatibility)</label><br>
+                    <input type="radio" id="q19d" name="q19" value="d">
+                    <label for="q19d">(d) (b) और (c) दोनों</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>20. कीट परागण (Entomophily) के लिए अनुकूलित फूल होते हैं:</p>
+                <div class="options">
+                    <input type="radio" id="q20a" name="q20" value="a">
+                    <label for="q20a">(a) छोटे और अनाकर्षक</label><br>
+                    <input type="radio" id="q20b" name="q20" value="b">
+                    <label for="q20b">(b) रंगीन और सुगंधित</label><br>
+                    <input type="radio" id="q20c" name="q20" value="c">
+                    <label for="q20c">(c) परागकण हल्के और शुष्क होते हैं</label><br>
+                    <input type="radio" id="q20d" name="q20" value="d">
+                    <label for="q20d">(d) उपरोक्त सभी</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>21. भ्रूणकोष (Embryo sac) कैसा होता है?</p>
+                <div class="options">
+                    <input type="radio" id="q21a" name="q21" value="a">
+                    <label for="q21a">(a) 7-कोशिकीय, 8-केंद्रकीय</label><br>
+                    <input type="radio" id="q21b" name="q21" value="b">
+                    <label for="q21b">(b) 8-कोशिकीय, 7-केंद्रकीय</label><br>
+                    <input type="radio" id="q21c" name="q21" value="c">
+                    <label for="q21c">(c) 7-कोशिकीय, 7-केंद्रकीय</label><br>
+                    <input type="radio" id="q21d" name="q21" value="d">
+                    <label for="q21d">(d) 8-कोशिकीय, 8-केंद्रकीय</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>22. त्रिसंलयन (Triple fusion) किसका भाग है?</p>
+                <div class="options">
+                    <input type="radio" id="q22a" name="q22" value="a">
+                    <label for="q22a">(a) निषेचन</label><br>
+                    <input type="radio" id="q22b" name="q22" value="b">
+                    <label for="q22b">(b) दोहरा निषेचन</label><br>
+                    <input type="radio" id="q22c" name="q22" value="c">
+                    <label for="q22c">(c) परागण</label><br>
+                    <input type="radio" id="q22d" name="q22" value="d">
+                    <label for="q22d">(d) बीजांकुरण</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>23. बीज की बाहरी परत क्या कहलाती है?</p>
+                <div class="options">
+                    <input type="radio" id="q23a" name="q23" value="a">
+                    <label for="q23a">(a) भ्रूणपोष</label><br>
+                    <input type="radio" id="q23b" name="q23" value="b">
+                    <label for="q23b">(b) बीजचोल (Seed coat)</label><br>
+                    <input type="radio" id="q23c" name="q23" value="c">
+                    <label for="q23c">(c) बीजपत्र (Cotyledon)</label><br>
+                    <input type="radio" id="q23d" name="q23" value="d">
+                    <label for="q23d">(d) मूलांकुर (Radicle)</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>24. केला किस प्रकार के फल का उदाहरण है?</p>
+                <div class="options">
+                    <input type="radio" id="q24a" name="q24" value="a">
+                    <label for="q24a">(a) सत्य फल</label><br>
+                    <input type="radio" id="q24b" name="q24" value="b">
+                    <label for="q24b">(b) अनिषेकफलित फल (Parthenocarpic fruit)</label><br>
+                    <input type="radio" id="q24c" name="q24" value="c">
+                    <label for="q24c">(c) आभासी फल</label><br>
+                    <input type="radio" id="q24d" name="q24" value="d">
+                    <label for="q24d">(d) (b) और (c) दोनों</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+             <div class="question">
+                <p>25. रोपण (Grafting) किस प्रकार के प्रवर्धन का उदाहरण है?</p>
+                <div class="options">
+                    <input type="radio" id="q25a" name="q25" value="a">
+                    <label for="q25a">(a) लैंगिक जनन</label><br>
+                    <input type="radio" id="q25b" name="q25" value="b">
+                    <label for="q25b">(b) अलैंगिक जनन</label><br>
+                    <input type="radio" id="q25c" name="q25" value="c">
+                    <label for="q25c">(c) कायिक प्रवर्धन</label><br>
+                    <input type="radio" id="q25d" name="q25" value="d">
+                    <label for="q25d">(d) ऊतक संवर्धन (Tissue Culture)</label>
+                </div>
+                 <div class="result-info" style="display: none;"></div>
+            </div>
+
+            <button type="submit" class="submit-btn">जमा करें</button>
+        </form>
+
+        <div class="results" id="results">
+            <h2>आपका परिणाम</h2>
+            <p id="score"></p>
+            <p>नीचे प्रत्येक प्रश्न के बाद सही उत्तर देखें।</p>
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        const form = document.getElementById('quizForm');
+        const resultsDiv = document.getElementById('results');
+        const scoreParagraph = document.getElementById('score');
+        const submitButton = form.querySelector('.submit-btn');
+        const studentNameInput = document.getElementById('studentName');
+        const timerDisplay = document.getElementById('timer');
+
+        const correctAnswers = {
+            q1: 'b', // Clone
+            q2: 'd', // All of the above
+            q3: 'b', // Yeast
+            q4: 'c', // Bryophyllum
+            q5: 'b', // Male reproductive organ
+            q6: 'b', // Pollen grains
+            q7: 'b', // Pollination
+            q8: 'd', // All of the above (Maize, Grass, Wheat are wind pollinated)
+            q9: 'a', // Aquatic plants (Hydrophily)
+            q10: 'b', // Fruit
+            q11: 'b', // Seed
+            q12: 'c', // Angiosperms
+            q13: 'c', // Triploid
+            q14: 'a', // Ovary
+            q15: 'b', // Apple (Thalamus contributes)
+            q16: 'a', // Formation of fruit without fertilization (e.g., Banana)
+            q17: 'b', // Hilum
+            q18: 'c', // Sporopollenin
+            q19: 'd', // Unisexuality & Self-incompatibility
+            q20: 'b', // Colorful and fragrant
+            q21: 'a', // 7-celled, 8-nucleated
+            q22: 'b', // Double Fertilization (Fusion of 2nd male gamete with polar nuclei)
+            q23: 'b', // Seed coat
+            q24: 'b', // Parthenocarpic fruit (often seedless, develops without fertilization)
+            q25: 'c'  // Vegetative propagation
+        };
+
+        // Timer logic
+        let timeRemaining = 25 * 60; // 25 minutes in seconds
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "समय समाप्त!";
+                    alert("आपका समय समाप्त हो गया है! आपके उत्तर स्वतः जमा किए जा रहे हैं।");
+                    // Automatically submit the form
+                     if (!submitButton.disabled) { // Prevent multiple auto-submissions
+                         submitButton.click(); // Simulate a click on the submit button
+                     }
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+
+        // Start the timer when the page loads
+        document.addEventListener('DOMContentLoaded', startTimer);
+
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent actual form submission
+
+            // Stop the timer
+            clearInterval(timerInterval);
+
+            // Disable the submit button to prevent multiple submissions
+            submitButton.disabled = true;
+
+            const studentName = studentNameInput.value.trim();
+            if (!studentName) {
+                alert("कृपया अपना नाम दर्ज करें।");
+                submitButton.disabled = false; // Re-enable if name is missing
+                startTimer(); // Restart timer if submission failed due to missing name
+                return;
+            }
+            studentNameInput.disabled = true; // Disable name field after submission
+
+            let score = 0;
+            const questions = form.querySelectorAll('.question');
+            const answersData = []; // Array to store Q&A for CSV
+
+            questions.forEach((question, index) => {
+                const questionName = `q${index + 1}`;
+                const selectedOption = question.querySelector(`input[name="${questionName}"]:checked`);
+                const resultInfoDiv = question.querySelector('.result-info');
+
+                resultInfoDiv.style.display = 'block'; // Show result info area
+
+                let userAnswer = 'कोई उत्तर नहीं';
+                let isCorrect = false;
+
+                if (selectedOption) {
+                    userAnswer = selectedOption.value;
+                    if (userAnswer === correctAnswers[questionName]) {
+                        score++;
+                        isCorrect = true;
+                    }
+                }
+
+                // Display correct answer and user's answer
+                const correctAnswerText = correctAnswers[questionName].toUpperCase();
+                const userAnswerDisplay = selectedOption ? `आपका उत्तर: (${userAnswer.toUpperCase()})` : `आपका उत्तर: कोई उत्तर नहीं`;
+
+                resultInfoDiv.innerHTML = `<p class="${isCorrect ? 'correct-answer' : 'incorrect-answer'}">${isCorrect ? 'सही उत्तर' : 'गलत उत्तर'}: (${correctAnswerText})</p><p class="user-answer">${userAnswerDisplay}</p>`;
+
+                // Add data for CSV
+                 answersData.push({
+                    question: `Q${index + 1}`,
+                    userAnswer: selectedOption ? selectedOption.value.toUpperCase() : 'N/A',
+                    correctAnswer: correctAnswers[questionName].toUpperCase(),
+                    isCorrect: isCorrect ? 'Correct' : 'Incorrect'
+                 });
+            });
+
+            // Display the total score
+            scoreParagraph.textContent = `आपका स्कोर: ${score} / 25`;
+            resultsDiv.style.display = 'block'; // Show results section
+
+            // Scroll to the results section
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+
+            // Prepare data for CSV download
+            let csvContent = "Name,Score,Question,Your Answer,Correct Answer,Result\n";
+            answersData.forEach((data, index) => {
+                csvContent += `"${studentName}",${score},"${data.question}","${data.userAnswer}","${data.correctAnswer}","${data.isCorrect}"\n`;
+            });
+
+            // Trigger CSV download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'result.csv');
+            link.style.visibility = 'hidden'; // Hide the link
+            document.body.appendChild(link);
+            link.click(); // Simulate click to download
+            document.body.removeChild(link); // Clean up the link
+
+        });
+    </script>
+
+</body>
+</html>
