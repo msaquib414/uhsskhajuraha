@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>गृह विज्ञान प्रश्नोत्तरी: पाचन तंत्र</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+        }
+        /* Custom styles for better visual feedback on results */
+        .correct-answer {
+            color: #16a34a; /* green-600 */
+            font-weight: bold;
+        }
+        .user-correct {
+            background-color: #dcfce7; /* green-100 */
+            border-left: 4px solid #16a34a;
+        }
+        .user-incorrect {
+            background-color: #fee2e2; /* red-100 */
+            border-left: 4px solid #dc2626;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800" oncontextmenu="return false;">
+
+    <!-- Name Input Modal -->
+    <div id="name-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center">
+            <h1 class="text-2xl font-bold mb-4">प्रश्नोत्तरी में आपका स्वागत है</h1>
+            <p class="text-gray-600 mb-6">शुरू करने के लिए कृपया अपना पूरा नाम दर्ज करें।</p>
+            <input type="text" id="student-name" placeholder="अपना नाम यहाँ लिखें" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="start-quiz-btn" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg">प्रश्नोत्तरी शुरू करें</button>
+        </div>
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quiz-container" class="hidden">
+        <!-- Header with Timer -->
+        <header class="bg-white shadow-md sticky top-0 z-10">
+            <div class="container mx-auto px-4 py-3 flex justify-center items-center">
+                <div id="timer" class="text-2xl font-bold bg-gray-200 text-gray-800 px-6 py-2 rounded-full shadow-inner">25:00</div>
+            </div>
+        </header>
+
+        <!-- Quiz Form -->
+        <main class="container mx-auto p-4 md:p-8">
+            <h1 class="text-3xl font-bold text-center mb-2">पाचन तंत्र</h1>
+            <p class="text-lg text-gray-600 text-center mb-8">कक्षा 11 गृह विज्ञान</p>
+            
+            <form id="quiz-form" class="bg-white p-6 md:p-8 rounded-xl shadow-lg space-y-8">
+                <!-- Questions will be injected here by JavaScript -->
+                <div id="questions-wrapper"></div>
+                
+                <!-- Submit Button -->
+                <div class="text-center pt-4">
+                    <button type="submit" id="submit-btn" class="bg-green-600 text-white font-bold py-3 px-12 rounded-lg hover:bg-green-700 transition duration-300 text-xl shadow-xl">सबमिट करें</button>
+                </div>
+            </form>
+
+            <!-- Result Display -->
+            <div id="result-container" class="hidden mt-8 text-center bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-3xl font-bold text-blue-600">आपका परिणाम</h2>
+                <p id="score" class="text-5xl font-bold my-4"></p>
+                <p class="text-gray-600">सही उत्तरों को हरे रंग में हाइलाइट किया गया है।</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const quizQuestions = [
+            { question: "भोजन का पाचन मुख्य रूप से कहाँ से शुरू होता है?", options: ["मुख से", "आमाशय से", "छोटी आंत से", "बड़ी आंत से"], correctAnswer: "a" },
+            { question: "लार में कौन सा एंजाइम पाया जाता है जो स्टार्च को पचाता है?", options: ["पेप्सिन", "एमाइलेज (टायलिन)", "लाइपेज", "ट्रिप्सिन"], correctAnswer: "b" },
+            { question: "आमाशय (Stomach) में प्रोटीन के पाचन की शुरुआत कौन सा एंजाइम करता है?", options: ["एमाइलेज", "लाइपेज", "पेप्सिन", "न्यूक्लिएज"], correctAnswer: "c" },
+            { question: "पचे हुए भोजन का अवशोषण मुख्य रूप से पाचन तंत्र के किस भाग में होता है?", options: ["आमाशय", "बड़ी आंत", "यकृत", "छोटी आंत"], correctAnswer: "d" },
+            { question: "यकृत (Liver) द्वारा स्रावित पित्त रस (Bile Juice) का मुख्य कार्य क्या है?", options: ["वसा का पायसीकरण (Emulsification)", "प्रोटीन का पाचन", "कार्बोहाइड्रेट का पाचन", "रक्त का शुद्धिकरण"], correctAnswer: "a" },
+            { question: "मानव शरीर की सबसे बड़ी ग्रंथि कौन सी है?", options: ["अग्न्याशय", "यकृत", "लार ग्रंथि", "थायरॉयड"], correctAnswer: "b" },
+            { question: "भोजन को आमाशय से छोटी आंत में ले जाने वाली नली को क्या कहते हैं?", options: ["ग्रसिका (Esophagus)", "श्वासनली", "पाइलोरिक स्फिंक्टर", "इलियम"], correctAnswer: "c" },
+            { question: "अग्न्याशय (Pancreas) द्वारा कौन सा हार्मोन स्रावित होता है जो रक्त शर्करा को नियंत्रित करता है?", options: ["पित्त रस", "पेप्सिन", "गैस्ट्रिन", "इंसुलिन"], correctAnswer: "d" },
+            { question: "छोटी आंत की आंतरिक सतह पर उंगली जैसी संरचनाएं क्या कहलाती हैं, जो अवशोषण सतह को बढ़ाती हैं?", options: ["विली (Villi)", "एल्वियोली", "न्यूरॉन्स", "मांसपेशियां"], correctAnswer: "a" },
+            { question: "जल का अवशोषण मुख्य रूप से पाचन तंत्र के किस अंग में होता है?", options: ["छोटी आंत", "बड़ी आंत", "आमाशय", "मुख"], correctAnswer: "b" },
+            { question: "वसा (Fat) को पचाने वाला एंजाइम 'लाइपेज' किसके द्वारा स्रावित होता है?", options: ["यकृत", "लार ग्रंथियों", "अग्न्याशय", "आमाशय"], correctAnswer: "c" },
+            { question: "भोजन नली (Esophagus) की दीवारों के संकुचन और शिथिलन को क्या कहा जाता है जिससे भोजन नीचे जाता है?", options: ["अवशोषण", "पाचन", "स्वांगीकरण", "क्रमाकुंचन (Peristalsis)"], correctAnswer: "d" },
+            { question: "हाइड्रोक्लोरिक अम्ल (HCl) का स्राव पाचन तंत्र के किस भाग में होता है?", options: ["आमाशय में", "छोटी आंत में", "यकृत में", "मुख में"], correctAnswer: "a" },
+            { question: "अपचित भोजन अस्थायी रूप से कहाँ संग्रहीत होता है?", options: ["छोटी आंत", "मलाशय (Rectum)", "अग्न्याशय", "पित्ताशय"], correctAnswer: "b" },
+            { question: "कार्बोहाइड्रेट का अंतिम उत्पाद पाचन के बाद क्या होता है?", options: ["अमीनो एसिड", "फैटी एसिड", "ग्लूकोज", "ग्लिसरॉल"], correctAnswer: "c" },
+            { question: "प्रोटीन पाचन के बाद किसमें टूट जाते हैं?", options: ["ग्लूकोज", "वसा", "विटामिन", "अमीनो एसिड"], correctAnswer: "d" },
+            { question: "पित्ताशय (Gallbladder) का मुख्य कार्य क्या है?", options: ["पित्त रस का भंडारण करना", "पित्त रस का उत्पादन करना", "इंसुलिन बनाना", "एंजाइम बनाना"], correctAnswer: "a" },
+            { question: "कौन सा विटामिन आंतों में बैक्टीरिया द्वारा संश्लेषित होता है?", options: ["विटामिन सी", "विटामिन के", "विटामिन ए", "विटामिन डी"], correctAnswer: "b" },
+            { question: "भोजन का वह घटक जिसका पाचन मनुष्य के पाचन तंत्र में नहीं होता है?", options: ["प्रोटीन", "वसा", "सेलूलोज़", "स्टार्च"], correctAnswer: "c" },
+            { question: "जब आमाशय में अम्ल की मात्रा बढ़ जाती है, तो उस स्थिति को क्या कहते हैं?", options: ["कब्ज", "अपच", "अल्सर", "अम्लता (Acidity)"], correctAnswer: "d" },
+            { question: "दाँतों का सबसे कठोर भाग क्या कहलाता है?", options: ["इनेमल (Enamel)", "डेंटिन", "पल्प", "सीमेंटम"], correctAnswer: "a" },
+            { question: "भोजन को निगलते समय श्वसन मार्ग को बंद करने वाली संरचना कौन सी है?", options: ["जीभ", "एपिग्लॉटिस (Epiglottis)", "ग्रसनी", "तालु"], correctAnswer: "b" },
+            { question: "छोटी आंत के तीन भाग कौन-कौन से हैं?", options: ["सीकम, कोलन, रेक्टम", "कार्डियक, फंडस, पाइलोरस", "ड्यूओडेनम, जेजुनम, इलियम", "ग्रसिका, आमाशय, ग्रहणी"], correctAnswer: "c" },
+            { question: "पेप्सिन एंजाइम को सक्रिय होने के लिए किस माध्यम की आवश्यकता होती है?", options: ["क्षारीय", "उदासीन", "लवणीय", "अम्लीय"], correctAnswer: "d" },
+            { question: "स्वांगीकरण (Assimilation) प्रक्रिया का क्या अर्थ है?", options: ["पचे हुए भोजन का रक्त में अवशोषित होना", "अपशिष्ट पदार्थ का बाहर निकलना", "भोजन का टूटना", "अवशोषित भोजन का शरीर द्वारा उपयोग किया जाना"], correctAnswer: "a" }
+        ];
+
+        // --- DOM ELEMENTS ---
+        const nameModal = document.getElementById('name-modal');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const studentNameInput = document.getElementById('student-name');
+        const quizContainer = document.getElementById('quiz-container');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const quizForm = document.getElementById('quiz-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultContainer = document.getElementById('result-container');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+
+        // --- STATE ---
+        let studentName = '';
+        let timerInterval;
+        let timeRemaining = 25 * 60; // 25 minutes in seconds
+
+        // --- FUNCTIONS ---
+
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "00:00";
+                    // As per requirement, do nothing on timeout.
+                    // If auto-submit was needed, we would call handleSubmit() here.
+                }
+            }, 1000);
+        }
+
+        // Function to render questions
+        function renderQuestions() {
+            let questionsHTML = '';
+            quizQuestions.forEach((q, index) => {
+                questionsHTML += `
+                    <div id="question-${index}" class="p-4 rounded-lg border border-gray-200">
+                        <p class="font-bold text-lg mb-4">${index + 1}. ${q.question}</p>
+                        <div class="space-y-2">
+                            ${renderOptions(q.options, index)}
+                        </div>
+                        <div id="answer-feedback-${index}" class="mt-3 text-lg"></div>
+                    </div>
+                `;
+            });
+            questionsWrapper.innerHTML = questionsHTML;
+        }
+
+        // Function to render options for a single question
+        function renderOptions(options, questionIndex) {
+            let optionsHTML = '';
+            const optionLetters = ['a', 'b', 'c', 'd'];
+            options.forEach((option, index) => {
+                optionsHTML += `
+                    <label for="q${questionIndex}o${index}" class="block p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer has-[:checked]:bg-blue-100 has-[:checked]:border-blue-400">
+                        <input type="radio" id="q${questionIndex}o${index}" name="question-${questionIndex}" value="${optionLetters[index]}" class="mr-3">
+                        ${optionLetters[index].toUpperCase()}. ${option}
+                    </label>
+                `;
+            });
+            return optionsHTML;
+        }
+
+        // Function to handle form submission
+        function handleSubmit(event) {
+            if (event) event.preventDefault();
+
+            // Prevent multiple submissions
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'परिणाम प्रोसेस हो रहा है...';
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            // Stop the timer
+            clearInterval(timerInterval);
+
+            let score = 0;
+            quizQuestions.forEach((q, index) => {
+                const questionContainer = document.getElementById(`question-${index}`);
+                const feedbackContainer = document.getElementById(`answer-feedback-${index}`);
+                const selectedOption = document.querySelector(`input[name="question-${index}"]:checked`);
+                const correctAnswer = q.correctAnswer;
+                const correctAnswerText = q.options[['a', 'b', 'c', 'd'].indexOf(correctAnswer)];
+
+                // Disable all radio buttons for this question
+                document.querySelectorAll(`input[name="question-${index}"]`).forEach(radio => {
+                    radio.disabled = true;
+                });
+
+                if (selectedOption) {
+                    const selectedLabel = selectedOption.parentElement;
+                    if (selectedOption.value === correctAnswer) {
+                        score++;
+                        selectedLabel.classList.add('user-correct');
+                    } else {
+                        selectedLabel.classList.add('user-incorrect');
+                    }
+                }
+                
+                // Show the correct answer
+                feedbackContainer.innerHTML = `सही उत्तर: <span class="correct-answer">${correctAnswer.toUpperCase()}. ${correctAnswerText}</span>`;
+            });
+
+            // Display the final score
+            scoreDisplay.textContent = `${score} / ${quizQuestions.length}`;
+            resultContainer.classList.remove('hidden');
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+            // Generate and download CSV
+            downloadCSV(score);
+        }
+
+        // Function to generate and download CSV file
+        function downloadCSV(score) {
+            const csvContent = `data:text/csv;charset=utf-8,नाम,अंक\n${studentName},${score}`;
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // --- EVENT LISTENERS ---
+
+        // Start Quiz Button
+        startQuizBtn.addEventListener('click', () => {
+            studentName = studentNameInput.value.trim().replace(/,/g, ''); // Remove commas to avoid CSV issues
+            if (studentName === '') {
+                alert('कृपया अपना नाम दर्ज करें।');
+                return;
+            }
+            nameModal.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            renderQuestions();
+            startTimer();
+        });
+        
+        // Form Submit
+        quizForm.addEventListener('submit', handleSubmit);
+
+    </script>
+</body>
+</html>
+

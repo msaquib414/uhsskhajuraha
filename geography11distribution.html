@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>भूगोल प्रश्नोत्तरी: महासागर, महाद्वीप और भूकंप</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+        }
+        .correct-answer {
+            color: #16a34a; /* green-600 */
+            font-weight: bold;
+        }
+        .user-correct {
+            background-color: #dcfce7; /* green-100 */
+            border-color: #16a34a;
+        }
+        .user-incorrect {
+            background-color: #fee2e2; /* red-100 */
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800" oncontextmenu="return false;">
+
+    <!-- Name Input Section -->
+    <div id="name-section" class="min-h-screen flex items-center justify-center bg-gray-200 p-4">
+        <div class="bg-white p-8 rounded-xl shadow-2xl text-center w-full max-w-md mx-auto">
+            <h1 class="text-2xl font-bold mb-4 text-gray-800">भूगोल प्रश्नोत्तरी में आपका स्वागत है</h1>
+            <p class="text-gray-600 mb-6">यह प्रश्नोत्तरी कक्षा 11 के भूगोल विषय के 'महासागरों और महाद्वीपों का वितरण' और 'भूकंप' पर आधारित है।</p>
+            <input type="text" id="student-name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="अपना पूरा नाम लिखें">
+            <button id="start-quiz-btn" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-transform transform hover:scale-105 duration-300">प्रश्नोत्तरी शुरू करें</button>
+        </div>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quiz-section" class="hidden">
+        <header class="bg-white shadow-md sticky top-0 z-10 py-3">
+            <div class="container mx-auto flex justify-between items-center px-4">
+                <h1 class="text-xl md:text-2xl font-bold text-blue-700">कक्षा 11: भूगोल प्रश्नोत्तरी</h1>
+                <div id="timer" class="text-2xl font-bold bg-gray-200 text-gray-800 px-4 py-2 rounded-lg shadow-inner">40:00</div>
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 md:p-8">
+            <form id="quiz-form">
+                <div id="questions-container" class="space-y-8">
+                    <!-- Questions will be dynamically inserted here -->
+                </div>
+                <div class="mt-10 text-center">
+                    <button type="submit" id="submit-btn" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition duration-300 text-lg shadow-lg">उत्तर जमा करें</button>
+                </div>
+            </form>
+            <div id="result-section" class="hidden mt-10 text-center bg-white p-8 rounded-lg shadow-xl">
+                <h2 class="text-3xl font-bold mb-4">आपका परिणाम</h2>
+                <p id="score" class="text-5xl font-bold text-blue-600"></p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const quizData = [
+            // Distribution of Oceans and Continents Questions
+            { question: "1. महाद्वीपीय विस्थापन सिद्धांत किसने प्रस्तावित किया?", options: { a: "आर्थर होम्स", b: "अल्फ्रेड वेगनर", c: "हैरी हेस", d: "मैकेंजी और पार्कर" }, answer: "b" },
+            { question: "2. वेगनर के अनुसार, पैंजिया के विभाजन के बाद उत्तरी भाग को क्या कहा गया?", options: { a: "गोंडवानालैंड", b: "लॉरेशिया", c: "टेथिस सागर", d: "पैंथालसा" }, answer: "b" },
+            { question: "3. निम्नलिखित में से कौन सा महाद्वीपीय विस्थापन के पक्ष में एक प्रमाण नहीं है?", options: { a: "महाद्वीपों में साम्यता (Jigsaw Fit)", b: "विभिन्न महाद्वीपों में जीवाश्मों का वितरण", c: "सूर्य से पृथ्वी की दूरी", d: "प्लेसर निक्षेप" }, answer: "c" },
+            { question: "4. 'टिलाइट' क्या हैं?", options: { a: "एक प्रकार की ज्वालामुखी चट्टान", b: "समुद्री तलछट", c: "हिमानी निक्षेपण से निर्मित अवसादी चट्टानें", d: "एक प्रकार का जीवाश्म" }, answer: "c" },
+            { question: "5. पोलर फ्लीइंग बल (Polar fleeing force) किससे संबंधित है?", options: { a: "पृथ्वी का घूर्णन", b: "सूर्य का गुरुत्वाकर्षण", c: "चंद्रमा का गुरुत्वाकर्षण", d: "पृथ्वी का परिक्रमण" }, answer: "a" },
+            { question: "6. संवहन धारा सिद्धांत (Convectional Current Theory) किसने दिया?", options: { a: "अल्फ्रेड वेगनर", b: "चार्ल्स डार्विन", c: "आर्थर होम्स", d: "हैरी हेस" }, answer: "c" },
+            { question: "7. मध्य-महासागरीय कटकों के साथ ज्वालामुखी उद्गार सामान्य क्यों हैं?", options: { a: "यह पृथ्वी का सबसे कमजोर हिस्सा है", b: "दो प्लेटें एक दूसरे से दूर जा रही हैं", c: "दो प्लेटें आपस में टकरा रही हैं", d: "समुद्र के दबाव के कारण" }, answer: "b" },
+            { question: "8. 'सीफ्लोर स्प्रेडिंग' (Sea Floor Spreading) की अवधारणा किसने प्रस्तुत की?", options: { a: "अल्फ्रेड वेगनर", b: "आर्थर होम्स", c: "मैकेंजी और पार्कर", d: "हैरी हेस" }, answer: "d" },
+            { question: "9. प्लेट विवर्तनिकी (Plate Tectonics) का सिद्धांत कब विकसित हुआ?", options: { a: "1920 के दशक में", b: "1960 के दशक में", c: "1890 के दशक में", d: "2000 के दशक में" }, answer: "b" },
+            { question: "10. पृथ्वी की सबसे ऊपरी परत, जिसमें पर्पटी और मेंटल का ऊपरी भाग शामिल है, उसे क्या कहते हैं?", options: { a: "स्थलमंडल (Lithosphere)", b: "दुर्बलतामंडल (Asthenosphere)", c: "मध्यमंडल (Mesosphere)", d: "क्रोड (Core)" }, answer: "a" },
+            { question: "11. निम्नलिखित में से कौन सी एक प्रमुख विवर्तनिक प्लेट नहीं है?", options: { a: "यूरेशियन प्लेट", b: "अंटार्कटिक प्लेट", c: "नाज्का प्लेट", d: "अफ्रीकी प्लेट" }, answer: "c" },
+            { question: "12. अपसारी सीमा (Divergent Boundary) पर क्या होता है?", options: { a: "प्लेटें एक दूसरे की ओर बढ़ती हैं", b: "प्लेटें एक दूसरे से दूर जाती हैं", c: "प्लेटें एक दूसरे के समानांतर खिसकती हैं", d: "प्लेटें स्थिर रहती हैं" }, answer: "b" },
+            { question: "13. हिमालय पर्वत का निर्माण किस प्रकार की प्लेट सीमा पर हुआ है?", options: { a: "अपसारी सीमा", b: "रूपांतर सीमा", c: "अभिसारी सीमा", d: "महासागरीय कटक" }, answer: "c" },
+            { question: "14. 'सबडक्शन ज़ोन' (Subduction Zone) कहाँ बनता है?", options: { a: "जहाँ दो महाद्वीपीय प्लेटें टकराती हैं", b: "जहाँ एक महासागरीय प्लेट महाद्वीपीय प्लेट के नीचे धँसती है", c: "जहाँ दो प्लेटें एक दूसरे से दूर जाती हैं", d: "जहाँ प्लेटें समानांतर खिसकती हैं" }, answer: "b" },
+            { question: "15. रूपांतर भ्रंश (Transform Fault) का सबसे प्रसिद्ध उदाहरण कौन सा है?", options: { a: "पूर्वी अफ्रीकी दरार घाटी", b: "मध्य-अटलांटिक कटक", c: "सैन एंड्रियास भ्रंश", d: "एंडीज पर्वत श्रृंखला" }, answer: "c" },
+            { question: "16. प्लेटों की गति का मुख्य कारण क्या माना जाता है?", options: { a: "पृथ्वी का घूर्णन", b: "मेंटल में चलने वाली संवहन धाराएँ", c: "ज्वारीय बल", d: "सूर्य का गुरुत्वाकर्षण" }, answer: "b" },
+            { question: "17. 'रिंग ऑफ फायर' (Ring of Fire) किस महासागर के चारों ओर स्थित है?", options: { a: "अटलांटिक महासागर", b: "हिंद महासागर", c: "आर्कटिक महासागर", d: "प्रशांत महासागर" }, answer: "d" },
+            { question: "18. भारतीय प्लेट के यूरेशियन प्लेट से टकराने से किस भू-आकृति का निर्माण हुआ?", options: { a: "दक्कन का पठार", b: "हिमालय पर्वत", c: "पश्चिमी घाट", d: "अरावली पर्वत" }, answer: "b" },
+            { question: "19. हॉटस्पॉट (Hotspot) ज्वालामुखी गतिविधि का एक उदाहरण कौन सा है?", options: { a: "एंडीज पर्वत", b: "हिमालय", c: "हवाई द्वीपसमूह", d: "आल्प्स पर्वत" }, answer: "c" },
+            { question: "20. वेगनर के अनुसार, पैंजिया को घेरे हुए विशाल महासागर का क्या नाम था?", options: { a: "टेथिस सागर", b: "प्रशांत महासागर", c: "पैंथालसा", d: "आर्कटिक महासागर" }, answer: "c" },
+            { question: "21. महाद्वीपीय प्रवाह के लिए वेगनर द्वारा सुझाए गए दो बल कौन से थे?", options: { a: "गुरुत्वाकर्षण और चुंबकीय बल", b: "पोलर फ्लीइंग बल और ज्वारीय बल", c: "संवहन धाराएँ और गुरुत्वाकर्षण", d: "चुंबकीय बल और घूर्णन बल" }, answer: "b" },
+            { question: "22. महासागरीय पर्पटी की चट्टानें महाद्वीपीय पर्पटी की चट्टानों की तुलना में कैसी होती हैं?", options: { a: "अधिक पुरानी", b: "समान आयु की", c: "अपेक्षाकृत नई", d: "इनमें से कोई नहीं" }, answer: "c" },
+            { question: "23. गोंडवानालैंड का हिस्सा निम्नलिखित में से कौन सा भूभाग नहीं था?", options: { a: "भारत", b: "उत्तरी अमेरिका", c: "ऑस्ट्रेलिया", d: "अफ्रीका" }, answer: "b" },
+            { question: "24. प्लेट शब्द का सबसे पहले प्रयोग किसने किया था?", options: { a: "अल्फ्रेड वेगनर", b: "आर्थर होम्स", c: "हैरी हेस", d: "तुजो विल्सन" }, answer: "d" },
+            { question: "25. जब दो महाद्वीपीय प्लेटें टकराती हैं, तो क्या होता है?", options: { a: "एक प्लेट नीचे धँस जाती है", b: "वलित पर्वतों का निर्माण होता है", c: "एक गहरी खाई बनती है", d: "ज्वालामुखी द्वीप बनते हैं" }, answer: "b" },
+            { question: "26. लेमूर नामक जीव के जीवाश्म किन भूभागों पर पाए जाते हैं जो महाद्वीपीय विस्थापन को प्रमाणित करते हैं?", options: { a: "भारत, मेडागास्कर और अफ्रीका", b: "उत्तरी अमेरिका और यूरोप", c: "दक्षिण अमेरिका और अफ्रीका", d: "ऑस्ट्रेलिया और अंटार्कटिका" }, answer: "a" },
+            { question: "27. मध्य-अटलांटिक कटक के दोनों ओर की चट्टानों के चुंबकीय गुणों का अध्ययन क्या दर्शाता है?", options: { a: "चट्टानों की आयु समान है", b: "चुंबकीय गुण सममित हैं", c: "चुंबकीय गुण पूरी तरह से यादृच्छिक हैं", d: "केवल एक तरफ चुंबकीय पट्टियाँ हैं" }, answer: "b" },
+            { question: "28. किस प्रकार की प्लेट सीमा पर न तो पर्पटी का निर्माण होता है और न ही विनाश?", options: { a: "अभिसारी सीमा", b: "अपसारी सीमा", c: "रूपांतर सीमा", d: "सबडक्शन ज़ोन" }, answer: "c" },
+            { question: "29. 'टेथिस सागर' नामक भूसन्नति किन दो भूभागों के बीच स्थित थी?", options: { a: "उत्तरी और दक्षिणी अमेरिका", b: "अफ्रीका और अंटार्कटिका", c: "लॉरेशिया और गोंडवानालैंड", d: "यूरेशिया और अफ्रीका" }, answer: "c" },
+            { question: "30. महासागरीय अधस्तल की बनावट का मानचित्रण किसने संभव बनाया?", options: { a: "उपग्रह प्रौद्योगिकी", b: "द्वितीय विश्व युद्ध के बाद की प्रौद्योगिकी", c: "प्राचीन मानचित्र", d: "रेडियोकार्बन डेटिंग" }, answer: "b" },
+            { question: "31. निम्नलिखित में से कौन सी एक छोटी (minor) प्लेट है?", options: { a: "प्रशांत प्लेट", b: "यूरेशियन प्लेट", c: "कोकोस प्लेट", d: "इंडो-ऑस्ट्रेलियाई प्लेट" }, answer: "c" },
+            { question: "32. प्लेटों की गति की दर क्या है?", options: { a: "लगभग 25 सेमी प्रति वर्ष", b: "लगभग 2.5 सेमी प्रति वर्ष", c: "लगभग 25 मीटर प्रति वर्ष", d: "लगभग 2.5 मीटर प्रति वर्ष" }, answer: "b" },
+            { question: "33. 'ग्लोसोप्टेरिस' वनस्पति के जीवाश्मों का मिलना किस बात का प्रमाण है?", options: { a: "जलवायु परिवर्तन", b: "महाद्वीपीय विस्थापन", c: "समुद्र तल का विस्तार", d: "ज्वालामुखी गतिविधि" }, answer: "b" },
+            { question: "34. दुर्बलतामंडल (Asthenosphere) की क्या विशेषता है?", options: { a: "यह ठोस और कठोर है", b: "यह अत्यधिक गर्म और पिघली हुई है", c: "यह आंशिक रूप से पिघली हुई और प्लास्टिक जैसी है", d: "यह गैसों से बनी है" }, answer: "c" },
+            { question: "35. जब एक महासागरीय प्लेट दूसरी महासागरीय प्लेट से टकराती है, तो क्या बनता है?", options: { a: "ज्वालामुखी द्वीप चाप (Volcanic Island Arc)", b: "वलित पर्वत", c: "दरार घाटी", d: "महाद्वीपीय पठार" }, answer: "a" },
+            { question: "36. घाना तट पर सोने के बड़े निक्षेपों का पाया जाना, जबकि उद्गम चट्टानों का ब्राजील में होना, क्या कहलाता है?", options: { a: "टिलाइट", b: "जिग-सॉ-फिट", c: "लेमूरिया", d: "प्लेसर निक्षेप" }, answer: "d" },
+            { question: "37. भारतीय प्लेट वर्तमान में किस दिशा में गति कर रही है?", options: { a: "दक्षिण", b: "पश्चिम", c: "पूर्व", d: "उत्तर-पूर्व" }, answer: "d" },
+            { question: "38. महासागरीय गर्त (Oceanic Trenches) सामान्यतः कहाँ पाए जाते हैं?", options: { a: "महाद्वीपीय मग्नतटों पर", b: "मध्य-महासागरीय कटकों के पास", c: "अभिसारी प्लेट सीमाओं पर", d: "अपसारी प्लेट सीमाओं पर" }, answer: "c" },
+            { question: "39. वेगनर का महाद्वीपीय विस्थापन सिद्धांत अंततः क्यों अस्वीकार कर दिया गया?", options: { a: "प्रमाण अपर्याप्त थे", b: "प्रस्तावित बल अपर्याप्त थे", c: "उन्होंने प्लेटों का उल्लेख नहीं किया", d: "सिद्धांत बहुत जटिल था" }, answer: "b" },
+            { question: "40. संपूर्ण पृथ्वी के लगभग कितने प्रतिशत भाग पर महाद्वीप स्थित हैं?", options: { a: "71%", b: "29%", c: "50%", d: "45%" }, answer: "b" },
+            // Earthquake Questions
+            { question: "41. भूकंपीय तरंगों को किस यंत्र से मापा जाता है?", options: { a: "बैरोमीटर (Barometer)", b: "थर्मामीटर (Thermometer)", c: "सिस्मोग्राफ (Seismograph)", d: "लैक्टोमीटर (Lactometer)" }, answer: "c" },
+            { question: "42. वह स्थान जहाँ से भूकंपीय ऊर्जा निकलती है, क्या कहलाता है?", options: { a: "अधिकेंद्र (Epicenter)", b: "उद्गम केंद्र (Focus/Hypocenter)", c: "प्लेट सीमा (Plate Boundary)", d: "भ्रंश (Fault)" }, answer: "b" },
+            { question: "43. भूकंप की तीव्रता को मापने के लिए किस पैमाने का उपयोग किया जाता है?", options: { a: "सेल्सियस पैमाना", b: "फारेनहाइट पैमाना", c: "रिक्टर पैमाना", d: "केल्विन पैमाना" }, answer: "c" },
+            { question: "44. कौन सी भूकंपीय तरंगें सबसे तेज गति से चलती हैं और सबसे पहले धरातल पर पहुँचती हैं?", options: { a: "P-तरंगें (P-waves)", b: "S-तरंगें (S-waves)", c: "L-तरंगें (L-waves)", d: "R-तरंगें (Rayleigh waves)" }, answer: "a" },
+            { question: "45. निम्नलिखित में से कौन सी भूकंपीय तरंगें केवल ठोस माध्यम से ही गुजर सकती हैं?", options: { a: "P-तरंगें", b: "S-तरंगें", c: "धरातलीय तरंगें", d: "ध्वनि तरंगें" }, answer: "b" },
+            { question: "46. पृथ्वी की सतह पर भूकंप के उद्गम केंद्र के ठीक ऊपर के बिंदु को क्या कहते हैं?", options: { a: "उद्गम केंद्र (Hypocenter)", b: "अधिकेंद्र (Epicenter)", c: "सिस्मिक ज़ोन (Seismic Zone)", d: "भ्रंश रेखा (Fault Line)" }, answer: "b" },
+            { question: "47. भूकंप के कारण उत्पन्न होने वाली विशाल समुद्री लहरों को क्या कहा जाता है?", options: { a: "ज्वार (Tide)", b: "धारा (Current)", c: "सुनामी (Tsunami)", d: "विक्षोभ (Disturbance)" }, answer: "c" },
+            { question: "48. पृथ्वी का 'छाया क्षेत्र' (Shadow Zone) किस भूकंपीय तरंग के लिए सबसे बड़ा होता है?", options: { a: "P-तरंगों के लिए", b: "S-तरंगों के लिए", c: "L-तरंगों के लिए", d: "दोनों (P और S) के लिए समान होता है" }, answer: "b" },
+            { question: "49. भारत को कितने भूकंपीय जोनों (Seismic Zones) में विभाजित किया गया है?", options: { a: "तीन", b: "चार", c: "पाँच", d: "छह" }, answer: "b" },
+            { question: "50. भूकंप के परिमाण (Magnitude) और तीव्रता (Intensity) में क्या अंतर है?", options: { a: "दोनों एक ही चीज हैं", b: "परिमाण ऊर्जा को मापता है, जबकि तीव्रता हुए नुकसान को मापती है", c: "तीव्रता ऊर्जा को मापती है, जबकि परिमाण हुए नुकसान को मापता है", d: "परिमाण केवल P-तरंगों पर आधारित है, जबकि तीव्रता S-तरंगों पर" }, answer: "b" }
+        ];
+
+        // --- DOM ELEMENTS ---
+        const nameSection = document.getElementById('name-section');
+        const quizSection = document.getElementById('quiz-section');
+        const studentNameInput = document.getElementById('student-name');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const questionsContainer = document.getElementById('questions-container');
+        const quizForm = document.getElementById('quiz-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultSection = document.getElementById('result-section');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+
+        // --- STATE ---
+        let studentName = '';
+        let timerInterval;
+        let timeLeft = 40 * 60; // 40 minutes in seconds
+
+        // --- FUNCTIONS ---
+
+        function startQuiz() {
+            studentName = studentNameInput.value.trim();
+            if (studentName === '') {
+                alert('कृपया अपना नाम दर्ज करें।');
+                return;
+            }
+            nameSection.classList.add('hidden');
+            quizSection.classList.remove('hidden');
+            loadQuestions();
+            startTimer();
+        }
+
+        function loadQuestions() {
+            let questionsHTML = '';
+            quizData.forEach((q, index) => {
+                questionsHTML += `
+                    <div id="q-block-${index}" class="bg-white p-6 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg">
+                        <p class="text-lg font-semibold mb-4">${q.question}</p>
+                        <div class="space-y-3">
+                            ${Object.keys(q.options).map(key => `
+                                <label class="flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors duration-200">
+                                    <input type="radio" name="question${index}" value="${key}" class="mr-3 h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                    <span>${key.toUpperCase()}. ${q.options[key]}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div id="answer-feedback-${index}" class="mt-4 text-lg hidden"></div>
+                    </div>
+                `;
+            });
+            questionsContainer.innerHTML = questionsHTML;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "समय समाप्त!";
+                    handleSubmit();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function handleSubmit(event) {
+            if(event) event.preventDefault();
+            if (submitBtn.disabled) return; // Prevent multiple submissions
+
+            clearInterval(timerInterval);
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'जमा हो गया';
+            submitBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+            submitBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+
+            let score = 0;
+            quizData.forEach((q, index) => {
+                const questionBlock = document.getElementById(`q-block-${index}`);
+                const feedbackEl = document.getElementById(`answer-feedback-${index}`);
+                const radioButtons = quizForm.elements[`question${index}`];
+                const selectedOption = radioButtons.value;
+                
+                // Disable all radio buttons for this question
+                for(let i = 0; i < radioButtons.length; i++) {
+                    radioButtons[i].disabled = true;
+                }
+
+                const correctLabel = questionBlock.querySelector(`input[value="${q.answer}"]`).parentElement;
+
+                // Show correct answer
+                feedbackEl.innerHTML = `सही उत्तर: <span class="correct-answer">${q.answer.toUpperCase()}. ${q.options[q.answer]}</span>`;
+                feedbackEl.classList.remove('hidden');
+
+                if (selectedOption) {
+                    const selectedLabel = questionBlock.querySelector(`input[value="${selectedOption}"]`).parentElement;
+                    if (selectedOption === q.answer) {
+                        score++;
+                        selectedLabel.classList.add('user-correct');
+                    } else {
+                        selectedLabel.classList.add('user-incorrect');
+                        correctLabel.classList.add('user-correct'); // Also highlight correct one if user was wrong
+                    }
+                } else {
+                    // If user didn't answer, just highlight the correct one
+                    correctLabel.classList.add('user-correct');
+                }
+            });
+            
+            scoreDisplay.textContent = `${score} / ${quizData.length}`;
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+
+            downloadCSV(score);
+        }
+
+        function downloadCSV(score) {
+            const csvContent = `data:text/csv;charset=utf-8,Student Name,Score\n"${studentName.replace(/"/g, '""')}",${score}`;
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // --- EVENT LISTENERS ---
+        startQuizBtn.addEventListener('click', startQuiz);
+        studentNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                startQuizBtn.click();
+            }
+        });
+        quizForm.addEventListener('submit', handleSubmit);
+
+    </script>
+</body>
+</html>
+

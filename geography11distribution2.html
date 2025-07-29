@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #334155;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the top for better scroll behavior */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px;
+            margin-top: 50px; /* Space for the fixed timer */
+            position: relative; /* For timer positioning */
+        }
+        .timer-container {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #1e3a8a; /* Dark blue */
+            color: #ffffff;
+            padding: 10px 20px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-align: center;
+            width: fit-content;
+            min-width: 150px;
+        }
+        .question-card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        .question-card .question-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .option-label:hover {
+            background-color: #e0f2fe; /* Light blue hover */
+            border-color: #38b2ac; /* Teal border on hover */
+        }
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+        .option-label.correct {
+            background-color: #d1fae5; /* Green for correct */
+            border-color: #34d399;
+            font-weight: 600;
+        }
+        .option-label.incorrect {
+            background-color: #fee2e2; /* Red for incorrect */
+            border-color: #ef4444;
+            font-weight: 600;
+        }
+        .submit-btn {
+            background-color: #2563eb; /* Blue */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .submit-btn:hover:not(:disabled) {
+            background-color: #1d4ed8; /* Darker blue on hover */
+        }
+        .submit-btn:disabled {
+            background-color: #9ca3af; /* Gray when disabled */
+            cursor: not-allowed;
+        }
+        .result-message {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            background-color: #eff6ff; /* Light blue background */
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+        }
+        .correct-answer-text {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            color: #10b981; /* Green */
+            font-weight: 500;
+        }
+        .incorrect-answer-text {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            color: #ef4444; /* Red */
+            font-weight: 500;
+        }
+        .name-input-section {
+            background-color: #e0f2fe; /* Light blue */
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        .name-input-section input {
+            padding: 10px 15px;
+            border: 2px solid #93c5fd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            width: 80%;
+            max-width: 300px;
+            margin-top: 15px;
+        }
+        .name-input-section button {
+            background-color: #059669; /* Green */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .name-input-section button:hover {
+            background-color: #047857; /* Darker green */
+        }
+    </style>
+</head>
+<body>
+    <div class="timer-container" id="timer">
+        25:00
+    </div>
+
+    <div class="container">
+        <div id="name-input-section" class="name-input-section">
+            <h2 class="text-2xl font-bold mb-4 text-blue-800">Welcome to the Quiz!</h2>
+            <p class="text-lg text-blue-700">Please enter your name to start the quiz.</p>
+            <input type="text" id="student-name" placeholder="Your Name" class="mt-4 p-3 border-2 border-blue-400 rounded-lg focus:outline-none focus:border-blue-600">
+            <button id="start-quiz-btn" class="mt-6 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md">Start Quiz</button>
+        </div>
+
+        <form id="quiz-form" class="hidden">
+            <!-- Questions will be dynamically loaded here -->
+        </form>
+
+        <div id="result-display" class="result-message hidden">
+            <!-- Result will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        const quizForm = document.getElementById('quiz-form');
+        const resultDisplay = document.getElementById('result-display');
+        const timerDisplay = document.getElementById('timer');
+        const nameInputSection = document.getElementById('name-input-section');
+        const studentNameInput = document.getElementById('student-name');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        let studentName = '';
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+        let quizSubmitted = false;
+
+        // Array of questions with text questions, options, and correct answers
+        const questions = [
+            {
+                id: 1,
+                questionText: '3. ऑस्ट्रेलिया अंटार्कटिका से कब अलग हुआ? (When did Australia separate from Antarctica?)',
+                options: {
+                    a: 'मीसोजोइक काल में (Mesozoic period)',
+                    b: 'क्रिटेशियस काल में (Cretaceous period)',
+                    c: 'टर्शियरी काल में (Tertiary period)',
+                    d: 'इओसीन काल में (Eocene period)'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                id: 2,
+                questionText: '4. निम्नलिखित में से किसका निर्माण विवर्तनिक शक्तियों के परिणामस्वरूप होता है? (Which of the following is formed as a result of tectonic forces?)',
+                options: {
+                    a: 'वलित भृगुएँ (Folded valleys)',
+                    b: 'V-आकार की घाटी (V-shaped valley)',
+                    c: 'ब्लाइंड घाटी (Blind valley)',
+                    d: 'यू-आकार की घाटी (U-shaped valley)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 3,
+                questionText: '5. वेगनर के अनुसार निम्नलिखित में से कौन-सा भाग पैंजिया का भाग नहीं है? (Which of the following is not a part of Pangaea according to Wegener?)',
+                options: {
+                    a: 'गोंडवानालैंड (Gondwanaland)',
+                    b: 'लॉरेशिया (Laurasia)',
+                    c: 'यूरेशिया (Eurasia)',
+                    d: 'अंगारालैंड (Angaraland)'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                id: 4,
+                questionText: '6. निम्नलिखित में से किस महासागर में सर्वोत्तम साम्यवस्था पाई जाती है? (The best equilibrium is found in which of the following oceans?)',
+                options: {
+                    a: 'अटलांटिक महासागर (Atlantic Ocean)',
+                    b: 'हिंद महासागर (Indian Ocean)',
+                    c: 'प्रशांत महासागर (Pacific Ocean)',
+                    d: 'आर्कटिक महासागर (Arctic Ocean)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 5,
+                questionText: '7. निम्नलिखित में से कौन-सा भाग गोंडवानालैंड का भाग नहीं है? (Which of the following continent is not a part of Gondwanaland?)',
+                options: {
+                    a: 'उत्तरी अमेरिका (North America)',
+                    b: 'दक्षिणी अमेरिका (South America)',
+                    c: 'अफ्रीका (Africa)',
+                    d: 'अंटार्कटिका (Antarctica)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 6,
+                questionText: '8. वेगनर ने विस्थापन सिद्धांत कब प्रस्तुत किया? (When did Wegener propose the displacement theory?)',
+                options: {
+                    a: '1911',
+                    b: '1912',
+                    c: '1913',
+                    d: '1914'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                id: 7,
+                questionText: '9. गोंडवानालैंड सर्वप्रथम कब अलग हुआ? (When did Gondwanaland separate from Pangaea?)',
+                options: {
+                    a: '10 करोड़ वर्ष पूर्व (10 crore years ago)',
+                    b: '20 करोड़ वर्ष पूर्व (20 crore years ago)',
+                    c: '25 करोड़ वर्ष पूर्व (25 crore years ago)',
+                    d: '50 करोड़ वर्ष पूर्व (50 crore years ago)'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                id: 8,
+                questionText: '10. कौन सा महाद्वीपीय गोंडवानालैंड का भाग नहीं था? (Which of the following was not a part of Gondwanaland?)',
+                options: {
+                    a: 'अफ्रीका (Africa)',
+                    b: 'ऑस्ट्रेलिया (Australia)',
+                    c: 'अंटार्कटिका (Antarctica)',
+                    d: 'यूरेशिया (Eurasia)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 9,
+                questionText: '11. वेगनर के अनुसार निम्न में से कौन एक बल महाद्वीपीय विस्थापन के लिए उत्तरदायी है? (According to Wegener, which one of the following forces is responsible for continental drift?)',
+                options: {
+                    a: 'ज्वारीय बल (Tidal force)',
+                    b: 'संवाहक धाराएँ (Conductive currents)',
+                    c: 'तनाव बल (Tension force)',
+                    d: 'संपीड़न बल (Compressive force)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 10,
+                questionText: '12. निम्नलिखित में से कौन-सा एकमात्र महाद्वीप था जो कभी नाम था? (What was the name of the only continent located on Earth 100 million years ago?)',
+                options: {
+                    a: 'अंगारा (Angara)',
+                    b: 'गोंडवाना (Gondwana)',
+                    c: 'अफ्रीका (Africa)',
+                    d: 'पैंजिया (Pangaea)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 11,
+                questionText: '13. संवहन धारा सिद्धांत का संबंध निम्न में से किस भूवैज्ञानिक से है? (Convection current theory is related to which of the following geoscientist?)',
+                options: {
+                    a: 'वेगनर (Wegener)',
+                    b: 'आर्थर होम्स (Arthur Holmes)',
+                    c: 'बुल्लार्ड (Bullard)',
+                    d: 'जेम्स मॉस (James Jeans)'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                id: 12,
+                questionText: '14. निम्न में से किस क्षेत्र को अग्नि वलय कहा जाता है? (Which of the following region is known as the Ring of Fire?)',
+                options: {
+                    a: 'मध्य महाद्वीपीय क्षेत्र (Mid continental region)',
+                    b: 'मध्य अटलांटिक क्षेत्र (Mid-Atlantic region)',
+                    c: 'हिंद महासागरीय क्षेत्र (Indian Ocean region)',
+                    d: 'प्रशांत महासागरीय क्षेत्र (Pacific Ocean region)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 13,
+                questionText: '15. निम्नलिखित में से किसने महासागर के तल के प्रसरण सिद्धांत का प्रतिपादन किया? (Who propounded the theory of ocean subsurface expansion?)',
+                options: {
+                    a: 'आर्थर होम्स (Arthur Holmes)',
+                    b: 'वेगनर (Wegener)',
+                    c: 'लोथियन ग्रीन (Lothian Green)',
+                    d: 'हेस (Hess)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 14,
+                questionText: '16. निम्न में से कौन सी प्लेट छोटी नहीं है? (Which of the following is not a small plate?)',
+                options: {
+                    a: 'यूरेशियन प्लेट (Eurasian plate)',
+                    b: 'कोकोस प्लेट (Cocos plate)',
+                    c: 'फिलीपींस प्लेट (Philippine plate)',
+                    d: 'अरेबियन प्लेट (Arabian plate)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 15,
+                questionText: '17. निम्न में से कौन सी प्लेट छोटी है? (Which of the following is not a small plate?)',
+                options: {
+                    a: 'कोकोस प्लेट (Cocos plate)',
+                    b: 'नाज़का प्लेट (Nazca plate)',
+                    c: 'फिलीपींस प्लेट (Philippine plate)',
+                    d: 'अरेबियन प्लेट (Arabian plate)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 16,
+                questionText: '18. रूपांतरण भ्रंश का निर्माण होता है? (A Metamorphic fault is formed by?)',
+                options: {
+                    a: 'दो प्लेटों के अभिसरण से (convergence of two plates)',
+                    b: 'दो प्लेटों के अपसरण से (divergence of two plates)',
+                    c: 'दो प्लेटों के आपस में सरकने से (sliding of two plates side by side)',
+                    d: 'उपर्युक्त सभी स्थितियों में (in all of the above cases)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 17,
+                questionText: '19. हिमालय पर्वत का निम्न में से किससे सम्बन्ध है? (The Himalayan Mountains are related to which of the following?)',
+                options: {
+                    a: 'टेथिस सागर से (Tethys Sea)',
+                    b: 'आर्कटिक सागर से (Arctic Sea)',
+                    c: 'अरब सागर से (Arabian Sea)',
+                    d: 'भूमध्य सागर से (Mediterranean Sea)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 18,
+                questionText: '20. "विश्व प्लेट" शब्द किसने गढ़ा? (Who coined the term "The world plate"?)',
+                options: {
+                    a: 'मॉर्गन (Morgan)',
+                    b: 'मैकेंजी (McKenzie)',
+                    c: 'ले पिशोन (Le Pichon)',
+                    d: 'विल्सन (Wilson)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 19,
+                questionText: '21. भारतीय प्लेट की सीमा का कौन सा भाग हिमालय में है? (What type of plate boundary in the Himalayas is part of the Indian plate?)',
+                options: {
+                    a: 'महाद्वीपीय अभिसरण सीमा (Oceanic-continental convergent)',
+                    b: 'अपसारी सीमा (Divergent boundary)',
+                    c: 'रूपांतरण सीमा (Transform boundary)',
+                    d: 'महाद्वीपीय अभिसरण सीमा (Continent-continent convergent)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 20,
+                questionText: '22. निम्नलिखित कथनों पर विचार कीजिए: (Consider the following statement:)\n1. प्रशांत प्लेट हिमालय में सबसे कमजोर ज्वालामुखी है। (The Pacific plate is most vulnerable to earthquakes in the Himalayas.)\n2. नवीन वलित पहाड़ (new folded garlands)\n3. सक्रिय ज्वालामुखी (active volcanoes)\n4. अपसारी प्लेट सीमा (divergent plate boundaries)\n5. अभिसारी प्लेट सीमा (convergent plate boundaries)\nनिम्न में से कौन-से कथन सही हैं? (Which of the above statements are correct?)',
+                options: {
+                    a: '1, 2 और 3 (1, 2 and 3)',
+                    b: '2, 3 और 4 (2, 3 and 4)',
+                    c: '1, 3 और 4 (1, 3 and 4)',
+                    d: 'सभी कथन सही हैं (all statements are correct)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 21,
+                questionText: '23. मध्य अटलांटिक कटक के निर्माण के लिए निम्न में से कौन-सा प्लेट संचलन उत्तरदायी है? (Which one of the following plate movement is responsible for the formation of the Mid-Atlantic Ridge?)',
+                options: {
+                    a: 'अपसारी संचलन (Divergent movement)',
+                    b: 'अभिसारी संचलन (Convergent movement)',
+                    c: 'रूपांतरण संचलन (Transform fault movement)',
+                    d: 'समानांतर संचलन (Parallel movement)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 22,
+                questionText: '24. वलित पर्वत निर्माण समाप्त होता है (Fold Mountain Formation ends at):',
+                options: {
+                    a: 'महाद्वीपीय समुद्री अभिसरण क्षेत्र पर (continent-continent convergence zone)',
+                    b: 'महाद्वीपीय महासागर अभिसरण क्षेत्र पर (continent-ocean convergence zone)',
+                    c: 'महासागर-महासागर अभिसरण क्षेत्र पर (ocean-ocean convergence zone)',
+                    d: 'सभी पर (all of the above)'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                id: 23,
+                questionText: '25. निम्नलिखित में से कौन-सी मुख्य प्लेट नहीं है? (Which of the following is not a main plate?)',
+                options: {
+                    a: 'अफ्रीकी (African)',
+                    b: 'यूरेशियाई (Eurasian)',
+                    c: 'अंटार्कटिक (Antarctic)',
+                    d: 'उत्तरी अमेरिकी (North American)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 24,
+                questionText: '26. प्रारंभ में सभी स्थल खंड एक बड़े भू-खंड के रूप में जुड़े हुए थे जिसे कहते हैं (In the beginning, all the landmasses where connected in the form of a large landmass called):',
+                options: {
+                    a: 'पैंजिया (Pangaea)',
+                    b: 'गोंडवानालैंड (Gondwanaland)',
+                    c: 'लॉरेशिया (Laurasia)',
+                    d: 'पैंथालस्सा (Panthalassa)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 25,
+                questionText: '27. प्रशांत महासागरीय प्लेट के दक्षिण-पूर्वी भाग में निम्न प्लेट को कहते हैं (The plate located in the south-east region of the Pacific ocean is called):',
+                options: {
+                    a: 'कोकोस प्लेट (Cocos plate)',
+                    b: 'नाज़का प्लेट (Nazca plate)',
+                    c: 'फिलीपींस प्लेट (Philippine plate)',
+                    d: 'अरेबियन प्लेट (Arabian plate)'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                id: 26,
+                questionText: '28. किस देश में भूकम्प का उद्भव कम होता है? (In which country the destructive earthquake was caused by earthquakes are called Tsunamis?)',
+                options: {
+                    a: 'जापान (Japan)',
+                    b: 'मेक्सिको (Mexico)',
+                    c: 'न्यूजीलैंड (New Zealand)',
+                    d: 'फिलीपींस (Philippines)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 27,
+                questionText: '29. अग्नि वलय की निम्न में से कौन सी पेटी है? (Which of the following is the Ring of Fire belt?)',
+                options: {
+                    a: 'प्रशांत महासागरीय पेटी (Pacific Ocean Belt)',
+                    b: 'मध्य अटलांटिक पेटी (Mid Atlantic Belt)',
+                    c: 'हिंद महासागरीय पेटी (Indian Ocean Belt)',
+                    d: 'आर्कटिक महासागरीय पेटी (Arctic Ocean Belt)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 28,
+                questionText: '30. विश्व का सबसे ऊंचा ज्वालामुखी है (The world\'s highest active volcano is):',
+                options: {
+                    a: 'एटना (Etna)',
+                    b: 'क्राकाटोआ (Krakatoa)',
+                    c: 'माउंट फुजियामा (Mount Fujiama)',
+                    d: 'अंटोफला (Antofalla)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 29,
+                questionText: '31. ज्वालामुखी का ऊपरी भाग जहाँ से लावा निकलता है, कहलाता है (The upper part of the volcano from where the lava emerges is called):',
+                options: {
+                    a: 'सुरंग (Tunnel)',
+                    b: 'गर्त (Trench)',
+                    c: 'क्रेटर (Crater)',
+                    d: 'काल्डेरा (Caldera)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 30,
+                questionText: '32. निम्नलिखित में से सर्वाधिक ज्वालामुखी मिलते हैं (Most of the volcanoes are found in which of the following countries?):',
+                options: {
+                    a: 'जापान (Japan)',
+                    b: 'इंडोनेशिया (Indonesia)',
+                    c: 'इटली (Italy)',
+                    d: 'फिलीपींस (Philippines)'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                id: 31,
+                questionText: '33. किलिमंजारो किस देश में स्थित है? (In which country is the dead volcano Kilimanjaro located?)',
+                options: {
+                    a: 'जापान (Japan)',
+                    b: 'मेक्सिको (Mexico)',
+                    c: 'इटली (Italy)',
+                    d: 'तंजानिया (Tanzania)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 32,
+                questionText: '34. माउंट एटना किस द्वीप पर स्थित है? (Mount Etna is an active volcano on which island?)',
+                options: {
+                    a: 'सिसिली (Sicily)',
+                    b: 'लिपारी (Lipari)',
+                    c: 'वोल्केनो (Volcano)',
+                    d: 'पोंज़ा (Ponza)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 33,
+                questionText: '35. विश्व के किस भाग में भूकम्प सबसे अधिक आते हैं? (The earthquake is most common in which part of the world?)',
+                options: {
+                    a: 'एशिया (Asia)',
+                    b: 'उत्तरी अमेरिका (North America)',
+                    c: 'अफ्रीका (Africa)',
+                    d: 'ऑस्ट्रेलिया (Australia)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 34,
+                questionText: '36. धरातल पर सबसे पहले पहुँचने वाली तरंगें हैं (The deadliest waves on the surface are called):',
+                options: {
+                    a: 'P-तरंगें (P-waves)',
+                    b: 'S-तरंगें (S-waves)',
+                    c: 'L-तरंगें (L-waves)',
+                    d: 'R-तरंगें (R-waves)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 35,
+                questionText: '37. भूकम्प का वह बिन्दु जहाँ भूकम्प प्रमुख अनुभव किया जाता है? (The point on the surface where the earthquake is first felt is called):',
+                options: {
+                    a: 'अधिकेन्द्र (epicenter)',
+                    b: 'भूकम्प केन्द्र (hypocenter)',
+                    c: 'भूकम्प केन्द्र (earthquake center)',
+                    d: 'इनमें से कोई नहीं (none of these)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 36,
+                questionText: '38. भूकम्प की तीव्रता को मापने का स्केल है (The scale to measure seismic intensity is called):',
+                options: {
+                    a: 'बर्नियर स्केल (Bernier scale)',
+                    b: 'प्रदर्शिनी स्केल (Exhibition factor)',
+                    c: 'कोहलर स्केल (Koehler scale)',
+                    d: 'रिक्टर स्केल (Richter scale)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 37,
+                questionText: '39. मध्य महासागरीय कटक में भूकम्प उद्गम क्षेत्र है (In the mid-oceanic ridges, the zone of earthquake origin is):',
+                options: {
+                    a: 'गहराई में (in depth)',
+                    b: 'अधिक गहराई में (deeper)',
+                    c: 'कम गहराई में (at low depth)',
+                    d: 'इनमें से कोई नहीं (at the bottom of the ocean)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 38,
+                questionText: '40. भूकम्प का विवर्तनिक भूकम्प से संबंध है (The vibration developed in the Earth crust is called):',
+                options: {
+                    a: 'भू-प्रेषण (Earth transmission)',
+                    b: 'पृथ्वी की गति (Motion of the Earth)',
+                    c: 'भूकम्प (Earthquake)',
+                    d: 'पृथ्वी की कामुकता (Sensitivity of the Earth)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 39,
+                questionText: '41. भूकम्पों के कारण समुद्रों में विकसित विशाल तरंगें होती हैं (Earthquakes cause the development of huge waves in the ocean called):',
+                options: {
+                    a: 'समुद्री तरंगें (Sea waves)',
+                    b: 'भूकम्पी तरंगें (Tremor waves)',
+                    c: 'सुनामी तरंगें (Tsunami waves)',
+                    d: 'धरातलीय तरंगें (Surface waves)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 40,
+                questionText: '42. भूकम्प के आघात की तीव्रता/प्रमाण को किस वैज्ञानिक के नाम से जाना जाता है? (The intensity of earthquake shock is known by the name of which scientist?)',
+                options: {
+                    a: 'रिक्टर (Richter)',
+                    b: 'हम्बोल्ट (Humboldt)',
+                    c: 'हेटर (Hettner)',
+                    d: 'कोहलर (Koehler)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 41,
+                questionText: '43. भूकम्प की वे तरंगें जो भूकम्प अधिकेन्द्र (Epicentre) पर सबसे पहले पहुँचती हैं, उन्हें कहते हैं (Those earthquake waves that reach the epicenter first are called):',
+                options: {
+                    a: 'धरातलीय तरंगें (Surface waves)',
+                    b: 'सुनामी तरंगें (Tsunami waves)',
+                    c: 'P-तरंगें (P-waves)',
+                    d: 'S-तरंगें (S-waves)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 42,
+                questionText: '44. भूकम्पों को ऊर्जा कहाँ से आती है जो आने वाले भूकम्पों को कहते हैं (Earthquakes that come due to the collapse of the cause of Underground stresses are called):',
+                options: {
+                    a: 'ज्वालामुखी भूकम्प (Volcanic earthquake)',
+                    b: 'विवर्तनिक भूकम्प (Tectonic earthquake)',
+                    c: 'संपीड़न भूकम्प (Compression earthquake)',
+                    d: 'इनमें से कोई नहीं (None of these)'
+                },
+                correctAnswer: 'b'
+            },
+            {
+                id: 43,
+                questionText: '45. निम्न में से कौन-सी भूकम्प तरंगें सर्वाधिक विनाशकारी होती हैं? (Which of the following earthquake waves are the most destructive?)',
+                options: {
+                    a: 'P-तरंगें (P-waves)',
+                    b: 'S-तरंगें (S-waves)',
+                    c: 'सुनामी तरंगें (Tsunami waves)',
+                    d: 'धरातलीय तरंगें (Surface waves)'
+                },
+                correctAnswer: 'd'
+            },
+            {
+                id: 44,
+                questionText: '46. भूकम्पीय छायाक्षेत्र का अभिप्राय है (The seismic shadow zone refers to):',
+                options: {
+                    a: '90° से 120° के मध्य (between 90° to 120°)',
+                    b: '120° से 160° के मध्य (between 120° to 160°)',
+                    c: '105° से 145° के मध्य (between 105° to 145°)',
+                    d: '165° से 205° के मध्य (between 165° to 205°)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 45,
+                questionText: '47. सुनामी का कारण है (Cause of Tsunami is):',
+                options: {
+                    a: 'भूकम्प (Earthquake)',
+                    b: 'पानी के नीचे ज्वालामुखी विस्फोट (Underwater volcanic eruption)',
+                    c: '(अ) एवं (ब) दोनों (Both (a) and (b))',
+                    d: 'इनमें से कोई नहीं (None of these)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 46,
+                questionText: '48. वेगनर कहाँ के प्रसिद्ध मौसम विज्ञानी थे (Wegener was the famous meteorologist of):',
+                options: {
+                    a: 'जर्मनी (Germany)',
+                    b: 'फ्रांस (France)',
+                    c: 'इटली (Italy)',
+                    d: 'इंग्लैंड (England)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 47,
+                questionText: '49. कोलंबस ने अमेरिका की खोज कब की थी? (When did Columbus discover America?)',
+                options: {
+                    a: '1492 ई. (1492 AD)',
+                    b: '1498 ई. (1498 AD)',
+                    c: '1513 ई. (1513 AD)',
+                    d: '1519 ई. (1519 AD)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 48,
+                questionText: '50. हिमालय पर्वत कहाँ से निर्मित हुआ है? (From which ocean did the Himalaya mountains originate?)',
+                options: {
+                    a: 'काला सागर (Black sea)',
+                    b: 'अरब सागर (Arab sea)',
+                    c: 'टेथिस सागर (Tethys sea)',
+                    d: 'भूमध्य सागर (Mediterranean sea)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 49,
+                questionText: '51. भारत किस प्राचीन भूखंड का एक भाग है? (India is a part of which ancient land?)',
+                options: {
+                    a: 'अंगारा भूमि (Angara land)',
+                    b: 'यूरेशिया (Eurasia)',
+                    c: 'गोंडवाना लैंड (Gondwana land)',
+                    d: 'बेल्फिनलैंड (Belfin land)'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 50,
+                questionText: '52. निम्न में से कौन-सा महाद्वीप लॉरेशिया का हिस्सा था? (Which one of the following continents was part of Laurasia?)',
+                options: {
+                    a: 'एशिया (Asia)',
+                    b: 'दक्षिणी अमेरिका (South America)',
+                    c: 'अफ्रीका (Africa)',
+                    d: 'ऑस्ट्रेलिया (Australia)'
+                },
+                correctAnswer: 'a'
+            },
+            {
+                id: 51,
+                questionText: '53. पृथ्वी की सतह का कितना प्रतिशत भाग सागर से ढका है? (What percentage of the earth\'s surface is covered by ocean?)',
+                options: {
+                    a: '50%',
+                    b: '60%',
+                    c: '71%',
+                    d: '80%'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 52,
+                questionText: '54. अल्फ्रेड वेगनर ने महाद्वीपीय प्रवाह का सिद्धांत कब प्रस्तुत किया? (When did Alfred Wegener give the continental drift theory?)',
+                options: {
+                    a: '1920',
+                    b: '1946',
+                    c: '1912',
+                    d: '1948'
+                },
+                correctAnswer: 'c'
+            },
+            {
+                id: 53,
+                questionText: '55. विशाल सागरीय भाग को वेगनर द्वारा क्या नाम दिया गया? (What was the name given of massive ocean by Wegener?)',
+                options: {
+                    a: 'पैंजिया (Pangaea)',
+                    b: 'पैंथालस्सा (Panthalassa)',
+                    c: 'अंगारालैंड (Angaraland)',
+                    d: 'गोंडवाना लैंड (Gondwana Land)'
+                },
+                correctAnswer: 'b'
+            }
+        ];
+
+        // Function to shuffle array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Shuffle questions to randomize order
+        shuffleArray(questions);
+
+        // Function to render questions
+        function renderQuestions() {
+            quizForm.innerHTML = ''; // Clear previous questions
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question-card');
+                questionDiv.innerHTML = `
+                    <h3 class="text-xl font-semibold mb-3 text-gray-800">Question ${index + 1}</h3>
+                    <p class="question-text">${q.questionText}</p>
+                    <div class="options">
+                        ${Object.keys(q.options).map(optionKey => `
+                            <label class="option-label" for="q${q.id}-${optionKey}">
+                                <input type="radio" id="q${q.id}-${optionKey}" name="question${q.id}" value="${optionKey}" class="mr-3">
+                                <span class="text-gray-700">${optionKey.toUpperCase()}. ${q.options[optionKey]}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div id="feedback-q${q.id}" class="mt-2 text-sm"></div>
+                `;
+                quizForm.appendChild(questionDiv);
+            });
+
+            const submitButton = document.createElement('button');
+            submitButton.type = 'submit';
+            submitButton.id = 'submit-quiz-btn';
+            submitButton.classList.add('submit-btn', 'mt-8', 'block', 'mx-auto');
+            submitButton.textContent = 'Submit Quiz';
+            quizForm.appendChild(submitButton);
+        }
+
+        // Timer functions
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                if (!quizSubmitted) {
+                    handleSubmit(new Event('submit')); // Auto-submit if time runs out
+                }
+            } else {
+                timeLeft--;
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        // Handle quiz submission
+        async function handleSubmit(event) {
+            event.preventDefault();
+
+            if (quizSubmitted) {
+                return; // Prevent multiple submissions
+            }
+            quizSubmitted = true;
+            clearInterval(timerInterval); // Stop the timer
+
+            const submitBtn = document.getElementById('submit-quiz-btn');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Quiz Submitted!';
+            }
+
+            let score = 0;
+            const answers = {}; // To store user's answers
+
+            questions.forEach(q => {
+                const selectedOption = document.querySelector(`input[name="question${q.id}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback-q${q.id}`);
+                const optionsLabels = document.querySelectorAll(`label[for^="q${q.id}-"]`);
+
+                let userAnswer = null;
+                if (selectedOption) {
+                    userAnswer = selectedOption.value;
+                    answers[`question${q.id}`] = userAnswer;
+                } else {
+                    answers[`question${q.id}`] = 'unanswered';
+                }
+
+                // Highlight correct/incorrect answers
+                optionsLabels.forEach(label => {
+                    const input = label.querySelector('input');
+                    if (input.value === q.correctAnswer) {
+                        label.classList.add('correct');
+                        if (feedbackDiv) {
+                            feedbackDiv.innerHTML += `<p class="correct-answer-text">Correct Answer: ${q.correctAnswer.toUpperCase()}. ${q.options[q.correctAnswer]}</p>`;
+                        }
+                    } else if (input.value === userAnswer && userAnswer !== q.correctAnswer) {
+                        label.classList.add('incorrect');
+                    }
+                    // Disable all radio buttons after submission
+                    input.disabled = true;
+                });
+
+                if (userAnswer === q.correctAnswer) {
+                    score++;
+                }
+            });
+
+            resultDisplay.classList.remove('hidden');
+            resultDisplay.innerHTML = `<p>Your Score: ${score} out of ${questions.length}</p>`;
+
+            // Generate and download CSV
+            const csvContent = `Student Name,Score\n"${studentName}",${score}\n`;
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'result.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Event listener for starting the quiz
+        startQuizBtn.addEventListener('click', () => {
+            studentName = studentNameInput.value.trim();
+            if (studentName) {
+                nameInputSection.classList.add('hidden');
+                quizForm.classList.remove('hidden');
+                renderQuestions();
+                startTimer();
+            } else {
+                alert('Please enter your name to start the quiz.');
+            }
+        });
+
+        // Attach submit event listener to the form
+        quizForm.addEventListener('submit', handleSubmit);
+
+    </script>
+</body>
+</html>
+

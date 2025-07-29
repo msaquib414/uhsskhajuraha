@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>भूगोल प्रश्नोत्तरी: खनिज एवं शैल</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+        }
+        /* Custom styles for better visual feedback */
+        .correct-answer {
+            color: #16a34a; /* green-600 */
+            font-weight: bold;
+        }
+        .user-correct {
+            background-color: #dcfce7; /* green-100 */
+            border-left: 4px solid #16a34a;
+        }
+        .user-incorrect {
+            background-color: #fee2e2; /* red-100 */
+            border-left: 4px solid #dc2626;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800" oncontextmenu="return false;">
+
+    <!-- Name Input Modal -->
+    <div id="name-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center">
+            <h1 class="text-2xl font-bold mb-4">प्रश्नोत्तरी में आपका स्वागत है</h1>
+            <p class="text-gray-600 mb-6">शुरू करने के लिए कृपया अपना पूरा नाम दर्ज करें।</p>
+            <input type="text" id="student-name" placeholder="अपना नाम यहाँ लिखें" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="start-quiz-btn" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg">प्रश्नोत्तरी शुरू करें</button>
+        </div>
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quiz-container" class="hidden">
+        <!-- Header with Timer -->
+        <header class="bg-white shadow-md sticky top-0 z-10">
+            <div class="container mx-auto px-4 py-3 flex justify-center items-center">
+                <div id="timer" class="text-2xl font-bold bg-gray-200 text-gray-800 px-6 py-2 rounded-full shadow-inner">25:00</div>
+            </div>
+        </header>
+
+        <!-- Quiz Form -->
+        <main class="container mx-auto p-4 md:p-8">
+            <h1 class="text-3xl font-bold text-center mb-2">खनिज एवं शैल</h1>
+            <p class="text-lg text-gray-600 text-center mb-8">कक्षा 11 भूगोल</p>
+            
+            <form id="quiz-form" class="bg-white p-6 md:p-8 rounded-xl shadow-lg space-y-8">
+                <!-- Questions will be injected here by JavaScript -->
+                <div id="questions-wrapper"></div>
+                
+                <!-- Submit Button -->
+                <div class="text-center pt-4">
+                    <button type="submit" id="submit-btn" class="bg-green-600 text-white font-bold py-3 px-12 rounded-lg hover:bg-green-700 transition duration-300 text-xl shadow-xl">सबमिट करें</button>
+                </div>
+            </form>
+
+            <!-- Result Display -->
+            <div id="result-container" class="hidden mt-8 text-center bg-white p-8 rounded-xl shadow-lg">
+                <h2 class="text-3xl font-bold text-blue-600">आपका परिणाम</h2>
+                <p id="score" class="text-5xl font-bold my-4"></p>
+                <p class="text-gray-600">सही उत्तरों को हरे रंग में हाइलाइट किया गया है।</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const quizQuestions = [
+            { question: "पृथ्वी की पपड़ी का लगभग 98% भाग आठ तत्वों से बना है। इनमें से कौन सा तत्व सबसे अधिक मात्रा में है?", options: ["ऑक्सीजन", "सिलिकॉन", "एल्यूमीनियम", "लोहा"], correctAnswer: "a" },
+            { question: "निम्नलिखित में से कौन एक धात्विक खनिज का उदाहरण है?", options: ["गंधक", "फास्फेट", "नमक", "बॉक्साइट"], correctAnswer: "d" },
+            { question: "आग्नेय शैलों (Igneous Rocks) का निर्माण कैसे होता है?", options: ["अवसादों के जमाव से", "मैग्मा और लावा के ठंडे होने से", "ताप और दाब के कारण रूपांतरण से", "जैविक अवशेषों से"], correctAnswer: "b" },
+            { question: "ग्रेनाइट किस प्रकार की शैल का एक उदाहरण है?", options: ["अवसादी शैल", "कायांतरित शैल", "आग्नेय शैल", "जैविक शैल"], correctAnswer: "c" },
+            { question: "खनिज जो सामान्यतः ताप और दाब के कारण बनते हैं, वे किससे संबंधित हैं?", options: ["आग्नेय शैल", "अवसादी शैल", "कायांतरित शैल", "इनमें से कोई नहीं"], correctAnswer: "c" },
+            { question: "निम्नलिखित में से कौन सी शैल अवसादी (Sedimentary) नहीं है?", options: ["बलुआ पत्थर", "शेल", "चूना पत्थर", "संगमरमर"], correctAnswer: "d" },
+            { question: "पेट्रोलॉजी (Petrology) किसका विज्ञान है?", options: ["खनिजों का", "शैलों का", "जीवाश्मों का", "पर्वतों का"], correctAnswer: "b" },
+            { question: "कोयला और पेट्रोलियम किस प्रकार की शैलों में पाए जाते हैं?", options: ["आग्नेय", "अवसादी", "कायांतरित", "ज्वालामुखीय"], correctAnswer: "b" },
+            { question: "हीरा किसका कायांतरित रूप है?", options: ["ग्रेफाइट", "कोयला", "चूना पत्थर", "बलुआ पत्थर"], correctAnswer: "b" },
+            { question: "मोह स्केल (Mohs Scale) का उपयोग क्या मापने के लिए किया जाता है?", options: ["खनिज का घनत्व", "खनिज की चमक", "खनिज की कठोरता", "खनिज का रंग"], correctAnswer: "c" },
+            { question: "पृथ्वी के आंतरिक भाग से निकले मैग्मा के ठंडे होने से बनी शैलों को क्या कहते हैं?", options: ["पातालीय शैल", "ज्वालामुखीय शैल", "अवसादी शैल", "कायांतरित शैल"], correctAnswer: "a" },
+            { question: "निम्नलिखित में से कौन एक अधात्विक खनिज है?", options: ["सोना", "चाँदी", "अभ्रक", "ताँबा"], correctAnswer: "c" },
+            { question: "शैल चक्र (Rock Cycle) के अनुसार, आग्नेय शैलें अपक्षय और अपरदन के बाद किसमें परिवर्तित हो सकती हैं?", options: ["कायांतरित शैलों में", "अवसादी शैलों में", "पुनः मैग्मा में", "इनमें से कोई नहीं"], correctAnswer: "b" },
+            { question: "बेसाल्ट किस प्रकार की आग्नेय शैल का उदाहरण है?", options: ["अंतर्वेधी (Intrusive)", "बहिर्वेधी (Extrusive)", "मध्यवर्ती", "पातालीय"], correctAnswer: "b" },
+            { question: "चूना पत्थर (Limestone) का कायांतरित रूप क्या है?", options: ["क्वार्टजाइट", "स्लेट", "संगमरमर", "नाइस"], correctAnswer: "c" },
+            { question: "जीवाश्म (Fossils) सामान्यतः किन शैलों में पाए जाते हैं?", options: ["आग्नेय", "कायांतरित", "अवसादी", "इन सभी में"], correctAnswer: "c" },
+            { question: "निम्नलिखित में से कौन सा खनिज सबसे कठोर है?", options: ["क्वार्ट्ज", "टोपाज", "कोरंडम", "हीरा"], correctAnswer: "d" },
+            { question: "पृथ्वी की सतह पर मैग्मा के तेजी से ठंडा होने से बनने वाली शैलों की संरचना कैसी होती है?", options: ["बड़े कणों वाली", "छोटे और महीन कणों वाली", "मध्यम कणों वाली", "कण रहित"], correctAnswer: "b" },
+            { question: "बलुआ पत्थर (Sandstone) किस प्रकार की शैल है?", options: ["आग्नेय", "अवसादी", "कायांतरित", "रासायनिक"], correctAnswer: "b" },
+            { question: "कायांतरण की प्रक्रिया में शैलों में क्या परिवर्तन होता है?", options: ["केवल रासायनिक संरचना", "केवल भौतिक गुण", "गठन और संरचना दोनों", "रंग"], correctAnswer: "c" },
+            { question: "निम्नलिखित में से कौन सा एक प्राथमिक शैल (Primary Rock) कहलाता है?", options: ["अवसादी शैल", "आग्नेय शैल", "कायांतरित शैल", "जैविक शैल"], correctAnswer: "b" },
+            { question: "ग्रेनाइट का कायांतरित रूप क्या है?", options: ["संगमरमर", "स्लेट", "क्वार्टजाइट", "नाइस (Gneiss)"], correctAnswer: "d" },
+            { question: "जब मैग्मा धरातल के नीचे ही ठंडा होकर जम जाता है, तो उसे क्या कहते हैं?", options: ["बहिर्वेधी आग्नेय शैल", "अंतर्वेधी आग्नेय शैल", "अवसादी शैल", "लावा"], correctAnswer: "b" },
+            { question: "शेल (Shale) का कायांतरित रूप क्या है?", options: ["स्लेट", "संगमरमर", "नाइस", "क्वार्टजाइट"], correctAnswer: "a" },
+            { question: "धात्विक खनिजों को किन तीन प्रकारों में विभाजित किया जा सकता है?", options: ["लौह, अलौह, बहुमूल्य", "कठोर, नरम, तरल", "चमकदार, गैर-चमकदार, पारदर्शी", "ईंधन, गैर-ईंधन, परमाणु"], correctAnswer: "a" },
+            { question: "पृथ्वी के क्रस्ट में दूसरा सबसे प्रचुर तत्व कौन सा है?", options: ["ऑक्सीजन", "सिलिकॉन", "एल्यूमीनियम", "लोहा"], correctAnswer: "b" },
+            { question: "पपड़ीदार या परतदार संरचना किस प्रकार की शैलों की विशेषता है?", options: ["आग्नेय", "कायांतरित", "अवसादी", "ज्वालामुखीय"], correctAnswer: "c" },
+            { question: "निम्नलिखित में से कौन सा खनिज ईंधन खनिज का उदाहरण है?", options: ["बॉक्साइट", "सोना", "यूरेनियम", "अभ्रक"], correctAnswer: "c" },
+            { question: "वह प्रक्रिया जिसमें समेकित शैलें परतों में टूट जाती हैं, क्या कहलाती है?", options: ["कायांतरण", "अपक्षय", "शिलीभवन (Lithification)", "अपरदन"], correctAnswer: "b" },
+            { question: "निम्नलिखित में से कौन सा खनिज क्वार्ट्ज और फेल्डस्पार से बनता है?", options: ["ग्रेनाइट", "बेसाल्ट", "चूना पत्थर", "कोयला"], correctAnswer: "a" },
+            { question: "डायमंड और ग्रेफाइट दोनों किस तत्व के अपरूप (allotropes) हैं?", options: ["सिलिकॉन", "ऑक्सीजन", "कार्बन", "लोहा"], correctAnswer: "c" },
+            { question: "गैब्रो (Gabbro) किस प्रकार की शैल है?", options: ["अंतर्वेधी आग्नेय", "बहिर्वेधी आग्नेय", "अवसादी", "कायांतरित"], correctAnswer: "a" },
+            { question: "पत्रण (Foliation) या रेखांकन (Lineation) किस प्रकार की शैलों में होता है?", options: ["आग्नेय", "अवसादी", "कायांतरित", "इन सभी में"], correctAnswer: "c" },
+            { question: "खनिजों के भौतिक गुणों में क्या शामिल नहीं है?", options: ["रंग", "कठोरता", "रासायनिक संरचना", "चमक"], correctAnswer: "c" },
+            { question: "पिघले हुए पदार्थ जो पृथ्वी के आंतरिक भाग में होते हैं, उन्हें क्या कहा जाता है?", options: ["लावा", "मैग्मा", "अवसाद", "शैल"], correctAnswer: "b" }
+        ];
+
+        // --- DOM ELEMENTS ---
+        const nameModal = document.getElementById('name-modal');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const studentNameInput = document.getElementById('student-name');
+        const quizContainer = document.getElementById('quiz-container');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const quizForm = document.getElementById('quiz-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultContainer = document.getElementById('result-container');
+        const scoreDisplay = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+
+        // --- STATE ---
+        let studentName = '';
+        let timerInterval;
+        let timeRemaining = 25 * 60; // 25 minutes in seconds
+
+        // --- FUNCTIONS ---
+
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "00:00";
+                    // As per requirement, do nothing on timeout, but we could auto-submit here
+                    // handleSubmit(); 
+                }
+            }, 1000);
+        }
+
+        // Function to render questions
+        function renderQuestions() {
+            let questionsHTML = '';
+            quizQuestions.forEach((q, index) => {
+                questionsHTML += `
+                    <div id="question-${index}" class="p-4 rounded-lg border border-gray-200">
+                        <p class="font-bold text-lg mb-4">${index + 1}. ${q.question}</p>
+                        <div class="space-y-2">
+                            ${renderOptions(q.options, index)}
+                        </div>
+                        <div id="answer-feedback-${index}" class="mt-3 text-lg"></div>
+                    </div>
+                `;
+            });
+            questionsWrapper.innerHTML = questionsHTML;
+        }
+
+        // Function to render options for a single question
+        function renderOptions(options, questionIndex) {
+            let optionsHTML = '';
+            const optionLetters = ['a', 'b', 'c', 'd'];
+            options.forEach((option, index) => {
+                optionsHTML += `
+                    <label for="q${questionIndex}o${index}" class="block p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer has-[:checked]:bg-blue-100 has-[:checked]:border-blue-400">
+                        <input type="radio" id="q${questionIndex}o${index}" name="question-${questionIndex}" value="${optionLetters[index]}" class="mr-3">
+                        ${optionLetters[index].toUpperCase()}. ${option}
+                    </label>
+                `;
+            });
+            return optionsHTML;
+        }
+
+        // Function to handle form submission
+        function handleSubmit(event) {
+            if (event) event.preventDefault();
+
+            // Prevent multiple submissions
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'परिणाम प्रोसेस हो रहा है...';
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            // Stop the timer
+            clearInterval(timerInterval);
+
+            let score = 0;
+            quizQuestions.forEach((q, index) => {
+                const questionContainer = document.getElementById(`question-${index}`);
+                const feedbackContainer = document.getElementById(`answer-feedback-${index}`);
+                const selectedOption = document.querySelector(`input[name="question-${index}"]:checked`);
+                const correctAnswer = q.correctAnswer;
+                const correctAnswerText = q.options[['a', 'b', 'c', 'd'].indexOf(correctAnswer)];
+
+                // Disable all radio buttons for this question
+                document.querySelectorAll(`input[name="question-${index}"]`).forEach(radio => {
+                    radio.disabled = true;
+                });
+
+                if (selectedOption) {
+                    const selectedLabel = selectedOption.parentElement;
+                    if (selectedOption.value === correctAnswer) {
+                        score++;
+                        selectedLabel.classList.add('user-correct');
+                    } else {
+                        selectedLabel.classList.add('user-incorrect');
+                    }
+                }
+                
+                // Show the correct answer
+                feedbackContainer.innerHTML = `सही उत्तर: <span class="correct-answer">${correctAnswer.toUpperCase()}. ${correctAnswerText}</span>`;
+            });
+
+            // Display the final score
+            scoreDisplay.textContent = `${score} / ${quizQuestions.length}`;
+            resultContainer.classList.remove('hidden');
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+            // Generate and download CSV
+            downloadCSV(score);
+        }
+
+        // Function to generate and download CSV file
+        function downloadCSV(score) {
+            const csvContent = `data:text/csv;charset=utf-8,नाम,अंक\n${studentName},${score}`;
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // --- EVENT LISTENERS ---
+
+        // Start Quiz Button
+        startQuizBtn.addEventListener('click', () => {
+            studentName = studentNameInput.value.trim();
+            if (studentName === '') {
+                alert('कृपया अपना नाम दर्ज करें।');
+                return;
+            }
+            nameModal.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            renderQuestions();
+            startTimer();
+        });
+        
+        // Form Submit
+        quizForm.addEventListener('submit', handleSubmit);
+
+    </script>
+</body>
+</html>
+
