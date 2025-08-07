@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>भूगोल क्विज: एक विषय के रूप में</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .question p {
+            margin-top: 0;
+            font-weight: bold;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .options input[type="radio"] {
+            margin-right: 5px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .submit-btn:disabled {
+            background-color: #d3d3d3;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .correct-answer {
+            font-weight: bold;
+            color: #5cb85c;
+            margin-top: 5px;
+        }
+        .timer {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #d9534f;
+            background-color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .name-input {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: calc(100% - 22px);
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div class="timer" id="timer">25:00</div>
+
+    <div class="container">
+        <h1>भूगोल क्विज</h1>
+        <h2>भूगोल एक विषय के रूप में (कक्षा 11)</h2>
+
+        <label for="studentName">छात्र/छात्रा का नाम:</label>
+        <input type="text" id="studentName" class="name-input" required>
+
+        <form id="quizForm">
+            <div class="question">
+                <p>1. भूगोल शब्द किस भाषा से लिया गया है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a"> a) अरबी</label>
+                    <label><input type="radio" name="q1" value="b"> b) ग्रीक</label>
+                    <label><input type="radio" name="q1" value="c"> c) हिंदी</label>
+                    <label><input type="radio" name="q1" value="d"> d) अंग्रेजी</label>
+                </div>
+                <div class="correct-answer" id="correct_q1" style="display:none;">सही उत्तर: b) ग्रीक</div>
+            </div>
+
+            <div class="question">
+                <p>2. 'भूगोल का जनक' किसे कहा जाता है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="a"> a) इरेटोस्थनीज</label>
+                    <label><input type="radio" name="q2" value="b"> b) हिकेटियस</label>
+                    <label><input type="radio" name="q2" value="c"> c) अलेक्जेंडर वॉन हम्बोल्ट</label>
+                    <label><input type="radio" name="q2" value="d"> d) कार्ल रिटर</label>
+                </div>
+                <div class="correct-answer" id="correct_q2" style="display:none;">सही उत्तर: b) हिकेटियस</div>
+            </div>
+
+            <div class="question">
+                <p>3. "भूगोल पृथ्वी का वर्णन है" - यह कथन किसका है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="a"> a) वारेनियस</label>
+                    <label><input type="radio" name="q3" value="b"> b) रिटर</label>
+                    <label><input type="radio" name="q3" value="c"> c) हम्बोल्ट</label>
+                    <label><input type="radio" name="q3" value="d"> d) ब्लाश</label>
+                </div>
+                <div class="correct-answer" id="correct_q3" style="display:none;">सही उत्तर: a) वारेनियस</div>
+            </div>
+
+            <div class="question">
+                <p>4. भूगोल अध्ययन के दो प्रमुख उपागम कौन-से हैं?</p>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="a"> a) भौतिक भूगोल और मानव भूगोल</label>
+                    <label><input type="radio" name="q4" value="b"> b) क्रमबद्ध उपागम और प्रादेशिक उपागम</label>
+                    <label><input type="radio" name="q4" value="c"> c) क्षेत्रीय अध्ययन और स्थानिक विश्लेषण</label>
+                    <label><input type="radio" name="q4" value="d"> d) इनमें से कोई नहीं</label>
+                </div>
+                <div class="correct-answer" id="correct_q4" style="display:none;">सही उत्तर: b) क्रमबद्ध उपागम और प्रादेशिक उपागम</div>
+            </div>
+
+            <div class="question">
+                <p>5. क्रमबद्ध भूगोल का प्रतिपादन किसने किया था?</p>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="a"> a) कार्ल रिटर</label>
+                    <label><input type="radio" name="q5" value="b"> b) अलेक्जेंडर वॉन हम्बोल्ट</label>
+                    <label><input type="radio" name="q5" value="c"> c) फ्रेडरिक रेटजेल</label>
+                    <label><input type="radio" name="q5" value="d"> d) विडाल डी ला ब्लाश</label>
+                </div>
+                <div class="correct-answer" id="correct_q5" style="display:none;">सही उत्तर: b) अलेक्जेंडर वॉन हम्बोल्ट</div>
+            </div>
+
+            <div class="question">
+                <p>6. प्रादेशिक भूगोल का प्रतिपादन किसने किया था?</p>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="a"> a) अलेक्जेंडर वॉन हम्बोल्ट</label>
+                    <label><input type="radio" name="q6" value="b"> b) कार्ल रिटर</label>
+                    <label><input type="radio" name="q6" value="c"> c) फ्रेडरिक रेटजेल</label>
+                    <label><input type="radio" name="q6" value="d"> d) विडाल डी ला ब्लाश</label>
+                </div>
+                <div class="correct-answer" id="correct_q6" style="display:none;">सही उत्तर: b) कार्ल रिटर</div>
+            </div>
+
+            <div class="question">
+                <p>7. निम्नलिखित में से कौन-सा भौतिक भूगोल का क्षेत्र नहीं है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="a"> a) भू-आकृति विज्ञान</label>
+                    <label><input type="radio" name="q7" value="b"> b) जलवायु विज्ञान</label>
+                    <label><input type="radio" name="q7" value="c"> c) जनसंख्या भूगोल</label>
+                    <label><input type="radio" name="q7" value="d"> d) समुद्र विज्ञान</label>
+                </div>
+                <div class="correct-answer" id="correct_q7" style="display:none;">सही उत्तर: c) जनसंख्या भूगोल</div>
+            </div>
+
+            <div class="question">
+                <p>8. निम्नलिखित में से कौन-सा मानव भूगोल का क्षेत्र है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="a"> a) मृदा भूगोल</label>
+                    <label><input type="radio" name="q8" value="b"> b) सामाजिक भूगोल</label>
+                    <label><input type="radio" name="q8" value="c"> c) जैव भूगोल</label>
+                    <label><input type="radio" name="q8" value="d"> d) जल विज्ञान</label>
+                </div>
+                <div class="correct-answer" id="correct_q8" style="display:none;">सही उत्तर: b) सामाजिक भूगोल</div>
+            </div>
+
+            <div class="question">
+                <p>9. भूगोल की किस शाखा का संबंध जनसंख्या के अध्ययन से है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="a"> a) सामाजिक भूगोल</label>
+                    <label><input type="radio" name="q9" value="b"> b) अधिवास भूगोल</label>
+                    <label><input type="radio" name="q9" value="c"> c) जनसंख्या भूगोल</label>
+                    <label><input type="radio" name="q9" value="d"> d) राजनीतिक भूगोल</label>
+                </div>
+                <div class="correct-answer" id="correct_q9" style="display:none;">सही उत्तर: c) जनसंख्या भूगोल</div>
+            </div>
+
+            <div class="question">
+                <p>10. आर्थिक भूगोल का संबंध किससे है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="a"> a) उद्योगों का वितरण</label>
+                    <label><input type="radio" name="q10" value="b"> b) कृषि पद्धतियाँ</label>
+                    <label><input type="radio" name="q10" value="c"> c) व्यापार और परिवहन</label>
+                    <label><input type="radio" name="q10" value="d"> d) उपरोक्त सभी</label>
+                </div>
+                <div class="correct-answer" id="correct_q10" style="display:none;">सही उत्तर: d) उपरोक्त सभी</div>
+            </div>
+
+            <div class="question">
+                <p>11. जीव भूगोल के अंतर्गत किसका अध्ययन किया जाता है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="a"> a) पादप भूगोल</label>
+                    <label><input type="radio" name="q11" value="b"> b) जंतु भूगोल</label>
+                    <label><input type="radio" name="q11" value="c"> c) पर्यावरण भूगोल</label>
+                    <label><input type="radio" name="q11" value="d"> d) उपरोक्त सभी</label>
+                </div>
+                <div class="correct-answer" id="correct_q11" style="display:none;">सही उत्तर: d) उपरोक्त सभी</div>
+            </div>
+
+            <div class="question">
+                <p>12. किस उपागम में एक विशिष्ट भौगोलिक तत्व का अध्ययन किया जाता है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="a"> a) प्रादेशिक उपागम</label>
+                    <label><input type="radio" name="q12" value="b"> b) क्रमबद्ध उपागम</label>
+                    <label><input type="radio" name="q12" value="c"> c) क्षेत्रीय उपागम</label>
+                    <label><input type="radio" name="q12" value="d"> d) स्थानिक संगठन</label>
+                </div>
+                <div class="correct-answer" id="correct_q12" style="display:none;">सही उत्तर: b) क्रमबद्ध उपागम</div>
+            </div>
+
+            <div class="question">
+                <p>13. किस उपागम में एक प्रदेश का समग्र रूप से अध्ययन किया जाता है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q13" value="a"> a) क्रमबद्ध उपागम</label>
+                    <label><input type="radio" name="q13" value="b"> b) विषय वस्तु उपागम</label>
+                    <label><input type="radio" name="q13" value="c"> c) प्रादेशिक उपागम</label>
+                    <label><input type="radio" name="q13" value="d"> d) स्थानिक विश्लेषण</label>
+                </div>
+                <div class="correct-answer" id="correct_q13" style="display:none;">सही उत्तर: c) प्रादेशिक उपागम</div>
+            </div>
+
+            <div class="question">
+                <p>14. भूगोल एक समन्वयकारी विषय के रूप में ______ से संबंधित है।</p>
+                <div class="options">
+                    <label><input type="radio" name="q14" value="a"> a) इतिहास</label>
+                    <label><input type="radio" name="q14" value="b"> b) समाजशास्त्र</label>
+                    <label><input type="radio" name="q14" value="c"> c) भूविज्ञान</label>
+                    <label><input type="radio" name="q14" value="d"> d) उपरोक्त सभी</label>
+                </div>
+                <div class="correct-answer" id="correct_q14" style="display:none;">सही उत्तर: d) उपरोक्त सभी</div>
+            </div>
+
+            <div class="question">
+                <p>15. कार्टोग्राफी का संबंध किससे है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q15" value="a"> a) मानचित्रकला</label>
+                    <label><input type="radio" name="q15" value="b"> b) सांख्यिकी विश्लेषण</label>
+                    <label><input type="radio" name="q15" value="c"> c) क्षेत्रीय सर्वेक्षण</label>
+                    <label><input type="radio" name="q15" value="d"> d) स्थानिक मॉडलिंग</label>
+                </div>
+                <div class="correct-answer" id="correct_q15" style="display:none;">सही उत्तर: a) मानचित्रकला</div>
+            </div>
+
+            <div class="question">
+                <p>16. सुदूर संवेदन (Remote Sensing) का उपयोग किसमें किया जाता है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q16" value="a"> a) आंकड़ों का संग्रह</label>
+                    <label><input type="radio" name="q16" value="b"> b) आंकड़ों का विश्लेषण</label>
+                    <label><input type="radio" name="q16" value="c"> c) मानचित्र निर्माण</label>
+                    <label><input type="radio" name="q16" value="d"> d) उपरोक्त सभी</label>
+                </div>
+                <div class="correct-answer" id="correct_q16" style="display:none;">सही उत्तर: a) आंकड़ों का संग्रह</div>
+            </div>
+
+            <div class="question">
+                <p>17. भौगोलिक सूचना तंत्र (GIS) का मुख्य कार्य क्या है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q17" value="a"> a) भौगोलिक आंकड़ों का संग्रह और प्रबंधन</label>
+                    <label><input type="radio" name="q17" value="b"> b) भौगोलिक आंकड़ों का विश्लेषण</label>
+                    <label><input type="radio" name="q17" value="c"> c) भौगोलिक आंकड़ों का प्रस्तुतिकरण</label>
+                    <label><input type="radio" name="q17" value="d"> d) उपरोक्त सभी</label>
+                </div>
+                <div class="correct-answer" id="correct_q17" style="display:none;">सही उत्तर: d) उपरोक्त सभी</div>
+            </div>
+
+            <div class="question">
+                <p>18. निम्नलिखित में से कौन-सा भूगोल का उपक्षेत्र नहीं है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q18" value="a"> a) नगरीय भूगोल</label>
+                    <label><input type="radio" name="q18" value="b"> b) ग्रामीण भूगोल</label>
+                    <label><input type="radio" name="q18" value="c"> c) चिकित्सा भूगोल</label>
+                    <label><input type="radio" name="q18" value="d"> d) रसायन भूगोल</label>
+                </div>
+                <div class="correct-answer" id="correct_q18" style="display:none;">सही उत्तर: d) रसायन भूगोल</div>
+            </div>
+
+            <div class="question">
+                <p>19. समय भूगोल का संबंध किससे है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q19" value="a"> a) समय क्षेत्रों का अध्ययन</label>
+                    <label><input type="radio" name="q19" value="b"> b) भौगोलिक घटनाओं के सामयिक वितरण का अध्ययन</label>
+                    <label><input type="radio" name="q19" value="c"> c) जलवायु परिवर्तन का अध्ययन</label>
+                    <label><input type="radio" name="q19" value="d"> d) इनमें से कोई नहीं</label>
+                </div>
+                <div class="correct-answer" id="correct_q19" style="display:none;">सही उत्तर: b) भौगोलिक घटनाओं के सामयिक वितरण का अध्ययन</div>
+            </div>
+
+            <div class="question">
+                <p>20. व्यवहारवादी भूगोल किस पर केंद्रित है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q20" value="a"> a) आर्थिक गतिविधियाँ</label>
+                    <label><input type="radio" name="q20" value="b"> b) मानवीय व्यवहार और स्थानिक निर्णय</label>
+                    <label><input type="radio" name="q20" value="c"> c) राजनीतिक प्रक्रियाएँ</label>
+                    <label><input type="radio" name="q20" value="d"> d) पर्यावरणीय प्रभाव</label>
+                </div>
+                <div class="correct-answer" id="correct_q20" style="display:none;">सही उत्तर: b) मानवीय व्यवहार और स्थानिक निर्णय</div>
+            </div>
+
+            <div class="question">
+                <p>21. निम्नलिखित में से कौन-सा द्वैतवाद भूगोल में प्रचलित नहीं है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q21" value="a"> a) भौतिक बनाम मानव भूगोल</label>
+                    <label><input type="radio" name="q21" value="b"> b) क्रमबद्ध बनाम प्रादेशिक भूगोल</label>
+                    <label><input type="radio" name="q21" value="c"> c) सैद्धांतिक बनाम व्यावहारिक भूगोल</label>
+                    <label><input type="radio" name="q21" value="d"> d) ऐतिहासिक बनाम आधुनिक भूगोल</label>
+                </div>
+                <div class="correct-answer" id="correct_q21" style="display:none;">सही उत्तर: d) ऐतिहासिक बनाम आधुनिक भूगोल</div>
+            </div>
+
+            <div class="question">
+                <p>22. भूगोल 'क्यों' और 'कैसे' से संबंधित प्रश्नों का उत्तर देने का प्रयास करता है। यह भूगोल के किस पहलू को दर्शाता है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q22" value="a"> a) वर्णनात्मक</label>
+                    <label><input type="radio" name="q22" value="b"> b) विश्लेषणात्मक</label>
+                    <label><input type="radio" name="q22" value="c"> c) भविष्य कहनेवाला</label>
+                    <label><input type="radio" name="q22" value="d"> d) मानक</label>
+                </div>
+                <div class="correct-answer" id="correct_q22" style="display:none;">सही उत्तर: b) विश्लेषणात्मक</div>
+            </div>
+
+            <div class="question">
+                <p>23. भूगोल में क्षेत्र विवरण विज्ञान (Areal Differentiation) की अवधारणा किसने दी?</p>
+                <div class="options">
+                    <label><input type="radio" name="q23" value="a"> a) हेटनर</label>
+                    <label><input type="radio" name="q23" value="b"> b) ब्लाश</label>
+                    <label><input type="radio" name="q23" value="c"> c) रिटर</label>
+                    <label><input type="radio" name="q23" value="d"> d) हम्बोल्ट</label>
+                </div>
+                <div class="correct-answer" id="correct_q23" style="display:none;">सही उत्तर: a) हेटनर</div>
+            </div>
+
+            <div class="question">
+                <p>24. भूगोल केवल धरातल का ही नहीं, बल्कि मानव और पर्यावरण के बीच संबंधों का भी अध्ययन करता है। यह कथन भूगोल की किस विचारधारा से संबंधित है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q24" value="a"> a) निश्चयवाद</label>
+                    <label><input type="radio" name="q24" value="b"> b) संभावनावाद</label>
+                    <label><input type="radio" name="q24" value="c"> c) क्षेत्रीय भिन्नता</label>
+                    <label><input type="radio" name="q24" value="d"> d) पारिस्थितिक अध्ययन</label>
+                </div>
+                <div class="correct-answer" id="correct_q24" style="display:none;">सही उत्तर: d) पारिस्थितिक अध्ययन</div>
+            </div>
+
+            <div class="question">
+                <p>25. निम्नलिखित में से कौन-सा भूगोल के अध्ययन का उद्देश्य नहीं है?</p>
+                <div class="options">
+                    <label><input type="radio" name="q25" value="a"> a) पृथ्वी को मानव के घर के रूप में समझना</label>
+                    <label><input type="radio" name="q25" value="b"> b) पृथ्वी के तत्वों के स्थानिक वितरण का अध्ययन</label>
+                    <label><input type="radio" name="q25" value="c"> c) प्राकृतिक नियमों का प्रतिपादन करना जो पृथ्वी की विशेषताओं को नियंत्रित करते हैं</label>
+                    <label><input type="radio" name="q25" value="d"> d) केवल खगोलीय पिंडों का अध्ययन करना</label>
+                </div>
+                <div class="correct-answer" id="correct_q25" style="display:none;">सही उत्तर: d) केवल खगोलीय पिंडों का अध्ययन करना</div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">सबमिट करें</button>
+        </form>
+
+        <div class="result" id="result" style="display:none;"></div>
+    </div>
+
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+        // Timer
+        const timerElement = document.getElementById('timer');
+        const totalTime = 25 * 60; // 25 minutes in seconds
+        let timeRemaining = totalTime;
+        let timerInterval;
+
+        function updateTimer() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz(); // Auto-submit when timer reaches zero
+                timerElement.textContent = "समय समाप्त!";
+            } else {
+                timeRemaining--;
+            }
+        }
+
+        // Start timer when the page loads
+        timerInterval = setInterval(updateTimer, 1000);
+
+        // Quiz Submission
+        const quizForm = document.getElementById('quizForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultDiv = document.getElementById('result');
+        const studentNameInput = document.getElementById('studentName');
+
+        const correctAnswers = {
+            q1: 'b', q2: 'b', q3: 'a', q4: 'b', q5: 'b',
+            q6: 'b', q7: 'c', q8: 'b', q9: 'c', q10: 'd',
+            q11: 'd', q12: 'b', q13: 'c', q14: 'd', q15: 'a',
+            q16: 'a', q17: 'd', q18: 'd', q19: 'b', q20: 'b',
+            q21: 'd', q22: 'b', q23: 'a', q24: 'd', q25: 'd'
+        };
+
+        function submitQuiz() {
+            if (submitBtn.disabled) {
+                return; // Prevent multiple submissions
+            }
+
+            clearInterval(timerInterval); // Stop the timer
+
+            const studentName = studentNameInput.value.trim();
+            if (studentName === "") {
+                alert("कृपया अपना नाम दर्ज करें।");
+                return;
+            }
+
+            let score = 0;
+            const totalQuestions = 25;
+            const formData = new FormData(quizForm);
+            const studentAnswers = {};
+
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = 'q' + i;
+                const userAnswer = formData.get(questionName);
+                studentAnswers[questionName] = userAnswer;
+
+                const correctAnswer = correctAnswers[questionName];
+                const correctAnswerElement = document.getElementById('correct_' + questionName);
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                }
+
+                // Display correct answer
+                if (correctAnswerElement) {
+                    correctAnswerElement.style.display = 'block';
+                }
+
+                // Highlight selected answer (optional, but good for feedback)
+                const selectedOption = quizForm.querySelector(`input[name="${questionName}"][value="${userAnswer}"]`);
+                 if (selectedOption) {
+                    const label = selectedOption.parentElement;
+                     if (userAnswer === correctAnswer) {
+                        label.style.color = '#5cb85c'; // Green for correct
+                    } else if (userAnswer !== null) {
+                        label.style.color = '#d9534f'; // Red for incorrect
+                    }
+                }
+                 // Highlight correct answer if not selected
+                const correctOptionLabel = quizForm.querySelector(`input[name="${questionName}"][value="${correctAnswer}"]`).parentElement;
+                 correctOptionLabel.style.fontWeight = 'bold';
+                 correctOptionLabel.style.color = '#5cb85c'; // Ensure correct answer is always highlighted green
+            }
+
+            resultDiv.textContent = `आपका स्कोर: ${score} / ${totalQuestions}`;
+            resultDiv.style.display = 'block';
+            submitBtn.disabled = true; // Disable submit button after submission
+
+            // Prepare data for CSV download
+            const csvData = [
+                ['नाम', 'स्कोर'],
+                [studentName, score]
+            ];
+
+            downloadCSV(csvData, 'result.csv');
+        }
+
+        quizForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            submitQuiz();
+        });
+
+        function downloadCSV(data, filename) {
+            const csvContent = data.map(row => row.join(',')).join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+
+            link.setAttribute('href', url);
+            link.setAttribute('download', filename);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+    </script>
+
+</body>
+</html>
