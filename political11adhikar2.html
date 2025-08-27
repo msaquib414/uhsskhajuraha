@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>भारतीय संविधान में अधिकार - प्रश्नोत्तरी</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+        }
+        /* Custom styles for better aesthetics */
+        .quiz-option:hover {
+            background-color: #f0f9ff; /* light blue on hover */
+        }
+        .quiz-option input:checked + label {
+            background-color: #dbeafe; /* blue-100 when selected */
+            border-color: #3b82f6; /* blue-500 border when selected */
+        }
+        .correct-answer {
+            color: #16a34a; /* green-600 */
+            font-weight: bold;
+        }
+        .incorrect-answer {
+            color: #dc2626; /* red-600 */
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800" oncontextmenu="return false;">
+
+    <!-- Name Input Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center">
+            <h2 class="text-2xl font-bold mb-4">प्रश्नोत्तरी में आपका स्वागत है!</h2>
+            <p class="text-slate-600 mb-6">शुरू करने के लिए कृपया अपना नाम दर्ज करें।</p>
+            <input type="text" id="studentName" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="अपना पूरा नाम लिखें">
+            <button id="startQuizBtn" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300">क्विज शुरू करें</button>
+        </div>
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quizContainer" class="container mx-auto p-4 md:p-8 hidden">
+        
+        <!-- Header with Timer -->
+        <header class="bg-white shadow-md rounded-xl p-4 mb-8 sticky top-4 z-10">
+            <h1 class="text-2xl md:text-3xl font-bold text-center text-blue-700">भारतीय संविधान में अधिकार</h1>
+            <div id="timer" class="mt-2 text-center text-2xl font-bold bg-slate-200 text-slate-800 py-2 px-4 rounded-lg w-48 mx-auto">25:00</div>
+        </header>
+
+        <!-- Quiz Form -->
+        <form id="quizForm" class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+            <div id="questionsContainer" class="space-y-8">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+            <div class="mt-10 text-center">
+                <button type="submit" id="submitBtn" class="bg-green-600 text-white font-bold py-3 px-12 rounded-lg text-lg hover:bg-green-700 transition-colors duration-300 disabled:bg-slate-400 disabled:cursor-not-allowed">सबमिट करें</button>
+            </div>
+        </form>
+
+        <!-- Result Display -->
+        <div id="resultContainer" class="hidden mt-8 bg-white p-8 rounded-xl shadow-lg text-center">
+            <h2 class="text-3xl font-bold mb-4">आपका परिणाम</h2>
+            <p id="score" class="text-5xl font-bold text-blue-600"></p>
+            <p class="text-slate-600 mt-2">25 में से</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const nameModal = document.getElementById('nameModal');
+            const studentNameInput = document.getElementById('studentName');
+            const startQuizBtn = document.getElementById('startQuizBtn');
+            const quizContainer = document.getElementById('quizContainer');
+            const questionsContainer = document.getElementById('questionsContainer');
+            const quizForm = document.getElementById('quizForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const resultContainer = document.getElementById('resultContainer');
+            const scoreElement = document.getElementById('score');
+            const timerElement = document.getElementById('timer');
+
+            let studentName = '';
+            let timerInterval;
+            let timeRemaining = 25 * 60; // 25 minutes in seconds
+
+            // Quiz Questions Data - NEW SET
+            const quizData = [
+                { question: "1. 'कानून का शासन' (Rule of Law) की अवधारणा मुख्य रूप से किस देश के संविधान से प्रेरित है?", options: ["अमेरिका", "आयरलैंड", "फ्रांस", "ब्रिटेन"], answer: "D" },
+                { question: "2. निवारक निरोध (Preventive Detention) का अर्थ क्या है?", options: ["अपराध करने के बाद गिरफ्तारी", "बिना किसी कारण के गिरफ्तारी", "अपराध करने से रोकने के लिए शक के आधार पर गिरफ्तारी", "न्यायालय के आदेश पर गिरफ्तारी"], answer: "C" },
+                { question: "3. भारतीय नागरिकों को कितने प्रकार की स्वतंत्रताएं अनुच्छेद 19 के तहत दी गई हैं?", options: ["5", "6", "7", "8"], answer: "B" },
+                { question: "4. 'अधिकार पृच्छा' (Quo Warranto) रिट कब जारी की जाती है?", options: ["जब कोई निचली अदालत अपने अधिकार क्षेत्र से बाहर कार्य करती है", "जब कोई सार्वजनिक अधिकारी अपने कानूनी कर्तव्य का पालन नहीं करता", "जब किसी व्यक्ति को अवैध रूप से हिरासत में लिया जाता है", "जब कोई व्यक्ति अवैध रूप से किसी सार्वजनिक पद पर आसीन हो जाता है"], answer: "D" },
+                { question: "5. संस्कृति और शिक्षा संबंधी अधिकार मुख्य रूप से किसे दिए गए हैं?", options: ["सभी नागरिकों को", "केवल अल्पसंख्यकों को", "केवल महिलाओं और बच्चों को", "केवल अनुसूचित जातियों को"], answer: "B" },
+                { question: "6. मौलिक अधिकारों को लागू करने के लिए न्यायालय क्या जारी कर सकता है?", options: ["अध्यादेश", "अधिनियम", "रिट (Writ)", "नोटिस"], answer: "C" },
+                { question: "7. 'बेगार' का निषेध संविधान के किस अधिकार के अंतर्गत आता है?", options: ["समानता का अधिकार", "शोषण के विरुद्ध अधिकार", "स्वतंत्रता का अधिकार", "धार्मिक स्वतंत्रता का अधिकार"], answer: "B" },
+                { question: "8. कौन सा अनुच्छेद किसी भी नागरिक के साथ धर्म, वंश, जाति, लिंग या जन्म स्थान के आधार पर भेदभाव का निषेध करता है?", options: ["अनुच्छेद 14", "अनुच्छेद 15", "अनुच्छेद 16", "अनुच्छेद 17"], answer: "B" },
+                { question: "9. राज्य के नीति-निदेशक तत्व (Directive Principles) संविधान के किस भाग में हैं?", options: ["भाग II", "भाग III", "भाग IV", "भाग V"], answer: "C" },
+                { question: "10. किसी व्यक्ति को एक ही अपराध के लिए एक बार से अधिक दंडित नहीं किया जा सकता। यह संरक्षण किस अनुच्छेद में है?", options: ["अनुच्छेद 20", "अनुच्छेद 21", "अनुच्छेद 22", "अनुच्छेद 19"], answer: "A" },
+                { question: "11. 'जीवन का अधिकार' में क्या शामिल माना जाता है?", options: ["केवल जीवित रहना", "गरिमापूर्ण जीवन", "स्वास्थ्य का अधिकार", "उपरोक्त सभी"], answer: "D" },
+                { question: "12. मौलिक अधिकारों पर युक्तिसंगत प्रतिबंध कौन लगा सकता है?", options: ["राष्ट्रपति", "प्रधानमंत्री", "संसद", "सर्वोच्च न्यायालय"], answer: "C" },
+                { question: "13. सिखों को कृपाण धारण करने और ले जाने का अधिकार किस मौलिक अधिकार के अंतर्गत आता है?", options: ["स्वतंत्रता का अधिकार", "समानता का अधिकार", "धार्मिक स्वतंत्रता का अधिकार", "शोषण के विरुद्ध अधिकार"], answer: "C" },
+                { question: "14. 'उत्प्रेषण' (Certiorari) रिट का क्या उद्देश्य है?", options: ["हम आदेश देते हैं", "अधीनस्थ न्यायालय के मामले को समीक्षा के लिए वरिष्ठ न्यायालय में भेजना", "किसी व्यक्ति को न्यायालय में प्रस्तुत करना", "किस अधिकार से"], answer: "B" },
+                { question: "15. मौलिक कर्तव्य किस समिति की सिफारिश पर संविधान में जोड़े गए थे?", options: ["बलवंत राय मेहता समिति", "स्वर्ण सिंह समिति", "सरकारिया आयोग", "अशोक मेहता समिति"], answer: "B" },
+                { question: "16. भारत में नागरिकता संबंधी कानून बनाने का अधिकार किसे है?", options: ["गृह मंत्रालय", "संसद", "राष्ट्रपति", "चुनाव आयोग"], answer: "B" },
+                { question: "17. 'निजता का अधिकार' (Right to Privacy) को सर्वोच्च न्यायालय ने किस मौलिक अधिकार का हिस्सा माना है?", options: ["समानता का अधिकार (अनुच्छेद 14)", "स्वतंत्रता का अधिकार (अनुच्छेद 19)", "जीवन और व्यक्तिगत स्वतंत्रता का अधिकार (अनुच्छेद 21)", "संवैधानिक उपचारों का अधिकार (अनुच्छेद 32)"], answer: "C" },
+                { question: "18. लोक नियोजन (सरकारी नौकरियों) में अवसर की समानता किस अनुच्छेद में दी गई है?", options: ["अनुच्छेद 15", "अनुच्छेद 16", "अनुच्छेद 17", "अनुच्छेद 18"], answer: "B" },
+                { question: "19. किस स्थिति में मौलिक अधिकारों को निलंबित किया जा सकता है?", options: ["वित्तीय आपातकाल", "राष्ट्रपति शासन", "राष्ट्रीय आपातकाल (युद्ध और बाहरी आक्रमण के आधार पर)", "कभी नहीं"], answer: "C" },
+                { question: "20. राज्य के नीति-निदेशक तत्वों की प्रकृति कैसी है?", options: ["न्यायालय द्वारा प्रवर्तनीय (न्यायोचित)", "गैर-न्यायोचित (न्यायालय द्वारा लागू नहीं)", "अर्ध-न्यायोचित", "इनमें से कोई नहीं"], answer: "B" },
+                { question: "21. कौन सा अनुच्छेद अपने पसंद के व्यक्ति से विवाह करने के अधिकार को संरक्षण देता है?", options: ["अनुच्छेद 19", "अनुच्छेद 21", "अनुच्छेद 25", "अनुच्छेद 14"], answer: "B" },
+                { question: "22. 'अधिकारों का घोषणापत्र' (Bill of Rights) की अवधारणा किस देश से ली गई है?", options: ["ब्रिटेन", "कनाडा", "आयरलैंड", "संयुक्त राज्य अमेरिका"], answer: "D" },
+                { question: "23. भारत का कोई भी नागरिक अपनी इच्छानुसार कोई भी पेशा या व्यवसाय चुन सकता है, यह किस अधिकार के तहत आता है?", options: ["समानता का अधिकार", "स्वतंत्रता का अधिकार", "शोषण के विरुद्ध अधिकार", "संवैधानिक उपचारों का अधिकार"], answer: "B" },
+                { question: "24. राष्ट्रीय मानवाधिकार आयोग का अध्यक्ष कौन हो सकता है?", options: ["कोई भी सेवारत न्यायाधीश", "भारत के सेवानिवृत्त मुख्य न्यायाधीश", "राष्ट्रपति द्वारा नियुक्त कोई भी व्यक्ति", "प्रधानमंत्री"], answer: "B" },
+                { question: "25. मौलिक अधिकार और राज्य के नीति-निदेशक तत्वों में मुख्य अंतर क्या है?", options: ["मौलिक अधिकार नकारात्मक हैं जबकि निदेशक तत्व सकारात्मक हैं", "मौलिक अधिकार वाद योग्य हैं जबकि निदेशक तत्व नहीं", "मौलिक अधिकार नागरिकों के लिए हैं, निदेशक तत्व राज्य के लिए", "उपरोक्त सभी"], answer: "D" }
+            ];
+
+            // Function to start the quiz
+            function startQuiz() {
+                studentName = studentNameInput.value.trim();
+                if (studentName === '') {
+                    alert('कृपया अपना नाम दर्ज करें।');
+                    return;
+                }
+                nameModal.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+                loadQuestions();
+                startTimer();
+            }
+
+            // Function to load questions into the form
+            function loadQuestions() {
+                let questionsHTML = '';
+                const optionLetters = ['A', 'B', 'C', 'D'];
+                quizData.forEach((q, index) => {
+                    questionsHTML += `
+                        <div id="question-${index}">
+                            <p class="text-lg font-semibold mb-4">${q.question}</p>
+                            <div class="space-y-3">
+                                ${q.options.map((option, i) => `
+                                    <div class="quiz-option border border-slate-300 rounded-lg transition-colors duration-200">
+                                        <input type="radio" id="q${index}_${optionLetters[i]}" name="question${index}" value="${optionLetters[i]}" class="hidden">
+                                        <label for="q${index}_${optionLetters[i]}" class="block w-full p-3 cursor-pointer rounded-lg">
+                                            <span class="font-bold mr-3">${optionLetters[i]}.</span> ${option}
+                                        </label>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div id="answer-feedback-${index}" class="mt-3 text-md"></div>
+                        </div>
+                    `;
+                });
+                questionsContainer.innerHTML = questionsHTML;
+            }
+
+            // Function to start the timer
+            function startTimer() {
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    const minutes = Math.floor(timeRemaining / 60);
+                    const seconds = timeRemaining % 60;
+                    timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                    if (timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        timerElement.textContent = "समय समाप्त!";
+                        timerElement.classList.add('text-red-600');
+                        submitQuiz();
+                    }
+                }, 1000);
+            }
+
+            // Function to handle quiz submission
+            function submitQuiz() {
+                clearInterval(timerInterval); // Stop the timer
+                let score = 0;
+                
+                // Disable all inputs and the submit button
+                submitBtn.disabled = true;
+                const radioButtons = document.querySelectorAll('input[type="radio"]');
+                radioButtons.forEach(radio => radio.disabled = true);
+
+                // Calculate score and show feedback
+                quizData.forEach((q, index) => {
+                    const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                    const feedbackElement = document.getElementById(`answer-feedback-${index}`);
+                    const correctLabel = document.querySelector(`label[for="q${index}_${q.answer}"]`);
+                    
+                    if (selectedOption) {
+                        const selectedLabel = document.querySelector(`label[for="${selectedOption.id}"]`);
+                        if (selectedOption.value === q.answer) {
+                            score++;
+                            selectedLabel.classList.add('bg-green-100', 'border-green-500');
+                        } else {
+                            selectedLabel.classList.add('bg-red-100', 'border-red-500');
+                            correctLabel.classList.add('bg-green-100', 'border-green-500');
+                        }
+                    } else {
+                        // If no answer was selected, just highlight the correct one
+                        correctLabel.classList.add('bg-green-100', 'border-green-500');
+                    }
+                    
+                    // Display the correct answer text
+                    const correctAnswerText = q.options[['A', 'B', 'C', 'D'].indexOf(q.answer)];
+                    feedbackElement.innerHTML = `<span class="correct-answer">सही उत्तर: ${q.answer}. ${correctAnswerText}</span>`;
+                });
+
+                // Display final score
+                scoreElement.textContent = score;
+                resultContainer.classList.remove('hidden');
+                resultContainer.scrollIntoView({ behavior: 'smooth' });
+
+                // Generate and download CSV
+                generateCSV(studentName, score);
+            }
+
+            // Function to generate and download CSV
+            function generateCSV(name, score) {
+                const csvContent = "data:text/csv;charset=utf-8," 
+                    + "Student Name,Marks\n" 
+                    + `${name},${score}`;
+                
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "result.csv");
+                document.body.appendChild(link); // Required for FF
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            // Event Listeners
+            startQuizBtn.addEventListener('click', startQuiz);
+            studentNameInput.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
+                    startQuiz();
+                }
+            });
+            quizForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                submitQuiz();
+            });
+        });
+    </script>
+</body>
+</html>
