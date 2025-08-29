@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ज्ञानेंद्रियाँ - गृह विज्ञान प्रश्नोत्तरी (सेट 2)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans Devanagari', sans-serif;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+        }
+        .correct-answer {
+            color: #16a34a; /* green-600 */
+            font-weight: bold;
+        }
+        .user-correct {
+            background-color: #dcfce7; /* green-100 */
+        }
+        .user-incorrect {
+            background-color: #fee2e2; /* red-100 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800" oncontextmenu="return false;">
+
+    <!-- Name Input Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">प्रश्नोत्तरी में आपका स्वागत है</h2>
+            <p class="text-gray-600 mb-6">कृपया आरंभ करने के लिए अपना नाम दर्ज करें।</p>
+            <form id="nameForm">
+                <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
+                <button type="submit" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">शुरू करें</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quizContainer" class="container mx-auto p-4 md:p-8 hidden">
+        <!-- Header with Timer -->
+        <header class="bg-white shadow-md rounded-xl p-4 mb-8 sticky top-4 z-10">
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl md:text-3xl font-bold text-blue-700">ज्ञानेंद्रियाँ - बहुविकल्पीय प्रश्न (सेट 2)</h1>
+                <div id="timer" class="text-2xl font-bold bg-blue-100 text-blue-800 px-4 py-2 rounded-lg shadow-inner">25:00</div>
+            </div>
+        </header>
+
+        <!-- Quiz Form -->
+        <form id="quizForm" class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+            <div id="questions-wrapper" class="space-y-8">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+            <div class="mt-10 text-center">
+                <button type="submit" id="submitBtn" class="bg-green-600 text-white font-bold py-3 px-12 text-lg rounded-lg hover:bg-green-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">सबमिट करें</button>
+            </div>
+        </form>
+
+        <!-- Result Display -->
+        <div id="result" class="mt-8 text-center bg-white p-8 rounded-xl shadow-lg hidden">
+            <h2 class="text-3xl font-bold text-gray-800">आपका परिणाम</h2>
+            <p id="score" class="text-5xl font-bold my-4 text-blue-600"></p>
+            <p class="text-gray-600">आपकी परिणाम फ़ाइल `result.csv` डाउनलोड हो गई है।</p>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. GLOBAL VARIABLES & CONSTANTS ---
+        const quizData = [
+            { question: "1. मानव शरीर में कुल कितनी ज्ञानेंद्रियाँ होती हैं?", options: ["चार", "पाँच", "छह", "सात"], answer: "b" },
+            { question: "2. आँखों की अच्छी सेहत के लिए कौन सा विटामिन सबसे महत्वपूर्ण है?", options: ["विटामिन ए", "विटामिन सी", "विटामिन डी", "विटामिन के"], answer: "a" },
+            { question: "3. ध्वनि तरंगें कान के किस भाग से सबसे पहले टकराती हैं?", options: ["कोक्लिया", "पिन्ना", "कर्णपटह (पर्दा)", "मध्य कान की हड्डियाँ"], answer: "c" },
+            { question: "4. हमें स्पर्श, दबाव और तापमान का अनुभव कौन सी ज्ञानेंद्रिय कराती है?", options: ["जीभ", "नाक", "आँख", "त्वचा"], answer: "d" },
+            { question: "5. गंध की पहचान के लिए कौन सी तंत्रिकाएँ जिम्मेदार हैं?", options: ["ऑप्टिक तंत्रिका", "घ्राण तंत्रिकाएँ", "श्रवण तंत्रिका", "स्वाद तंत्रिका"], answer: "b" },
+            { question: "6. 'ग्लूकोमा' (काला मोतिया) रोग शरीर के किस अंग को प्रभावित करता है?", options: ["कान", "नाक", "मस्तिष्क", "आँख"], answer: "d" },
+            { question: "7. शरीर का संतुलन बनाए रखने में कान का कौन सा भाग मुख्य भूमिका निभाता है?", options: ["आंतरिक कान", "मध्य कान", "बाहरी कान", "कर्णपटह"], answer: "a" },
+            { question: "8. जीभ पर पाए जाने वाले छोटे उभार क्या कहलाते हैं जो स्वाद कलिकाओं को धारण करते हैं?", options: ["स्वाद कोशिकाएँ", "पैपिला (Papillae)", "लार ग्रंथियाँ", "तंत्रिका अंत"], answer: "b" },
+            { question: "9. त्वचा को उसका रंग प्रदान करने वाले वर्णक का नाम क्या है?", options: ["मेलेनिन", "हीमोग्लोबिन", "केराटिन", "कोलेजन"], answer: "a" },
+            { question: "10. जब आँख का लेंस धुंधला हो जाता है, तो उस स्थिति को क्या कहते हैं?", options: ["रतौंधी", "निकट दृष्टि दोष", "मोतियाबिंद", "दूर दृष्टि दोष"], answer: "c" },
+            { question: "11. मानव कान सामान्यतः किस आवृत्ति रेंज की ध्वनि सुन सकता है?", options: ["20 हर्ट्ज से कम", "20,000 हर्ट्ज से अधिक", "20 से 20,000 हर्ट्ज के बीच", "केवल 1000 हर्ट्ज"], answer: "c" },
+            { question: "12. श्वसन मार्ग में धूल और कीटाणुओं को छानने में नाक का कौन सा हिस्सा मदद करता है?", options: ["नाक के बाल और श्लेष्मा", "हड्डी", "उपास्थि", "नथुने"], answer: "a" },
+            { question: "13. हमारे शरीर का सबसे बड़ा अंग कौन सा है?", options: ["यकृत", "मस्तिष्क", "हृदय", "त्वचा"], answer: "d" },
+            { question: "14. रेटिना पर किसी वस्तु का प्रतिबिंब कैसा बनता है?", options: ["वास्तविक और सीधा", "आभासी और उल्टा", "वास्तविक और उल्टा", "आभासी और सीधा"], answer: "c" },
+            { question: "15. मध्य कान में पाई जाने वाली सबसे छोटी हड्डी का नाम क्या है?", options: ["मैलियस", "इंकस", "स्टेप्स", "ह्यूमरस"], answer: "c" },
+            { question: "16. स्वाद और गंध की भावनाएँ एक दूसरे से कैसे संबंधित हैं?", options: ["कोई संबंध नहीं", "वे एक दूसरे से निकटता से जुड़ी हुई हैं", "वे एक दूसरे के विपरीत हैं", "केवल गंध स्वाद को प्रभावित करती है"], answer: "b" },
+            { question: "17. सूर्य की हानिकारक पराबैंगनी (UV) किरणों से त्वचा की रक्षा कौन सा वर्णक करता है?", options: ["केराटिन", "कोलेजन", "मेलेनिन", "वसा"], answer: "c" },
+            { question: "18. रंग दृष्टि (Color Vision) के लिए आँख की कौन सी कोशिकाएँ जिम्मेदार होती हैं?", options: ["रॉड कोशिकाएँ", "कोन कोशिकाएँ", "गैंग्लियन कोशिकाएँ", "अमैक्रिन कोशिकाएँ"], answer: "b" },
+            { question: "19. कान का मैल (Earwax) बनाने वाली ग्रंथियों का मुख्य कार्य क्या है?", options: ["सुनने में मदद करना", "कान को चिकनाई देना और बाहरी कणों को रोकना", "शरीर का संतुलन बनाना", "संक्रमण पैदा करना"], answer: "b" },
+            { question: "20. 'ट्रेकोमा' नामक संक्रामक रोग किस अंग को प्रभावित करता है?", options: ["आँख", "नाक", "कान", "त्वचा"], answer: "a" },
+            { question: "21. निकट दृष्टि दोष (Myopia) को ठीक करने के लिए किस प्रकार के लेंस का उपयोग किया जाता है?", options: ["उत्तल लेंस", "अवतल लेंस", "बेलनाकार लेंस", "कोई लेंस नहीं"], answer: "b" },
+            { question: "22. जीभ का कौन सा भाग कड़वे स्वाद के प्रति सबसे अधिक संवेदनशील होता है?", options: ["नोक (आगे का भाग)", "किनारे", "मध्य भाग", "पिछला भाग"], answer: "d" },
+            { question: "23. त्वचा की सबसे बाहरी परत क्या कहलाती है?", options: ["डर्मिस", "हाइपोडर्मिस", "एपिडर्मिस", "मेसोडर्मिस"], answer: "c" },
+            { question: "24. आँख में आँसू बनाने वाली ग्रंथि का क्या नाम है?", options: ["पीयूष ग्रंथि", "थायरॉइड ग्रंथि", "लार ग्रंथि", "लैक्रिमल ग्रंथि"], answer: "d" },
+            { question: "25. सुनने की प्रक्रिया का अंतिम चरण क्या है, जहाँ श्रवण तंत्रिका द्वारा भेजे गए संकेतों को मस्तिष्क समझता है?", options: ["कर्णपटह का कंपन", "कोक्लिया में तरल का हिलना", "मस्तिष्क द्वारा ध्वनि की व्याख्या", "मध्य कान की हड्डियों का हिलना"], answer: "c" }
+        ];
+        
+        let studentName = '';
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+
+        const nameForm = document.getElementById('nameForm');
+        const nameModal = document.getElementById('nameModal');
+        const quizContainer = document.getElementById('quizContainer');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const quizForm = document.getElementById('quizForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultDiv = document.getElementById('result');
+        const scoreP = document.getElementById('score');
+        const timerDisplay = document.getElementById('timer');
+
+        // --- 2. EVENT LISTENERS ---
+        
+        // Handle name submission
+        nameForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            studentName = document.getElementById('studentName').value.trim();
+            if (studentName) {
+                nameModal.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+                startTimer();
+            }
+        });
+
+        // Handle quiz submission
+        quizForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitQuiz();
+        });
+        
+        // Disable right-click globally
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+
+        // --- 3. FUNCTIONS ---
+
+        // Function to load questions into the form
+        function loadQuestions() {
+            let questionsHTML = '';
+            quizData.forEach((q, index) => {
+                questionsHTML += `
+                    <div id="question-${index}" class="border-b border-gray-200 pb-6">
+                        <p class="text-lg font-semibold mb-4">${q.question}</p>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                                <input type="radio" name="question${index}" value="a" class="mr-3 h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                <span>${q.options[0]}</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                                <input type="radio" name="question${index}" value="b" class="mr-3 h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                <span>${q.options[1]}</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                                <input type="radio" name="question${index}" value="c" class="mr-3 h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                <span>${q.options[2]}</span>
+                            </label>
+                            <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                                <input type="radio" name="question${index}" value="d" class="mr-3 h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                <span>${q.options[3]}</span>
+                            </label>
+                        </div>
+                        <div id="answer-${index}" class="mt-3 text-md"></div>
+                    </div>
+                `;
+            });
+            questionsWrapper.innerHTML = questionsHTML;
+        }
+
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "00:00";
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        // Function to handle quiz submission and result calculation
+        function submitQuiz() {
+            clearInterval(timerInterval); // Stop the timer
+            submitBtn.disabled = true; // Disable button
+            submitBtn.textContent = 'प्रस्तुत किया गया';
+            submitBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+            submitBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+
+            let score = 0;
+            quizData.forEach((q, index) => {
+                const questionDiv = document.getElementById(`question-${index}`);
+                const answerDiv = document.getElementById(`answer-${index}`);
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                
+                const correctAnswerText = q.options[q.answer.charCodeAt(0) - 97];
+                
+                if (selectedOption) {
+                    const selectedLabel = selectedOption.parentElement;
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                        selectedLabel.classList.add('user-correct');
+                    } else {
+                        selectedLabel.classList.add('user-incorrect');
+                    }
+                }
+                
+                answerDiv.innerHTML = `<span class="correct-answer">सही उत्तर: ${correctAnswerText}</span>`;
+            });
+
+            scoreP.textContent = `${score} / ${quizData.length}`;
+            resultDiv.classList.remove('hidden');
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+
+            downloadCSV(score);
+        }
+
+        // Function to create and download the CSV file
+        function downloadCSV(score) {
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Student Name,Marks\n" 
+                + `${studentName},${score}/${quizData.length}\n`;
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link); // Required for FF
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // --- 4. INITIALIZATION ---
+        window.onload = () => {
+            loadQuestions();
+        };
+
+    </script>
+</body>
+</html>
