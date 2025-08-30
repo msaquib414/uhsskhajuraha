@@ -1,0 +1,267 @@
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>विलयन (Solutions) रसायन विज्ञान प्रश्नोत्तरी</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+            --light-text: #ffffff;
+            --border-color: #dee2e6;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef;
+            color: var(--dark-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #quiz-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: var(--light-text);
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .header-main { text-align: center; color: var(--dark-text); margin-bottom: 20px; }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .options-container label {
+            display: block;
+            margin-bottom: 10px;
+            padding: 12px;
+            background-color: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .options-container label:hover {
+            background-color: #e2e6ea;
+            border-color: #b1b9c1;
+        }
+
+        .options-container input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.1);
+        }
+        
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--light-text);
+            background-color: var(--success-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #submit-btn:hover {
+            background-color: #218838;
+        }
+
+        #submit-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        #result-display {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #eef7ff;
+            color: #0056b3;
+        }
+
+        .correct-answer-reveal {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+            display: none; /* Initially hidden */
+        }
+
+        .correct-choice {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+        }
+        .incorrect-choice {
+             background-color: #f8d7da !important;
+             border-color: #f5c6cb !important;
+        }
+
+    </style>
+</head>
+
+<body oncontextmenu="return false;">
+
+    <div id="quiz-container">
+        <h1 class="header-main">विलयन (Solutions) रसायन विज्ञान प्रश्नोत्तरी</h1>
+        
+        <form id="quiz-form">
+            <div id="questions-wrapper">
+                </div>
+            <button type="submit" id="submit-btn">उत्तर जमा करें</button>
+        </form>
+        
+        <div id="result-display"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const quizData = [
+                // 10 questions with answer 'A'
+                { q: "विलयन की मोलरता (Molarity) की इकाई क्या है?", o: ["मोल/लीटर", "मोल/किलोग्राम", "ग्राम/लीटर", "मोल"], a: 0 },
+                { q: "निम्नलिखित में से कौन एक अणुसंख्यक गुणधर्म (colligative property) है?", o: ["परासरण दाब", "पृष्ठ तनाव", "श्यानता", "घनत्व"], a: 0 },
+                { q: "एक आदर्श विलयन वह है जो:", o: ["राउल्ट के नियम का पालन करता है", "हेनरी के नियम का पालन करता है", "बॉयल के नियम का पालन करता है", "चार्ल्स के नियम का पालन करता है"], a: 0 },
+                { q: "जब किसी विलायक में अवाष्पशील विलेय मिलाया जाता है, तो उसका वाष्प दाब:", o: ["कम हो जाता है", "बढ़ जाता है", "अपरिवर्तित रहता है", "शून्य हो जाता है"], a: 0 },
+                { q: "समान परासरण दाब वाले विलयनों को क्या कहा जाता है?", o: ["समपरासारी (Isotonic)", "अतिपरासारी (Hypertonic)", "अल्पपरासारी (Hypotonic)", "आदर्श विलयन"], a: 0 },
+                { q: "रक्त कोशिकाओं को जब अल्पपरासारी विलयन में रखा जाता है, तो वे:", o: ["फूल जाती हैं", "सिकुड़ जाती हैं", "कोई परिवर्तन नहीं होता", "फट जाती हैं"], a: 0 },
+                { q: "गैसों की द्रव में विलेयता पर दाब का प्रभाव किस नियम द्वारा वर्णित है?", o: ["हेनरी का नियम", "राउल्ट का नियम", "डाल्टन का नियम", "ग्राहम का नियम"], a: 0 },
+                { q: "1 किलोग्राम विलायक में उपस्थित विलेय के मोलों की संख्या को कहते हैं:", o: ["मोललता (Molality)", "मोलरता (Molarity)", "नॉर्मलता (Normality)", "मोल अंश (Mole fraction)"], a: 0 },
+                { q: "जल के लिए मोलल उन्नयन स्थिरांक (Kb) का मान होता है:", o: ["0.52 K kg/mol", "1.86 K kg/mol", "1.00 K kg/mol", "0.83 K kg/mol"], a: 0 },
+                { q: "वांट हॉफ गुणांक (van't Hoff factor) 'i' का मान उस विलेय के लिए 1 से अधिक होता है जो विलयन में:", o: ["वियोजित (dissociate) होता है", "संगुणित (associate) होता है", "न वियोजित होता है न संगुणित", "अघुलनशील होता है"], a: 0 },
+
+                // 10 questions with answer 'B'
+                { q: "विलयन की मोललता (Molality) की इकाई क्या है?", o: ["मोल/लीटर", "मोल/किलोग्राम", "ग्राम/लीटर", "मोल"], a: 1 },
+                { q: "निम्नलिखित में से कौन अणुसंख्यक गुणधर्म नहीं है?", o: ["वाष्प दाब का आपेक्षिक अवनमन", "क्वथनांक में उन्नयन", "हिमांक में अवनमन", "पृष्ठ तनाव"], a: 1 },
+                { q: "तापमान बढ़ाने पर गैसों की द्रव में विलेयता:", o: ["बढ़ती है", "घटती है", "अपरिवर्तित रहती है", "पहले बढ़ती है फिर घटती है"], a: 1 },
+                { q: "परासरण दाब (Osmotic pressure) मापने के लिए सूत्र है:", o: ["π = VRT", "π = CRT", "π = nRT", "P = VRT"], a: 1 },
+                { q: "NaCl के जलीय विलयन के लिए वांट हॉफ गुणांक 'i' का अनुमानित मान है:", o: ["1", "2", "3", "0.5"], a: 1 },
+                { q: "जल के लिए मोलल अवनमन स्थिरांक (Kf) का मान होता है:", o: ["0.52 K kg/mol", "1.86 K kg/mol", "2.73 K kg/mol", "0.98 K kg/mol"], a: 1 },
+                { q: "अंडे को नमक के सांद्र विलयन में रखने पर वह:", o: ["फूल जाता है", "सिकुड़ जाता है", "कोई परिवर्तन नहीं होता", "घुल जाता है"], a: 1 },
+                { q: "कौन सी सांद्रता इकाई तापमान पर निर्भर नहीं करती है?", o: ["मोलरता", "मोललता", "नॉर्मलता", "फॉर्मलता"], a: 1 },
+                { q: "प्रतिपरासरण (Reverse Osmosis) का उपयोग किया जाता है:", o: ["जल के क्वथन में", "जल के विलवणीकरण में", "जल के जमने में", "जल के वाष्पीकरण में"], a: 1 },
+                { q: "यदि दो द्रवों का विलयन राउल्ट के नियम से ऋणात्मक विचलन दर्शाता है, तो:", o: ["ΔH_mix > 0", "ΔH_mix < 0", "ΔV_mix > 0", "ΔH_mix = 0"], a: 1 },
+
+                // 10 questions with answer 'C'
+                { q: "किसी विलयन का अणुसंख्यक गुणधर्म निर्भर करता है:", o: ["विलेय के कणों की प्रकृति पर", "विलायक की प्रकृति पर", "विलेय के कणों की संख्या पर", "विलयन के आयतन पर"], a: 2 },
+                { q: "राउल्ट का नियम संबंधित है:", o: ["हिमांक से", "क्वथनांक से", "वाष्प दाब से", "परासरण दाब से"], a: 2 },
+                { q: "मोल अंश (Mole Fraction) की इकाई क्या है?", o: ["मोल/लीटर", "मोल/किग्रा", "कोई इकाई नहीं", "ग्राम/मोल"], a: 2 },
+                { q: "जब एसीटोन और क्लोरोफॉर्म को मिलाया जाता है, तो वे किस प्रकार का विलयन बनाते हैं?", o: ["आदर्श विलयन", "धनात्मक विचलन वाला अनादर्श विलयन", "ऋणात्मक विचलन वाला अनादर्श विलयन", "निलंबन"], a: 2 },
+                { q: "एज़ियोट्रोपिक मिश्रण (Azeotropic mixture) क्या होते हैं?", o: ["नियत क्वथनांक वाले मिश्रण", "नियत हिमांक वाले मिश्रण", "स्थिर संघटन पर उबलने वाले मिश्रण", "विकल्प (a) और (c) दोनों"], a: 2 },
+                { q: "K₄[Fe(CN)₆] जब जल में वियोजित होता है, तो कितने आयन देता है?", o: ["2", "3", "5", "10"], a: 2 },
+                { q: "हिमांक में अवनमन (Depression in freezing point) के लिए सही संबंध है:", o: ["ΔTf = Kb * m", "ΔTf = Kf / m", "ΔTf = Kf * m", "ΔTf = m / Kf"], a: 2 },
+                { q: "ठंडे देशों में कारों के रेडिएटर में एथिलीन ग्लाइकॉल मिलाया जाता है क्योंकि यह:", o: ["जल के क्वथनांक को बढ़ाता है", "जल के वाष्प दाब को कम करता है", "जल के हिमांक को कम करता है", "जंग लगने से रोकता है"], a: 2 },
+                { q: "सभी घटकों के मोल अंश का योग हमेशा होता है:", o: ["0", "100", "1", "अनंत"], a: 2 },
+                { q: "यदि दो द्रवों का विलयन राउल्ट के नियम से धनात्मक विचलन दर्शाता है, तो:", o: ["A-B आकर्षण A-A और B-B से अधिक है", "A-B आकर्षण A-A और B-B से कम है", "A-B आकर्षण A-A और B-B के बराबर है", "विलयन का आयतन घटता है"], a: 2 },
+
+                // 10 questions with answer 'D'
+                { q: "क्वथनांक में उन्नयन (Elevation in boiling point) का कारण है:", o: ["परासरण दाब में वृद्धि", "हिमांक में कमी", "पृष्ठ तनाव में वृद्धि", "वाष्प दाब में कमी"], a: 3 },
+                { q: "एक लीटर विलयन में उपस्थित विलेय के ग्राम तुल्यांको की संख्या को कहते हैं:", o: ["मोलरता", "मोललता", "मोल अंश", "नॉर्मलता"], a: 3 },
+                { q: "बेंजीन में एसिटिक एसिड का संगुणन (association) होता है। इसके लिए वांट हॉफ गुणांक 'i' का मान:", o: ["1 के बराबर होगा", "1 से अधिक होगा", "शून्य होगा", "1 से कम होगा"], a: 3 },
+                { q: "समुद्री जल का विलवणीकरण (desalination) किस प्रक्रिया द्वारा किया जाता है?", o: ["परासरण", "आसवन", "अपोहन", "प्रतिपरासरण"], a: 3 },
+                { q: "निम्नलिखित में से किसकी सांद्रता व्यक्त करने की विधि तापमान से प्रभावित होती है?", o: ["मोललता", "भार प्रतिशत", "मोल अंश", "मोलरता"], a: 3 },
+                { q: "0.1 M ग्लूकोज विलयन और 0.1 M NaCl विलयन में से किसका परासरण दाब अधिक होगा?", o: ["ग्लूकोज विलयन", "दोनों का बराबर होगा", "कह नहीं सकते", "NaCl विलयन"], a: 3 },
+                { q: "अर्धपारगम्य झिल्ली (Semi-permeable membrane) से केवल कौन से कण पार हो सकते हैं?", o: ["विलेय के कण", "बड़े आयन", "निलंबित कण", "विलायक के कण"], a: 3 },
+                { q: "क्वथनांक में उन्नयन के लिए सही संबंध है:", o: ["ΔTb = Kf * m", "ΔTb = Kb / m", "ΔTb = m / Kb", "ΔTb = Kb * m"], a: 3 },
+                { q: "समान मोललता वाले निम्नलिखित विलयनों में से किसका हिमांक सबसे कम होगा?", o: ["यूरिया", "ग्लूकोज", "NaCl", "K₂SO₄"], a: 3 },
+                { q: "यदि किसी विलयन का वाष्प दाब, राउल्ट के नियम द्वारा अनुमानित दाब से अधिक है, तो यह दर्शाता है:", o: ["कोई विचलन नहीं", "ऋणात्मक विचलन", "आदर्श व्यवहार", "धनात्मक विचलन"], a: 3 }
+            ];
+
+            const quizForm = document.getElementById('quiz-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const resultDisplay = document.getElementById('result-display');
+            const questionsWrapper = document.getElementById('questions-wrapper');
+
+            function renderQuestions() {
+                let quizHtml = '';
+                quizData.forEach((item, index) => {
+                    let optionsHtml = '';
+                    item.o.forEach((option, optionIndex) => {
+                        optionsHtml += `
+                            <label for="q${index}_option${optionIndex}">
+                                <input type="radio" name="question${index}" id="q${index}_option${optionIndex}" value="${optionIndex}">
+                                ${option}
+                            </label>
+                        `;
+                    });
+
+                    quizHtml += `
+                        <div class="question-block">
+                            <div class="question-text">
+                                ${index + 1}. ${item.q}
+                            </div>
+                            <div class="options-container">${optionsHtml}</div>
+                            <div class="correct-answer-reveal" id="correct-answer-${index}"></div>
+                        </div>
+                    `;
+                });
+                questionsWrapper.innerHTML = quizHtml;
+            }
+
+            function handleSubmit(event) {
+                event.preventDefault();
+                if (submitBtn.disabled) return; 
+
+                submitBtn.disabled = true;
+
+                let score = calculateAndShowResults();
+                resultDisplay.innerHTML = `आपका परिणाम: आपने <strong>${quizData.length}</strong> में से <strong>${score}</strong> अंक प्राप्त किए हैं।`;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function calculateAndShowResults() {
+                let score = 0;
+                quizData.forEach((item, index) => {
+                    const selectedOptionNode = document.querySelector(`input[name="question${index}"]:checked`);
+                    const labels = document.querySelectorAll(`label[for^="q${index}_option"]`);
+                    const correctAnswerReveal = document.getElementById(`correct-answer-${index}`);
+                    const correctOptionText = item.o[item.a];
+                    
+                    correctAnswerReveal.innerHTML = `✅ सही उत्तर: ${correctOptionText}`;
+                    correctAnswerReveal.style.display = 'block';
+                    labels[item.a].classList.add('correct-choice');
+
+                    if (selectedOptionNode) {
+                        const userAnswer = parseInt(selectedOptionNode.value);
+                        if (userAnswer === item.a) {
+                            score++;
+                        } else {
+                            labels[userAnswer].classList.add('incorrect-choice');
+                        }
+                    }
+                });
+                return score;
+            }
+
+            // Initialize the quiz
+            renderQuestions();
+            quizForm.addEventListener('submit', handleSubmit);
+        });
+    </script>
+
+</body>
+</html>
+
