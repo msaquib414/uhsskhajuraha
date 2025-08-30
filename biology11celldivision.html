@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cell Cycle and Cell Division Quiz | कोशिका चक्र और कोशिका विभाजन प्रश्नोत्तरी</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #timer {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007bff;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 0 0 15px 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        #quiz-container {
+            max-width: 800px;
+            margin: 80px auto 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            margin-bottom: 5px;
+        }
+        h2 {
+            margin-top: 0;
+            font-size: 1.2em;
+            color: #555;
+            font-weight: normal;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .options-container label {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .options-container label:hover {
+            background-color: #e9ecef;
+        }
+
+        .options-container input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #submit-btn:hover {
+            background-color: #218838;
+        }
+
+        #submit-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        #result-container {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #eef7ff;
+            color: #0056b3;
+        }
+
+        .correct-answer-display {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: none; /* Initially hidden */
+        }
+
+        .correct-choice {
+            background-color: #d4edda !important;
+        }
+        .incorrect-choice {
+             background-color: #f8d7da !important;
+        }
+
+    </style>
+</head>
+
+<body oncontextmenu="return false;">
+
+    <div id="timer">25:00</div>
+    
+    <div id="quiz-container">
+        <h1>Cell Cycle & Division Quiz</h1>
+        <h2>कोशिका चक्र और विभाजन प्रश्नोत्तरी</h2>
+        
+        <form id="quiz-form">
+            <div id="questions-wrapper">
+                </div>
+            <button type="submit" id="submit-btn">Submit / जमा करें</button>
+        </form>
+        
+        <div id="result-container"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const studentName = prompt("Please enter your name: / कृपया अपना नाम दर्ज करें:", "Student");
+
+            const quizData = [
+                // Set 1 (A, B, C, D)
+                { q: "The sequence of events by which a cell duplicates its genome, synthesizes the other constituents of the cell and eventually divides into two daughter cells is termed...", q_hi: "घटनाओं का वह अनुक्रम जिसके द्वारा एक कोशिका अपने जीनोम का द्विगुणन करती है, कोशिका के अन्य घटकों का संश्लेषण करती है और अंततः दो संतति कोशिकाओं में विभाजित हो जाती है, कहलाता है...", o: [{en:"Cell cycle", hi:"कोशिका चक्र"}, {en:"Meiosis", hi:"अर्धसूत्रण"}, {en:"Mitosis", hi:"समसूत्री विभाजन"}, {en:"Karyokinesis", hi:"केंद्रक विभाजन"}], a: 0 },
+                { q: "In which phase of cell cycle, DNA replication takes place?", q_hi: "कोशिका चक्र के किस चरण में डीएनए प्रतिकृति होती है?", o: [{en:"G1 phase", hi:"G1 चरण"}, {en:"S phase", hi:"S चरण"}, {en:"G2 phase", hi:"G2 चरण"}, {en:"M phase", hi:"M चरण"}], a: 1 },
+                { q: "The stage between two successive M-phases is called...", q_hi: "दो क्रमिक M-चरणों के बीच की अवस्था कहलाती है...", o: [{en:"Telophase", hi:"अंत्यावस्था"}, {en:"Anaphase", hi:"पश्चावस्था"}, {en:"Interphase", hi:"अंतरावस्था"}, {en:"Prophase", hi:"पूर्वावस्था"}], a: 2 },
+                { q: "During which stage of prophase I, crossing over occurs?", q_hi: "पूर्वावस्था I के किस चरण के दौरान जीन विनिमय होता है?", o: [{en:"Leptotene", hi:"लेप्टोटीन"}, {en:"Zygotene", hi:"जाइगोटीन"}, {en:"Diplotene", hi:"डिप्लोटीन"}, {en:"Pachytene", hi:"पैकेटीन"}], a: 3 },
+                // Set 2 (A, B, C, D)
+                { q: "Which of the following is the shortest phase in the cell cycle?", q_hi: "निम्नलिखित में से कौन कोशिका चक्र में सबसे छोटा चरण है?", o: [{en:"M phase", hi:"M चरण"}, {en:"G1 phase", hi:"G1 चरण"}, {en:"S phase", hi:"S चरण"}, {en:"G2 phase", hi:"G2 चरण"}], a: 0 },
+                { q: "Centromere splits and chromatids separate during...", q_hi: "सेंट्रोमियर विभाजित होता है और क्रोमैटिड अलग हो जाते हैं...", o: [{en:"Prophase", hi:"पूर्वावस्था"}, {en:"Anaphase", hi:"पश्चावस्था"}, {en:"Metaphase", hi:"मध्यावस्था"}, {en:"Telophase", hi:"अंत्यावस्था"}], a: 1 },
+                { q: "The complex formed by a pair of synapsed homologous chromosomes is called...", q_hi: "सूत्रयुग्मित समजात गुणसूत्रों के एक जोड़े द्वारा निर्मित सम्मिश्र को कहा जाता है...", o: [{en:"Kinetochore", hi:"काइनेटोकोर"}, {en:"Axoneme", hi:"अक्षसूत्र"}, {en:"Bivalent", hi:"युग्मक"}, {en:"Equatorial plate", hi:"मध्यवर्ती प्लेट"}], a: 2 },
+                { q: "In animal cells, cytokinesis is achieved by the appearance of a...", q_hi: "जंतु कोशिकाओं में, कोशिकाद्रव्य विभाजन किसके प्रकट होने से होता है...", o: [{en:"Cell plate", hi:"कोशिका प्लेट"}, {en:"Spindle fibers", hi:"तर्कु तंतु"}, {en:"Centriole", hi:"तारककाय"}, {en:"Furrow in the plasma membrane", hi:"प्लाज्मा झिल्ली में एक खांच"}], a: 3 },
+                // Set 3 (A, B, C, D)
+                { q: "Diplotene stage of prophase-I is characterized by...", q_hi: "पूर्वावस्था-I की डिप्लोटीन अवस्था की विशेषता है...", o: [{en:"Dissolution of the synaptonemal complex", hi:"सिनेप्टोनीमल कॉम्प्लेक्स का विघटन"}, {en:"Synapsis of homologous chromosomes", hi:"समजात गुणसूत्रों का सूत्रयुग्मन"}, {en:"Separation of sister chromatids", hi:"संतति क्रोमैटिड का पृथक्करण"}, {en:"Formation of cell plate", hi:"कोशिका प्लेट का निर्माण"}], a: 0 },
+                { q: "The number of chromosomes is reduced to half during...", q_hi: "गुणसूत्रों की संख्या आधी हो जाती है...", o: [{en:"Mitosis", hi:"समसूत्री विभाजन"}, {en:"Meiosis I", hi:"अर्धसूत्रण I"}, {en:"Meiosis II", hi:"अर्धसूत्रण II"}, {en:"G2 phase", hi:"G2 चरण"}], a: 1 },
+                { q: "The point of attachment between two non-sister chromatids of homologous chromosomes where crossing over occurs is called...", q_hi: "समजात गुणसूत्रों के दो गैर-संतति क्रोमैटिड के बीच जुड़ाव का बिंदु जहाँ जीन विनिमय होता है, कहलाता है...", o: [{en:"Centromere", hi:"सेंट्रोमियर"}, {en:"Telomere", hi:"टीलोमियर"}, {en:"Chiasmata", hi:"किएज्मा"}, {en:"Kinetochore", hi:"काइनेटोकोर"}], a: 2 },
+                { q: "Which stage is best to study the morphology of chromosomes?", q_hi: "गुणसूत्रों की आकारिकी का अध्ययन करने के लिए कौन सी अवस्था सबसे अच्छी है?", o: [{en:"Prophase", hi:"पूर्वावस्था"}, {en:"Interphase", hi:"अंतरावस्था"}, {en:"Telophase", hi:"अंत्यावस्था"}, {en:"Metaphase", hi:"मध्यावस्था"}], a: 3 },
+                // Set 4 (A, B, C, D)
+                { q: "During the G1 phase of the cell cycle, the cell is...", q_hi: "कोशिका चक्र के G1 चरण के दौरान, कोशिका...", o: [{en:"Metabolically active but does not replicate its DNA", hi:"उपापचयी रूप से सक्रिय होती है लेकिन अपने डीएनए की प्रतिकृति नहीं करती"}, {en:"Replicating its DNA", hi:"अपने डीएनए की प्रतिकृति कर रही होती है"}, {en:"In a quiescent stage", hi:"एक निष्क्रिय अवस्था में होती है"}, {en:"Preparing for cell division", hi:"कोशिका विभाजन की तैयारी कर रही होती है"}], a: 0 },
+                { q: "Spindle fibres attach to which part of the chromosome?", q_hi: "तर्कु तंतु गुणसूत्र के किस भाग से जुड़ते हैं?", o: [{en:"Telomere", hi:"टीलोमियर"}, {en:"Kinetochore", hi:"काइनेटोकोर"}, {en:"Centriole", hi:"तारककाय"}, {en:"Chromatin", hi:"क्रोमैटिन"}], a: 1 },
+                { q: "Mitosis results in...", q_hi: "समसूत्री विभाजन का परिणाम होता है...", o: [{en:"Reduction in chromosome number", hi:"गुणसूत्र संख्या में कमी"}, {en:"Formation of four haploid cells", hi:"चार अगुणित कोशिकाओं का निर्माण"}, {en:"Formation of two diploid daughter cells", hi:"दो द्विगुणित संतति कोशिकाओं का निर्माण"}, {en:"Genetic recombination", hi:"आनुवंशिक पुनर्संयोजन"}], a: 2 },
+                { q: "The cell plate grows from...", q_hi: "कोशिका प्लेट बढ़ती है...", o: [{en:"Wall to centre", hi:"दीवार से केंद्र की ओर"}, {en:"Centre to wall", hi:"केंद्र से दीवार की ओर"}, {en:"One wall to another", hi:"एक दीवार से दूसरी दीवार तक"}, {en:"Centre to poles", hi:"केंद्र से ध्रुवों की ओर"}], a: 3 },
+                // Set 5 (A, B, C, D)
+                { q: "The quiescent stage (G0) is when the cell...", q_hi: "शांत अवस्था (G0) तब होती है जब कोशिका...", o: [{en:"Exits the cell cycle", hi:"कोशिका चक्र से बाहर निकल जाती है"}, {en:"Enters the M phase", hi:"M चरण में प्रवेश करती है"}, {en:"Suspends the cell cycle", hi:"कोशिका चक्र को निलंबित करती है"}, {en:"Doubles its DNA content", hi:"अपने डीएनए की मात्रा को दोगुना करती है"}], a: 0 },
+                { q: "Which of the following serves as the mitotic spindle poison?", q_hi: "निम्नलिखित में से कौन समसूत्री तर्कु विष के रूप में कार्य करता है?", o: [{en:"Cytokinin", hi:"साइटोकाइनिन"}, {en:"Colchicine", hi:"कोल्चिसिन"}, {en:"Auxin", hi:"ऑक्सिन"}, {en:"Gibberellin", hi:"जिबरेलिन"}], a: 1 },
+                { q: "Pairing of homologous chromosomes is called...", q_hi: "समजात गुणसूत्रों का युग्मन कहलाता है...", o: [{en:"Crossing over", hi:"जीन विनिमय"}, {en:"Terminalisation", hi:"टर्मिनलाइजेशन"}, {en:"Synapsis", hi:"सूत्रयुग्मन"}, {en:"Disjunction", hi:"वियोजन"}], a: 2 },
+                { q: "Cells in G0 phase are...", q_hi: "G0 चरण में कोशिकाएं होती हैं...", o: [{en:"Exiting the cell cycle", hi:"कोशिका चक्र से बाहर निकलती हैं"}, {en:"Entering the cell cycle", hi:"कोशिका चक्र में प्रवेश करती हैं"}, {en:"Suspending the cell cycle", hi:"कोशिका चक्र को निलंबित करती हैं"}, {en:"Metabolically inactive", hi:"उपापचयी रूप से निष्क्रिय"}], a: 3 },
+                // Set 6 (A, B, C, D)
+                { q: "The synthesis of proteins and RNA occurs during which phase?", q_hi: "प्रोटीन और आरएनए का संश्लेषण किस चरण के दौरान होता है?", o: [{en:"G1 and G2 phases", hi:"G1 और G2 चरण"}, {en:"S phase", hi:"S चरण"}, {en:"M phase", hi:"M चरण"}, {en:"Anaphase", hi:"पश्चावस्था"}], a: 0 },
+                { q: "Meiosis II is also known as...", q_hi: "अर्धसूत्रण II को यह भी कहा जाता है...", o: [{en:"Reductional division", hi:"न्यूनकारी विभाजन"}, {en:"Equational division", hi:"सम विभाजन"}, {en:"Multiplication division", hi:"गुणन विभाजन"}, {en:"Direct division", hi:"प्रत्यक्ष विभाजन"}], a: 1 },
+                { q: "The enzyme recombinase is required at which stage of meiosis?", q_hi: "अर्धसूत्रण के किस चरण में रिकॉम्बिनेज एंजाइम की आवश्यकता होती है?", o: [{en:"Zygotene", hi:"जाइगोटीन"}, {en:"Diplotene", hi:"डिप्लोटीन"}, {en:"Pachytene", hi:"पैकेटीन"}, {en:"Diakinesis", hi:"डाइकाइनेसिस"}], a: 2 },
+                { q: "If a cell has 2n=10 chromosomes, what will be the number of chromatids in the G2 phase?", q_hi: "यदि एक कोशिका में 2n=10 गुणसूत्र हैं, तो G2 चरण में क्रोमैटिड की संख्या क्या होगी?", o: [{en:"10", hi:"10"}, {en:"5", hi:"5"}, {en:"15", hi:"15"}, {en:"20", hi:"20"}], a: 3 },
+                // Set 7 (A, B, C, D)
+                { q: "The process of division of cytoplasm is called...", q_hi: "कोशिका द्रव्य के विभाजन की प्रक्रिया कहलाती है...", o: [{en:"Cytokinesis", hi:"कोशिकाद्रव्य विभाजन"}, {en:"Karyokinesis", hi:"केंद्रक विभाजन"}, {en:"Meiosis", hi:"अर्धसूत्रण"}, {en:"S-phase", hi:"एस-चरण"}], a: 0 },
+                { q: "In meiosis, the daughter cells differ from the parent cell as well as amongst themselves due to...", q_hi: "अर्धसूत्रण में, संतति कोशिकाएं जनक कोशिका से और आपस में भी भिन्न होती हैं, जिसका कारण है...", o: [{en:"Segregation and independent assortment only", hi:"केवल पृथक्करण और स्वतंत्र अपव्यूहन"}, {en:"Segregation, independent assortment and crossing over", hi:"पृथक्करण, स्वतंत्र अपव्यूहन और जीन विनिमय"}, {en:"Independent assortment and crossing over only", hi:"केवल स्वतंत्र अपव्यूहन और जीन विनिमय"}, {en:"Segregation and crossing over only", hi:"केवल पृथक्करण और जीन विनिमय"}], a: 1 },
+                { q: "What is the key event during anaphase of mitosis?", q_hi: "समसूत्री विभाजन के पश्चावस्था के दौरान प्रमुख घटना क्या है?", o: [{en:"Chromosomes align at the metaphase plate", hi:"गुणसूत्र मध्यावस्था प्लेट पर संरेखित होते हैं"}, {en:"Nuclear envelope reforms", hi:"केंद्रकीय आवरण का पुनर्निर्माण होता है"}, {en:"Splitting of centromeres", hi:"सेंट्रोमियर का विभाजन"}, {en:"Condensation of chromosomes", hi:"गुणसूत्रों का संघनन"}], a: 2 },
+                { q: "The M-phase of the human cell cycle lasts for about...", q_hi: "मानव कोशिका चक्र का M-चरण लगभग कितने समय तक रहता है?", o: [{en:"24 hours", hi:"24 घंटे"}, {en:"90 minutes", hi:"90 मिनट"}, {en:"10 hours", hi:"10 घंटे"}, {en:"1 hour", hi:"1 घंटा"}], a: 3 },
+                // Set 8 (A, B, C, D)
+                { q: "Condensation of chromatin is observed in...", q_hi: "क्रोमैटिन का संघनन देखा जाता है...", o: [{en:"Prophase", hi:"पूर्वावस्था"}, {en:"Metaphase", hi:"मध्यावस्था"}, {en:"Anaphase", hi:"पश्चावस्था"}, {en:"Interphase", hi:"अंतरावस्था"}], a: 0 },
+                { q: "Which of these is not a stage of karyokinesis?", q_hi: "इनमें से कौन केंद्रक विभाजन का चरण नहीं है?", o: [{en:"Prophase", hi:"पूर्वावस्था"}, {en:"Cytokinesis", hi:"कोशिकाद्रव्य विभाजन"}, {en:"Metaphase", hi:"मध्यावस्था"}, {en:"Anaphase", hi:"पश्चावस्था"}], a: 1 },
+                { q: "If a diploid cell has 20 chromosomes, how many chromosomes will be in its gametes?", q_hi: "यदि एक द्विगुणित कोशिका में 20 गुणसूत्र हैं, तो उसके युग्मकों में कितने गुणसूत्र होंगे?", o: [{en:"20", hi:"20"}, {en:"40", hi:"40"}, {en:"10", hi:"10"}, {en:"5", hi:"5"}], a: 2 },
+                { q: "The formation of synaptonemal complex occurs during...", q_hi: "सिनेप्टोनीमल कॉम्प्लेक्स का निर्माण किसके दौरान होता है...", o: [{en:"Leptotene", hi:"लेप्टोटीन"}, {en:"Pachytene", hi:"पैकेटीन"}, {en:"Diplotene", hi:"डिप्लोटीन"}, {en:"Zygotene", hi:"जाइगोटीन"}], a: 3 },
+                // Set 9 (A, B, C, D)
+                { q: "At the end of Meiosis-I, the two daughter cells formed are...", q_hi: "अर्धसूत्रण-I के अंत में, बनी दो संतति कोशिकाएं होती हैं...", o: [{en:"Haploid", hi:"अगुणित"}, {en:"Diploid", hi:"द्विगुणित"}, {en:"Tetraploid", hi:"चतुर्गुणित"}, {en:"Aneuploid", hi:"असुगुणित"}], a: 0 },
+                { q: "During anaphase-I of meiosis...", q_hi: "अर्धसूत्रण के पश्चावस्था-I के दौरान...", o: [{en:"Sister chromatids separate", hi:"संतति क्रोमैटिड अलग होते हैं"}, {en:"Homologous chromosomes separate", hi:"समजात गुणसूत्र अलग होते हैं"}, {en:"Non-homologous chromosomes separate", hi:"गैर-समजात गुणसूत्र अलग होते हैं"}, {en:"Centromeres divide", hi:"सेंट्रोमियर विभाजित होते हैं"}], a: 1 },
+                { q: "The interphase is divided into...", q_hi: "अंतरावस्था को विभाजित किया गया है...", o: [{en:"G1 and G2 phase", hi:"G1 और G2 चरण"}, {en:"S and M phase", hi:"S और M चरण"}, {en:"G1, S and G2 phases", hi:"G1, S और G2 चरण"}, {en:"Prophase, Metaphase, Anaphase, Telophase", hi:"पूर्वावस्था, मध्यावस्था, पश्चावस्था, अंत्यावस्था"}], a: 2 },
+                { q: "Significance of meiosis lies in...", q_hi: "अर्धसूत्रण का महत्व निहित है...", o: [{en:"Producing identical daughter cells", hi:"समान संतति कोशिकाओं का उत्पादन"}, {en:"Cell repair", hi:"कोशिका की मरम्मत"}, {en:"Growth of the organism", hi:"जीव की वृद्धि"}, {en:"Maintaining chromosome number in sexual reproduction", hi:"लैंगिक प्रजनन में गुणसूत्र संख्या बनाए रखना"}], a: 3 },
+                // Set 10 (A, B, C, D)
+                { q: "Centriole duplicates during...", q_hi: "तारककाय का द्विगुणन होता है...", o: [{en:"S phase", hi:"S चरण"}, {en:"G1 phase", hi:"G1 चरण"}, {en:"G2 phase", hi:"G2 चरण"}, {en:"Prophase", hi:"पूर्वावस्था"}], a: 0 },
+                { q: "Which is the longest stage of meiosis?", q_hi: "अर्धसूत्रण की सबसे लंबी अवस्था कौन सी है?", o: [{en:"Metaphase I", hi:"मध्यावस्था I"}, {en:"Prophase I", hi:"पूर्वावस्था I"}, {en:"Anaphase I", hi:"पश्चावस्था I"}, {en:"Telophase I", hi:"अंत्यावस्था I"}], a: 1 },
+                { q: "The nuclear envelope reappears during...", q_hi: "केंद्रकीय आवरण पुनः प्रकट होता है...", o: [{en:"Prophase", hi:"पूर्वावस्था"}, {en:"Metaphase", hi:"मध्यावस्था"}, {en:"Telophase", hi:"अंत्यावस्था"}, {en:"Anaphase", hi:"पश्चावस्था"}], a: 2 },
+                { q: "Crossing over leads to...", q_hi: "जीन विनिमय का परिणाम होता है...", o: [{en:"Duplication of chromosomes", hi:"गुणसूत्रों का द्विगुणन"}, {en:"Linkage between genes", hi:"जीनों के बीच सहलग्नता"}, {en:"Aneuploidy", hi:"असुगुणिता"}, {en:"Genetic recombination", hi:"आनुवंशिक पुनर्संयोजन"}], a: 3 }
+            ];
+
+            const questionsWrapper = document.getElementById('questions-wrapper');
+            quizData.forEach((item, index) => {
+                const questionBlock = document.createElement('div');
+                questionBlock.className = 'question-block';
+
+                const questionText = document.createElement('div');
+                questionText.className = 'question-text';
+                questionText.innerHTML = `${index + 1}. ${item.q}<br/><span style="color:#555;">${item.q_hi}</span>`;
+
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'options-container';
+
+                item.o.forEach((option, optionIndex) => {
+                    const label = document.createElement('label');
+                    label.htmlFor = `q${index}_option${optionIndex}`;
+                    
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `question${index}`;
+                    radio.id = `q${index}_option${optionIndex}`;
+                    radio.value = optionIndex;
+
+                    label.appendChild(radio);
+                    label.append(` ${option.en} / ${option.hi}`);
+                    optionsContainer.appendChild(label);
+                });
+
+                const correctAnswerDisplay = document.createElement('div');
+                correctAnswerDisplay.className = 'correct-answer-display';
+                correctAnswerDisplay.id = `correct-answer-${index}`;
+                
+                questionBlock.appendChild(questionText);
+                questionBlock.appendChild(optionsContainer);
+                questionBlock.appendChild(correctAnswerDisplay);
+        
