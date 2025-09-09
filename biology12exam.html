@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कक्षा 12 जीव विज्ञान प्रश्नोत्तरी</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans Devanagari', sans-serif;
+            touch-action: pan-y; /* Allows vertical scrolling on touch devices while disabling other gestures */
+        }
+        /* Disables text selection and other context menu actions on touch devices */
+        * {
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+             -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800" oncontextmenu="return false;">
+
+    <!-- Name Input Modal -->
+    <div id="name-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-11/12 max-w-md text-center transform transition-all duration-300 scale-95 opacity-0" id="name-modal-content">
+            <h2 class="text-2xl font-bold mb-4 text-slate-700">जीव विज्ञान प्रश्नोत्तरी में आपका स्वागत है</h2>
+            <p class="mb-6 text-slate-600">शुरू करने के लिए कृपया अपना नाम दर्ज करें।</p>
+            <input type="text" id="student-name" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none" placeholder="अपना पूरा नाम लिखें">
+            <button id="start-quiz-btn" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg">क्विज़ शुरू करें</button>
+        </div>
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quiz-container" class="container mx-auto p-4 md:p-8 hidden">
+        
+        <!-- Header with Timer -->
+        <div class="sticky top-0 bg-slate-100/80 backdrop-blur-sm z-10 py-4 mb-6">
+             <h1 class="text-3xl font-bold text-center text-slate-700 mb-2">आनुवंशिकी और विकास - प्रश्नोत्तरी</h1>
+            <div id="timer" class="text-4xl font-bold text-center text-blue-600 bg-white py-2 px-6 rounded-full shadow-lg w-fit mx-auto border-2 border-blue-200">25:00</div>
+        </div>
+
+        <div id="result" class="hidden mb-6 p-6 bg-blue-100 border border-blue-300 text-blue-800 rounded-xl text-center text-2xl font-semibold shadow-md"></div>
+        
+        <form id="quiz-form" class="bg-white p-6 md:p-8 rounded-2xl shadow-xl space-y-8">
+            <!-- Questions will be injected here by JavaScript -->
+        </form>
+        
+        <div class="mt-8 text-center">
+            <button id="submit-btn" class="bg-green-600 text-white font-bold py-4 px-10 text-lg rounded-lg hover:bg-green-700 transition-colors duration-300 shadow-lg">सबमिट करें</button>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const questions = [
+            { question: "1. मेंडल ने अपने प्रयोगों के लिए किस पौधे का चयन किया?", options: { A: "मटर", B: "चना", C: "गेहूं", D: "आम" }, answer: "A" },
+            { question: "2. एक जीन के विभिन्न रूपों को क्या कहा जाता है?", options: { A: "जीनोटाइप", B: "एलील", C: "फेनोटाइप", D: "गुणसूत्र" }, answer: "B" },
+            { question: "3. 'आनुवंशिकी का जनक' किसे कहा जाता है?", options: { A: "डार्विन", B: "लैमार्क", C: "ग्रेगर मेंडल", D: "वाटसन" }, answer: "C" },
+            { question: "4. जब एक जीन जोड़ी दूसरे के प्रभाव को छुपाती है, तो उसे क्या कहते हैं?", options: { A: "प्रभाविता", B: "अप्रभाविता", C: "सह-प्रभाविता", D: "उत्परिवर्तन" }, answer: "A" },
+            { question: "5. F2 पीढ़ी में एकसंकर क्रॉस का लक्षणप्ररूपी अनुपात (phenotypic ratio) क्या होता है?", options: { A: "1:2:1", B: "9:3:3:1", C: "1:1", D: "3:1" }, answer: "D" },
+            { question: "6. मनुष्य में लिंग निर्धारण किसके द्वारा होता है?", options: { A: "X गुणसूत्र", B: "Y गुणसूत्र", C: "ऑटोसोम", D: "कोशिका द्रव्य" }, answer: "B" },
+            { question: "7. कौन सा रक्त समूह 'सार्वभौमिक दाता' (universal donor) है?", options: { A: "A", B: "B", C: "AB", D: "O" }, answer: "D" },
+            { question: "8. ABO रक्त समूह प्रणाली किसका एक उत्कृष्ट उदाहरण है?", options: { A: "अपूर्ण प्रभाविता", B: "सहलग्नता", C: "सह-प्रभाविता और बहुविकल्पी एलील", D: "लिंग सहलग्नता" }, answer: "C" },
+            { question: "9. एकसंकर क्रॉस का जीनप्ररूपी अनुपात (genotypic ratio) क्या है?", options: { A: "1:2:1", B: "3:1", C: "9:3:3:1", D: "1:1:1:1" }, answer: "A" },
+            { question: "10. मेंडल का कौन सा नियम एकसंकर क्रॉस द्वारा समझाया गया है?", options: { A: "स्वतंत्र अपव्यूहन का नियम", B: "प्रभाविता का नियम", C: "सहलग्नता का नियम", D: "उत्परिवर्तन का नियम" }, answer: "B" },
+            { question: "11. जब F1 पीढ़ी के सदस्य दोनों जनकों से मिलते-जुलते हैं, तो यह घटना क्या कहलाती है?", options: { A: "अपूर्ण प्रभाविता", B: "प्रभाविता", C: "सह-प्रभाविता", D: "बहुप्रभाविता" }, answer: "C" },
+            { question: "12. एक ही गुणसूत्र पर स्थित जीनों में एक साथ वंशानुगत होने की प्रवृत्ति होती है, इसे कहते हैं?", options: { A: "सहलग्नता (Linkage)", B: "विनिमय (Crossing over)", C: "स्वतंत्र अपव्यूहन", D: "प्रभाविता" }, answer: "A" },
+            { question: "13. टर्नर सिंड्रोम में गुणसूत्रों की संख्या कितनी होती है?", options: { A: "46", B: "45 (XO)", C: "47 (XXY)", D: "44" }, answer: "B" },
+            { question: "14. डाउन सिंड्रोम किस गुणसूत्र की त्रिसूत्रता (trisomy) के कारण होता है?", options: { A: "18", B: "13", C: "X", D: "21" }, answer: "D" },
+            { question: "15. हीमोफिलिया किस प्रकार का रोग है?", options: { A: "X-सहलग्न अप्रभावी", B: "Y-सहलग्न", C: "ऑटोसोमल प्रभावी", D: "ऑटोसोमल अप्रभावी" }, answer: "A" },
+            { question: "16. यदि माता का रक्त समूह 'O' और पिता का 'AB' है, तो बच्चे का रक्त समूह क्या होगा?", options: { A: "केवल O", B: "केवल AB", C: "A या B", D: "A, B, AB या O" }, answer: "C" },
+            { question: "17. द्विसंकर क्रॉस का लक्षणप्ररूपी अनुपात (phenotypic ratio) क्या है?", options: { A: "1:2:1", B: "3:1", C: "1:1:1:1", D: "9:3:3:1" }, answer: "D" },
+            { question: "18. मेंडल के पृथक्करण के नियम को और क्या कहा जाता है?", options: { A: "प्रभाविता का नियम", B: "युग्मकों की शुद्धता का नियम", C: "स्वतंत्र अपव्यूहन का नियम", D: "सहलग्नता का नियम" }, answer: "B" },
+            { question: "19. जब एक शुद्ध लंबा पौधा (TT) एक शुद्ध बौने पौधे (tt) से क्रॉस करता है, तो F1 पीढ़ी के सभी पौधे कैसे होंगे?", options: { A: "सभी लंबे", B: "सभी बौने", C: "आधे लंबे, आधे बौने", D: "सभी मध्यम ऊंचाई के" }, answer: "A" },
+            { question: "20. अपूर्ण प्रभाविता में, F2 पीढ़ी का लक्षणप्ररूपी अनुपात क्या होता है?", options: { A: "3:1", B: "1:2:1", C: "9:3:3:1", D: "1:1" }, answer: "B" },
+            { question: "21. कौन सा रक्त समूह 'सार्वभौमिक ग्राही' (universal recipient) है?", options: { A: "O", B: "A", C: "AB", D: "B" }, answer: "C" },
+            { question: "22. एक सामान्य महिला जिसका पिता वर्णांध है, एक सामान्य पुरुष से शादी करती है। उनके पुत्रों में वर्णांधता की क्या संभावना है?", options: { A: "0%", B: "25%", C: "100%", D: "50%" }, answer: "D" },
+            { question: "23. जीनोटाइप Tt का फेनोटाइप क्या होगा (जहाँ 'T' लंबेपन के लिए प्रभावी है)?", options: { A: "लंबा", B: "बौना", C: "मध्यम", D: "निर्धारित नहीं किया जा सकता" }, answer: "A" },
+            { question: "24. पॉलीप्लोइडी (Polyploidy) का क्या अर्थ है?", options: { A: "एक गुणसूत्र की हानि", B: "गुणसूत्रों के पूरे सेट में वृद्धि", C: "एक गुणसूत्र का जुड़ना", D: "गुणसूत्रों के सेट में कमी" }, answer: "B" },
+            { question: "25. एक विषमयुग्मजी (Heterozygous) व्यक्ति (जैसे Tt) द्वारा कितने प्रकार के युग्मक बनाए जा सकते हैं?", options: { A: "एक", B: "दो", C: "चार", D: "आठ" }, answer: "B" },
+            { question: "26. वंशावली विश्लेषण (Pedigree Analysis) में, एक भरा हुआ वृत्त (solid circle) क्या दर्शाता है?", options: { A: "सामान्य पुरुष", B: "सामान्य मादा", C: "प्रभावित मादा", D: "प्रभावित पुरुष" }, answer: "C" },
+            { question: "27. स्वतंत्र अपव्यूहन का नियम किस पर आधारित है?", options: { A: "एकसंकर क्रॉस", B: "बैक क्रॉस", C: "टेस्ट क्रॉस", D: "द्विसंकर क्रॉस" }, answer: "D" },
+            { question: "28. वह स्थिति जिसमें एक अकेला जीन एक से अधिक लक्षणों को प्रभावित करता है, क्या कहलाती है?", options: { A: "प्लिओट्रॉपी (Pleiotropy)", B: "बहुविकल्पी एलील", C: "पॉलीजेनिक वंशानुक्रम", D: "सहलग्नता" }, answer: "A" },
+            { question: "29. क्लाइनफेल्टर सिंड्रोम का जीनोटाइप क्या है?", options: { A: "XO", B: "XYY", C: "XXY", D: "XXX" }, answer: "C" },
+            { question: "30. किसी जीव का आनुवंशिक संगठन क्या कहलाता है?", options: { A: "फेनोटाइप", B: "एलील", C: "कैरिओटाइप", D: "जीनोटाइप" }, answer: "D" }
+        ];
+
+        // --- DOM Elements ---
+        const nameModal = document.getElementById('name-modal');
+        const nameModalContent = document.getElementById('name-modal-content');
+        const studentNameInput = document.getElementById('student-name');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const quizContainer = document.getElementById('quiz-container');
+        const quizForm = document.getElementById('quiz-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultDiv = document.getElementById('result');
+        const timerDiv = document.getElementById('timer');
+
+        // --- State ---
+        let studentName = "";
+        let timer;
+        let timeLeft = 25 * 60; // 25 minutes in seconds
+
+        // --- Functions ---
+
+        // Function to load questions into the form
+        function loadQuiz() {
+            let quizHTML = '';
+            questions.forEach((q, index) => {
+                quizHTML += `
+                    <div class="question-block border-b border-slate-200 pb-8">
+                        <p class="text-lg font-semibold mb-4">${q.question}</p>
+                        <div class="space-y-3">
+                `;
+                for (const option in q.options) {
+                    quizHTML += `
+                        <label class="flex items-center p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-slate-50 transition-colors duration-200">
+                            <input type="radio" name="question${index}" value="${option}" class="mr-3 h-5 w-5 border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <span class="text-md">${option}. ${q.options[option]}</span>
+                        </label>
+                    `;
+                }
+                quizHTML += `
+                        </div>
+                        <div id="answer${index}" class="mt-3 text-md font-bold"></div>
+                    </div>
+                `;
+            });
+            quizForm.innerHTML = quizHTML;
+        }
+
+        // Function to start the timer
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDiv.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    timerDiv.textContent = "समय समाप्त!";
+                    timerDiv.classList.add('text-red-600');
+                    calculateResult();
+                }
+            }, 1000);
+        }
+
+        // Function to calculate and display results
+        function calculateResult() {
+            clearInterval(timer);
+            let score = 0;
+            const inputs = quizForm.querySelectorAll('input[type="radio"]');
+            
+            questions.forEach((q, index) => {
+                const userAnswer = quizForm.querySelector(`input[name="question${index}"]:checked`);
+                const answerDiv = document.getElementById(`answer${index}`);
+                const questionBlockLabels = document.querySelectorAll(`input[name="question${index}"]`);
+                
+                questionBlockLabels.forEach(labelInput => {
+                    const parentLabel = labelInput.parentElement;
+                    // Highlight the correct answer
+                    if(labelInput.value === q.answer) {
+                        parentLabel.classList.add('bg-green-100', 'border-green-400');
+                    }
+                });
+
+                if (userAnswer) {
+                     if (userAnswer.value === q.answer) {
+                        score++;
+                    } else {
+                        // Highlight user's wrong answer in red
+                         userAnswer.parentElement.classList.add('bg-red-100', 'border-red-400');
+                    }
+                    answerDiv.innerHTML = `सही उत्तर: <span class="text-green-600">${q.answer}. ${q.options[q.answer]}</span>`;
+                } else {
+                    answerDiv.innerHTML = `आपने प्रयास नहीं किया। सही उत्तर: <span class="text-green-600">${q.answer}. ${q.options[q.answer]}</span>`;
+                }
+            });
+            
+            inputs.forEach(input => input.disabled = true);
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'प्रश्नोत्तरी समाप्त';
+            submitBtn.classList.add('bg-gray-500', 'hover:bg-gray-500');
+
+            resultDiv.innerHTML = `प्रिय ${studentName}, आपका स्कोर है: <span class="text-blue-800 font-extrabold">${score} / ${questions.length}</span>`;
+            resultDiv.classList.remove('hidden');
+            window.scrollTo(0, 0);
+
+            downloadCSV(score);
+        }
+
+        // Function to download results as CSV
+        function downloadCSV(score) {
+            const csvContent = "data:text/csv;charset=utf-8,Student Name,Marks\n" + studentName + "," + score;
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+
+        // --- Event Listeners ---
+        window.onload = () => {
+             // Animate modal entry
+            setTimeout(() => {
+                nameModalContent.classList.remove('scale-95', 'opacity-0');
+                nameModalContent.classList.add('scale-100', 'opacity-100');
+            }, 100);
+            loadQuiz();
+        };
+
+        startQuizBtn.addEventListener('click', () => {
+            studentName = studentNameInput.value.trim();
+            if (studentName === "") {
+                alert("कृपया अपना नाम दर्ज करें।");
+                return;
+            }
+            nameModal.classList.add('opacity-0', 'pointer-events-none');
+             setTimeout(() => nameModal.classList.add('hidden'), 500);
+
+            quizContainer.classList.remove('hidden');
+            startTimer();
+        });
+
+        submitBtn.addEventListener('click', () => {
+            if (confirm('क्या आप निश्चित हैं कि आप सबमिट करना चाहते हैं?')) {
+                calculateResult();
+            }
+        });
+        
+    </script>
+
+</body>
+</html>
+
