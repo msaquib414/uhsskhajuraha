@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biology Quiz: Locomotion and Movement</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        #name-container, #result-container {
+            text-align: center;
+        }
+        #name-container input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #start-btn, #submit-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #start-btn:hover, #submit-btn:hover {
+            background-color: #0056b3;
+        }
+        #submit-btn:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+        #timer {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 25px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-block p {
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 8px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .correct-answer-display {
+            display: none;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 10px;
+        }
+        .correct-user-choice {
+            background-color: #d4edda; /* Light green */
+        }
+        .incorrect-user-choice {
+            background-color: #f8d7da; /* Light red */
+        }
+        h1, h2 {
+            text-align: center;
+            color: #0056b3;
+        }
+        #quiz-form {
+            display: none;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer">35:00</div>
+
+    <div class="quiz-container">
+        <div id="name-container">
+            <h1>Locomotion and Movement Quiz</h1>
+            <p>Please enter your name to begin.</p>
+            <input type="text" id="student-name" placeholder="Enter your full name" required>
+            <button id="start-btn">Start Quiz</button>
+        </div>
+
+        <form id="quiz-form">
+            <h2>Quiz Questions</h2>
+            <div id="questions-wrapper"></div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="submit" id="submit-btn">Submit Answers</button>
+            </div>
+        </form>
+        
+        <div id="result-container"></div>
+
+    </div>
+
+    <script>
+        const quizData = [
+            // Distribution: A=9, B=9, C=9, D=8
+            { q: "1. The functional unit of muscle contraction is called:", o: ["Sarcomere", "Myofibril", "Fascicle", "Sarcoplasm"], a: 0 }, // A
+            { q: "2. Which ion is essential for muscle contraction?", o: ["Sodium", "Potassium", "Calcium", "Chloride"], a: 2 }, // C
+            { q: "3. The 'A' band of a sarcomere contains:", o: ["Only thin filaments", "Only thick filaments", "Both thick and thin filaments", "Only Z-lines"], a: 2 }, // C
+            { q: "4. The sliding filament theory explains:", o: ["Nerve impulse transmission", "Muscle contraction", "Blood clotting", "Hormone action"], a: 1 }, // B
+            { q: "5. Red muscle fibers are rich in:", o: ["Glycogen", "Myoglobin", "Lactic acid", "Sarcoplasmic reticulum"], a: 1 }, // B
+            { q: "6. The human vertebral column consists of how many vertebrae?", o: ["26", "30", "33", "24"], a: 0 }, // A (26 in adults)
+            { q: "7. Which of the following is an example of a ball-and-socket joint?", o: ["Elbow joint", "Knee joint", "Shoulder joint", "Ankle joint"], a: 2 }, // C
+            { q: "8. The skull is composed of which two sets of bones?", o: ["Axial and Appendicular", "Cranial and Facial", "Long and Short", "Vertebral and Ribs"], a: 1 }, // B
+            { q: "9. Gout is an inflammation of joints due to the accumulation of:", o: ["Calcium carbonate crystals", "Lactic acid", "Uric acid crystals", "Cholesterol"], a: 2 }, // C
+            { q: "10. The number of floating ribs in humans is:", o: ["2 pairs", "3 pairs", "5 pairs", "7 pairs"], a: 0 }, // A
+            { q: "11. The H-zone in a skeletal muscle fibre is due to:", o: ["The central gap between actin filaments extending through myosin filaments", "Extension of myosin filaments in the central portion of the A-band", "The absence of myofibrils in the central portion", "The central gap between myosin filaments in the A-band"], a: 0 }, // A
+            { q: "12. What is the name of the connective tissue sheath that covers a muscle fascicle?", o: ["Endomysium", "Epimysium", "Perimysium", "Sarcolemma"], a: 2 }, // C
+            { q: "13. The joint between the atlas and axis vertebrae is a:", o: ["Saddle joint", "Pivot joint", "Hinge joint", "Fibrous joint"], a: 1 }, // B
+            { q: "14. A single motor neuron along with the muscle fibers it connects is called a:", o: ["Neuromuscular junction", "Motor unit", "Synaptic cleft", "Sarcomere"], a: 1 }, // B
+            { q: "15. The longest and strongest bone in the human body is the:", o: ["Humerus", "Tibia", "Femur", "Fibula"], a: 2 }, // C
+            { q: "16. Tetany, the rapid spasms in muscle, is caused by low levels of which ion in the body fluid?", o: ["Ca++", "K+", "Na+", "Mg++"], a: 0 }, // A
+            { q: "17. The coxal bone is part of the:", o: ["Pectoral girdle", "Pelvic girdle", "Cranium", "Vertebral column"], a: 1 }, // B
+            { q: "18. Which protein masks the active sites on the actin filament?", o: ["Myosin", "Troponin", "Tropomyosin", "Actin"], a: 2 }, // C
+            { q: "19. The acromion process is part of the:", o: ["Skull", "Pelvic girdle", "Scapula", "Vertebra"], a: 2 }, // C
+            { q: "20. How many bones are present in the human ankle (tarsals)?", o: ["5", "7", "8", "14"], a: 1 }, // B
+            { q: "21. Myasthenia gravis is an autoimmune disorder affecting:", o: ["Bones", "Neuromuscular junction", "Synovial fluid", "Cartilage"], a: 1 }, // B
+            { q: "22. The patella is also known as the:", o: ["Collar bone", "Shoulder blade", "Kneecap", "Ankle bone"], a: 2 }, // C
+            { q: "23. The type of joint found in the carpal bones of the wrist is a:", o: ["Hinge joint", "Pivot joint", "Saddle joint", "Gliding joint"], a: 3 }, // D
+            { q: "24. During muscle contraction, which of the following does NOT shorten?", o: ["I-band", "Sarcomere", "H-zone", "A-band"], a: 3 }, // D
+            { q: "25. The glenoid cavity articulates with the:", o: ["Head of the humerus", "Head of the femur", "Clavicle", "Acromion process"], a: 0 }, // A
+            { q: "26. Osteoporosis is a disorder characterized by:", o: ["Increased bone mass", "Decreased bone mass", "Inflammation of joints", "Uric acid deposition"], a: 1 }, // B
+            { q: "27. The Z-line is a dark membrane that bisects the:", o: ["A-band", "H-zone", "I-band", "M-line"], a: 2 }, // C
+            { q: "28. What is the total number of bones in each limb of a human?", o: ["25", "30", "35", "40"], a: 1 }, // B
+            { q: "29. The vertebral formula for humans is:", o: ["C7 T12 L5 S1 Co1", "C7 T12 L5 S(5) Co(4)", "C8 T12 L5 S1 Co1", "C7 T10 L5 S5 Co5"], a: 1 }, // B (S(5) and Co(4) indicates fused bones)
+            { q: "30. A cartilaginous joint is found:", o: ["Between cranial bones", "At the knee", "Between adjacent vertebrae", "At the shoulder"], a: 2 }, // C
+            { q: "31. The primary function of the sarcoplasmic reticulum is:", o: ["Protein synthesis", "ATP production", "Storage and release of calcium ions", "Nerve impulse conduction"], a: 2 }, // C
+            { q: "32. The immediate source of energy for muscle contraction is:", o: ["Glucose", "ATP", "Creatine phosphate", "Lactic acid"], a: 1 }, // B
+            { q: "33. Which of the following is a bone of the pectoral girdle?", o: ["Sternum", "Rib", "Ilium", "Clavicle"], a: 3 }, // D
+            { q: "34. Sutures in the skull are examples of which type of joint?", o: ["Synovial joints", "Cartilaginous joints", "Fibrous joints", "Ball-and-socket joints"], a: 2 }, // C
+            { q: "35. The property of muscles by which they can be stretched is called:", o: ["Contractility", "Excitability", "Elasticity", "Extensibility"], a: 3 } // D
+        ];
+
+        let studentName = "";
+        let timerInterval;
+        let timeRemaining = 35 * 60; // 35 minutes in seconds
+
+        const nameContainer = document.getElementById('name-container');
+        const quizForm = document.getElementById('quiz-form');
+        const startBtn = document.getElementById('start-btn');
+        const nameInput = document.getElementById('student-name');
+        const timerDisplay = document.getElementById('timer');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultContainer = document.getElementById('result-container');
+        
+        // Disable right-click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "Time's Up!";
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+        
+        // Function to load questions
+        function loadQuestions() {
+            let questionsHTML = "";
+            quizData.forEach((item, index) => {
+                questionsHTML += `
+                    <div class="question-block" id="q-block-${index}">
+                        <p>${item.q}</p>
+                        <div class="options">
+                `;
+                item.o.forEach((option, i) => {
+                    questionsHTML += `
+                        <label for="q${index}_option${i}">
+                            <input type="radio" name="question${index}" id="q${index}_option${i}" value="${i}">
+                            ${String.fromCharCode(65 + i)}. ${option}
+                        </label>
+                    `;
+                });
+                questionsHTML += `
+                        </div>
+                        <div class="correct-answer-display" id="ans-${index}"></div>
+                    </div>
+                `;
+            });
+            questionsWrapper.innerHTML = questionsHTML;
+        }
+
+        // Start Quiz event
+        startBtn.addEventListener('click', () => {
+            studentName = nameInput.value.trim();
+            if (studentName === "") {
+                alert("Please enter your name to start the quiz.");
+                return;
+            }
+            nameContainer.style.display = 'none';
+            quizForm.style.display = 'block';
+            loadQuestions();
+            startTimer();
+        });
+        
+        // Submit Quiz event
+        quizForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitQuiz();
+        });
+
+        // Function to handle quiz submission and result calculation
+        function submitQuiz() {
+            submitBtn.disabled = true;
+            clearInterval(timerInterval);
+            
+            let score = 0;
+            quizData.forEach((item, index) => {
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                const correctAnswerDisplay = document.getElementById(`ans-${index}`);
+                const correctOptionLabel = document.querySelector(`label[for="q${index}_option${item.a}"]`);
+                
+                correctAnswerDisplay.textContent = `Correct Answer: ${String.fromCharCode(65 + item.a)}. ${item.o[item.a]}`;
+                correctAnswerDisplay.style.display = 'block';
+
+                correctOptionLabel.classList.add('correct-user-choice');
+
+                if (selectedOption) {
+                    const userAnswer = parseInt(selectedOption.value);
+                    if (userAnswer === item.a) {
+                        score++;
+                    } else {
+                        const userOptionLabel = document.querySelector(`label[for="${selectedOption.id}"]`);
+                        userOptionLabel.classList.add('incorrect-user-choice');
+                    }
+                }
+            });
+            
+            resultContainer.innerHTML = `<h2>Quiz Over, ${studentName}!</h2><h3>Your Score: ${score} out of ${quizData.length}</h3>`;
+            window.scrollTo(0, 0);
+            
+            // Generate and download CSV
+            generateCSV(studentName, score);
+        }
+
+        // Function to generate CSV and trigger download
+        function generateCSV(name, score) {
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Name,Score\n" 
+                + `${name},${score}`;
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
+
