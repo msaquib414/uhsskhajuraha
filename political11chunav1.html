@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>राजनीति विज्ञान प्रश्नोत्तरी: चुनाव और प्रतिनिधित्व</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans Devanagari', sans-serif;
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+        }
+        /* Custom styles for radio buttons after submission */
+        .correct-answer {
+            accent-color: #22c55e; /* green-500 */
+        }
+        .wrong-answer {
+            accent-color: #ef4444; /* red-500 */
+        }
+        .selected-wrong {
+             accent-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800" oncontextmenu="return false;">
+
+    <!-- Name Entry Modal -->
+    <div id="name-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center">
+            <h1 class="text-2xl font-bold mb-4 text-blue-600">प्रश्नोत्तरी में आपका स्वागत है!</h1>
+            <p class="text-gray-600 mb-6">शुरू करने के लिए कृपया अपना नाम दर्ज करें।</p>
+            <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="startQuizBtn" class="w-full mt-6 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105">क्विज़ शुरू करें</button>
+        </div>
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quiz-container" class="container mx-auto p-4 md:p-8 hidden">
+        
+        <!-- Header with Timer -->
+        <header class="bg-white shadow-md rounded-xl p-4 mb-8 sticky top-4 z-10">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <h1 class="text-2xl md:text-3xl font-bold text-blue-700">चुनाव और प्रतिनिधित्व</h1>
+                <div id="timer" class="mt-2 md:mt-0 text-2xl font-bold bg-blue-100 text-blue-800 px-4 py-2 rounded-lg">35:00</div>
+            </div>
+        </header>
+
+        <!-- Quiz Form -->
+        <form id="quizForm" class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+            
+            <div id="questions-wrapper">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-8 text-center">
+                <button type="submit" id="submitBtn" class="bg-green-600 text-white font-bold py-3 px-10 rounded-lg hover:bg-green-700 transition duration-300 text-lg transform hover:scale-105">उत्तर जमा करें</button>
+            </div>
+        </form>
+
+        <!-- Result Display -->
+        <div id="result" class="hidden mt-8 text-center bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-blue-700 mb-4">आपका परिणाम</h2>
+            <p id="score" class="text-4xl font-bold text-gray-800"></p>
+            <p class="text-gray-600 mt-2">आपकी प्रतिक्रियाओं और सही उत्तरों को ऊपर चिह्नित किया गया है।</p>
+        </div>
+
+    </div>
+
+    <script>
+        // --- DATA ---
+        const quizData = [
+            { question: "1. भारत में कौन सी चुनाव प्रणाली अपनाई गई है?", options: ["आनुपातिक प्रतिनिधित्व", "सर्वाधिक वोट पाने वाले की जीत (FPTP)", "मिश्रित प्रणाली", "एकल संक्रमणीय मत प्रणाली"], answer: "b" },
+            { question: "2. भारतीय संविधान का कौन सा भाग चुनाव आयोग से संबंधित है?", options: ["भाग XII", "भाग XV", "भाग XVIII", "भाग XX"], answer: "b" },
+            { question: "3. भारत के मुख्य चुनाव आयुक्त की नियुक्ति कौन करता है?", options: ["प्रधानमंत्री", "संसद", "भारत के मुख्य न्यायाधीश", "राष्ट्रपति"], answer: "d" },
+            { question: "4. 'सार्वभौमिक वयस्क मताधिकार' का क्या अर्थ है?", options: ["सभी शिक्षित वयस्कों को वोट देने का अधिकार", "सभी वयस्क नागरिकों को वोट देने का अधिकार", "केवल संपत्ति वाले वयस्कों को वोट देने का अधिकार", "केवल पुरुषों को वोट देने का अधिकार"], answer: "b" },
+            { question: "5. भारत में लोकसभा और विधानसभा चुनाव किस प्रणाली पर आधारित हैं?", options: ["सूची प्रणाली", "एकल संक्रमणीय मत", "सर्वाधिक वोट पाने वाले की जीत (FPTP)", "मिश्रित सदस्य आनुपातिक"], answer: "c" },
+            { question: "6. राज्यसभा के सदस्यों का चुनाव किस पद्धति से होता है?", options: ["प्रत्यक्ष चुनाव", "आनुपातिक प्रतिनिधित्व की एकल संक्रमणीय मत प्रणाली", "FPTP प्रणाली", "राष्ट्रपति द्वारा मनोनयन"], answer: "b" },
+            { question: "7. चुनाव क्षेत्रों का सीमांकन करने का कार्य कौन करता है?", options: ["चुनाव आयोग", "संसद", "परिसीमन आयोग", "योजना आयोग"], answer: "c" },
+            { question: "8. भारत में मताधिकार की न्यूनतम आयु क्या है?", options: ["21 वर्ष", "25 वर्ष", "18 वर्ष", "20 वर्ष"], answer: "c" },
+            { question: "9. चुनाव आयोग की स्थापना कब हुई थी?", options: ["1947", "1950", "1952", "1949"], answer: "b" },
+            { question: "10. निम्नलिखित में से कौन सा चुनाव आयोग का कार्य नहीं है?", options: ["चुनाव करवाना", "मतदाता सूची तैयार करना", "उम्मीदवारों का नामांकन करना", "राजनीतिक दलों को मान्यता देना"], answer: "c" },
+            { question: "11. 'फर्स्ट पास्ट द पोस्ट' (FPTP) प्रणाली में विजेता कौन होता है?", options: ["जिसे 50% से अधिक वोट मिलते हैं", "जिसे अन्य सभी उम्मीदवारों से अधिक वोट मिलते हैं", "जिसे एक निश्चित कोटा वोट मिलता है", "जिसका चयन लॉटरी से होता है"], answer: "b" },
+            { question: "12. आनुपातिक प्रतिनिधित्व प्रणाली का मुख्य उद्देश्य क्या है?", options: ["स्थिर सरकार बनाना", "सभी सामाजिक समूहों को उचित प्रतिनिधित्व देना", "चुनाव प्रक्रिया को सरल बनाना", "द्वि-दलीय प्रणाली को बढ़ावा देना"], answer: "b" },
+            { question: "13. लोकसभा में अनुसूचित जातियों के लिए सीटों का आरक्षण किस आधार पर किया जाता है?", options: ["उनकी सामाजिक स्थिति के आधार पर", "उनकी आर्थिक स्थिति के आधार पर", "उनकी जनसंख्या के अनुपात के आधार पर", "उनकी शैक्षिक योग्यता के आधार पर"], answer: "c" },
+            { question: "14. भारत में राष्ट्रपति का चुनाव किस प्रकार का चुनाव है?", options: ["प्रत्यक्ष चुनाव", "अप्रत्यक्ष चुनाव", "आंशिक प्रत्यक्ष चुनाव", "मनोनयन"], answer: "b" },
+            { question: "15. 'मतपत्र' (Ballot Paper) का प्रयोग पहली बार किस देश में हुआ था?", options: ["भारत", "अमेरिका", "यूनान", "ऑस्ट्रेलिया"], answer: "d" },
+            { question: "16. चुनाव सुधारों के लिए भारत में कौन सी समिति गठित की गई थी?", options: ["सरकारिया समिति", "तारकुंडे समिति", "बलवंत राय मेहता समिति", "अशोक मेहता समिति"], answer: "b" },
+            { question: "17. एक स्वतंत्र और निष्पक्ष चुनाव का क्या महत्व है?", options: ["यह लोकतंत्र का आधार है", "यह तानाशाही को बढ़ावा देता है", "यह केवल एक औपचारिकता है", "इससे सरकार अस्थिर होती है"], answer: "a" },
+            { question: "18. भारत में महिलाओं को पहली बार वोट देने का अधिकार कब मिला?", options: ["1926", "1947", "1950", "1935"], answer: "a" },
+            { question: "19. चुनाव के दौरान 'आचार संहिता' कौन लागू करता है?", options: ["सरकार", "सुप्रीम कोर्ट", "चुनाव आयोग", "संसद"], answer: "c" },
+            { question: "20. यदि किसी चुनाव में कोई उम्मीदवार निर्विरोध चुना जाता है, तो इसका क्या अर्थ है?", options: ["चुनाव रद्द हो गया है", "उसके खिलाफ कोई अन्य उम्मीदवार नहीं है", "उसने सभी वोट जीते हैं", "चुनाव बाद में होगा"], answer: "b" },
+            { question: "21. चुनाव आयोग एक कैसी संस्था है?", options: ["संवैधानिक संस्था", "सांविधिक संस्था", "कार्यकारी संस्था", "निजी संस्था"], answer: "a" },
+            { question: "22. पृथक निर्वाचक मंडल की व्यवस्था किस अधिनियम द्वारा की गई थी?", options: ["1909 का मार्ले-मिंटो सुधार", "1919 का मोंटेग्यू-चेम्सफोर्ड सुधार", "1935 का भारत सरकार अधिनियम", "1947 का भारतीय स्वतंत्रता अधिनियम"], answer: "a" },
+            { question: "23. एक उम्मीदवार को चुनाव लड़ने के लिए न्यूनतम आयु (लोकसभा) क्या है?", options: ["18 वर्ष", "21 वर्ष", "25 वर्ष", "30 वर्ष"], answer: "c" },
+            { question: "24. EVM का पूरा नाम क्या है?", options: ["इलेक्ट्रिक वोटिंग मशीन", "इलेक्ट्रॉनिक वोटिंग मशीन", "इलेक्शन वोटिंग मशीन", "इनमें से कोई नहीं"], answer: "b" },
+            { question: "25. मुख्य चुनाव आयुक्त का कार्यकाल कितना होता है?", options: ["5 वर्ष या 62 वर्ष की आयु तक", "6 वर्ष या 65 वर्ष की आयु तक", "5 वर्ष या 65 वर्ष की आयु तक", "6 वर्ष या 62 वर्ष की आयु तक"], answer: "b" },
+            { question: "26. राजनीतिक दलों को चुनाव चिन्ह कौन आवंटित करता है?", options: ["राष्ट्रपति", "संसद", "चुनाव आयोग", "नीति आयोग"], answer: "c" },
+            { question: "27. भारत का कौन सा राज्य आनुपातिक प्रतिनिधित्व प्रणाली का उपयोग विधानसभा चुनावों के लिए नहीं करता है?", options: ["इजराइल", "नीदरलैंड", "अर्जेंटीना", "भारत"], answer: "d" },
+            { question: "28. 'प्रत्यक्ष लोकतंत्र' का एक उदाहरण क्या है?", options: ["भारत में चुनाव", "अमेरिका में राष्ट्रपति चुनाव", "स्विट्जरलैंड में जनमत संग्रह", "ब्रिटेन में संसदीय चुनाव"], answer: "c" },
+            { question: "29. भारत में पहला आम चुनाव कब हुआ था?", options: ["1947-48", "1950-51", "1951-52", "1955-56"], answer: "c" },
+            { question: "30. 'प्रतिनिधित्व' का क्या अर्थ है?", options: ["जनता पर शासन करना", "जनता की ओर से निर्णय लेना", "कानून बनाना", "न्याय प्रदान करना"], answer: "b" },
+            { question: "31. किस संवैधानिक संशोधन द्वारा मतदान की आयु 21 से घटाकर 18 वर्ष कर दी गई?", options: ["42वां संशोधन", "44वां संशोधन", "61वां संशोधन", "73वां संशोधन"], answer: "c" },
+            { question: "32. इजराइल की संसद (नेसेट) के चुनाव किस प्रणाली से होते हैं?", options: ["FPTP प्रणाली", "संपूर्ण देश को एक निर्वाचन क्षेत्र मानकर आनुपातिक प्रतिनिधित्व", "मिश्रित प्रणाली", "राष्ट्रपति प्रणाली"], answer: "b" },
+            { question: "33. निम्नलिखित में से कौन सा अप्रत्यक्ष चुनाव का उदाहरण है?", options: ["लोकसभा सदस्य का चुनाव", "ग्राम पंचायत का चुनाव", "भारत के राष्ट्रपति का चुनाव", "विधानसभा सदस्य का चुनाव"], answer: "c" },
+            { question: "34. आरक्षित निर्वाचन क्षेत्र की अवधारणा का उद्देश्य क्या है?", options: ["समाज के कमजोर वर्गों को उचित प्रतिनिधित्व देना", "राजनीतिक दलों को लाभ पहुंचाना", "चुनाव प्रक्रिया को जटिल बनाना", "अमीर उम्मीदवारों को बढ़ावा देना"], answer: "a" },
+            { question: "35. चुनाव याचिका पर निर्णय देने का अधिकार किसे है?", options: ["चुनाव आयोग", "राष्ट्रपति", "उच्च न्यायालय", "जिला न्यायालय"], answer: "c" }
+        ];
+
+        // --- ELEMENTS ---
+        const nameModal = document.getElementById('name-modal');
+        const startQuizBtn = document.getElementById('startQuizBtn');
+        const studentNameInput = document.getElementById('studentName');
+        const quizContainer = document.getElementById('quiz-container');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const quizForm = document.getElementById('quizForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultDiv = document.getElementById('result');
+        const scoreP = document.getElementById('score');
+        const timerEl = document.getElementById('timer');
+
+        let studentName = "";
+        let timerInterval;
+        let timeRemaining = 35 * 60; // 35 minutes in seconds
+
+        // --- FUNCTIONS ---
+
+        /** Disable right-click */
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        /** Load questions into the DOM */
+        function loadQuiz() {
+            let questionsHTML = '';
+            quizData.forEach((q, index) => {
+                questionsHTML += `
+                    <div class="mb-8 question-block">
+                        <p class="text-lg font-semibold mb-4">${q.question}</p>
+                        <div class="space-y-3">
+                            ${Object.entries(q.options).map(([key, value]) => `
+                                <label class="flex items-center p-3 border rounded-lg hover:bg-gray-50 transition cursor-pointer">
+                                    <input type="radio" name="question${index}" value="${String.fromCharCode(97 + parseInt(key))}" class="h-5 w-5 mr-4 border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span>${value}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div id="answer${index}" class="hidden mt-3 text-md font-bold"></div>
+                    </div>
+                `;
+            });
+            questionsWrapper.innerHTML = questionsHTML;
+        }
+
+        /** Start the timer */
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerEl.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerEl.textContent = "समय समाप्त!";
+                    timerEl.classList.add('bg-red-200', 'text-red-800');
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        /** Handle form submission */
+        function submitQuiz(event) {
+            if (event) event.preventDefault();
+            
+            // Prevent multiple submissions
+            if (submitBtn.disabled) return;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'जमा किया गया';
+            submitBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+            submitBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+
+            clearInterval(timerInterval); // Stop timer
+
+            let score = 0;
+            const radioButtons = document.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach(radio => { radio.disabled = true; });
+
+            quizData.forEach((q, index) => {
+                const questionBlock = document.querySelector(`input[name="question${index}"]`).closest('.question-block');
+                const selectedAnswer = document.querySelector(`input[name="question${index}"]:checked`);
+                const answerDiv = document.getElementById(`answer${index}`);
+                
+                const labels = questionBlock.querySelectorAll('label');
+
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === q.answer) {
+                        score++;
+                        // Highlight correct selection
+                        selectedAnswer.parentElement.classList.add('bg-green-100', 'border-green-500');
+                        selectedAnswer.classList.add('correct-answer');
+                    } else {
+                        // Highlight wrong selection
+                        selectedAnswer.parentElement.classList.add('bg-red-100', 'border-red-500');
+                         selectedAnswer.classList.add('wrong-answer');
+                    }
+                }
+                
+                // Show the correct answer text and highlight it
+                const correctOptionIndex = q.answer.charCodeAt(0) - 97;
+                labels[correctOptionIndex].classList.add('bg-green-100', 'border-green-500', 'font-bold');
+                labels[correctOptionIndex].querySelector('input').classList.add('correct-answer');
+
+                const correctAnsText = q.options[correctOptionIndex];
+                answerDiv.innerHTML = `सही उत्तर: ${correctAnsText}`;
+                answerDiv.classList.remove('hidden');
+                answerDiv.classList.add('text-green-700');
+            });
+
+            // Display result
+            scoreP.textContent = `${score} / ${quizData.length}`;
+            resultDiv.classList.remove('hidden');
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+
+            // Trigger CSV download
+            downloadResults(studentName, score);
+        }
+
+        /** Create and download CSV file */
+        function downloadResults(name, finalScore) {
+            const csvContent = `data:text/csv;charset=utf-8,विद्यार्थी का नाम,अंक\n${name},${finalScore}`;
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // --- EVENT LISTENERS ---
+        startQuizBtn.addEventListener('click', () => {
+            studentName = studentNameInput.value.trim();
+            if (studentName === "") {
+                alert("कृपया अपना नाम दर्ज करें।");
+                return;
+            }
+            nameModal.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            startTimer();
+        });
+
+        quizForm.addEventListener('submit', submitQuiz);
+
+        // --- INITIALIZATION ---
+        window.onload = () => {
+            loadQuiz();
+        };
+
+    </script>
+
+</body>
+</html>
