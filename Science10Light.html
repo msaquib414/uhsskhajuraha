@@ -406,9 +406,102 @@
                 alert("कृपया अपना नाम दर्ज करें।");
                 return;
             }
-            currentUser = nameInput.value.trim();
+           currentUser = nameInput.value.trim();
             
             document.getElementById('nameModal').classList.add('hidden');
             document.getElementById('quizContainer').classList.remove('hidden');
             
-            startTi
+            startTimer();
+        }
+
+        // Submit Quiz
+        function submitQuiz(autoSubmit = false) {
+            clearInterval(timerInterval);
+            
+            // Disable submit button
+            const btn = document.getElementById('submitBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                btn.textContent = "उत्तर जमा हो चुके हैं";
+            }
+
+            let score = 0;
+
+            questions.forEach((item, index) => {
+                // Get selected option
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const selectedValue = selected ? parseInt(selected.value) : -1;
+
+                // Check correctness
+                if (selectedValue === item.correct) {
+                    score++;
+                }
+
+                // Show correct answer feedback
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                if (feedbackDiv) feedbackDiv.classList.remove('hidden');
+                
+                // Visual feedback styling
+                if (selectedValue !== -1) {
+                     const inputs = document.getElementsByName(`q${index}`);
+                     const label = inputs[selectedValue].parentElement;
+                     
+                     if (selectedValue === item.correct) {
+                         // Correct selection
+                         label.classList.add('bg-green-200', 'border-green-500');
+                     } else {
+                         // Incorrect selection - highlight incorrect choice and correct answer
+                         label.classList.add('bg-red-200', 'border-red-500');
+                         
+                         // Find and highlight the correct answer label too
+                         const correctLabel = inputs[item.correct].parentElement;
+                         correctLabel.classList.add('correct-answer-bg', 'border-green-500');
+                     }
+                } else {
+                    // No selection - only highlight correct answer
+                    const inputs = document.getElementsByName(`q${index}`);
+                    const correctLabel = inputs[item.correct].parentElement;
+                    correctLabel.classList.add('correct-answer-bg', 'border-green-500');
+                }
+            });
+
+            // Display Result
+            const resultSection = document.getElementById('resultSection');
+            resultSection.classList.remove('hidden');
+            document.getElementById('displayName').textContent = currentUser;
+            document.getElementById('scoreDisplay').textContent = score;
+
+            // Scroll to bottom
+            setTimeout(() => {
+                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 100);
+
+            // Download CSV
+            downloadCSV(currentUser, score);
+        }
+
+        // CSV Download
+        function downloadCSV(name, score) {
+            const csvContent = `Name,Score,Total\n"${name}",${score},${TOTAL_QUESTIONS}`;
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            // Sanitize name for filename
+            const sanitizedName = name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            link.setAttribute("download", `result_${sanitizedName}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>
+
