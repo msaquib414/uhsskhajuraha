@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اردو کوئز - شاید (شکیلہ اختر)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            user-select: none; /* Prevent text selection */
+        }
+        .option-label {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-label:hover {
+            background-color: #f3f4f6;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen pb-10" oncontextmenu="return false">
+
+    <!-- Timer Section (Fixed Top) -->
+    <div class="fixed top-0 left-0 right-0 bg-indigo-700 text-white shadow-lg z-50 py-2 text-center">
+        <div class="text-xl font-bold">
+            وقت باقی: <span id="timer">35:00</span>
+        </div>
+    </div>
+
+    <!-- Initial Name Input Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-2xl max-w-md w-full mx-4 text-center">
+            <h2 class="text-2xl font-bold mb-6 text-indigo-700">خوش آمدید</h2>
+            <p class="mb-4 text-gray-600">سبق "شاید" کا امتحان شروع کرنے کے لیے اپنا نام درج کریں۔</p>
+            <input type="text" id="studentName" placeholder="آپ کا نام" class="w-full p-3 border-2 border-gray-300 rounded-lg mb-6 text-right focus:outline-none focus:border-indigo-500 text-lg">
+            <button onclick="startQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                امتحان شروع کریں
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quizContainer" class="max-w-3xl mx-auto pt-20 px-4 hidden">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 text-center">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">سبق: شاید (افسانہ)</h1>
+            <p class="text-gray-500">مصنفہ: شکیلہ اختر | کل سوالات: 35 | کل نمبر: 35</p>
+        </div>
+
+        <form id="quizForm">
+            <div id="questionsList" class="space-y-6">
+                <!-- Questions will be injected here by JS -->
+            </div>
+
+            <div class="mt-8 text-center">
+                <button type="button" id="submitBtn" onclick="submitQuiz()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold py-4 px-12 rounded-lg shadow-lg transform transition hover:scale-105">
+                    جوابات جمع کروائیں
+                </button>
+            </div>
+        </form>
+
+        <!-- Result Section -->
+        <div id="resultSection" class="hidden mt-8 p-6 bg-indigo-50 border-2 border-indigo-200 rounded-xl text-center animate-fade-in">
+            <h2 class="text-3xl font-bold text-indigo-800 mb-2">نتیجہ</h2>
+            <p class="text-xl text-gray-700">
+                <span id="displayName" class="font-bold"></span>، آپ نے حاصل کیے:
+            </p>
+            <div class="text-5xl font-bold text-indigo-600 my-4">
+                <span id="scoreDisplay">0</span> / 35
+            </div>
+            <p class="text-sm text-gray-500">رزلٹ فائل ڈاؤن لوڈ ہو رہی ہے...</p>
+        </div>
+    </div>
+
+    <script>
+        // Questions Data based on Chapter 3 PDF (Shayad by Shakila Akhtar)
+        // Correct Answer Keys: 0=A, 1=B, 2=C, 3=D
+        const questions = [
+            // --- Biography Section ---
+            {
+                q: "شکیلہ اختر کہاں پیدا ہوئیں؟",
+                options: ["پٹنہ", "ارول (گیا)", "مظفرپور", "رانچی"],
+                correct: 1 // B
+            },
+            {
+                q: "شکیلہ اختر کی تاریخ پیدائش کیا ہے؟",
+                options: ["16 اگست 1916ء", "16 اگست 1920ء", "10 جنوری 1915ء", "20 مارچ 1918ء"],
+                correct: 0 // A
+            },
+            {
+                q: "ارول کس ندی کے ساحل پر واقع ہے؟",
+                options: ["گنگا", "جمنا", "سون", "پھلگو"],
+                correct: 2 // C
+            },
+            {
+                q: "شکیلہ اختر کے والد کا نام کیا تھا؟",
+                options: ["سید محمد", "شاہ زمان", "شاہ توصیف", "شاہ محمد توحید"],
+                correct: 3 // D
+            },
+            {
+                q: "شکیلہ اختر کا پہلا افسانہ کون سا ہے؟",
+                options: ["رحمت", "شاید", "ڈائن", "آنکھ مچولی"],
+                correct: 0 // A
+            },
+            {
+                q: "افسانہ 'رحمت' کس رسالے میں شائع ہوا؟",
+                options: ["نیرنگِ خیال", "ادبِ لطیف", "زمانہ", "ہمایوں"],
+                correct: 1 // B
+            },
+            {
+                q: "شکیلہ اختر کے کل کتنے افسانوی مجموعے شائع ہو چکے ہیں؟",
+                options: ["4", "5", "6", "7"],
+                correct: 2 // C
+            },
+            {
+                q: "ان میں سے کون سا ناولٹ شکیلہ اختر کا ہے؟",
+                options: ["آگ کا دریا", "ٹیڑھی لکیر", "امراؤ جان ادا", "تنکے کا سہارا"],
+                correct: 3 // D
+            },
+            {
+                q: "شکیلہ اختر کا انتقال کب ہوا؟",
+                options: ["10 فروری 1994ء", "10 جنوری 1990ء", "15 مارچ 1995ء", "20 اپریل 1996ء"],
+                correct: 0 // A
+            },
+            {
+                q: "شکیلہ اختر کے افسانوں میں عام طور پر کس ماحول کی عکاسی ملتی ہے؟",
+                options: ["دیہاتی ہندو گھرانے کی", "متوسط مسلم گھرانے کی", "امیر طبقے کی", "مغربی معاشرے کی"],
+                correct: 1 // B
+            },
+            {
+                q: "ان میں سے کون سا مجموعہ شکیلہ اختر کا ہے؟",
+                options: ["واردات", "لذتِ سنگ", "آگ اور پتھر", "راستے بند ہیں"],
+                correct: 2 // C
+            },
+            {
+                q: "شکیلہ اختر نے تعلیم کہاں حاصل کی؟",
+                options: ["اسکول میں", "کالج میں", "یونیورسٹی میں", "گھر پر"],
+                correct: 3 // D
+            },
+
+            // --- Story Section (Shayad) ---
+            {
+                q: "افسانہ 'شاید' میں کس مہینے کا ذکر ہے؟",
+                options: ["ستمبر", "اکتوبر", "اگست", "جولائی"],
+                correct: 0 // A
+            },
+            {
+                q: "کس تاریخ کو موسلا دھار بارش ہوئی جس کا ذکر افسانے میں ہے؟",
+                options: ["10 ستمبر", "13 ستمبر", "15 ستمبر", "20 ستمبر"],
+                correct: 1 // B
+            },
+            {
+                q: "افسانے میں کس ندی میں طغیانی کا ذکر آیا ہے؟",
+                options: ["گنگا", "سون", "پھلگو", "گنڈک"],
+                correct: 2 // C
+            },
+            {
+                q: "جب عورت نے آواز دی تو مصنفہ کس کام میں مشغول تھیں؟",
+                options: ["کھانا کھانے میں", "مطالعہ کرنے میں", "سلائی کرنے میں", "خطوط لکھنے میں"],
+                correct: 3 // D
+            },
+            {
+                q: "مدد مانگنے والی عورت کی عمر تقریباً کیسی تھی؟",
+                options: ["ادھیڑ عمر", "بوڑھی", "نوجوان", "بچی"],
+                correct: 0 // A
+            },
+            {
+                q: "عورت نے بتایا کہ وہ کتنے دنوں سے بھوکے ہیں؟",
+                options: ["دو دن", "پانچ دن", "سات دن", "دس دن"],
+                correct: 1 // B
+            },
+            {
+                q: "عورت کا تعلق کس جگہ سے تھا؟",
+                options: ["پٹنہ", "گیا", "صوفی", "آرہ"],
+                correct: 2 // C
+            },
+            {
+                q: "عورت کے گمشدہ بچے کا نام کیا تھا؟",
+                options: ["احمد", "پپو", "راجو", "منور (امیر)"],
+                correct: 3 // D
+            },
+            {
+                q: "گمشدہ بچے (منور) کی عمر کتنی بتائی گئی؟",
+                options: ["8 سال", "10 سال", "5 سال", "12 سال"],
+                correct: 0 // A
+            },
+            {
+                q: "عورت کا شوہر اور بڑا لڑکا کہاں گئے ہوئے تھے؟",
+                options: ["ڈھاکہ", "رنگون", "کلکتہ", "دہلی"],
+                correct: 1 // B
+            },
+            {
+                q: "عورت کہاں جانا چاہتی تھی؟",
+                options: ["رانچی", "مظفرپور", "پٹنہ (باقر گنج)", "لکھنؤ"],
+                correct: 2 // C
+            },
+            {
+                q: "جہاں وہ تھی وہاں سے پٹنہ کتنی دور تھا؟",
+                options: ["10 میل", "20 میل", "30 میل", "40 میل"],
+                correct: 3 // D
+            },
+            {
+                q: "مصنفہ نے عورت کو کھانے کے علاوہ اور کیا دیا؟",
+                options: ["پرانی چادر", "جوتے", "دوا", "کمبل"],
+                correct: 0 // A
+            },
+            {
+                q: "سیلاب کے وقت عورت گھر میں کیا کر رہی تھی؟",
+                options: ["کھانا پکا رہی تھی", "نماز پڑھ رہی تھی", "سو رہی تھی", "باتیں کر رہی تھی"],
+                correct: 1 // B
+            },
+            {
+                q: "سیلاب میں بہنے کے بعد عورت کو ہوش کہاں آیا؟",
+                options: ["اسپتال میں", "سڑک پر", "بنگالی بابو کے بنگلے میں", "درخت کے نیچے"],
+                correct: 2 // C
+            },
+            {
+                q: "عورت کے ساتھ کتنے بچے بچ گئے تھے؟",
+                options: ["ایک", "دو", "چار", "تین"],
+                correct: 3 // D
+            },
+            {
+                q: "لوگوں نے عورت کی کہانی سن کر اس پر کیا الزام لگایا؟",
+                options: ["فریبی/ڈھونگی ہونے کا", "پاگل ہونے کا", "چور ہونے کا", "بھکاری ہونے کا"],
+                correct: 0 // A
+            },
+            {
+                q: "مصنفہ نے عورت کو اپنی ملازمہ کے ساتھ کہاں بھیجا؟",
+                options: ["اسٹیشن", "ایک دوسرے مکان میں", "بازار", "اسپتال"],
+                correct: 1 // B
+            },
+            {
+                q: "عورت کے پیروں کی حالت کیسی تھی؟",
+                options: ["زخمی", "خون آلود", "سوجے ہوئے/آبلے پڑے ہوئے", "بالکل ٹھیک"],
+                correct: 2 // C
+            },
+            {
+                q: "کہانی 'شاید' کا اختتام کس خیال پر ہوتا ہے؟",
+                options: ["عورت سچی تھی", "عورت مرگئی", "شاید یہ ایک پُر فریب کھیل ہو", "عورت کو بچہ مل گیا"],
+                correct: 3 // D
+            },
+            {
+                q: "شکیلہ اختر کا پہلا افسانہ 'رحمت' کس سال شائع ہوا؟",
+                options: ["1936ء", "1940ء", "1947ء", "1950ء"],
+                correct: 0 // A
+            },
+            {
+                q: "موجودہ وقت میں 'ارول' کو کیا حیثیت حاصل ہے؟",
+                options: ["گاؤں", "ضلع", "قصبہ", "شہر"],
+                correct: 1 // B
+            },
+            {
+                q: "شکیلہ اختر کو ادبی خدمات پر کن اداروں نے نوازا؟",
+                options: ["ساہتیہ اکیڈمی", "مختلف ریاستی اردو اکادمیوں نے", "فلم انڈسٹری نے", "غیر ملکی اداروں نے"],
+                correct: 2 // C (Urdu Academies)
+            }
+        ];
+
+        // Timer Logic
+        let timeRemaining = 35 * 60; // 35 minutes
+        let timerInterval;
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz(true);
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+
+        // App State
+        let currentUser = "";
+
+        // Initialization
+        function init() {
+            const container = document.getElementById('questionsList');
+            
+            questions.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-gray-50 p-6 rounded-lg border border-gray-200";
+                
+                let optionsHtml = '';
+                item.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <label class="option-label block p-3 border rounded-lg mb-2 flex items-center gap-3">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="w-5 h-5 text-indigo-600">
+                            <span class="text-lg text-gray-800">${opt}</span>
+                        </label>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <p class="text-xl font-bold text-gray-800 mb-4"><span class="ml-2 text-indigo-600">سوال ${index + 1}:</span> ${item.q}</p>
+                    <div class="space-y-2">
+                        ${optionsHtml}
+                    </div>
+                    <div id="feedback-${index}" class="hidden mt-4 p-3 bg-green-100 text-green-800 rounded-lg font-bold border border-green-200">
+                        صحیح جواب: ${item.options[item.correct]}
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        // Start Quiz
+        function startQuiz() {
+            const nameInput = document.getElementById('studentName');
+            if (!nameInput.value.trim()) {
+                alert("برائے مہربانی اپنا نام درج کریں۔");
+                return;
+            }
+            currentUser = nameInput.value.trim();
+            
+            document.getElementById('nameModal').classList.add('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+            
+            startTimer();
+        }
+
+        // Submit Quiz
+        function submitQuiz(autoSubmit = false) {
+            clearInterval(timerInterval);
+            
+            // Disable submit button
+            const btn = document.getElementById('submitBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                btn.textContent = "جمع کر دیا گیا";
+            }
+
+            let score = 0;
+
+            questions.forEach((item, index) => {
+                // Get selected option
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const selectedValue = selected ? parseInt(selected.value) : -1;
+
+                // Check correctness
+                if (selectedValue === item.correct) {
+                    score++;
+                }
+
+                // Show correct answer feedback
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                if (feedbackDiv) feedbackDiv.classList.remove('hidden');
+                
+                // Visual feedback styling
+                if (selectedValue !== -1) {
+                     const inputs = document.getElementsByName(`q${index}`);
+                     const label = inputs[selectedValue].parentElement;
+                     if (selectedValue === item.correct) {
+                         label.classList.add('bg-green-200', 'border-green-500');
+                     } else {
+                         label.classList.add('bg-red-200', 'border-red-500');
+                     }
+                }
+            });
+
+            // Display Result
+            const resultSection = document.getElementById('resultSection');
+            resultSection.classList.remove('hidden');
+            document.getElementById('displayName').textContent = currentUser;
+            document.getElementById('scoreDisplay').textContent = score;
+
+            // Scroll to bottom
+            setTimeout(() => {
+                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 100);
+
+            // Download CSV
+            downloadCSV(currentUser, score);
+        }
+
+        // CSV Download
+        function downloadCSV(name, score) {
+            const csvContent = `Name,Score,Total\n${name},${score},35`;
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", `result_${name}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>
+
