@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اردو کوئز - پورے چاند کی رات (کرشن چندر)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            user-select: none; /* Prevent text selection */
+        }
+        .option-label {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-label:hover {
+            background-color: #f3f4f6;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen pb-10" oncontextmenu="return false">
+
+    <!-- Timer Section (Fixed Top) -->
+    <div class="fixed top-0 left-0 right-0 bg-indigo-700 text-white shadow-lg z-50 py-2 text-center">
+        <div class="text-xl font-bold">
+            وقت باقی: <span id="timer">35:00</span>
+        </div>
+    </div>
+
+    <!-- Initial Name Input Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-2xl max-w-md w-full mx-4 text-center">
+            <h2 class="text-2xl font-bold mb-6 text-indigo-700">خوش آمدید</h2>
+            <p class="mb-4 text-gray-600">سبق "پورے چاند کی رات" کا امتحان شروع کرنے کے لیے نام درج کریں۔</p>
+            <input type="text" id="studentName" placeholder="آپ کا نام" class="w-full p-3 border-2 border-gray-300 rounded-lg mb-6 text-right focus:outline-none focus:border-indigo-500 text-lg">
+            <button onclick="startQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                امتحان شروع کریں
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quizContainer" class="max-w-3xl mx-auto pt-20 px-4 hidden">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 text-center">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">سبق: پورے چاند کی رات</h1>
+            <p class="text-gray-500">مصنف: کرشن چندر | کل سوالات: 35 | کل نمبر: 35</p>
+        </div>
+
+        <form id="quizForm">
+            <div id="questionsList" class="space-y-6">
+                <!-- Questions will be injected here by JS -->
+            </div>
+
+            <div class="mt-8 text-center">
+                <button type="button" id="submitBtn" onclick="submitQuiz()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold py-4 px-12 rounded-lg shadow-lg transform transition hover:scale-105">
+                    جوابات جمع کروائیں
+                </button>
+            </div>
+        </form>
+
+        <!-- Result Section -->
+        <div id="resultSection" class="hidden mt-8 p-6 bg-indigo-50 border-2 border-indigo-200 rounded-xl text-center animate-fade-in">
+            <h2 class="text-3xl font-bold text-indigo-800 mb-2">نتیجہ</h2>
+            <p class="text-xl text-gray-700">
+                <span id="displayName" class="font-bold"></span>، آپ نے حاصل کیے:
+            </p>
+            <div class="text-5xl font-bold text-indigo-600 my-4">
+                <span id="scoreDisplay">0</span> / 35
+            </div>
+            <p class="text-sm text-gray-500">رزلٹ فائل ڈاؤن لوڈ ہو رہی ہے...</p>
+        </div>
+    </div>
+
+    <script>
+        // Questions Data based on Chapter 2 PDF
+        // Correct Answer Keys: 0=A, 1=B, 2=C, 3=D
+        const questions = [
+            // --- Section 1: Afsana (Short Story) ---
+            {
+                q: "اردو میں مختصر افسانہ کس ادب کی دین ہے؟",
+                options: ["مغربی ادب", "عربی ادب", "فارسی ادب", "ہندی ادب"],
+                correct: 0 // A
+            },
+            {
+                q: "افسانہ کیسی نثری کہانی کو کہا گیا ہے؟",
+                options: ["جو کئی دنوں میں پڑھی جائے", "جو ایک ہی نشست میں پڑھی جا سکے", "جو منظوم ہو", "جو حقیقت پر مبنی نہ ہو"],
+                correct: 1 // B
+            },
+            {
+                q: "ایک نقاد کے مطابق افسانے میں بنیادی چیز کیا ہے؟",
+                options: ["طویل مکالمے", "بہت سے کردار", "وحدتِ تاثر", "منظر نگاری"],
+                correct: 2 // C
+            },
+            {
+                q: "افسانے میں کس چیز کے امکانات کم ہوتے ہیں؟",
+                options: ["سچائی کے", "دلچسپی کے", "اختصار کے", "جھول (Gaps) کے"],
+                correct: 3 // D
+            },
+            {
+                q: "افسانہ نگار کے لیے کس چیز کا گہرا مطالعہ ضروری ہے؟",
+                options: ["انسانی نفسیات", "تاریخ", "جغرافیہ", "سائنس"],
+                correct: 0 // A
+            },
+            
+            // --- Section 2: Krishan Chander Biography ---
+            {
+                q: "کرشن چندر کب پیدا ہوئے؟",
+                options: ["1910ء", "1914ء", "1920ء", "1925ء"],
+                correct: 1 // B
+            },
+            {
+                q: "کرشن چندر کی پیدائش کہاں ہوئی؟",
+                options: ["لاہور", "دہلی", "وزیر آباد (گوجرانوالہ)", "سیالکوٹ"],
+                correct: 2 // C
+            },
+            {
+                q: "کرشن چندر کے والد کا پیشہ کیا تھا؟",
+                options: ["وکیل", "استاد", "کسان", "میڈیکل افسر"],
+                correct: 3 // D
+            },
+            {
+                q: "انہوں نے 1934ء میں ایم اے کس مضمون میں کیا؟",
+                options: ["انگریزی", "اردو", "فارسی", "تاریخ"],
+                correct: 0 // A
+            },
+            {
+                q: "کرشن چندر کا پہلا ناول کون سا ہے؟",
+                options: ["غدار", "شکست", "جب کھیت جاگے", "ایک گدھے کی سرگزشت"],
+                correct: 1 // B
+            },
+            {
+                q: "کرشن چندر کی تقریباً کتنی کتابیں شائع ہوئیں؟",
+                options: ["50", "60", "80", "100"],
+                correct: 2 // C
+            },
+            {
+                q: "1969ء میں انہیں حکومت ہند نے کس اعزاز سے نوازا؟",
+                options: ["بھارت رتن", "پدم شری", "پدم بھوشن", "سہتیہ اکیڈمی ایوارڈ"],
+                correct: 2 // C (Note: Text says Padma Bhushan)
+            },
+            {
+                q: "کرشن چندر کا انتقال کب ہوا؟",
+                options: ["1970ء", "1975ء", "1976ء", "1977ء"],
+                correct: 3 // D
+            },
+            {
+                q: "ان کا انتقال کس شہر میں ہوا؟",
+                options: ["ممبئی", "دہلی", "لاہور", "لکھنؤ"],
+                correct: 0 // A
+            },
+            {
+                q: "کرشن چندر نے وکالت کا امتحان کب پاس کیا؟",
+                options: ["1935ء", "1937ء", "1939ء", "1940ء"],
+                correct: 1 // B
+            },
+
+            // --- Section 3: The Story (Poore Chand Ki Raat) ---
+            {
+                q: "افسانہ 'پورے چاند کی رات' میں کس مہینے کا ذکر ہے؟",
+                options: ["مارچ", "مئی", "اپریل", "جون"],
+                correct: 2 // C
+            },
+            {
+                q: "کہانی کے شروع میں کن درختوں کی ڈالیاں پھولوں سے لد گئی تھیں؟",
+                options: ["سیب", "آڑو", "خوبانی", "بادام"],
+                correct: 3 // D
+            },
+            {
+                q: "مصنف پل کے جنگلے کا سہارا لے کر کب سے انتظار کر رہا تھا؟",
+                options: ["سہ پہر سے", "صبح سے", "رات سے", "دوپہر سے"],
+                correct: 0 // A
+            },
+            {
+                q: "لڑکی نے اپنے ابا سے گھر نہ آنے کا کیا بہانہ بنایا تھا؟",
+                options: ["بیمار ہے", "سہیلی کے گھر سونا ہے", "کام کرنا ہے", "گم ہو گئی ہے"],
+                correct: 1 // B
+            },
+            {
+                q: "لڑکی مصنف کے لیے کیا لائی تھی؟",
+                options: ["سیب اور انار", "پیسے اور زیور", "مکئی کے بھٹے اور خوبانیاں", "مچھلی اور چاول"],
+                correct: 2 // C
+            },
+            {
+                q: "لڑکی کے مطابق وہ بھٹے کس چیز کے تھے؟",
+                options: ["سادہ مکئی", "پہاڑی مکئی", "ولایتی مکئی", "مصری مکئی"],
+                correct: 3 // D
+            },
+            {
+                q: "مصنف نے لڑکی کے گلے میں کیا ڈالا تھا؟",
+                options: ["موتیوں کی ست لڑی", "سونے کا ہار", "پھولوں کا ہار", "چاندنی کا ٹکڑا"],
+                correct: 0 // A
+            },
+            {
+                q: "کہانی کے آخر میں مصنف کتنے سال بعد واپس لوٹا؟",
+                options: ["40 برس", "48 برس", "50 برس", "60 برس"],
+                correct: 1 // B
+            },
+            {
+                q: "واپسی پر مصنف کی عمر تقریباً کتنی تھی؟",
+                options: ["پچاس برس", "ساٹھ برس", "ستر (70) برس", "اسی برس"],
+                correct: 2 // C
+            },
+            {
+                q: "مصنف نے اس گھر کو کتنے سال پہلے خریدا تھا؟",
+                options: ["10 سال", "20 سال", "30 سال", "48 سال"],
+                correct: 3 // D
+            },
+            {
+                q: "پہلی بار مصنف لڑکی کو کس کے ساتھ دیکھ کر غلط فہمی کا شکار ہوا تھا؟",
+                options: ["اس کے بھائی کے ساتھ", "اس کے شوہر کے ساتھ", "اس کے باپ کے ساتھ", "اجنبی کے ساتھ"],
+                correct: 0 // A
+            },
+            {
+                q: "وہ 'اجنبی' نوجوان دراصل لڑکی کا کون تھا؟",
+                options: ["منگیتر", "سگا بھائی", "کزن", "دوست"],
+                correct: 1 // B
+            },
+            {
+                q: "لڑکی نے مصنف کا کتنے سال انتظار کیا؟",
+                options: ["ایک سال", "پانچ سال", "چھ سال", "دس سال"],
+                correct: 2 // C
+            },
+            {
+                q: "کہانی کے آخر میں جو بچی کھیل رہی تھی وہ لڑکی کی کیا لگتی تھی؟",
+                options: ["بیٹی", "بھتیجی", "بہن", "پوتی"],
+                correct: 3 // D
+            },
+            {
+                q: "مصنف کے ساتھ واپسی پر کون لوگ تھے؟",
+                options: ["بیٹے اور بہوئیں", "صرف بیوی", "دوست", "کوئی نہیں"],
+                correct: 0 // A
+            },
+            {
+                q: "جب وہ جھیل کی سیر کر رہے تھے تو کشتی کس درخت سے بندھی تھی؟",
+                options: ["سیب", "خوبانی", "بادام", "چنار"],
+                correct: 1 // B
+            },
+            {
+                q: "لڑکی کے مطابق زرد آلو کس موسم کے تھے؟",
+                options: ["اگلی بہار کے", "تازہ", "پچھلی بہار کے", "سردیوں کے"],
+                correct: 2 // C
+            },
+            {
+                q: "بڑھیا (لڑکی) نے مصنف کو کیسے پہچانا؟",
+                options: ["آواز سے", "چہرے سے", "نام سے", "نہیں پہچانا"],
+                correct: 1 // B (Context implies she recognized him after he spoke/appearance)
+            },
+            {
+                q: "کہانی 'پورے چاند کی رات' کا انجام کیسا ہے؟",
+                options: ["مزاحیہ", "خوشگوار", "دکھی/المیہ", "جاسوسی"],
+                correct: 2 // C
+            },
+            {
+                q: "کرشن چندر نے کس کالج سے تعلیم حاصل کی؟",
+                options: ["اسلامیہ کالج", "گورنمنٹ کالج", "اورینٹل کالج", "فورمین کرسچین کالج"],
+                correct: 3 // D
+            }
+        ];
+
+        // Timer Logic
+        let timeRemaining = 35 * 60; // 35 minutes
+        let timerInterval;
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz(true);
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+
+        // App State
+        let currentUser = "";
+
+        // Initialization
+        function init() {
+            const container = document.getElementById('questionsList');
+            
+            questions.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-gray-50 p-6 rounded-lg border border-gray-200";
+                
+                let optionsHtml = '';
+                item.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <label class="option-label block p-3 border rounded-lg mb-2 flex items-center gap-3">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="w-5 h-5 text-indigo-600">
+                            <span class="text-lg text-gray-800">${opt}</span>
+                        </label>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <p class="text-xl font-bold text-gray-800 mb-4"><span class="ml-2 text-indigo-600">سوال ${index + 1}:</span> ${item.q}</p>
+                    <div class="space-y-2">
+                        ${optionsHtml}
+                    </div>
+                    <div id="feedback-${index}" class="hidden mt-4 p-3 bg-green-100 text-green-800 rounded-lg font-bold border border-green-200">
+                        صحیح جواب: ${item.options[item.correct]}
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        // Start Quiz
+        function startQuiz() {
+            const nameInput = document.getElementById('studentName');
+            if (!nameInput.value.trim()) {
+                alert("برائے مہربانی اپنا نام درج کریں۔");
+                return;
+            }
+            currentUser = nameInput.value.trim();
+            
+            document.getElementById('nameModal').classList.add('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+            
+            startTimer();
+        }
+
+        // Submit Quiz
+        function submitQuiz(autoSubmit = false) {
+            clearInterval(timerInterval);
+            
+            // Disable submit button
+            const btn = document.getElementById('submitBtn');
+            if (btn) {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                btn.textContent = "جمع کر دیا گیا";
+            }
+
+            let score = 0;
+
+            questions.forEach((item, index) => {
+                // Get selected option
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const selectedValue = selected ? parseInt(selected.value) : -1;
+
+                // Check correctness
+                if (selectedValue === item.correct) {
+                    score++;
+                }
+
+                // Show correct answer feedback
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                if (feedbackDiv) feedbackDiv.classList.remove('hidden');
+                
+                // Visual feedback styling
+                if (selectedValue !== -1) {
+                     const inputs = document.getElementsByName(`q${index}`);
+                     const label = inputs[selectedValue].parentElement;
+                     if (selectedValue === item.correct) {
+                         label.classList.add('bg-green-200', 'border-green-500');
+                     } else {
+                         label.classList.add('bg-red-200', 'border-red-500');
+                     }
+                }
+            });
+
+            // Display Result
+            const resultSection = document.getElementById('resultSection');
+            resultSection.classList.remove('hidden');
+            document.getElementById('displayName').textContent = currentUser;
+            document.getElementById('scoreDisplay').textContent = score;
+
+            // Scroll to bottom
+            setTimeout(() => {
+                 window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 100);
+
+            // Download CSV
+            downloadCSV(currentUser, score);
+        }
+
+        // CSV Download
+        function downloadCSV(name, score) {
+            const csvContent = `Name,Score,Total\n${name},${score},35`;
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", `result_${name}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize
+        init();
+
+    </script>
+</body>
+</html>
+
