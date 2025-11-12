@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اردو کوئز - ہیرو (سید محمد حسنین)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            user-select: none; /* Prevent text selection */
+        }
+        .option-label {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .option-label:hover {
+            background-color: #f3f4f6;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen pb-10" oncontextmenu="return false">
+
+    <!-- Timer Section (Fixed Top) -->
+    <div class="fixed top-0 left-0 right-0 bg-indigo-700 text-white shadow-lg z-50 py-2 text-center">
+        <div class="text-xl font-bold">
+            وقت باقی: <span id="timer">35:00</span>
+        </div>
+    </div>
+
+    <!-- Initial Name Input Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-2xl max-w-md w-full mx-4 text-center">
+            <h2 class="text-2xl font-bold mb-6 text-indigo-700">خوش آمدید</h2>
+            <p class="mb-4 text-gray-600">امتحان شروع کرنے کے لیے اپنا نام درج کریں۔</p>
+            <input type="text" id="studentName" placeholder="آپ کا نام" class="w-full p-3 border-2 border-gray-300 rounded-lg mb-6 text-right focus:outline-none focus:border-indigo-500 text-lg">
+            <button onclick="startQuiz()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                امتحان شروع کریں
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quizContainer" class="max-w-3xl mx-auto pt-20 px-4 hidden">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6 text-center">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">سبق: ہیرو (انشائیہ)</h1>
+            <p class="text-gray-500">مصنف: سید محمد حسنین | کل سوالات: 35 | کل نمبر: 35</p>
+        </div>
+
+        <form id="quizForm">
+            <div id="questionsList" class="space-y-6">
+                <!-- Questions will be injected here by JS -->
+            </div>
+
+            <div class="mt-8 text-center">
+                <button type="button" id="submitBtn" onclick="submitQuiz()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold py-4 px-12 rounded-lg shadow-lg transform transition hover:scale-105">
+                    جوابات جمع کروائیں
+                </button>
+            </div>
+        </form>
+
+        <!-- Result Section -->
+        <div id="resultSection" class="hidden mt-8 p-6 bg-indigo-50 border-2 border-indigo-200 rounded-xl text-center animate-fade-in">
+            <h2 class="text-3xl font-bold text-indigo-800 mb-2">نتیجہ</h2>
+            <p class="text-xl text-gray-700">
+                <span id="displayName" class="font-bold"></span>، آپ نے حاصل کیے:
+            </p>
+            <div class="text-5xl font-bold text-indigo-600 my-4">
+                <span id="scoreDisplay">0</span> / 35
+            </div>
+            <p class="text-sm text-gray-500">رزلٹ فائل ڈاؤن لوڈ ہو رہی ہے...</p>
+        </div>
+    </div>
+
+    <script>
+        // Question Data (A, B, C, D distribution planned: ~9 each)
+        // Correct Answer Keys: 0=A, 1=B, 2=C, 3=D
+        const questions = [
+            {
+                q: "ڈاکٹر جانسن کے مطابق انشائیہ کس چیز کا نام ہے؟",
+                options: ["ذہنی ترنگ", "سنجیدہ تحریر", "تاریخی داستان", "سیاسی تبصرہ"],
+                correct: 0 // A
+            },
+            {
+                q: "اردو میں انشائیہ کی تاریخ کتنے سال پرانی بتائی گئی ہے؟",
+                options: ["20 سال", "35 سال", "50 سال", "100 سال"],
+                correct: 1 // B
+            },
+            {
+                q: "اردو میں انشائیہ کا ظہور کن ادبیات کے حوالے سے ہوا؟",
+                options: ["فارسی ادبیات", "عربی ادبیات", "مغربی ادبیات", "ہندی ادبیات"],
+                correct: 2 // C
+            },
+            {
+                q: "انشائیہ میں کون سا عنصر نمایاں ہونا چاہیے؟",
+                options: ["غم", "غصہ", "خوف", "طنز و مزاح"],
+                correct: 3 // D
+            },
+            {
+                q: "انشائیہ میں 'کہانی پن' کو کیا سمجھا جاتا ہے؟",
+                options: ["کفر", "لازمی", "بہتر", "جائز"],
+                correct: 0 // A
+            },
+            {
+                q: "سید محمد حسنین کب پیدا ہوئے؟",
+                options: ["2 اکتوبر 1910ء", "2 اکتوبر 1920ء", "2 اکتوبر 1930ء", "2 اکتوبر 1940ء"],
+                correct: 1 // B
+            },
+            {
+                q: "سید محمد حسنین کس شہر میں پیدا ہوئے؟",
+                options: ["دہلی", "لکھنؤ", "پٹنہ", "کراچی"],
+                correct: 2 // C
+            },
+            {
+                q: "سید محمد حسنین کا سلسلہ نسب کس بزرگ سے ملتا ہے؟",
+                options: ["بابا فرید", "خواجہ معین الدین", "نظام الدین اولیاء", "امام تاج فقیہ"],
+                correct: 3 // D
+            },
+            {
+                q: "انہوں نے میٹرک کس اسکول سے پاس کیا؟",
+                options: ["رام موہن رائے سیمنٹری اسکول", "پٹنہ ہائی اسکول", "علی گڑھ اسکول", "اسلامیہ اسکول"],
+                correct: 0 // A
+            },
+            {
+                q: "انہوں نے ایم اے اردو کا امتحان کب پاس کیا؟",
+                options: ["1940ء", "1946ء", "1950ء", "1956ء"],
+                correct: 1 // B
+            },
+            {
+                q: "سید محمد حسنین نے پی ایچ ڈی کی ڈگری کب حاصل کی؟",
+                options: ["1946ء", "1950ء", "1956ء", "1960ء"],
+                correct: 2 // C
+            },
+            {
+                q: "ان کا پی ایچ ڈی کے حوالے سے کیا امتیاز تھا؟",
+                options: ["پورے ہند میں اول", "یونیورسٹی میں اول", "شعبہ میں اول", "بہار میں اردو کی پہلی پی ایچ ڈی"],
+                correct: 3 // D
+            },
+            {
+                q: "وہ کس یونیورسٹی میں صدر شعبہ اردو رہے؟",
+                options: ["مگدھ یونیورسٹی", "پٹنہ یونیورسٹی", "بہار یونیورسٹی", "دہلی یونیورسٹی"],
+                correct: 0 // A
+            },
+            {
+                q: "سید محمد حسنین کی سب سے مشہور کتاب کس موضوع پر ہے؟",
+                options: ["افسانہ نگاری", "انشائیہ نگاری", "غزل گوئی", "تاریخ"],
+                correct: 1 // B
+            },
+            {
+                q: "کتاب 'صنف انشائیہ اور چند انشائیے' پہلی بار کب شائع ہوئی؟",
+                options: ["1950ء", "1955ء", "1958ء", "1960ء"],
+                correct: 2 // C
+            },
+            {
+                q: "اس کتاب کا چھٹا ترمیم شدہ ایڈیشن کب منظر عام پر آیا؟",
+                options: ["1980ء", "1990ء", "1995ء", "1997ء"],
+                correct: 3 // D
+            },
+            {
+                q: "اس کتاب میں کتنے انشائیہ نگاروں کے مضامین شامل ہیں؟",
+                options: ["27", "30", "20", "15"],
+                correct: 0 // A
+            },
+            {
+                q: "کتاب میں سید محمد حسنین کا مضمون کس نام سے شامل ہے؟",
+                options: ["سید محمد حسنین", "ح-م-اسلم عظیم آبادی", "ابو الکلام", "ابن انشا"],
+                correct: 1 // B
+            },
+            {
+                q: "انہوں نے تقریباً کتنی کتابیں لکھی ہیں؟",
+                options: ["ایک درجن", "چار درجن", "دو درجن", "تین درجن"],
+                correct: 2 // C
+            },
+            {
+                q: "سید محمد حسنین کا انتقال کب ہوا؟",
+                options: ["اکتوبر 1990ء", "اکتوبر 1995ء", "اکتوبر 1998ء", "اکتوبر 1999ء"],
+                correct: 3 // D
+            },
+            {
+                q: "ان کا انتقال کس ملک میں ہوا؟",
+                options: ["پاکستان", "ہندوستان", "بنگلہ دیش", "برطانیہ"],
+                correct: 0 // A
+            },
+            {
+                q: "وہ کہاں دفن ہوئے؟",
+                options: ["کراچی", "اسلام آباد", "لاہور", "پٹنہ"],
+                correct: 1 // B
+            },
+            {
+                q: "انہوں نے مگدھ یونیورسٹی سے کون سا رسالہ نکالا تھا؟",
+                options: ["خیال", "نگار", "مشام", "ادب"],
+                correct: 2 // C
+            },
+            {
+                q: "ان کے ظریفانہ مضامین کے مجموعے کا نام کیا ہے؟",
+                options: ["شوخیِ تحریر", "مزاحیہ دنیا", "خندہ پیشانی", "نشاط خاطر"],
+                correct: 3 // D
+            },
+            {
+                q: "مرزا غالب کو کون سا پھل بہت پسند تھا؟",
+                options: ["آم", "سیب", "انگور", "انار"],
+                correct: 0 // A
+            },
+            {
+                q: "مرزا غالب آم نہ پسند کرنے والوں کو کیا سمجھتے تھے؟",
+                options: ["بے وقوف", "گدھا", "نادان", "جانور"],
+                correct: 1 // B
+            },
+            {
+                q: "مصنف نے ہیرو کی کتنی قسمیں بتائی ہیں؟",
+                options: ["تین", "چار", "دو", "پانچ"],
+                correct: 2 // C
+            },
+            {
+                q: "مثالی ہیرو عموماً کس دنیا میں پایا جاتا ہے؟",
+                options: ["حقیقی دنیا", "فلمی دنیا", "خوابوں کی دنیا", "کتابی دنیا"],
+                correct: 3 // D
+            },
+            {
+                q: "مثالی ہیرو کا انجام عموماً کیسا ہوتا ہے؟",
+                options: ["المیہ (Tragic)", "مزاحیہ", "غیر واضح", "کامیاب"],
+                correct: 0 // A
+            },
+            {
+                q: "عصر جدید کا ہیرو (موسمی ہیرو) اپنے مزاج میں کیسا ہوتا ہے؟",
+                options: ["سست", "فعال (Active)", "مایوس", "کمزور"],
+                correct: 1 // B
+            },
+            {
+                q: "لکھنؤ کے لوگوں نے جانوروں کی کشتی کو کس چیز میں بدل دیا؟",
+                options: ["انسانوں کی کشتی", "سانپوں کی لڑائی", "بٹیر اور مرغ کی کشتی", "کتوں کی لڑائی"],
+                correct: 2 // C
+            },
+            {
+                q: "مصنف کے مطابق 'بانکے' کس کی ایک قسم تھے؟",
+                options: ["شاعر", "امیر", "فقیر", "ہیرو"],
+                correct: 3 // D
+            },
+            {
+                q: "ٹرین کے ڈبے میں کتنے بانکے سوار ہوئے تھے؟",
+                options: ["دو", "تین", "چار", "ایک"],
+                correct: 0 // A
+            },
+            {
+                q: "موسمی ہیرو کس پودے کی طرح تیزی سے بڑھتا ہے؟",
+                options: ["کریم کی بیل", "کدو کی بیل", "انگور کی بیل", "گلاب کا پودا"],
+                correct: 1 // B
+            },
+            {
+                q: "لفظ 'سواد' کے کیا معنی ہیں؟",
+                options: ["رنگ", "خوشبو", "مزہ / ذائقہ", "نقصان"],
+                correct: 2 // C
+            }
+        ];
+
+        // Timer Logic
+        let timeRemaining = 35 * 60; // 35 minutes in seconds
+        let timerInterval;
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz(true);
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+
+        // App State
+        let currentUser = "";
+
+        // Initialization
+        function init() {
+            const container = document.getElementById('questionsList');
+            
+            questions.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-gray-50 p-6 rounded-lg border border-gray-200";
+                
+                let optionsHtml = '';
+                item.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <label class="option-label block p-3 border rounded-lg mb-2 flex items-center gap-3">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="w-5 h-5 text-indigo-600">
+                            <span class="text-lg text-gray-800">${opt}</span>
+                        </label>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <p class="text-xl font-bold text-gray-800 mb-4"><span class="ml-2 text-indigo-600">سوال ${index + 1}:</span> ${item.q}</p>
+                    <div class="space-y-2">
+                        ${optionsHtml}
+                    </div>
+                    <div id="feedback-${index}" class="hidden mt-4 p-3 bg-green-100 text-green-800 rounded-lg font-bold border border-green-200">
+                        صحیح جواب: ${item.options[item.correct]}
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        // Start Quiz
+        function startQuiz() {
+            const nameInput = document.getElementById('studentName');
+            if (!nameInput.value.trim()) {
+                alert("برائے مہربانی اپنا نام درج کریں۔");
+                return;
+            }
+            currentUser = nameInput.value.trim();
+            
+            document.getElementById('nameModal').classList.add('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+            
+            startTimer();
+        }
+
+        // Submit Quiz
+        function submitQuiz(autoSubmit = false) {
+            clearInterval(timerInterval);
+            
+            // Disable submit button
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            btn.textContent = "جمع کر دیا گیا";
+
+            let score = 0;
+
+            questions.forEach((item, index) => {
+                // Get selected option
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const selectedValue = selected ? parseInt(selected.value) : -1;
+
+                // Check correctness
+                if (selectedValue === item.correct) {
+                    score++;
+                }
+
+                // Show correct answer feedback
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                feedbackDiv.classList.remove('hidden');
+                
+                // Highlight visual feedback
+                if (selectedValue !== -1) {
+                     const inputs = document.getElementsByName(`q${index}`);
+                     const label = inputs[selectedValue].parentElement;
+                     if (selectedValue === item.correct) {
+                         label.classList.add('bg-green-200', 'border-green-500');
+                     } else {
+                         label.classList.add('bg-red-200', 'border-red-500');
+                     }
+                }
+            });
+
+            // Display Result
+            document.getElementById('resultSection').classList.remove('hidden');
+            document.getElementById('displayName').textContent = currentUser;
+            document.getElementById('scoreDisplay').textContent = score;
+
+            // Scroll to bottom to show result
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+            // Download CSV
+            downloadCSV(currentUser, score);
+        }
+
+        // CSV Download
+        function downloadCSV(name, score) {
+            const csvContent = `Name,Score,Total\n${name},${score},35`;
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "result.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize quiz structure on load
+        init();
+
+    </script>
+</body>
+</html>
+
