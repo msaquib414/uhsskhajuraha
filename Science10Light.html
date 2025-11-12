@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="hi" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>विज्ञान क्विज़ - प्रकाश का परावर्तन तथा अपवर्तन (50 प्रश्न)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+            user-select: none;
+            background-color: #f8fafc; /* Tailwind: bg-slate-50 */
+        }
+        .option-label {
+            cursor: pointer;
+            transition: all 0.2s;
+            border-color: #e2e8f0; /* Tailwind: border-slate-200 */
+        }
+        .option-label:hover {
+            background-color: #f1f5f9; /* Tailwind: bg-slate-100 */
+        }
+        .correct-answer-bg {
+            background-color: #d1fae5; /* Tailwind: bg-green-100 */
+            border-color: #34d399; /* Tailwind: border-green-400 */
+        }
+    </style>
+</head>
+<body oncontextmenu="return false">
+
+    <!-- Timer Section (Fixed Top) -->
+    <div class="fixed top-0 left-0 right-0 bg-sky-600 text-white shadow-xl z-50 py-3 text-center">
+        <div class="text-xl font-bold">
+            शेष समय: <span id="timer">35:00</span>
+        </div>
+    </div>
+
+    <!-- Initial Name Input Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-slate-900 bg-opacity-90 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl shadow-2xl max-w-md w-full mx-4 text-center">
+            <h2 class="text-3xl font-bold mb-6 text-sky-700">क्विज़ में आपका स्वागत है</h2>
+            <p class="mb-4 text-slate-600">आगे बढ़ने के लिए अपना नाम दर्ज करें।</p>
+            <input type="text" id="studentName" placeholder="आपका नाम" class="w-full p-3 border-2 border-slate-300 rounded-lg mb-6 text-lg focus:outline-none focus:border-sky-500">
+            <button onclick="startQuiz()" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-md">
+                क्विज़ शुरू करें
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quizContainer" class="max-w-4xl mx-auto pt-20 px-4 hidden">
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 p-6 mb-6 text-center">
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">प्रकाश का परावर्तन तथा अपवर्तन (50 प्रश्न)</h1>
+            <p class="text-slate-500">कुल प्रश्न: 50 | अधिकतम अंक: 50</p>
+        </div>
+
+        <form id="quizForm">
+            <div id="questionsList" class="space-y-6">
+                <!-- Questions will be injected here by JS -->
+            </div>
+
+            <div class="mt-8 text-center">
+                <button type="button" id="submitBtn" onclick="submitQuiz()" class="bg-green-600 hover:bg-green-700 text-white text-xl font-bold py-4 px-12 rounded-lg shadow-xl transform transition hover:scale-105">
+                    उत्तर जमा करें
+                </button>
+            </div>
+        </form>
+
+        <!-- Result Section -->
+        <div id="resultSection" class="hidden mt-8 p-6 bg-sky-50 border-2 border-sky-300 rounded-xl text-center shadow-lg">
+            <h2 class="text-3xl font-bold text-sky-800 mb-2">परिणाम घोषित</h2>
+            <p class="text-xl text-slate-700">
+                <span id="displayName" class="font-bold"></span>, आपके द्वारा प्राप्त अंक:
+            </p>
+            <div class="text-6xl font-extrabold text-sky-600 my-4">
+                <span id="scoreDisplay">0</span> / 50
+            </div>
+            <p class="text-sm text-slate-500">आपका परिणाम CSV फ़ाइल के रूप में स्वचालित रूप से डाउनलोड हो रहा है...</p>
+        </div>
+    </div>
+
+    <script>
+        // Question Data (50 MCQs for "Prakash ka Paravartan tatha Apvartana")
+        // Correct Answer Keys: 0=A, 1=B, 2=C, 3=D
+        const questions = [
+            // --- Original 35 Questions ---
+            {
+                q: "प्रकाश की किरण जब विरल माध्यम से सघन माध्यम में प्रवेश करती है तो क्या होता है?",
+                options: ["अभिलंब की ओर झुक जाती है", "अभिलंब से दूर हट जाती है", "सीधी निकल जाती है", "परावर्तित हो जाती है"],
+                correct: 0 
+            },
+            {
+                q: "किसी वस्तु का वास्तविक तथा समान आकार का प्रतिबिम्ब प्राप्त करने के लिए वस्तु को उत्तल लेंस के सामने कहाँ रखा जाना चाहिए?",
+                options: ["फोकस दूरी की दोगुनी दूरी पर (2f)", "फोकस पर (f)", "अनंत पर", "लेंस तथा फोकस के बीच"],
+                correct: 0 
+            },
+            {
+                q: "समतल दर्पण द्वारा बना प्रतिबिम्ब हमेशा कैसा होता है?",
+                options: ["आभासी तथा सीधा", "वास्तविक तथा सीधा", "वास्तविक तथा उल्टा", "आभासी तथा उल्टा"],
+                correct: 0 
+            },
+            {
+                q: "प्रकाश का वेग अधिकतम किस माध्यम में होता है?",
+                options: ["निर्वात (Vacuum)", "पानी", "काँच", "तारपीन का तेल"],
+                correct: 0 
+            },
+            {
+                q: "गोलीय दर्पण की वक्रता त्रिज्या (R) और फोकस दूरी (f) में क्या संबंध है?",
+                options: ["R = 2f", "f = 2R", "R = f", "R = 4f"],
+                correct: 0 
+            },
+            {
+                q: "अवतल दर्पण द्वारा बना प्रतिबिम्ब कैसा हो सकता है?",
+                options: ["वास्तविक और आभासी दोनों", "केवल वास्तविक", "केवल आभासी", "इनमें से कोई नहीं"],
+                correct: 0 
+            },
+            {
+                q: "लेंस की क्षमता (Power of Lens) का SI मात्रक क्या है?",
+                options: ["डायोप्टर (Dioptre)", "मीटर", "कैंडेला", "वोल्ट"],
+                correct: 0 
+            },
+            {
+                q: "किस दर्पण का उपयोग सामान्यतः वाहनों के पश्च-दृश्य दर्पणों (Rear-view mirrors) के रूप में किया जाता है?",
+                options: ["उत्तल दर्पण", "अवतल दर्पण", "समतल दर्पण", "परवलयिक दर्पण"],
+                correct: 0 
+            },
+            {
+                q: "प्रकाश के परावर्तन के कितने नियम हैं?",
+                options: ["दो", "एक", "तीन", "चार"],
+                correct: 0 
+            },
+            {
+                q: "टॉर्च, सर्चलाइट तथा वाहनों की हेडलाइटों में प्रकाश का शक्तिशाली समानांतर किरण पुंज प्राप्त करने के लिए किस दर्पण का उपयोग किया जाता है?",
+                options: ["उत्तल दर्पण", "अवतल दर्पण", "समतल दर्पण", "बेलनाकार दर्पण"],
+                correct: 1 
+            },
+            {
+                q: "किस लेंस को अभिसारी लेंस (Converging Lens) भी कहा जाता है?",
+                options: ["अवतल लेंस", "उत्तल लेंस", "समतल लेंस", "द्वि-फोकसी लेंस"],
+                correct: 1 
+            },
+            {
+                q: "यदि किसी वस्तु को उत्तल दर्पण के सामने अनंत पर रखा जाए, तो प्रतिबिम्ब कहाँ बनेगा?",
+                options: ["फोकस पर (f)", "दर्पण के पीछे फोकस (F) पर", "वक्रता केंद्र (C) पर", "दर्पण के ध्रुव (P) पर"],
+                correct: 1 
+            },
+            {
+                q: "गोलीय दर्पण के ध्रुव और वक्रता केंद्र को मिलाने वाली रेखा क्या कहलाती है?",
+                options: ["फोकस", "मुख्य अक्ष", "वक्रता त्रिज्या", "द्वारक"],
+                correct: 1 
+            },
+            {
+                q: "किस रंग के प्रकाश का अपवर्तनांक (Refractive Index) सबसे अधिक होता है?",
+                options: ["लाल", "बैंगनी (Violet)", "हरा", "पीला"],
+                correct: 1 
+            },
+            {
+                q: "जब प्रकाश एक माध्यम से दूसरे माध्यम में जाता है, तो कौन सी राशि अपरिवर्तित रहती है?",
+                options: ["तरंगदैर्ध्य (Wavelength)", "वेग (Velocity)", "आवृत्ति (Frequency)", "तीव्रता (Intensity)"],
+                correct: 2 
+            },
+            {
+                q: "एक उत्तल लेंस की फोकस दूरी $25 \text{ cm}$ है। इसकी क्षमता (Power) क्या होगी?",
+                options: ["$+2 \text{ D}$", "$+4 \text{ D}$", "$-4 \text{ D}$", "$-2 \text{ D}$"],
+                correct: 1 
+            },
+            {
+                q: "लेंस सूत्र (Lens Formula) क्या है?",
+                options: ["$\frac{1}{v} - \frac{1}{u} = \frac{1}{f}$", "$\frac{1}{u} - \frac{1}{v} = \frac{1}{f}$", "$\frac{1}{v} + \frac{1}{u} = \frac{1}{f}$", "$v + u = f$"],
+                correct: 0 
+            },
+            {
+                q: "विरल माध्यम में प्रकाश की चाल, सघन माध्यम में प्रकाश की चाल की अपेक्षा क्या होती है?",
+                options: ["बराबर", "अधिक", "कम", "शून्य"],
+                correct: 1 
+            },
+            {
+                q: "पानी में रखा सिक्का थोड़ा ऊपर उठा हुआ क्यों दिखाई देता है?",
+                options: ["प्रकाश का परावर्तन", "प्रकाश का अपवर्तन", "प्रकाश का प्रकीर्णन", "कुल आंतरिक परावर्तन"],
+                correct: 1 
+            },
+            {
+                q: "किसी माध्यम का अपवर्तनांक $(\mu)$ किस पर निर्भर करता है?",
+                options: ["प्रकाश के वेग पर", "माध्यम की प्रकृति पर", "प्रकाश के रंग पर", "उपरोक्त सभी पर"],
+                correct: 3 
+            },
+            {
+                q: "एक गोलीय दर्पण और एक पतला गोलीय लेंस, प्रत्येक की फोकस दूरी $-15 \text{ cm}$ है। दर्पण तथा लेंस संभवतः हैं:",
+                options: ["दर्पण उत्तल, लेंस अवतल", "दोनों उत्तल", "दोनों अवतल", "दर्पण अवतल, लेंस उत्तल"],
+                correct: 2 
+            },
+            {
+                q: "गोलीय दर्पण के लिए आवर्धन $(\text{m})$ का सूत्र क्या है?",
+                options: ["$\text{m} = \text{h}'/\text{h}$", "$\text{m} = -\text{v}/\text{u}$", "दोनों (A) और (B)", "$\text{m} = \text{v}/\text{u}$"],
+                correct: 2 
+            },
+            {
+                q: "किस दर्पण में हमेशा आभासी, सीधा और छोटा प्रतिबिम्ब बनता है?",
+                options: ["अवतल दर्पण", "समतल दर्पण", "उत्तल दर्पण", "इनमें से कोई नहीं"],
+                correct: 2 
+            },
+            {
+                q: "प्रकाश के अपवर्तन का दूसरा नियम क्या कहलाता है?",
+                options: ["न्यूटन का नियम", "ह्यूजेन्स का नियम", "स्नेल का नियम (Snell's Law)", "फ्रेनेल का नियम"],
+                correct: 2 
+            },
+            {
+                q: "दाढ़ी बनाने के लिए किस दर्पण का उपयोग किया जाता है?",
+                options: ["उत्तल दर्पण", "समतल दर्पण", "अवतल दर्पण", "बेलनाकार दर्पण"],
+                correct: 2 
+            },
+            {
+                q: "एक प्रकाश किरण पुंज जो किसी एक बिंदु पर मिलती है, क्या कहलाती है?",
+                options: ["अपसारी किरण पुंज", "समानांतर किरण पुंज", "अभिसारी किरण पुंज (Converging)", "संयुक्त किरण पुंज"],
+                correct: 2 
+            },
+            {
+                q: "सूर्य का प्रकाश एक प्रिज्म से गुजरता है, तो सबसे कम विचलित (Least deviation) होने वाला रंग कौन सा है?",
+                options: ["बैंगनी", "हरा", "पीला", "लाल"],
+                correct: 3 
+            },
+            {
+                q: "किसी गोलीय लेंस के लिए रैखिक आवर्धन $(\text{m})$ का सूत्र क्या है?",
+                options: ["$\text{m} = -\text{v}/\text{u}$", "$\text{m} = \text{h}/\text{h}'$", "$\text{m} = \text{u}/\text{v}$", "$\text{m} = \text{v}/\text{u}$"],
+                correct: 3 
+            },
+            {
+                q: "जब प्रकाश की किरण सघन माध्यम से विरल माध्यम में प्रवेश करती है, तो आपतन कोण $(\text{i})$ और अपवर्तन कोण $(\text{r})$ में क्या संबंध होता है?",
+                options: ["$\text{i} = \text{r}$", "$\text{i} > \text{r}$", "$\text{i} < \text{r}$", "$\text{i} = 0$"],
+                correct: 2 
+            },
+            {
+                q: "किसी लेंस की क्षमता $(\text{P})$ और फोकस दूरी $(\text{f})$ में क्या संबंध है?",
+                options: ["$\text{P} = \text{f}$", "$\text{P} = 1/\text{f}$", "$\text{P} = 2/\text{f}$", "$\text{P} = \text{f}/2$"],
+                correct: 1 
+            },
+            {
+                q: "समतल दर्पण से वस्तु की दूरी $(\text{u})$ और प्रतिबिम्ब की दूरी $(\text{v})$ में क्या संबंध है?",
+                options: ["$\text{u} > \text{v}$", "$\text{u} < \text{v}$", "$\text{u} \neq \text{v}$", "$\text{u} = \text{v}$"],
+                correct: 3 
+            },
+            {
+                q: "प्रकाशीय केंद्र (Optical Centre) से गुजरने वाली प्रकाश की किरण?",
+                options: ["परावर्तित हो जाती है", "अपवर्तित हो जाती है", "बिना किसी विचलन के सीधी निकल जाती है", "फोकस पर मिलती है"],
+                correct: 2 
+            },
+            {
+                q: "उत्तल लेंस के लिए वस्तु को कहाँ रखा जाए कि आभासी और आवर्धित प्रतिबिम्ब प्राप्त हो?",
+                options: ["$2\text{f}$ पर", "$2\text{f}$ और $\text{f}$ के बीच", "फोकस ($\text{f}$) पर", "फोकस ($\text{f}$) और प्रकाशीय केंद्र के बीच"],
+                correct: 3 
+            },
+            {
+                q: "माध्यम 1 के सापेक्ष माध्यम 2 का अपवर्तनांक $(\mu_{21})$ का सूत्र क्या है?",
+                options: ["$\text{sin} \text{r}/\text{sin} \text{i}$", "$\text{v}_{2}/\text{v}_{1}$", "$\text{v}_{1}/\text{v}_{2}$", "$\text{v} \times \lambda$"],
+                correct: 2 
+            },
+            {
+                q: "अवतल लेंस द्वारा बना प्रतिबिम्ब हमेशा कैसा होता है?",
+                options: ["वास्तविक और उल्टा", "वास्तविक और सीधा", "आभासी, सीधा और छोटा", "आभासी, उल्टा और बड़ा"],
+                correct: 2 
+            },
+
+            // --- New 15 Questions to reach 50 ---
+            {
+                q: "अवतल दर्पण में वस्तु दूरी हमेशा ली जाती है:",
+                options: ["ऋणात्मक", "धनात्मक", "शून्य", "अनंत"],
+                correct: 0 
+            },
+            {
+                q: "प्रकाश का अपवर्तन होने पर, कौन सी राशि अपरिवर्तित रहती है?",
+                options: ["आवृत्ति (Frequency)", "वेग (Velocity)", "तरंगदैर्ध्य (Wavelength)", "दिशा (Direction)"],
+                correct: 0 
+            },
+            {
+                q: "$-2 \text{ D}$ क्षमता वाले लेंस की प्रकृति क्या है?",
+                options: ["अवतल लेंस", "उत्तल लेंस", "समतल लेंस", "दोनों"],
+                correct: 0 
+            },
+            {
+                q: "वास्तविक प्रतिबिम्ब को पर्दे पर लिया जा सकता है, यह कथन है:",
+                options: ["सत्य", "असत्य", "निश्चित नहीं", "कभी-कभी सत्य"],
+                correct: 0 
+            },
+            {
+                q: "आवर्धन $(\text{m})$ का धनात्मक मान क्या दर्शाता है?",
+                options: ["वास्तविक प्रतिबिम्ब", "आभासी प्रतिबिम्ब", "उल्टा प्रतिबिम्ब", "बड़ा प्रतिबिम्ब"],
+                correct: 1 
+            },
+            {
+                q: "काँच के स्लैब से अपवर्तन के बाद निर्गत किरण और आपतित किरण के बीच की दूरी क्या कहलाती है?",
+                options: ["सामान्य विचलन", "पार्श्विक विस्थापन (Lateral Shift)", "कोणीय विचलन", "फोकस दूरी"],
+                correct: 1 
+            },
+            {
+                q: "$1 \text{ मीटर}$ फोकस दूरी वाले उत्तल लेंस की क्षमता कितनी होती है?",
+                options: ["$-1 \text{ D}$", "$+1 \text{ D}$", "$+2 \text{ D}$", "$-0.5 \text{ D}$"],
+                correct: 1 
+            },
+            {
+                q: "जब वस्तु उत्तल लेंस के $2\text{f}$ से परे रखी जाती है, तो प्रतिबिम्ब कहाँ बनता है?",
+                options: ["$2\text{f}$ पर", "$\text{f}$ और $2\text{f}$ के बीच", "फोकस ($\text{f}$) पर", "अनंत पर"],
+                correct: 1 
+            },
+            {
+                q: "वक्रता त्रिज्या $(\text{R})$ किसके केंद्र बिंदु की दूरी है?",
+                options: ["मुख्य फोकस", "ध्रुव", "वक्रता केंद्र", "प्रकाशीय केंद्र"],
+                correct: 2 
+            },
+            {
+                q: "सोलर कुकर में किस दर्पण का उपयोग किया जाता है?",
+                options: ["उत्तल दर्पण", "समतल दर्पण", "अवतल दर्पण", "द्वि-फोकसी दर्पण"],
+                correct: 2 
+            },
+            {
+                q: "दर्पण सूत्र क्या है?",
+                options: ["$\frac{1}{v} - \frac{1}{u} = \frac{1}{f}$", "$\frac{1}{u} - \frac{1}{v} = \frac{1}{f}$", "$\frac{1}{v} + \frac{1}{u} = \frac{1}{f}$", "$v + u = f$"],
+                correct: 2 
+            },
+            {
+                q: "लेंस क्या है?",
+                options: ["एक अपारदर्शी सामग्री", "एक परावर्तक सतह", "दो सतहों से घिरा पारदर्शी माध्यम", "एक घुमावदार धातु की प्लेट"],
+                correct: 2 
+            },
+            {
+                q: "जिस माध्यम का अपवर्तनांक अधिक होता है, वह कहलाता है:",
+                options: ["विरल माध्यम", "शून्य माध्यम", "समांगी माध्यम", "सघन माध्यम"],
+                correct: 3 
+            },
+            {
+                q: "आकाश का रंग नीला क्यों दिखाई देता है?",
+                options: ["प्रकाश का अपवर्तन", "प्रकाश का परावर्तन", "कुल आंतरिक परावर्तन", "प्रकाश का प्रकीर्णन (Scattering)"],
+                correct: 3 
+            },
+            {
+                q: "अवतल दर्पण में वस्तु को $\text{C}$ और $\text{F}$ के बीच रखने पर प्रतिबिम्ब कहाँ बनता है?",
+                options: ["$\text{F}$ पर", "$\text{C}$ पर", "$\text{C}$ और $\text{F}$ के बीच", "$\text{C}$ से परे"],
+                correct: 3 
+            }
+        ];
+        
+        const TOTAL_QUESTIONS = 50; // Updated total
+
+        // Timer Logic
+        let timeRemaining = 35 * 60; // 35 minutes
+        let timerInterval;
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz(true);
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+
+        // App State
+        let currentUser = "";
+
+        // Initialization
+        function init() {
+            const container = document.getElementById('questionsList');
+            
+            questions.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-white p-6 rounded-xl border border-slate-200 shadow-sm";
+                
+                let optionsHtml = '';
+                // Option labels (A, B, C, D) in Hindi for presentation
+                const labels = ['A', 'B', 'C', 'D']; 
+
+                item.options.forEach((opt, optIndex) => {
+                    optionsHtml += `
+                        <label class="option-label block p-3 border rounded-lg mb-2 flex items-center gap-4">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="w-5 h-5 text-sky-600 focus:ring-sky-500">
+                            <span class="font-semibold text-sky-600">${labels[optIndex]}.</span>
+                            <span class="text-lg text-slate-800">${opt}</span>
+                        </label>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <p class="text-xl font-bold text-slate-800 mb-4 flex items-start">
+                        <span class="ml-2 text-sky-600">प्रश्न ${index + 1}:</span> ${item.q}
+                    </p>
+                    <div class="space-y-2">
+                        ${optionsHtml}
+                    </div>
+                    <div id="feedback-${index}" class="hidden mt-4 p-3 bg-green-50 text-green-700 rounded-lg font-semibold border border-green-300">
+                        <span class="text-green-800">सही उत्तर:</span> ${item.options[item.correct]}
+                    </div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        // Start Quiz
+        function startQuiz() {
+            const nameInput = document.getElementById('studentName');
+            if (!nameInput.value.trim()) {
+                alert("कृपया अपना नाम दर्ज करें।");
+                return;
+            }
+            currentUser = nameInput.value.trim();
+            
+            document.getElementById('nameModal').classList.add('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+            
+            startTi
