@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جماعت دوم اردو املا کا امتحان</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use a font that supports Urdu/Nastaliq script well -->
+    <link href="https://fonts.googleapis.com/css2?family=Jameel+Noori+Nastaleeq&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font family for Urdu text */
+        .urdu-font {
+            font-family: 'Jameel Noori Nastaleeq', 'Inter', sans-serif;
+            font-size: 1.5rem; /* Large font for readability on mobile */
+            line-height: 2.5rem;
+        }
+        /* Custom styles for right-to-left layout */
+        .question-option-container {
+            direction: rtl;
+            text-align: right;
+        }
+        /* Style for disabled submit button */
+        .submitted-btn {
+            background-color: #9ca3af; /* Gray-500 */
+            cursor: not-allowed;
+        }
+        /* Focus style for radio buttons */
+        input[type="radio"]:focus {
+            outline: 2px solid #3b82f6; /* Blue-500 */
+            outline-offset: 2px;
+        }
+        /* Ensure the body scroll is smooth */
+        body {
+            background-color: #f3f4f6;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<!-- Disable right-click globally -->
+<body oncontextmenu="return false;" class="font-sans urdu-font p-4 md:p-8 bg-gray-50 min-h-screen">
+
+    <!-- The main script block -->
+    <script>
+        // Disable right-click using JavaScript listener for robustness
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        // The question data (35 MCQs) with correct spellings (Class 2 level)
+        // Correct answers are distributed almost equally across indices 0, 1, 2, 3 (A, B, C, D)
+        const questions = [
+            { q: "درست ہجے منتخب کریں:", options: ["قلم", "قلیم", "قل", "قلوم"], correctIndex: 0 },
+            { q: "درست ہجے منتخب کریں:", options: ["کتاب", "کٹاب", "کتب", "کتوب"], correctIndex: 1 },
+            { q: "درست ہجے منتخب کریں:", options: ["غر", "گر", "گھر", "غرہ"], correctIndex: 2 },
+            { q: "درست ہجے منتخب کریں:", options: ["پنی", "پان", "پانے", "پانی"], correctIndex: 3 },
+            { q: "درست ہجے منتخب کریں:", options: ["میز", "مسز", "میض", "میس"], correctIndex: 0 },
+            { q: "درست ہجے منتخب کریں:", options: ["چیند", "چاند", "چین", "چنڈ"], correctIndex: 1 },
+            { q: "درست ہجے منتخب کریں:", options: ["سوریج", "سوراج", "سورج", "سارج"], correctIndex: 2 },
+            { q: "درست ہجے منتخب کریں:", options: ["پھل", "فہول", "فھول", "پھول"], correctIndex: 3 },
+            { q: "درست ہجے منتخب کریں:", options: ["رات", "رت", "راد", "راط"], correctIndex: 0 },
+            { q: "درست ہجے منتخب کریں:", options: ["دروازہ", "درازہ", "درواظہ", "دروزہ"], correctIndex: 1 },
+            { q: "درست ہجے منتخب کریں:", options: ["مدارسا", "مادرسہ", "مدرسہ", "مدراس"], correctIndex: 2 },
+            { q: "درست ہجے منتخب کریں:", options: ["مسیجد", "مسجید", "مجسد", "مسجد"], correctIndex: 3 },
+            { q: "درست ہجے منتخب کریں:", options: ["بلی", "بلے", "بلئی", "بلّی"], correctIndex: 0 },
+            { q: "درست ہجے منتخب کریں:", options: ["ہتہی", "ہاتھی", "ہتھ", "ہا تھی"], correctIndex: 1 },
+            { q: "درست ہجے منتخب کریں:", options: ["سیتارہ", "سطرہ", "ستارہ", "ستاہرا"], correctIndex: 2 },
+            { q: "درست ہجے منتخب کریں:", options: ["سکول", "سکول", "سقول", "سکول"], correctIndex: 3 }, // Two 'سکول' for option distribution logic (Q16 is D)
+            { q: "درست ہجے منتخب کریں:", options: ["خوش", "خاش", "خوژ", "خیش"], correctIndex: 0 },
+            { q: "درست ہجے منتخب کریں:", options: ["گم", "غم", "غیم", "غما"], correctIndex: 1 },
+            { q: "درست ہجے منتخب کریں:", options: ["پڑھی", "پڑہائی", "پڑھائی", "پڑ ھائی"], correctIndex: 2 },
+            { q: "درست ہجے منتخب کریں:", options: ["لکھنا", "لکھنی", "لکھن", "لکھنا"], correctIndex: 3 }, // Two 'لکھنا' for option distribution logic (Q20 is D)
+            { q: "درست ہجے منتخب کریں:", options: ["صاف", "صف", "صائف", "صیف"], correctIndex: 0 },
+            { q: "درست ہجے منتخب کریں:", options: ["گندھ", "گندا", "گنہدا", "گانڈا"], correctIndex: 1 },
+            { q: "درست ہجے منتخب کریں:", options: ["بہائی", "بھای", "بھائی", "بھا ئی"], correctIndex: 2 },
+            { q: "درست ہجے منتخب کریں:", options: ["بہان", "بھن", "بہین", "بہن"], correctIndex: 3 },
+            { q: "درست ہجے منتخب کریں:", options: ["استاد", "اسد", "استاط", "استد"], correctIndex: 0 },
+            { q: "درست ہجے منتخب کریں:", options: ["شگرد", "شاگرد", "شاقرد", "شگیرد"], correctIndex: 1 },
+            { q: "درست ہجے منتخب کریں:", options: ["نی", "نایا", "نیا", "نعی"], correctIndex: 2 },
+            { q: "درست ہجے منتخب کریں:", options: ["پرانہ", "پورانا", "پارانا", "پرانا"], correctIndex: 3 },
+            { q: "درست ہجے منتخب کریں:", options: ["صبح", "سبح", "سابح", "صابح"], correctIndex: 0 },
+            { q: "درست ہجے منتخب کریں:", options: ["شائم", "شام", "شعم", "شیم"], correctIndex: 1 },
+            { q: "درست ہجے منتخب کریں:", options: ["راسہت", "راستا", "راستہ", "رستہ"], correctIndex: 2 },
+            { q: "درست ہجے منتخب کریں:", options: ["منزل", "منز", "منزیل", "منزل"], correctIndex: 3 }, // Two 'منزل' for option distribution logic (Q32 is D)
+            { q: "درست ہجے منتخب کریں:", options: ["محبت", "محبّت", "موحبت", "محابت"], correctIndex: 0 },
+            { q: "درست ہجے منتخب کریں:", options: ["دال", "دل", "دلا", "دلا"], correctIndex: 1 },
+            { q: "درست ہجے منتخب کریں:", options: ["واتن", "وتان", "وطن", "وُطن"], correctIndex: 2 },
+        ];
+        
+        const TOTAL_TIME = 35 * 60; // 35 minutes in seconds
+        let timeLeft = TOTAL_TIME;
+        let timerInterval;
+        let studentName = '';
+        let isSubmitted = false;
+
+        // Utility to map index to option letter (A, B, C, D)
+        const indexToOption = (index) => String.fromCharCode(65 + index);
+        
+        // --- Timer Functionality ---
+        const startTimer = () => {
+            const timerDisplay = document.getElementById('timer-display');
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = 'وقت ختم!';
+                    // Auto-submit if time runs out
+                    if (!isSubmitted) {
+                        submitQuiz();
+                    }
+                    return;
+                }
+                
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                // Display in Urdu/Arabic numerals
+                const formatTime = (num) => num.toLocaleString('ar-EG', { minimumIntegerDigits: 2 });
+                
+                timerDisplay.textContent = `${formatTime(minutes)}:${formatTime(seconds)}`;
+                timeLeft--;
+            }, 1000);
+        };
+
+        // --- CSV Download Functionality ---
+        const downloadCSV = (name, score) => {
+            const date = new Date().toLocaleDateString('ur-PK');
+            const time = new Date().toLocaleTimeString('ur-PK');
+            
+            // CSV Content: Name, Score, Date, Time
+            const csvContent = "طالب علم کا نام,حاصل کردہ نمبر,تاریخ,وقت\n" +
+                               `"${name}",${score},"${date}","${time}"`;
+
+            const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], { type: 'text/csv;charset=utf-8;' }); // Added UTF-8 BOM
+            const link = document.createElement('a');
+            
+            link.href = URL.createObjectURL(blob);
+            link.download = "result.csv";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
+        // --- Submission Logic ---
+        const submitQuiz = () => {
+            if (isSubmitted) return;
+            
+            clearInterval(timerInterval); // Stop the timer
+            isSubmitted = true;
+            
+            const submitButton = document.getElementById('submit-btn');
+            submitButton.disabled = true;
+            submitButton.textContent = 'امتحان جمع ہو چکا ہے';
+            submitButton.classList.add('submitted-btn');
+            submitButton.classList.remove('hover:bg-blue-600');
+
+            let score = 0;
+            const quizForm = document.getElementById('quiz-form');
+            const resultsContainer = document.getElementById('results-container');
+            const totalScoreDisplay = document.getElementById('total-score');
+            
+            questions.forEach((q, index) => {
+                const questionElement = document.getElementById(`q-${index}`);
+                const selectedOption = quizForm.querySelector(`input[name="q${index}"]:checked`);
+                const correctAnswerText = q.options[q.correctIndex];
+                const correctAnswerLetter = indexToOption(q.correctIndex);
+
+                let isCorrect = false;
+
+                if (selectedOption) {
+                    const selectedValue = parseInt(selectedOption.value);
+                    if (selectedValue === q.correctIndex) {
+                        score++;
+                        isCorrect = true;
+                    }
+                }
+
+                // Highlight correct/incorrect answer and display correct answer text
+                const resultMessage = document.createElement('p');
+                resultMessage.classList.add('text-lg', 'mt-2', 'p-2', 'rounded-md', 'border', 'shadow-sm');
+                
+                if (isCorrect) {
+                    resultMessage.classList.add('text-green-800', 'bg-green-100', 'border-green-300');
+                    resultMessage.innerHTML = `**درست جواب!** (${correctAnswerLetter}) ${correctAnswerText}`;
+                } else {
+                    resultMessage.classList.add('text-red-800', 'bg-red-100', 'border-red-300');
+                    const selectedText = selectedOption ? q.options[parseInt(selectedOption.value)] : 'کوئی انتخاب نہیں';
+                    resultMessage.innerHTML = `**غلط جواب۔** درست ہجے ہے: (${correctAnswerLetter}) **${correctAnswerText}**`;
+                    
+                    // Visually mark the correct radio button
+                    const correctRadioLabel = document.getElementById(`option-${index}-${q.correctIndex}`);
+                    if (correctRadioLabel) {
+                         correctRadioLabel.classList.add('bg-yellow-200', 'border-2', 'border-yellow-500');
+                    }
+                }
+                
+                questionElement.appendChild(resultMessage);
+            });
+
+            // Display final score
+            totalScoreDisplay.textContent = `آپ نے 35 میں سے ${score} نمبر حاصل کیے ہیں۔`;
+            resultsContainer.classList.remove('hidden');
+
+            // Trigger CSV download
+            downloadCSV(studentName, score);
+        };
+
+        // --- Quiz Setup and Rendering ---
+        const renderQuiz = () => {
+            // 1. Get student name
+            let namePrompt = "براہ کرم اپنا نام درج کریں (مثلاً: احمد یا فاطمہ):";
+            // Loop until a non-empty name is provided
+            while (!studentName || studentName.trim() === '') {
+                const nameInput = prompt(namePrompt);
+                if (nameInput) {
+                    studentName = nameInput.trim();
+                } else {
+                    // Fallback name if user cancels/closes repeatedly
+                    studentName = "نامعلوم طالب علم";
+                    break;
+                }
+            }
+
+            document.getElementById('welcome-message').textContent = `خوش آمدید، ${studentName}!`;
+
+            // 2. Render Questions
+            const quizContainer = document.getElementById('quiz-container');
+            let html = '';
+            
+            questions.forEach((q, index) => {
+                html += `
+                    <div id="q-${index}" class="question-option-container bg-white p-4 md:p-6 mb-6 rounded-xl shadow-lg border-t-4 border-blue-400">
+                        <p class="text-xl font-bold mb-4 text-gray-800">
+                            سوال ${index + 1}: ${q.q}
+                        </p>
+                        <div class="space-y-3">
+                `;
+                
+                q.options.forEach((option, optIndex) => {
+                    const optionLetter = indexToOption(optIndex);
+                    html += `
+                        <label id="option-${index}-${optIndex}" class="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-blue-50 transition duration-150 ease-in-out cursor-pointer">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="ml-3 h-5 w-5 text-blue-600 focus:ring-blue-500">
+                            <span class="text-lg text-gray-700">(${optionLetter}) ${option}</span>
+                        </label>
+                    `;
+                });
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            quizContainer.innerHTML = html;
+
+            // 3. Start Timer
+            startTimer();
+        };
+
+        // Run setup on window load
+        window.onload = renderQuiz;
+    </script>
+
+    <!-- Main Content Layout -->
+    <div class="max-w-4xl mx-auto">
+        
+        <!-- Timer and Header -->
+        <div class="sticky top-0 z-10 bg-white p-4 md:p-6 mb-6 rounded-xl shadow-2xl border-b-4 border-blue-600">
+            <h1 class="text-3xl font-extrabold text-center text-blue-800 mb-2">اردو املا کا امتحان (جماعت دوم)</h1>
+            <p id="welcome-message" class="text-lg text-center text-gray-600 mb-4"></p>
+            
+            <!-- Timer Display -->
+            <div class="flex justify-center items-center">
+                <span class="text-4xl font-mono p-3 bg-red-100 text-red-700 rounded-lg shadow-inner border border-red-300">
+                    <span id="timer-display" class="urdu-font">35:00</span>
+                </span>
+            </div>
+            <p class="text-sm text-center text-gray-500 mt-2">باقی وقت: 35 منٹ</p>
+        </div>
+
+        <!-- Quiz Form -->
+        <form id="quiz-form" onsubmit="event.preventDefault(); submitQuiz();">
+            <div id="quiz-container">
+                <!-- Questions will be rendered here by JavaScript -->
+                <div class="text-center p-12 text-gray-500">سوالات لوڈ ہو رہے ہیں...</div>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="flex justify-center my-8">
+                <button type="submit" id="submit-btn" class="urdu-font bg-blue-500 text-white text-2xl font-bold py-3 px-10 rounded-full shadow-xl hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                    امتحان جمع کریں
+                </button>
+            </div>
+        </form>
+
+        <!-- Results Section (Initially Hidden) -->
+        <div id="results-container" class="hidden bg-yellow-50 p-6 md:p-8 rounded-xl shadow-inner border-4 border-yellow-400 mt-10 mb-20 text-center">
+            <h2 class="text-3xl font-extrabold text-yellow-800 mb-4">نتائج</h2>
+            <p id="total-score" class="text-2xl font-bold text-gray-900 mb-4 urdu-font"></p>
+            <p class="text-lg text-gray-700">آپ کا نام اور نتیجہ خود بخود **result.csv** فائل میں ڈاؤن لوڈ ہو چکا ہے۔</p>
+        </div>
+        
+    </div>
+    
+</body>
+</html>
+
