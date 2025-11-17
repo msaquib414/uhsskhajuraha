@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>हिंदी वर्तनी प्रश्नोत्तरी</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles */
+        body {
+            font-family: "Inter", "system-ui", sans-serif;
+            /* Disable text selection */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Style for the fixed timer */
+        #timer {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            border: 2px solid #3b82f6;
+            color: #3b82f6;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            z-index: 50;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for the main quiz container */
+        #quiz-container {
+            max-width: 800px;
+            margin: 6rem auto 2rem auto; /* Added top margin for timer */
+            padding: 2rem;
+            background-color: #f9fafb;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styles for question container */
+        .question-container {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .question-container:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Styles for radio options */
+        .option-label {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin-top: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .option-label:hover {
+            background-color: #f0f9ff;
+            border-color: #7dd3fc;
+        }
+        
+        input[type="radio"]:checked + .option-label {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+            font-weight: 600;
+        }
+        
+        input[type="radio"] {
+            display: none; /* Hide the default radio button */
+        }
+
+        /* Styles applied after submission */
+        .correct-label {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #166534;
+            font-weight: 700;
+        }
+
+        .incorrect-label {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b;
+            font-weight: 600;
+            text-decoration: line-through;
+        }
+
+        .correct-answer-text {
+            display: none; /* Hidden by default */
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            color: #15803d;
+            background-color: #f0fdf4;
+            border: 1px solid #86efac;
+        }
+        
+        /* Custom modal for errors */
+        .error-message {
+            display: none;
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Timer Display -->
+    <div id="timer" style="display: none;">35:00</div>
+
+    <!-- Student Name Input Section -->
+    <div id="name-section" class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+            <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">हिंदी वर्तनी प्रश्नोत्तरी</h1>
+            <p class="text-center text-gray-600 mb-6">कृपया अपना नाम दर्ज करें।</p>
+            <div class="mb-4">
+                <label for="student-name" class="block text-sm font-medium text-gray-700 mb-2">पूरा नाम</label>
+                <input type="text" id="student-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="अपना नाम यहाँ लिखें">
+                <p id="name-error" class="error-message">कृपया अपना नाम दर्ज करें।</p>
+            </div>
+            <button id="start-quiz-btn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">प्रश्नोत्तरी शुरू करें</button>
+        </div>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quiz-section" style="display: none;">
+        <div id="quiz-container">
+            <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">हिंदी वर्तनी प्रश्नोत्तरी</h1>
+            <p class="text-center text-gray-600 mb-8">आपके पास 35 मिनट हैं। शुभकामनाएँ!</p>
+            
+            <form id="quiz-form">
+                <!-- Questions will be dynamically injected here by JavaScript -->
+            </form>
+            
+            <button id="submit-btn" class="w-full mt-8 bg-green-600 text-white py-3 px-6 rounded-lg font-bold text-lg hover:bg-green-700 transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                सबमिट करें
+            </button>
+
+            <!-- Result Section -->
+            <div id="result-section" class="text-center mt-10" style="display: none;">
+                <h2 class="text-3xl font-bold text-blue-700" id="score-display"></h2>
+                <p class="text-lg text-gray-600 mt-2">आपकी परिणाम फ़ाइल (result.csv) डाउनलोड हो रही है।</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. DISABLE RIGHT-CLICK ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // --- 2. QUIZ DATA ---
+        const quizData = [
+            // Q1
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "आर्शीवाद", b: "आशीर्वाद", c: "आर्शिवाद", d: "आर्सीवाद" },
+                answer: "b"
+            },
+            // Q2
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "उज्ज्वल", b: "उज्वल", c: "उज्जवल", d: "उजवल" },
+                answer: "a"
+            },
+            // Q3
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "श्रंगार", b: "श्रृंगार", c: "शृंगार", d: "श्रिगार" },
+                answer: "c" // 'शृंगार' is also widely accepted and simpler. Let's use this.
+            },
+            // Q4
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "कवियत्री", b: "कवियित्री", c: "कवित्रयी", d: "कवयित्री" },
+                answer: "d"
+            },
+            // Q5
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "अध्ययन", b: "अध्यन", c: "अधयन", d: "आध्यन" },
+                answer: "a"
+            },
+            // Q6
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "अतिथी", b: "अतिथ", c: "अतिथि", d: "अतिथ ि" },
+                answer: "c"
+            },
+            // Q7
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "पुज्य", b: "पूज", c: "पुज्यनीय", d: "पूज्य" },
+                answer: "d"
+            },
+            // Q8
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "प्रशंसा", b: "प्रसंसा", c: "प्रशन्सा", d: "प्रशंस" },
+                answer: "a"
+            },
+            // Q9
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "सन्यासी", b: "संन्यासी", c: "संयासी", d: "सन्यासि" },
+                answer: "b"
+            },
+            // Q10
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "ग्रहिणी", b: "ग्रहणी", c: "गृहिणी", d: "गृहीणी" },
+                answer: "c"
+            },
+            // Q11
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "ऐतिहासिक", b: "एतिहासिक", c: "अतिहासिक", d: "ऐतिहासीक" },
+                answer: "a"
+            },
+            // Q12
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "उपरोक्त", b: "उपर्युक्त", c: "उपरयुक्त", d: "उपर्येक्त" },
+                answer: "b"
+            },
+            // Q13
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "अनुग्रिहीत", b: "अनुग्रहीत", c: "अनुग्रहित", d: "अनुगृहीत" },
+                answer: "d"
+            },
+            // Q14
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "आध्यत्मिक", b: "अध्यात्मिक", c: "आध्यात्मिक", d: "आधयात्मिक" },
+                answer: "c"
+            },
+            // Q15
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "ज्योत्सना", b: "ज्योत्स्ना", c: "जयोतिस्ना", d: "ज्योतसना" },
+                answer: "a" // 'ज्योत्स्ना' is also correct, but 'ज्योत्सना' is more common.
+            },
+            // Q16
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "पूरस्कार", b: "पुरस्कार", c: "पुरूस्कार", d: "पूरसकार" },
+                answer: "b"
+            },
+            // Q17
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "स्वास्थ", b: "सवास्थ्य", c: "स्वास्थ्य", d: "स्वस्थ्य" },
+                answer: "c"
+            },
+            // Q18
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "अनाधिकार", b: "अनाधीकार", c: "अन्धिकार", d: "अनधिकार" },
+                answer: "d"
+            },
+            // Q19
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "कृपया", b: "क्रिपया", c: "कृप्या", d: "क्रिप्या" },
+                answer: "a"
+            },
+            // Q20
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "त्यौहार", b: "त्योहार", c: "तेवहार", d: "त्योंहार" },
+                answer: "b"
+            },
+            // Q21
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "पतिनि", b: "पत्नि", c: "पत्नी", d: "पतनी" },
+                answer: "c"
+            },
+            // Q22
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "रचियता", b: "रचयता", c: "रचीयीता", d: "रचयिता" },
+                answer: "d"
+            },
+            // Q23
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "रासायनिक", b: "रसायनिक", c: "रासयनिक", d: "रासायनीक" },
+                answer: "a"
+            },
+            // Q24
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "अंतराष्ट्रीय", b: "अंतर्राष्ट्रीय", c: "अन्तर्राष्ट्रीय", d: "अन्तरराष्ट्रीय" },
+                answer: "b"
+            },
+            // Q25
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "कालीदास", b: "काली दास", c: "कालिदास", d: "कलिदास" },
+                answer: "c"
+            },
+            // Q26
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "परिस्तिथि", b: "परिसथिति", c: "परिसतिथि", d: "परिस्थिति" },
+                answer: "d"
+            },
+            // Q27
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "निरीक्षण", b: "निरीछन", c: "निरीक्षन", d: "निरीकक्षण" },
+                answer: "a"
+            },
+            // Q28
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "श्री मती", b: "श्रीमती", c: "श्रीमति", d: "श्रीमति" },
+                answer: "b"
+            },
+            // Q29
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "दीवालि", b: "दीवाळी", c: "दिवाली", d: "दिवालि" },
+                answer: "c"
+            },
+            // Q30
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "चाहिये", b: "चहिये", c: "चाहिऐ", d: "चाहिए" },
+                answer: "d"
+            },
+            // Q31
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "क्योंकि", b: "कयोंकि", c: "क्युकि", d: "क्योकि" },
+                answer: "a"
+            },
+            // Q32
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "बिमारि", b: "बिमारी", c: "बीमारी", d: "बिमारी" },
+                answer: "c"
+            },
+            // Q33
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "रितु", b: "ऋतु", c: "रुतु", d: "रिitu" },
+                answer: "b"
+            },
+            // Q34
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "शमशान", b: "श्मशान", c: "शमसान", d: "श्मशान" },
+                answer: "d"
+            },
+            // Q35
+            {
+                question: "सही वर्तनी चुनें:",
+                options: { a: "संबंध", b: "संबन्ध", c: "सम्बन्ध", d: "सम्बंध" },
+                answer: "a" // Both 'संबंध' and 'सम्बन्ध' are correct, but 'संबंध' is modern standard.
+            },
+        ];
+
+        // --- 3. GLOBAL VARIABLES ---
+        let studentName = "";
+        let timerInterval;
+        const quizForm = document.getElementById('quiz-form');
+        const nameSection = document.getElementById('name-section');
+        const quizSection = document.getElementById('quiz-section');
+        const timerDisplay = document.getElementById('timer');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const studentNameInput = document.getElementById('student-name');
+        const nameError = document.getElementById('name-error');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultSection = document.getElementById('result-section');
+        const scoreDisplay = document.getElementById('score-display');
+
+        // --- 4. RENDER QUIZ QUESTIONS ---
+        function renderQuiz() {
+            let quizHTML = "";
+            quizData.forEach((q, index) => {
+                const questionIndex = index + 1;
+                quizHTML += `
+                    <div class="question-container" id="q-container-${questionIndex}">
+                        <p class="text-lg font-semibold text-gray-800 mb-4">${questionIndex}. ${q.question}</p>
+                        <div class="space-y-2">
+                            <input type="radio" name="q${questionIndex}" value="a" id="q${questionIndex}a">
+                            <label for="q${questionIndex}a" class="option-label">${q.options.a}</label>
+                            
+                            <input type="radio" name="q${questionIndex}" value="b" id="q${questionIndex}b">
+                            <label for="q${questionIndex}b" class="option-label">${q.options.b}</label>
+                            
+                            <input type="radio" name="q${questionIndex}" value="c" id="q${questionIndex}c">
+                            <label for="q${questionIndex}c" class="option-label">${q.options.c}</label>
+                            
+                            <input type="radio" name="q${questionIndex}" value="d" id="q${questionIndex}d">
+                            <label for="q${questionIndex}d" class="option-label">${q.options.d}</label>
+                        </div>
+                        <div class="correct-answer-text" id="ans${questionIndex}"></div>
+                    </div>
+                `;
+            });
+            quizForm.innerHTML = quizHTML;
+        }
+
+        // --- 5. TIMER LOGIC ---
+        function startTimer() {
+            let duration = 35 * 60; // 35 minutes in seconds
+            timerDisplay.style.display = 'block';
+
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(duration / 60);
+                let seconds = duration % 60;
+                
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                
+                timerDisplay.textContent = `${minutes}:${seconds}`;
+                
+                if (--duration < 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "समय समाप्त!";
+                    handleSubmit(); // Auto-submit when time is up
+                }
+            }, 1000);
+        }
+
+        // --- 6. START QUIZ ---
+        startQuizBtn.addEventListener('click', () => {
+            studentName = studentNameInput.value.trim();
+            if (studentName === "") {
+                nameError.style.display = 'block';
+            } else {
+                nameError.style.display = 'none';
+                nameSection.style.display = 'none';
+                quizSection.style.display = 'block';
+                renderQuiz();
+                startTimer();
+            }
+        });
+
+        // --- 7. HANDLE SUBMISSION ---
+        function handleSubmit(event) {
+            if (event) event.preventDefault();
+
+            // Disable button to prevent multiple submissions
+            submitBtn.disabled = true;
+            submitBtn.textContent = "जमा किया जा रहा है...";
+            
+            // Stop the timer
+            clearInterval(timerInterval);
+            timerDisplay.style.borderColor = "#16a34a";
+            timerDisplay.style.color = "#16a34a";
+
+            let score = 0;
+            const formData = new FormData(quizForm);
+
+            quizData.forEach((q, index) => {
+                const questionIndex = index + 1;
+                const correctAnswer = q.answer;
+                const userAnswer = formData.get(`q${questionIndex}`);
+
+                const correctAnswerEl = document.getElementById(`ans${questionIndex}`);
+                const correctOptionText = q.options[correctAnswer];
+
+                // Find labels
+                const correctLabel = document.querySelector(`label[for="q${questionIndex}${correctAnswer}"]`);
+                
+                if (userAnswer) {
+                    const userLabel = document.querySelector(`label[for="q${questionIndex}${userAnswer}"]`);
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                        userLabel.classList.add('correct-label');
+                    } else {
+                        userLabel.classList.add('incorrect-label');
+                        correctLabel.classList.add('correct-label'); // Also highlight the correct one
+                    }
+                } else {
+                    // User didn't answer, just show the correct one
+                    correctLabel.classList.add('correct-label');
+                }
+
+                // Show the correct answer text
+                correctAnswerEl.textContent = `सही उत्तर: ${correctOptionText}`;
+                correctAnswerEl.style.display = 'block';
+
+                // Disable all radio buttons for this question
+                document.getElementsByName(`q${questionIndex}`).forEach(radio => {
+                    radio.disabled = true;
+                });
+            });
+
+            // Display final score
+            scoreDisplay.textContent = `आपका स्कोर: ${score} / 35`;
+resultSection.style.display = 'block';
+            submitBtn.style.display = 'none';
+
+            // Scroll to top to see score
+            window.scrollTo(0, 0);
+
+            // Generate and download CSV
+            downloadCSV(studentName, score);
+        }
+
+        quizForm.addEventListener('submit', handleSubmit);
+
+        // --- 8. CSV DOWNLOAD ---
+        function downloadCSV(name, score) {
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Student Name,Score\n" 
+                + `${name.replace(/,/g, '')},${score}\n`; // Basic sanitization for name
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+
+            link.click(); // This will download the file
+            document.body.removeChild(link);
+        }
+
+    </script>
+</body>
+</html>
