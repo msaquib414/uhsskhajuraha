@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>जैव प्रक्रम (Life Processes) - विज्ञान प्रश्नोत्तरी</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Using Tailwind's font-sans as default */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for checked radio buttons after submission */
+        .correct-answer-label {
+            color: #16a34a; /* green-600 */
+            font-weight: 700;
+        }
+        .incorrect-answer-label {
+            color: #dc2626; /* red-600 */
+            font-weight: 700;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="bg-gray-100" oncontextmenu="return false;">
+
+    <!-- 1. Name Input Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-sm">
+            <h2 class="text-2xl font-bold mb-4 text-center">प्रश्नोत्तरी में आपका स्वागत है</h2>
+            <p class="mb-4 text-center text-gray-600">कृपया अपना नाम दर्ज करें।</p>
+            <div class="mb-4">
+                <label for="studentName" class="block text-sm font-medium text-gray-700">आपका पूरा नाम:</label>
+                <input type="text" id="studentName" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="जैसे: राहुल कुमार">
+                <p id="nameError" class="text-red-500 text-sm mt-1 hidden">कृपया अपना नाम दर्ज करें।</p>
+            </div>
+            <button id="startButton" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-200">
+                प्रश्नोत्तरी शुरू करें
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. Main Quiz Content (Initially hidden) -->
+    <div id="quizContainer" class="hidden">
+        <!-- Timer -->
+        <div id="timer" class="fixed top-0 left-1/2 -translate-x-1/2 bg-white px-6 py-3 rounded-b-lg shadow-lg border border-t-0 z-40 text-2xl font-bold text-blue-700">
+            समय शेष: 25:00
+        </div>
+
+        <div class="container mx-auto p-4 max-w-3xl pt-20">
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                <h1 class="text-3xl font-bold text-center mb-2">विज्ञान प्रश्नोत्तरी: जैव प्रक्रम</h1>
+                <p class="text-center text-gray-600 mb-6">कक्षा 10</p>
+                
+                <!-- Result Display Area -->
+                <div id="result" class="hidden text-center text-2xl font-bold mb-6 p-4 bg-blue-100 text-blue-800 rounded-md"></div>
+
+                <!-- Quiz Form -->
+                <form id="quizForm">
+                    <!-- Questions will be dynamically inserted here -->
+                    <div id="questionsContainer" class="space-y-8"></div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-8 text-center">
+                        <button type="submit" id="submitButton" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                            जमा करें (Submit)
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Note: Answer distribution: a: 9, b: 10, c: 10, d: 11 (Total 40)
+        const questions = [
+            {
+                q: "1. स्वपोषी पोषण के लिए आवश्यक है:",
+                options: { a: "कार्बन डाइऑक्साइड", b: "क्लोरोफिल", c: "सूर्य का प्रकाश", d: "उपरोक्त सभी" },
+                answer: "d"
+            },
+            {
+                q: "2. मनुष्य के पाचन तंत्र में पित्त रस (bile juice) का स्राव कहाँ से होता है?",
+                options: { a: "आमाशय", b: "अग्न्याशय", c: "यकृत (लिवर)", d: "छोटी आँत" },
+                answer: "c"
+            },
+            {
+                q: "3. वसा (fat) के पाचन के लिए कौन सा एंजाइम जिम्मेदार है?",
+                options: { a: "एमाइलेज", b: "लाइपेज", c: "पेप्सिन", d: "ट्रिप्सिन" },
+                answer: "b"
+            },
+            {
+                q: "4. प्रकाश संश्लेषण क्रिया में ऑक्सीजन गैस कहाँ से निकलती है?",
+                options: { a: "जल के अपघटन से", b: "CO2 से", c: "क्लोरोफिल से", d: "वायुमंडल से" },
+                answer: "a"
+            },
+            {
+                q: "5. अवायवीय श्वसन (anaerobic respiration) में ग्लूकोज का विखंडन होता है:",
+                options: { a: "माइटोकॉन्ड्रिया में", b: "कोशिका द्रव्य में", c: "केंद्रक में", d: "हरित लवक में" },
+                answer: "b"
+            },
+            {
+                q: "6. वायवीय श्वसन (aerobic respiration) की प्रक्रिया कहाँ पूरी होती है?",
+                options: { a: "कोशिका द्रव्य", b: "राइबोसोम", c: "माइटोकॉन्ड्रिया", d: "लाइसोसोम" },
+                answer: "c"
+            },
+            {
+                q: "7. ATP का पूरा नाम क्या है?",
+                options: { a: "एडिनोसिन ट्राइफॉस्फेट", b: "एडिनोसिन डाइफॉस्फेट", c: "एडिनिन ट्राइफॉस्फेट", d: "इनमें से कोई नहीं" },
+                answer: "a"
+            },
+            {
+                q: "8. मछली का मुख्य श्वसन अंग क्या है?",
+                options: { a: "फेफड़े", b: "त्वचा", c: "श्वास नली", d: "गिल (गलफड़े)" },
+                answer: "d"
+            },
+            {
+                q: "9. मनुष्य के हृदय में कितने कोष्ठ (chambers) होते हैं?",
+                options: { a: "एक", b: "दो", c: "चार", d: "तीन" },
+                answer: "c"
+            },
+            {
+                q: "10. रक्त का लाल रंग किस वर्णक (pigment) के कारण होता है?",
+                options: { a: "मायोग्लोबिन", b: "हीमोग्लोबिन", c: "क्लोरोफिल", d: "फाइकोबिलिन" },
+                answer: "b"
+            },
+            {
+                q: "11. पौधों में जल का परिवहन (transport) किस ऊतक द्वारा होता है?",
+                options: { a: "जाइलम (Xylem)", b: "फ्लोएम (Phloem)", c: "मृदूतक", d: "दृढ़ोतक" },
+                answer: "a"
+            },
+            {
+                q: "12. कौन सी रक्त वाहिका ऑक्सीजन युक्त (oxygenated) रक्त फेफड़ों से हृदय तक ले जाती है?",
+                options: { a: "महाधमनी", b: "महाशिरा", c: "फुफ्फुस धमनी", d: "फुफ्फुस शिरा (Pulmonary vein)" },
+                answer: "d"
+            },
+            {
+                q: "13. मनुष्य में वृक्क (kidney) किस तंत्र का एक भाग है?",
+                options: { a: "पोषण", b: "श्वसन", c: "उत्सर्जन", d: "परिवहन" },
+                answer: "c"
+            },
+            {
+                q: "14. वृक्क की कार्यात्मक इकाई (functional unit) क्या कहलाती है?",
+                options: { a: "न्यूरॉन", b: "नेफ्रॉन (वृक्काणु)", c: "एल्विओलाई", d: "ग्लोमेरुलस" },
+                answer: "b"
+            },
+            {
+                q: "15. पौधे वाष्पोत्सर्जन (transpiration) की क्रिया द्वारा क्या बाहर निकालते हैं?",
+                options: { a: "जल (वाष्प के रूप में)", b: "ऑक्सीजन", c: "कार्बन डाइऑक्साइड", d: "भोजन" },
+                answer: "a"
+            },
+            {
+                q: "16. यूरिया का निर्माण शरीर में कहाँ होता है?",
+                options: { a: "वृक्क में", b: "फेफड़ों में", c: "अग्न्याशय में", d: "यकृत (लिवर) में" },
+                answer: "d"
+            },
+            {
+                q: "17. मनुष्य की लार (saliva) में कौन सा एंजाइम पाया जाता है?",
+                options: { a: "पेप्सिन", b: "एमाइलेज (टायलिन)", c: "लाइपेज", d: "ट्रिप्सिन" },
+                answer: "b"
+            },
+            {
+                q: "18. प्रोटीन का पाचन कहाँ से शुरू होता है?",
+                options: { a: "मुख गुहा", b: "छोटी आँत", c: "आमाशय (पेट)", d: "बड़ी आँत" },
+                answer: "c"
+            },
+            {
+                q: "19. प्रकाश संश्लेषण के लिए कौन सी गैस आवश्यक है?",
+                options: { a: "कार्बन डाइऑक्साइड (CO2)", b: "ऑक्सीजन (O2)", c: "नाइट्रोजन (N2)", d: "हाइड्रोजन (H2)" },
+                answer: "a"
+            },
+            {
+                q: "20. श्वसन की प्रक्रिया एक...",
+                options: { a: "उपचयी (anabolic) प्रक्रिया है", b: "प्रकाश-रासायनिक प्रक्रिया है", c: "भौतिक प्रक्रिया है", d: "अपचयी (catabolic) प्रक्रिया है" },
+                answer: "d"
+            },
+            {
+                q: "21. केंचुए (Earthworms) श्वसन करते हैं:",
+                options: { a: "फेफड़ों द्वारा", b: "गिल द्वारा", c: "त्वचा द्वारा", d: "श्वास नली द्वारा" },
+                answer: "c"
+            },
+            {
+                q: "22. रक्त दाब (Blood Pressure) मापने वाले यंत्र को क्या कहते हैं?",
+                options: { a: "बैरोमीटर", b: "स्फिग्मोमैनोमीटर", c: "थर्मामीटर", d: "लैक्टोमीटर" },
+                answer: "b"
+            },
+            {
+                q: "23. रक्त का थक्का (blood clotting) बनाने में कौन सी कोशिका मदद करती है?",
+                options: { a: "प्लेटलेट्स (बिम्बाणु)", b: "RBC (लाल रक्त कोशिका)", c: "WBC (श्वेत रक्त कोशिका)", d: "प्लाज्मा" },
+                answer: "a"
+            },
+            {
+                q: "24. पौधों में भोजन (सुक्रोज) का परिवहन किस ऊतक द्वारा होता है?",
+                options: { a: "जाइलम", b: "वल्कुट (Cortex)", c: "मज्जा (Pith)", d: "फ्लोएम" },
+                answer: "d"
+            },
+            {
+                q: "25. अमोनिया (अत्यधिक विषैला) को यूरिया (कम विषैला) में बदलना, किस जैव प्रक्रम का हिस्सा है?",
+                options: { a: "पाचन", b: "श्वसन", c: "उत्सर्जन", d: "परिवहन" },
+                answer: "c"
+            },
+            {
+                q: "26. कृत्रिम वृक्क (Artificial Kidney) द्वारा रक्त शोधन की प्रक्रिया क्या कहलाती है?",
+                options: { a: "अपोहन (Dialysis)", b: "परासरण", c: "विसरण", d: "वाष्पोत्सर्जन" },
+                answer: "a"
+            },
+            {
+                q: "27. पत्तियों में रंध्रों (Stomata) का खुलना और बंद होना किस पर निर्भर करता है?",
+                options: { a: "ऑक्सीजन की सांद्रता", b: "द्वार कोशिकाओं (Guard cells) की स्फीति पर", c: "तापमान पर", d: "CO2 की सांद्रता पर" },
+                answer: "b"
+            },
+            {
+                q: "28. जठर ग्रंथियां (Gastric glands) कहाँ पाई जाती हैं?",
+                options: { a: "छोटी आँत", b: "यकृत", c: "अग्न्याशय", d: "आमाशय की दीवार" },
+                answer: "d"
+            },
+            {
+                q: "29. ग्लाइकोलाइसिस (Glycolysis) की प्रक्रिया कहाँ होती है?",
+                options: { a: "कोशिका द्रव्य (Cytoplasm)", b: "माइटोकॉन्ड्रिया", c: "केंद्रक", d: "हरित लवक" },
+                answer: "a"
+            },
+            {
+                q: "30. वायवीय श्वसन में ग्लूकोज के एक अणु से कुल कितने ATP अणु बनते हैं (लगभग)?",
+                options: { a: "2", b: "8", c: "38", d: "16" },
+                answer: "c"
+            },
+            {
+                q: "31. लसीका (Lymph) का रंग कैसा होता है?",
+                options: { a: "लाल", b: "हल्का पीला या रंगहीन", c: "नीला", d: "हरा" },
+                answer: "b"
+            },
+            {
+                q: "32. 'दोहरा परिसंचरण' (Double Circulation) किसमें पाया जाता है?",
+                options: { a: "मछली", b: "केंचुआ", c: "अमीबा", d: "मनुष्य" },
+                answer: "d"
+            },
+            {
+                q: "33. पादप अपशिष्ट (Plant waste) कहाँ संचित रहते हैं?",
+                options: { a: "पत्तियों में", b: "कोशिकीय रिक्तिकाओं में", c: "गोंद और रेजिन के रूप में", d: "उपरोक्त सभी में" },
+                answer: "d"
+            },
+            {
+                q: "34. मूत्र (urine) का पीला रंग किस वर्णक के कारण होता है?",
+                options: { a: "यूरोक्रोम", b: "हीमोग्लोबिन", c: "बिलीरुबिन", d: "कैरोटीन" },
+                answer: "a"
+            },
+            {
+                q: "35. निम्नलिखित में से कौन स्वपोषी पोषण का एक उदाहरण है?",
+                options: { a: "कवक (फफूंद)", b: "जीवाणु (कुछ को छोड़कर)", c: "हरे पौधे", d: "अमीबा" },
+                answer: "c"
+            },
+            {
+                q: "36. निम्नलिखित में से कौन विषमपोषी (heterotrophic) पोषण का एक उदाहरण है?",
+                options: { a: "नील-हरित शैवाल", b: "कवक (Fungus)", c: "आम का पेड़", d: "यूग्लीना" },
+                answer: "b"
+            },
+            {
+                q: "37. कोशिका की 'ऊर्जा मुद्रा' (Energy Currency) किसे कहते हैं?",
+                options: { a: "DNA", b: "RNA", c: "ATP", d: "ग्लूकोज" },
+                answer: "c"
+            },
+            {
+                q: "38. वह एकमात्र धमनी (Artery) कौन सी है जो ऑक्सीजन रहित (deoxygenated) रक्त ले जाती है?",
+                options: { a: "महाधमनी (Aorta)", b: "कोरोनरी धमनी", c: "वृक्कीय धमनी", d: "फुफ्फुस धमनी (Pulmonary artery)" },
+                answer: "d"
+            },
+            {
+                q: "39. मानव हृदय की धड़कन को कौन प्रारंभ और नियंत्रित करता है?",
+                options: { a: "SA नोड (पेसमेकर)", b: "AV नोड", c: "पुरकिंजे फाइबर", d: "मस्तिष्क" },
+                answer: "a"
+            },
+            {
+                q: "40. पसीना (sweat) मुख्य रूप से किस ग्रंथि से निकलता है?",
+                options: { a: "तैल ग्रंथि (Sebaceous)", b: "स्वेद ग्रंथि (Sweat gland)", c: "लार ग्रंथि", d: "पीयूष ग्रंथि" },
+                answer: "b"
+            }
+        ];
+
+
+        // Global variables
+        let studentName = "";
+        let timerInterval;
+        let totalTime = 25 * 60; // 25 minutes in seconds
+
+        // DOM Elements
+        const nameModal = document.getElementById('nameModal');
+        const studentNameInput = document.getElementById('studentName');
+        const nameError = document.getElementById('nameError');
+        const startButton = document.getElementById('startButton');
+        const quizContainer = document.getElementById('quizContainer');
+        const timerElement = document.getElementById('timer');
+        const questionsContainer = document.getElementById('questionsContainer');
+        const quizForm = document.getElementById('quizForm');
+        const submitButton = document.getElementById('submitButton');
+        const resultElement = document.getElementById('result');
+
+        // Function to start the quiz
+        function startQuiz() {
+            studentName = studentNameInput.value.trim();
+            if (studentName === "") {
+                nameError.classList.remove('hidden');
+                studentNameInput.classList.add('border-red-500');
+                return;
+            }
+            // Hide modal, show quiz
+            nameModal.classList.add('hidden');
+            quizContainer.classList.remove('hidden');
+            
+            // Start timer
+            startTimer();
+            // Render questions
+            renderQuestions();
+        }
+
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                totalTime--;
+                const minutes = Math.floor(totalTime / 60);
+                let seconds = totalTime % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                timerElement.textContent = `समय शेष: ${minutes}:${seconds}`;
+
+                if (totalTime <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.textContent = "समय समाप्त!";
+                    timerElement.classList.add('text-red-600');
+                    submitQuiz(); // Auto-submit
+                }
+            }, 1000);
+        }
+
+        // Function to render questions
+        function renderQuestions() {
+            let questionsHTML = '';
+            questions.forEach((q, index) => {
+                questionsHTML += `
+                    <div class="mb-8 border-b pb-6" id="q-${index}">
+                        <p class="font-semibold text-lg mb-3">${q.q}</p>
+                        <div class="space-y-2">
+                            <div>
+                                <input type="radio" id="q${index}a" name="q${index}" value="a">
+                                <label for="q${index}a" class="ml-2 text-gray-700">A) ${q.options.a}</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="q${index}b" name="q${index}" value="b">
+                                <label for="q${index}b" class="ml-2 text-gray-700">B) ${q.options.b}</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="q${index}c" name="q${index}" value="c">
+                                <label for="q${index}c" class="ml-2 text-gray-700">C) ${q.options.c}</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="q${index}d" name="q${index}" value="d">
+                                <label for="q${index}d" class="ml-2 text-gray-700">D) ${q.options.d}</label>
+                            </div>
+                        </div>
+                        <div id="answer-display-${index}" class="mt-3 text-sm font-bold hidden"></div>
+                    </div>
+                `;
+            });
+            questionsContainer.innerHTML = questionsHTML;
+        }
+
+        // Function to handle quiz submission
+        function submitQuiz(event) {
+            if (event) event.preventDefault();
+
+            // Disable submit button
+            submitButton.disabled = true;
+            submitButton.textContent = 'जमा हो गया';
+
+            // Stop timer
+            clearInterval(timerInterval);
+
+            let score = 0;
+            const formData = new FormData(quizForm);
+
+            // Disable all inputs and check answers
+            questions.forEach((q, index) => {
+                const userAnswer = formData.get(`q${index}`);
+                const correctAnswer = q.answer;
+                
+                // Disable all radio buttons for this question
+                document.querySelectorAll(`input[name="q${index}"]`).forEach(radio => {
+                    radio.disabled = true;
+                });
+
+                const correctLabel = document.querySelector(`label[for="q${index}${correctAnswer}"]`);
+                if (correctLabel) {
+                    correctLabel.classList.add('correct-answer-label');
+                }
+                
+                if (userAnswer) {
+                    const userLabel = document.querySelector(`label[for="q${index}${userAnswer}"]`);
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                    } else {
+                        if (userLabel) {
+                            userLabel.classList.add('incorrect-answer-label');
+                        }
+                    }
+                }
+                
+                // Show the correct answer text
+                const answerDisplay = document.getElementById(`answer-display-${index}`);
+                answerDisplay.textContent = `सही उत्तर: (${correctAnswer.toUpperCase()}) ${q.options[correctAnswer]}`;
+                answerDisplay.classList.remove('hidden');
+                answerDisplay.classList.add('text-green-700', 'p-2', 'bg-green-100', 'rounded-md');
+
+            });
+
+            // Display final score
+            resultElement.textContent = `प्रिय ${studentName}, आपका स्कोर: ${score} / ${questions.length}`;
+            resultElement.classList.remove('hidden');
+            window.scrollTo(0, 0); // Scroll to top to see result
+
+            // Download CSV
+            downloadCSV(studentName, score);
+        }
+
+        // Function to download CSV
+        function downloadCSV(name, score) {
+            const csvContent = "data:text/csv;charset=utf-8," +
+                "Student Name,Marks\n" +
+                `"${name}",${score}`;
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Event Listeners
+        startButton.addEventListener('click', startQuiz);
+        quizForm.addEventListener('submit', submitQuiz);
+        
+        // Disable right-click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+    </script>
+</body>
+</html>
