@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Prompt Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .input-group label {
+            transition: all 0.2s;
+        }
+        .input-group:focus-within label {
+            color: #3b82f6;
+        }
+        /* Style for the select dropdown */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236b7280%22%20d%3D%22M287%20200.7L150.3%2064.1c-4.2-4.2-11-4.2-15.2%200L8.1%20200.7c-4.4%204.4-4.4%2011.6%200%2016%204.4%204.4%2011.6%204.4%2016%200l126.2-126.2%20126.2%20126.2c4.4%204.4%2011.6%204.4%2016%200%204.4-4.4%204.4-11.6%200-16z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 0.65rem auto;
+            padding-right: 2.5rem; /* Add padding to prevent text overlap with arrow */
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white max-w-2xl w-full rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-8 text-white">
+            <h1 class="text-3xl font-bold flex items-center gap-3">
+                <i class="fa-solid fa-robot"></i> Quiz Generator
+            </h1>
+            <p class="text-blue-100 mt-2 text-sm">
+                Fill in the details below. We will generate the prompt, copy it, and open Gemini for you.
+            </p>
+        </div>
+
+        <!-- Form Container -->
+        <div class="p-8 space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Class Input (Dropdown) -->
+                <div class="input-group">
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Class / Grade</label>
+                    <select id="classInput" 
+                        class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                        <option value="" disabled selected>Select Class</option>
+                        <option value="Class 9">Class 9</option>
+                        <option value="Class 10">Class 10</option>
+                        <option value="Class 11">Class 11</option>
+                        <option value="Class 12">Class 12</option>
+                    </select>
+                </div>
+
+                <!-- Subject Input -->
+                <div class="input-group">
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Subject</label>
+                    <input type="text" id="subjectInput" placeholder="e.g. Physics" 
+                        class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Chapter Input -->
+                <div class="input-group">
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Chapter Topic</label>
+                    <input type="text" id="chapterInput" placeholder="e.g. Laws of Motion" 
+                        class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                </div>
+
+                <!-- Language Input -->
+                <div class="input-group">
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Language</label>
+                    <input type="text" id="languageInput" value="Hindi" placeholder="e.g. Hindi" 
+                        class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                </div>
+            </div>
+
+            <!-- Preview of logic -->
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-xs text-yellow-800">
+                <i class="fa-solid fa-circle-info mr-1"></i> 
+                <strong>Includes:</strong> 40 MCQs, No Right Click, 25min Timer, CSV Download, Auto-check answers.
+            </div>
+
+            <!-- Action Button -->
+            <button onclick="generateAndLaunch()" id="launchBtn"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg transform active:scale-95 transition-all duration-200 flex justify-center items-center gap-2 group">
+                <span>Generate Prompt & Open Gemini</span>
+                <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-1 transition-transform"></i>
+            </button>
+
+            <!-- Status Text -->
+            <p id="statusMsg" class="text-center text-green-600 font-semibold text-sm opacity-0 transition-opacity">
+                <i class="fa-solid fa-check"></i> Prompt copied! Ready to paste in Gemini.
+            </p>
+
+        </div>
+    </div>
+
+    <script>
+        function generateAndLaunch() {
+            // 1. Get Values
+            const classVal = document.getElementById('classInput').value.trim() || "Grade 10";
+            const subjectVal = document.getElementById('subjectInput').value.trim() || "General Knowledge";
+            const chapterVal = document.getElementById('chapterInput').value.trim() || "General";
+            const languageVal = document.getElementById('languageInput').value.trim() || "English";
+
+            // Add validation for class selection
+            if (classVal === "") {
+                const classInput = document.getElementById('classInput');
+                classInput.focus();
+                classInput.classList.add("ring-2", "ring-red-500");
+                setTimeout(() => classInput.classList.remove("ring-2", "ring-red-500"), 1000);
+                return;
+            }
+
+            // 2. Construct the Detailed Prompt
+            // This is the prompt that will be sent to Gemini
+            const prompt = `
+Generate a single-file HTML page (containing CSS and JS) that functions as a secure Quiz Application.
+**Context:**
+- Class: ${classVal}
+- Subject: ${subjectVal}
+- Chapter: ${chapterVal}
+- Language: ${languageVal}
+
+**Functional Requirements:**
+1. **Content:** Generate 40 unique Multiple Choice Questions (MCQs) relevant to the context above.
+2. **Structure:** Each question must have 4 options (radio buttons).
+3. **Correct Answers:** The correct answers must be distributed almost equally among options A, B, C, and D (approx 10 each).
+4. **Security:** Disable the Right-Click context menu on the entire page using JavaScript to prevent simple copying.
+
+**User Flow & UI:**
+1. **Start Screen:** When loaded, ask for the "Student Name" in a text box. Do not show questions until the name is entered and a "Start Quiz" button is clicked.
+2. **Timer:** Display a countdown timer of 25 minutes strictly fixed at the top middle of the screen (sticky/fixed position).
+3. **Submission:** - There should be a "Submit Quiz" button at the bottom.
+   - This button can be clicked ONLY ONCE. Disable it immediately after clicking.
+4. **Scoring & Review (After Submit):**
+   - Calculate score (1 mark per correct answer).
+   - Display the user's Total Score at the top.
+   - **Critical:** Immediately display the correct answer below every single question.
+   - Use color coding: Highlight the user's selected answer in Green (if correct) or Red (if incorrect). If incorrect, highlight the actual correct option in Green.
+5. **Data Export:** - Immediately upon submission, automatically generate and trigger a download of a file named 'result.csv'.
+   - The CSV content should be: "Student Name, Total Score, Date/Time".
+
+**Technical Constraints:**
+- Provide ONLY a single HTML file code block. 
+- Make the design clean and modern using internal CSS.
+            `.trim();
+
+            // 3. Copy to Clipboard
+            const btn = document.getElementById('launchBtn');
+            const status = document.getElementById('statusMsg');
+
+            // Use navigator.clipboard.writeText for modern browsers
+            navigator.clipboard.writeText(prompt).then(() => {
+                successAnimation();
+            }).catch(err => {
+                // Fallback for older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = prompt;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textArea);
+                successAnimation();
+            });
+
+            function successAnimation() {
+                // Visual feedback
+                btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                btn.classList.add('bg-green-600', 'hover:bg-green-700');
+                btn.innerHTML = `<span>Prompt Copied! Opening Gemini...</span>`;
+                status.classList.remove('opacity-0');
+
+                // Open Gemini after short delay
+                setTimeout(() => {
+                    window.open("https://gemini.google.com/app/34d165b493dfafa6?hl=en-IN", "_blank");
+                    
+                    // Reset button style
+                    setTimeout(() => {
+                        btn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                        btn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                        btn.innerHTML = `<span>Generate Prompt & Open Gemini</span> <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-1 transition-transform"></i>`;
+                        status.classList.add('opacity-0');
+                    }, 2000);
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
