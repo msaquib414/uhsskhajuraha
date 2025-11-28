@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कक्षा 10 हिंदी: श्रम विभाजन और जाति प्रथा</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Using Tailwind's font-sans as default */
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        /* Custom styles for marking answers after submission */
+        .correct-highlight {
+            background-color: #d1fae5; /* green-100 */
+            border-color: #10b981; /* green-500 */
+        }
+        .incorrect-highlight {
+            background-color: #fee2e2; /* red-100 */
+            border-color: #ef4444; /* red-500 */
+        }
+        .correct-answer-label {
+            color: #059669; /* green-600 */
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-gray-50" oncontextmenu="return false;">
+
+    <!-- 1. Name Input Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 transition-opacity duration-300">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md border-t-8 border-blue-600 transform scale-100 transition-transform duration-300">
+            <h2 class="text-3xl font-extrabold mb-4 text-center text-gray-800">कक्षा 10 हिंदी प्रश्नोत्तरी</h2>
+            <p class="mb-6 text-center text-gray-600 font-medium">अध्याय 1: श्रम विभाजन और जाति प्रथा</p>
+            <div class="mb-6">
+                <label for="studentName" class="block text-sm font-semibold text-gray-700 mb-2">विद्यार्थी का नाम:</label>
+                <input type="text" id="studentName" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition" placeholder="जैसे: अमित कुमार">
+                <p id="nameError" class="text-red-500 text-sm mt-2 hidden">कृपया अपना नाम दर्ज करें।</p>
+            </div>
+            <button id="startButton" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg text-lg transition duration-300 shadow-md hover:shadow-lg">
+                प्रश्नोत्तरी शुरू करें (25 मिनट)
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. Main Quiz Content (Initially hidden) -->
+    <div id="quizContainer" class="hidden">
+        <!-- Timer (Fixed at Top Center) -->
+        <div id="timer" class="fixed top-0 left-1/2 -translate-x-1/2 bg-white px-8 py-3 rounded-b-xl shadow-xl border border-t-0 z-40 text-2xl font-extrabold text-blue-700 min-w-[200px] text-center transition-colors duration-500">
+            समय शेष: 25:00
+        </div>
+
+        <div class="container mx-auto p-4 max-w-3xl pt-24 pb-16">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl border border-gray-200">
+                <h1 class="text-3xl font-bold text-center mb-2 text-gray-800">श्रम विभाजन और जाति प्रथा</h1>
+                <p class="text-center text-gray-500 mb-6">कक्षा 10 हिंदी | बाबा साहेब भीमराव अंबेडकर</p>
+                
+                <!-- Result Display Area -->
+                <div id="result" class="hidden text-center text-2xl font-extrabold mb-8 p-4 bg-purple-100 text-purple-800 rounded-lg shadow-inner transition duration-500"></div>
+
+                <!-- Quiz Form -->
+                <form id="quizForm">
+                    <div id="questionsContainer" class="space-y-10"></div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-12 text-center">
+                        <button type="submit" id="submitButton" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-10 rounded-xl text-xl transition duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed">
+                            परिणाम जमा करें (Submit)
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions based on Chapter 1: Shram Vibhajan Aur Jati Pratha
+        const questions = [
+            { q: "1. 'श्रम विभाजन और जाति प्रथा' पाठ के लेखक कौन हैं?", options: { a: "महात्मा गांधी", b: "गुणाकर मुले", c: "भीमराव अंबेडकर", d: "यतीन्द्र मिश्र" }, answer: "c" },
+            { q: "2. बाबा साहेब भीमराव अंबेडकर का जन्म कब हुआ था?", options: { a: "14 अप्रैल 1881 ई०", b: "14 अप्रैल 1891 ई०", c: "14 अप्रैल 1871 ई०", d: "14 अप्रैल 1901 ई०" }, answer: "b" },
+            { q: "3. अंबेडकर का जन्म किस राज्य में हुआ था?", options: { a: "बिहार", b: "उत्तर प्रदेश", c: "मध्य प्रदेश (महू)", d: "महाराष्ट्र" }, answer: "c" },
+            { q: "4. मानव मुक्ति के पुरोधा किसे कहा गया है?", options: { a: "नलिन विलोचन शर्मा", b: "यतीन्द्र मिश्र", c: "भीमराव अंबेडकर", d: "अमरकांत" }, answer: "c" },
+            { q: "5. 'द कास्ट्स इन इंडिया' किनकी रचना है?", options: { a: "महात्मा गाँधी", b: "जवाहरलाल नेहरू", c: "राम मनोहर लोहिया", d: "भीमराव अंबेडकर" }, answer: "d" },
+            { q: "6. 'जाति-पाँति तोड़क मंडल' का वार्षिक सम्मेलन किस वर्ष आयोजित किया गया था?", options: { a: "सन् 1935", b: "सन् 1936", c: "सन् 1938", d: "सन् 1940" }, answer: "b" },
+            { q: "7. अंबेडकर के चिंतन व रचनात्मकता के मुख्यतः कितने प्रेरक व्यक्ति रहे?", options: { a: "तीन", b: "पाँच", c: "चार", d: "दो" }, answer: "a" },
+            { q: "8. भारतीय संविधान के निर्माता के रूप में हम किन्हें जानते हैं?", options: { a: "महात्मा गाँधी", b: "भीमराव अंबेडकर", c: "पंडित नेहरू", d: "सुभाष चंद्र बोस" }, answer: "b" },
+            { q: "9. 'जाति-भेद का उच्छेद' भाषण का हिंदी रूपांतरण किसने किया?", options: { a: "नलिन विलोचन शर्मा", b: "ललई सिंह यादव", c: "रामविलास शर्मा", d: "नामवर सिंह" }, answer: "b" },
+            { q: "10. आधुनिक सभ्य समाज 'श्रम विभाजन' को क्यों आवश्यक मानता है?", options: { a: "रूढ़िवादिता के लिए", b: "कार्य कुशलता के लिए", c: "भाईचारे के लिए", d: "इनमें से कोई नहीं" }, answer: "b" },
+            { q: "11. जाति प्रथा भारत में किसका एक प्रमुख कारण बनी हुई है?", options: { a: "बेरोजगारी का", b: "गरीबी का", c: "उत्पीड़न का", d: "इनमें से सभी" }, answer: "d" },
+            { q: "12. अंबेडकर उच्चतर शिक्षा के लिए बड़ौदा नरेश के प्रोत्साहन पर कहाँ गए थे?", options: { a: "जापान", b: "न्यूयार्क (अमेरिका)", c: "रूस", d: "चीन" }, answer: "b" },
+            { q: "13. जाति प्रथा श्रमिकों को किस प्रकार विभाजित करती है?", options: { a: "समान रूप से", b: "अस्वाभाविक रूप से", c: "रुचि के आधार पर", d: "कार्य कुशलता के आधार पर" }, answer: "b" },
+            { q: "14. लेखक की दृष्टि में आदर्श समाज कैसा होना चाहिए?", options: { a: "जिसमें स्वतंत्रता, समता और भ्रातृत्व हो", b: "जिसमें सभी धनी हों", c: "जिसमें सभी शिक्षित हों", d: "जिसमें सभी स्वस्थ हों" }, answer: "a" },
+            { q: "15. जाति प्रथा पेशे का दोषपूर्ण क्या करती है?", options: { a: "निर्धारण", b: "पूर्वनिर्धारण", c: "विभाजन", d: "संशोधन" }, answer: "b" },
+            { q: "16. लोकतंत्र मूलतः क्या है?", options: { a: "सामूहिक जीवनचर्या की एक रीति", b: "एक शासन पद्धति", c: "कानून का शासन", d: "वोट देने का अधिकार" }, answer: "a" },
+            { q: "17. 'एनीहिलेशन ऑफ कास्ट' (Annihilation of Caste) भाषण लाहौर में कब पढ़ा जाना था?", options: { a: "1935 में", b: "1936 में", c: "1937 में", d: "1938 में" }, answer: "b" },
+            { q: "18. 'बुद्धा एण्ड हिज धम्मा' के लेखक कौन हैं?", options: { a: "हजारी प्रसाद द्विवेदी", b: "बिरजू महाराज", c: "भीमराव अंबेडकर", d: "अशोक वाजपेयी" }, answer: "c" },
+            { q: "19. हिंदू धर्म की जाति प्रथा व्यक्ति को कैसा पेशा चुनने की अनुमति नहीं देती?", options: { a: "मनपसंद पेशा", b: "पैतृक पेशे से अलग पेशा", c: "सरकारी नौकरी", d: "व्यापार" }, answer: "b" },
+            { q: "20. भाईचारे का वास्तविक रूप कैसा होता है?", options: { a: "दूध और पानी के मिश्रण की तरह", b: "पानी और चीनी की तरह", c: "पानी और नमक की तरह", d: "तेल और पानी की तरह" }, answer: "a" },
+            { q: "21. जाति प्रथा मनुष्य को जीवन भर के लिए किसमें बाँध देती है?", options: { a: "स्वतंत्रता में", b: "एक ही पेशे में", c: "शिक्षा में", d: "इनमें से कोई नहीं" }, answer: "b" },
+            { q: "22. बाबा साहेब का निधन कब हुआ?", options: { a: "दिसंबर 1956", b: "दिसंबर 1950", c: "दिसंबर 1960", d: "दिसंबर 1952" }, answer: "a" },
+            { q: "23. अंबेडकर के अनुसार, उद्योगों में गरीबी और उत्पीड़न से भी बड़ी समस्या क्या है?", options: { a: "पूंजी का अभाव", b: "निर्धारित कार्य को अरुचि से करना", c: "कच्चे माल की कमी", d: "मशीनों का अभाव" }, answer: "b" },
+            { q: "24. बाबा साहेब का संपूर्ण वाङ्मय कितने खंडों में प्रकाशित है?", options: { a: "15 खंडों में", b: "18 खंडों में", c: "20 खंडों में", d: "21 खंडों में" }, answer: "d" },
+            { q: "25. जाति प्रथा के पोषकों की इस युग में भी क्या नहीं है?", options: { a: "कमी", b: "अधिकता", c: "समझ", d: "जानकारी" }, answer: "a" },
+            { q: "26. प्रतिकूल परिस्थितियों में भी मनुष्य को क्या बदलने की स्वतंत्रता होनी चाहिए?", options: { a: "घर", b: "धर्म", c: "पेशा", d: "नाम" }, answer: "c" },
+            { q: "27. बाबा साहेब ने किस भाषा के धार्मिक और वैदिक वाङ्मय का अनुवाद के जरिये अध्ययन किया?", options: { a: "पाली", b: "प्राकृत", c: "संस्कृत", d: "तमिल" }, answer: "c" },
+            { q: "28. 'हू आर शुद्राज' (Who are Shudras) किसकी रचना है?", options: { a: "भीमराव अंबेडकर", b: "अमरकांत", c: "मैक्स मूलर", d: "यतीन्द्र मिश्र" }, answer: "a" },
+            { q: "29. सच्चे लोकतंत्र के लिए समाज में कैसी भावना आवश्यक है?", options: { a: "श्रद्धा और सम्मान", b: "ईर्ष्या और द्वेष", c: "ऊँच और नीच", d: "अलगाव" }, answer: "a" },
+            { q: "30. एक आदर्श समाज में वांछित परिवर्तन समाज के एक छोर से दूसरे छोर तक क्या होना चाहिए?", options: { a: "रुक जाना चाहिए", b: "संचारित होना चाहिए", c: "समाप्त होना चाहिए", d: "केवल अमीरों तक जाना चाहिए" }, answer: "b" }
+        ];
+
+        // Global variables
+        let studentName = "";
+        let timerInterval;
+        let totalTime = 25 * 60; // 25 minutes in seconds
+
+        // DOM Elements
+        const nameModal = document.getElementById('nameModal');
+        const studentNameInput = document.getElementById('studentName');
+        const nameError = document.getElementById('nameError');
+        const startButton = document.getElementById('startButton');
+        const quizContainer = document.getElementById('quizContainer');
+        const timerElement = document.getElementById('timer');
+        const questionsContainer = document.getElementById('questionsContainer');
+        const quizForm = document.getElementById('quizForm');
+        const submitButton = document.getElementById('submitButton');
+        const resultElement = document.getElementById('result');
+
+        // Function to start the quiz
+        function startQuiz() {
+            studentName = studentNameInput.value.trim();
+            if (studentName === "") {
+                nameError.classList.remove('hidden');
+                studentNameInput.classList.add('border-red-500');
+                return;
+            }
+            // Hide modal, show quiz
+            nameModal.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                nameModal.classList.add('hidden');
+            }, 300); 
+            quizContainer.classList.remove('hidden');
+            
+            // Start timer
+            startTimer();
+            // Render questions
+            renderQuestions();
+        }
+
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                totalTime--;
+                const minutes = Math.floor(totalTime / 60);
+                let seconds = totalTime % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                timerElement.textContent = `समय शेष: ${minutes}:${seconds}`;
+
+                if (totalTime <= 300) { // 5 minutes remaining
+                    timerElement.classList.add('text-orange-600');
+                }
+                
+                if (totalTime <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.textContent = "समय समाप्त! (Time Over)";
+                    timerElement.classList.remove('text-blue-700', 'text-orange-600');
+                    timerElement.classList.add('text-red-600', 'bg-red-50');
+                    submitQuiz(); // Auto-submit
+                }
+            }, 1000);
+        }
+
+        // Function to render questions
+        function renderQuestions() {
+            let questionsHTML = '';
+            questions.forEach((q, index) => {
+                const qNum = index + 1;
+                questionsHTML += `
+                    <div class="p-4 border border-gray-200 rounded-lg shadow-sm" id="q-${index}">
+                        <p class="font-bold text-lg mb-4 text-gray-800">${qNum}. ${q.q}</p>
+                        <div class="space-y-3">
+                            ${['a', 'b', 'c', 'd'].map(optionKey => `
+                                <div class="flex items-start option-row p-2 rounded-md transition duration-150" data-question="${index}" data-option="${optionKey}">
+                                    <input type="radio" id="q${index}${optionKey}" name="q${index}" value="${optionKey}" class="mt-1 text-blue-600 focus:ring-blue-500 w-4 h-4">
+                                    <label for="q${index}${optionKey}" class="ml-3 text-gray-700 cursor-pointer text-base w-full">
+                                        ${optionKey.toUpperCase()}) ${q.options[optionKey]}
+                                    </label>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div id="answer-display-${index}" class="mt-4 text-sm font-bold hidden border-l-4 border-blue-500 bg-blue-50 p-3 rounded-md text-blue-700"></div>
+                    </div>
+                `;
+            });
+            questionsContainer.innerHTML = questionsHTML;
+        }
+
+        // Function to handle quiz submission
+        function submitQuiz(event) {
+            if (event) event.preventDefault();
+
+            // Check if already submitted
+            if (submitButton.disabled) return;
+
+            // Disable submit button
+            submitButton.disabled = true;
+            submitButton.textContent = 'परिणाम जमा हो गया (Submitted)';
+
+            // Stop timer
+            clearInterval(timerInterval);
+
+            let score = 0;
+            const formData = new FormData(quizForm);
+
+            // Process all questions
+            questions.forEach((q, index) => {
+                const userAnswer = formData.get(`q${index}`);
+                const correctAnswer = q.answer;
+                
+                // Disable all radio buttons for this question
+                document.querySelectorAll(`input[name="q${index}"]`).forEach(radio => {
+                    radio.disabled = true;
+                });
+
+                // Get all option rows for this question
+                const optionRows = document.querySelectorAll(`.option-row[data-question="${index}"]`);
+
+                // Highlight the correct answer
+                const correctRow = document.querySelector(`.option-row[data-question="${index}"][data-option="${correctAnswer}"]`);
+                if (correctRow) {
+                    correctRow.classList.add('correct-highlight', 'border');
+                    const correctLabel = correctRow.querySelector('label');
+                    if (correctLabel) {
+                        correctLabel.classList.add('correct-answer-label');
+                    }
+                }
+                
+                if (userAnswer) {
+                    const userRow = document.querySelector(`.option-row[data-question="${index}"][data-option="${userAnswer}"]`);
+                    
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                    } else {
+                        // User answered incorrectly
+                        if (userRow) {
+                            userRow.classList.add('incorrect-highlight', 'border');
+                            // Ensure user selection is visible
+                            const userRadio = userRow.querySelector('input');
+                            if (userRadio) userRadio.checked = true;
+                        }
+                    }
+                }
+                
+                // Show the correct answer text below the question
+                const answerDisplay = document.getElementById(`answer-display-${index}`);
+                answerDisplay.textContent = `सही उत्तर: (${correctAnswer.toUpperCase()}) ${q.options[correctAnswer]}`;
+                answerDisplay.classList.remove('hidden');
+            });
+
+            // Display final score
+            resultElement.textContent = `प्रिय ${studentName}, आपका कुल स्कोर: ${score} / ${questions.length}`;
+            resultElement.classList.remove('hidden');
+            window.scrollTo(0, 0); // Scroll to top to see result
+
+            // Download CSV
+            downloadCSV(studentName, score);
+        }
+
+        // Function to download CSV
+        function downloadCSV(name, score) {
+            const now = new Date();
+            // Format date and time for CSV (e.g., 2023-11-28 21:02:30 IST)
+            const dateTime = now.toLocaleString('en-IN', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit',
+                hour12: false, timeZoneName: 'short'
+            }).replace(',', ' ');
+            
+            const csvContent = "data:text/csv;charset=utf-8," +
+                "Student Name,Total Score,Date/Time\n" +
+                `"${name}",${score},"${dateTime}"`;
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Event Listeners
+        startButton.addEventListener('click', startQuiz);
+        quizForm.addEventListener('submit', submitQuiz);
+        
+        // Disable right-click globally
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+    </script>
+</body>
+</html>
