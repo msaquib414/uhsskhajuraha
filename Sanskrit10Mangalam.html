@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कक्षा 10 संस्कृत: मंगलम् (Mangalam)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Using Tailwind's font-sans as default */
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+        /* Custom styles for marking answers after submission */
+        .correct-highlight {
+            background-color: #d1fae5; /* green-100 */
+            border-color: #10b981; /* green-500 */
+        }
+        .incorrect-highlight {
+            background-color: #fee2e2; /* red-100 */
+            border-color: #ef4444; /* red-500 */
+        }
+        .correct-answer-label {
+            color: #059669; /* green-600 */
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-orange-50" oncontextmenu="return false;">
+
+    <!-- 1. Name Input Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 transition-opacity duration-300">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md border-t-8 border-orange-600 transform scale-100 transition-transform duration-300">
+            <h2 class="text-3xl font-extrabold mb-4 text-center text-gray-800">कक्षा 10 संस्कृत प्रश्नोत्तरी</h2>
+            <p class="mb-6 text-center text-gray-600 font-medium">पाठ 1: मंगलम् (Mangalam)</p>
+            <div class="mb-6">
+                <label for="studentName" class="block text-sm font-semibold text-gray-700 mb-2">विद्यार्थी का नाम:</label>
+                <input type="text" id="studentName" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500 transition" placeholder="जैसे: रोहित कुमार">
+                <p id="nameError" class="text-red-500 text-sm mt-2 hidden">कृपया अपना नाम दर्ज करें।</p>
+            </div>
+            <button id="startButton" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-4 rounded-lg text-lg transition duration-300 shadow-md hover:shadow-lg">
+                प्रश्नोत्तरी शुरू करें (25 मिनट)
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. Main Quiz Content (Initially hidden) -->
+    <div id="quizContainer" class="hidden">
+        <!-- Timer (Fixed at Top Center) -->
+        <div id="timer" class="fixed top-0 left-1/2 -translate-x-1/2 bg-white px-8 py-3 rounded-b-xl shadow-xl border border-t-0 z-40 text-2xl font-extrabold text-orange-700 min-w-[200px] text-center transition-colors duration-500">
+            समय शेष: 25:00
+        </div>
+
+        <div class="container mx-auto p-4 max-w-3xl pt-24 pb-16">
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-2xl border border-gray-200">
+                <h1 class="text-3xl font-bold text-center mb-2 text-gray-800">मंगलम् (Mangalam)</h1>
+                <p class="text-center text-gray-500 mb-6">कक्षा 10 संस्कृत (पीयूषम्) | उपनिषद</p>
+                
+                <!-- Result Display Area -->
+                <div id="result" class="hidden text-center text-2xl font-extrabold mb-8 p-4 bg-orange-100 text-orange-800 rounded-lg shadow-inner transition duration-500"></div>
+
+                <!-- Quiz Form -->
+                <form id="quizForm">
+                    <div id="questionsContainer" class="space-y-10"></div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-12 text-center">
+                        <button type="submit" id="submitButton" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-10 rounded-xl text-xl transition duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed">
+                            परिणाम जमा करें (Submit)
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Note: Answer Distribution: A: 8, B: 7, C: 8, D: 7 (Total 30)
+        const questions = [
+            { q: "1. 'मंगलम्' पाठ में कितने मंत्र संकलित हैं?", options: { a: "चार", b: "पाँच", c: "सात", d: "आठ" }, answer: "b" },
+            { q: "2. सत्य का मुख किस पात्र से ढका हुआ है?", options: { a: "हिरण्मय पात्र से", b: "रजत पात्र से", c: "मृण्मय पात्र से", d: "ताम्र पात्र से" }, answer: "a" },
+            { q: "3. 'मंगलम्' पाठ के रचनाकार (संकलनकर्ता) कौन हैं?", options: { a: "कालिदास", b: "महर्षि वेदव्यास", c: "वाल्मीकि", d: "माघ" }, answer: "b" },
+            { q: "4. उपनिषद किसका अंतिम भाग है?", options: { a: "रामायण का", b: "लौकिक संस्कृत का", c: "वैदिक वाङ्मय का", d: "आधुनिक साहित्य का" }, answer: "c" },
+            { q: "5. 'अणोरणीयान् महतो महीयान्...' मंत्र किस उपनिषद से संगृहीत है?", options: { a: "मुण्डकोपनिषद", b: "कठोपनिषद", c: "ईशावास्योपनिषद", d: "श्वेताश्वतरोपनिषद" }, answer: "b" },
+            { q: "6. महान से भी महान क्या है?", options: { a: "आत्मा", b: "देवता", c: "ऋषि", d: "दानव" }, answer: "a" },
+            { q: "7. किसकी विजय होती है?", options: { a: "असत्य की", b: "क्रोध की", c: "सत्य की", d: "मोह की" }, answer: "c" },
+            { q: "8. नदियाँ नाम और रूप को छोड़कर कहाँ मिलती हैं?", options: { a: "सरोवर में", b: "समुद्र में", c: "तालाब में", d: "झील में" }, answer: "b" },
+            { q: "9. 'हिरण्मयेन पात्रेण...' मंत्र किस उपनिषद से लिया गया है?", options: { a: "कठोपनिषद", b: "मुण्डकोपनिषद", c: "श्वेताश्वतरोपनिषद", d: "ईशावास्योपनिषद" }, answer: "d" },
+            { q: "10. 'सत्यमेव जयते' किस उपनिषद का मूलमंत्र है?", options: { a: "मुण्डकोपनिषद", b: "ईशावास्योपनिषद", c: "कठोपनिषद", d: "केनोपनिषद" }, answer: "a" },
+            { q: "11. किसकी विजय नहीं होती है?", options: { a: "सत्य की", b: "धर्म की", c: "असत्य की", d: "सज्जन की" }, answer: "c" },
+            { q: "12. सूक्ष्म से भी सूक्ष्मतर क्या है?", options: { a: "आत्मा", b: "गगन", c: "परमात्मा", d: "संसार" }, answer: "a" },
+            { q: "13. जंतु के हृदय रूपी गुफा में क्या स्थित है?", options: { a: "शरीर", b: "देवता", c: "राक्षस", d: "आत्मा (तत्व)" }, answer: "d" },
+            { q: "14. 'यथा नद्यः स्यन्दमानाः...' मंत्र किस उपनिषद से है?", options: { a: "कठोपनिषद", b: "ईशावास्योपनिषद", c: "मुण्डकोपनिषद", d: "श्वेताश्वतरोपनिषद" }, answer: "c" },
+            { q: "15. 'वेदाहमेतं पुरुषं महान्तम्...' मंत्र किस उपनिषद से लिया गया है?", options: { a: "कठोपनिषद", b: "श्वेताश्वतरोपनिषद", c: "मुण्डकोपनिषद", d: "ईशावास्योपनिषद" }, answer: "b" },
+            { q: "16. विद्वान शोक रहित होकर किसको देखता है?", options: { a: "परमात्मा (महिमा) को", b: "संसार को", c: "धन को", d: "मित्र को" }, answer: "a" },
+            { q: "17. सत्य से किसका रास्ता प्रशस्त होता है?", options: { a: "घर का", b: "विद्यालय का", c: "देवलोक का", d: "युद्ध का" }, answer: "c" },
+            { q: "18. उपनिषद किस शास्त्र के सिद्धांतों को प्रकट करते हैं?", options: { a: "दर्शन शास्त्र", b: "व्याकरण शास्त्र", c: "छंद शास्त्र", d: "धर्म शास्त्र" }, answer: "a" },
+            { q: "19. नदियाँ क्या छोड़कर समुद्र में मिल जाती हैं?", options: { a: "जल", b: "वेग", c: "नाम और रूप", d: "किनारा" }, answer: "c" },
+            { q: "20. साधक (विद्वान) किसको पार कर जाता है?", options: { a: "मृत्यु को", b: "समुद्र को", c: "पर्वत को", d: "आकाश को" }, answer: "a" },
+            { q: "21. सत्य धर्म की प्राप्ति के लिए किसे हटा दें?", options: { a: "लौह पात्र को", b: "स्वर्णमय (हिरण्मय) पात्र को", c: "चाँदी के पात्र को", d: "पीतल के पात्र को" }, answer: "b" },
+            { q: "22. ऋषिगण 'देवयान' मार्ग से कहाँ पहुँचते हैं?", options: { a: "इन्द्रलोक", b: "सत्य के निधान तक", c: "पाताल लोक", d: "मृत्यु लोक" }, answer: "b" },
+            { q: "23. आदित्य वर्ण (सूर्य के समान) किसे कहा गया है?", options: { a: "अंधकार को", b: "आत्मा को", c: "अज्ञान को", d: "पुरुष (परमात्मा) को" }, answer: "d" },
+            { q: "24. 'मंगलम्' पाठ में किसके मंत्र हैं?", options: { a: "पुराण के", b: "वेद (उपनिषद) के", c: "रामायण के", d: "महाभारत के" }, answer: "b" },
+            { q: "25. परमात्मा की महिमा कहाँ गाई गई है?", options: { a: "सर्वत्र", b: "केवल भारत में", c: "केवल घर में", d: "कहीं नहीं" }, answer: "a" },
+            { q: "26. भारत की प्राचीन पवित्र परंपरा में 'मंगलम्' पाठ का क्या महत्व है?", options: { a: "मंगलाचरण", b: "कहानी", c: "नाटक", d: "निबंध" }, answer: "a" },
+            { q: "27. कौन अपने नाम और रूप से विमुक्त होता है?", options: { a: "मूर्ख", b: "विद्वान", c: "राजा", d: "बालक" }, answer: "b" },
+            { q: "28. 'तमसो मा ज्योतिर्गमय' जैसा भाव किस मंत्र में है?", options: { a: "वेदाहमेतं...", b: "हिरण्मयेन...", c: "सत्यमेव...", d: "यथा नद्यः..." }, answer: "a" },
+            { q: "29. आत्मा के गूढ़ रहस्य की व्याख्या किस उपनिषद में की गई है?", options: { a: "कठोपनिषद", b: "ईशावास्योपनिषद", c: "मुण्डकोपनिषद", d: "श्वेताश्वतरोपनिषद" }, answer: "a" },
+            { q: "30. ज्ञानी और अज्ञानी में अंतर किस उपनिषद में बताया गया है?", options: { a: "कठोपनिषद", b: "श्वेताश्वतरोपनिषद", c: "मुण्डकोपनिषद", d: "ईशावास्योपनिषद" }, answer: "b" }
+        ];
+
+        // Global variables
+        let studentName = "";
+        let timerInterval;
+        let totalTime = 25 * 60; // 25 minutes in seconds
+
+        // DOM Elements
+        const nameModal = document.getElementById('nameModal');
+        const studentNameInput = document.getElementById('studentName');
+        const nameError = document.getElementById('nameError');
+        const startButton = document.getElementById('startButton');
+        const quizContainer = document.getElementById('quizContainer');
+        const timerElement = document.getElementById('timer');
+        const questionsContainer = document.getElementById('questionsContainer');
+        const quizForm = document.getElementById('quizForm');
+        const submitButton = document.getElementById('submitButton');
+        const resultElement = document.getElementById('result');
+
+        // Function to start the quiz
+        function startQuiz() {
+            studentName = studentNameInput.value.trim();
+            if (studentName === "") {
+                nameError.classList.remove('hidden');
+                studentNameInput.classList.add('border-red-500');
+                return;
+            }
+            // Hide modal, show quiz
+            nameModal.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                nameModal.classList.add('hidden');
+            }, 300); 
+            quizContainer.classList.remove('hidden');
+            
+            // Start timer
+            startTimer();
+            // Render questions
+            renderQuestions();
+        }
+
+        // Function to start the timer
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                totalTime--;
+                const minutes = Math.floor(totalTime / 60);
+                let seconds = totalTime % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+
+                timerElement.textContent = `समय शेष: ${minutes}:${seconds}`;
+
+                if (totalTime <= 300) { // 5 minutes remaining
+                    timerElement.classList.add('text-red-600');
+                }
+                
+                if (totalTime <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.textContent = "समय समाप्त! (Time Over)";
+                    timerElement.classList.remove('text-orange-700', 'text-red-600');
+                    timerElement.classList.add('text-red-800', 'bg-red-100');
+                    submitQuiz(); // Auto-submit
+                }
+            }, 1000);
+        }
+
+        // Function to render questions
+        function renderQuestions() {
+            let questionsHTML = '';
+            questions.forEach((q, index) => {
+                const qNum = index + 1;
+                questionsHTML += `
+                    <div class="p-5 border border-orange-200 rounded-xl shadow-sm bg-orange-50/50" id="q-${index}">
+                        <p class="font-bold text-lg mb-4 text-gray-800">${qNum}. ${q.q}</p>
+                        <div class="space-y-3">
+                            ${['a', 'b', 'c', 'd'].map(optionKey => `
+                                <div class="flex items-start option-row p-3 rounded-lg hover:bg-orange-100 transition duration-150 cursor-pointer" onclick="document.getElementById('q${index}${optionKey}').click()" data-question="${index}" data-option="${optionKey}">
+                                    <input type="radio" id="q${index}${optionKey}" name="q${index}" value="${optionKey}" class="mt-1 text-orange-600 focus:ring-orange-500 w-4 h-4 cursor-pointer">
+                                    <label for="q${index}${optionKey}" class="ml-3 text-gray-700 cursor-pointer text-base w-full select-none">
+                                        ${optionKey.toUpperCase()}) ${q.options[optionKey]}
+                                    </label>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div id="answer-display-${index}" class="mt-4 text-sm font-bold hidden border-l-4 border-orange-500 bg-orange-100 p-3 rounded-md text-orange-900"></div>
+                    </div>
+                `;
+            });
+            questionsContainer.innerHTML = questionsHTML;
+        }
+
+        // Function to handle quiz submission
+        function submitQuiz(event) {
+            if (event) event.preventDefault();
+
+            // Check if already submitted
+            if (submitButton.disabled) return;
+
+            // Disable submit button
+            submitButton.disabled = true;
+            submitButton.textContent = 'परिणाम जमा हो गया (Submitted)';
+            submitButton.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // Stop timer
+            clearInterval(timerInterval);
+
+            let score = 0;
+            const formData = new FormData(quizForm);
+
+            // Process all questions
+            questions.forEach((q, index) => {
+                const userAnswer = formData.get(`q${index}`);
+                const correctAnswer = q.answer;
+                
+                // Disable all radio buttons for this question
+                document.querySelectorAll(`input[name="q${index}"]`).forEach(radio => {
+                    radio.disabled = true;
+                });
+
+                // Get all option rows for this question
+                const optionRows = document.querySelectorAll(`.option-row[data-question="${index}"]`);
+
+                // Highlight the correct answer
+                const correctRow = document.querySelector(`.option-row[data-question="${index}"][data-option="${correctAnswer}"]`);
+                if (correctRow) {
+                    correctRow.classList.add('correct-highlight', 'border-2');
+                    const correctLabel = correctRow.querySelector('label');
+                    if (correctLabel) {
+                        correctLabel.classList.add('correct-answer-label');
+                    }
+                }
+                
+                if (userAnswer) {
+                    const userRow = document.querySelector(`.option-row[data-question="${index}"][data-option="${userAnswer}"]`);
+                    
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                    } else {
+                        // User answered incorrectly
+                        if (userRow) {
+                            userRow.classList.add('incorrect-highlight', 'border-2');
+                            // Ensure user selection is visible
+                            const userRadio = userRow.querySelector('input');
+                            if (userRadio) userRadio.checked = true; 
+                        }
+                    }
+                }
+                
+                // Show the correct answer text below the question
+                const answerDisplay = document.getElementById(`answer-display-${index}`);
+                answerDisplay.textContent = `सही उत्तर: (${correctAnswer.toUpperCase()}) ${q.options[correctAnswer]}`;
+                answerDisplay.classList.remove('hidden');
+            });
+
+            // Display final score
+            resultElement.textContent = `प्रिय ${studentName}, आपका कुल स्कोर: ${score} / ${questions.length}`;
+            resultElement.classList.remove('hidden');
+            window.scrollTo(0, 0); // Scroll to top to see result
+
+            // Download CSV
+            downloadCSV(studentName, score);
+        }
+
+        // Function to download CSV
+        function downloadCSV(name, score) {
+            const now = new Date();
+            // Format date and time for CSV (e.g., 2023-11-28 21:02:30 IST)
+            const dateTime = now.toLocaleString('en-IN', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit',
+                hour12: false, timeZoneName: 'short'
+            }).replace(',', ' ');
+            
+            const csvContent = "data:text/csv;charset=utf-8," +
+                "Student Name,Total Score,Date/Time\n" +
+                `"${name}",${score},"${dateTime}"`;
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Event Listeners
+        startButton.addEventListener('click', startQuiz);
+        quizForm.addEventListener('submit', submitQuiz);
+        
+        // Disable right-click globally
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+    </script>
+</body>
+</html>
