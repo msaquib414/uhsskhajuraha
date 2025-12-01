@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 10 English: The Pace for Living Quiz</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            user-select: none; /* Prevent text selection */
+            -webkit-user-select: none;
+        }
+
+        /* Styles for result feedback */
+        .correct-answer-box {
+            background-color: #dcfce7; /* green-100 */
+            border: 1px solid #16a34a; /* green-600 */
+            color: #15803d; /* green-700 */
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .user-correct {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+        }
+
+        .user-wrong {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+        }
+
+        /* Sticky Timer */
+        .sticky-timer {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen pb-12" oncontextmenu="return false;">
+
+    <!-- Name Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-[60] backdrop-blur-sm px-4">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md transform transition-all">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">Welcome!</h2>
+            <p class="text-center text-gray-600 mb-6">Class 10 English - Chapter 1</p>
+            
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Enter Student Name</label>
+                    <input type="text" id="studentName" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-lg" placeholder="Your Name...">
+                    <p id="nameError" class="text-red-500 text-sm mt-1 hidden">Please enter your name to start.</p>
+                </div>
+                <button onclick="startQuiz()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition duration-200 shadow-lg text-lg">
+                    Start Quiz
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timer Display -->
+    <div id="timerDisplay" class="sticky-timer hidden bg-white px-8 py-2 rounded-b-xl border border-t-0 border-gray-200 text-xl font-bold text-blue-800 min-w-[200px] text-center">
+        25:00
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quizContainer" class="hidden container mx-auto px-4 pt-24 max-w-4xl">
+        <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200">
+            <!-- Header -->
+            <div class="bg-indigo-600 p-6 md:p-8 text-white text-center">
+                <h1 class="text-2xl md:text-4xl font-bold mb-2">The Pace for Living</h1>
+                <p class="opacity-90 text-lg">Based on Bihar Board Class 10 English Textbook</p>
+            </div>
+
+            <!-- Score Section (Hidden initially) -->
+            <div id="resultHeader" class="hidden bg-green-50 p-8 text-center border-b border-green-100">
+                <h3 class="text-3xl font-bold text-green-800" id="scoreText"></h3>
+                <p class="text-green-600 mt-2 font-medium">Scroll down to check correct answers.</p>
+            </div>
+
+            <!-- Questions Form -->
+            <form id="quizForm" class="p-6 md:p-10 space-y-10">
+                <!-- Questions will be injected here via JS -->
+            </form>
+
+            <!-- Submit Button Footer -->
+            <div class="p-8 bg-gray-50 border-t border-gray-200 text-center">
+                <button id="submitBtn" onclick="submitQuiz(event)" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-16 rounded-full text-xl shadow-lg transform transition hover:-translate-y-1 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                    Submit Quiz
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions Data derived from the PDF content
+        // Distribution target: A:10, B:10, C:10, D:10
+        const questions = [
+            {
+                q: "1. Who is the author of 'The Pace for Living'?",
+                options: { a: "Satyajit Ray", b: "R.C. Hutchinson", c: "Toni Morrison", d: "Leo Tolstoy" },
+                correct: "b"
+            },
+            {
+                q: "2. R.C. Hutchinson is a _________ novelist.",
+                options: { a: "British", b: "American", c: "French", d: "Russian" },
+                correct: "a"
+            },
+            {
+                q: "3. Where did the author see the play mentioned in the essay?",
+                options: { a: "London", b: "New York", c: "Dublin", d: "Paris" },
+                correct: "c"
+            },
+            {
+                q: "4. Who was the chief character in the play?",
+                options: { a: "An elderly corn-merchant", b: "A young doctor", c: "A retired soldier", d: "A fast driver" },
+                correct: "a"
+            },
+            {
+                q: "5. Which town did the corn-merchant belong to?",
+                options: { a: "A big city in England", b: "A small Irish country town", c: "A village in Spain", d: "A town in Somerset" },
+                correct: "b"
+            },
+            {
+                q: "6. What was the condition of the corn-merchant's heart?",
+                options: { a: "Strong", b: "Normal", c: "Dicky (Weak)", d: "Perfect" },
+                correct: "c"
+            },
+            {
+                q: "7. Who was cheating the corn-merchant?",
+                options: { a: "His son", b: "His wife", c: "His friend", d: "His nephew" },
+                correct: "d"
+            },
+            {
+                q: "8. How much did the corn-merchant's wife spend on a holiday?",
+                options: { a: "£10", b: "£50", c: "£100", d: "£5" },
+                correct: "a"
+            },
+            {
+                q: "9. The corn-merchant complained about an aeroplane flying at what speed?",
+                options: { a: "500 miles an hour", b: "1,000 miles an hour", c: "90 miles an hour", d: "2,000 miles an hour" },
+                correct: "b"
+            },
+            {
+                q: "10. How did the author find the corn-merchant's line about the aeroplane?",
+                options: { a: "Boring", b: "Sad", c: "Enchanting", d: "Irrelevant" },
+                correct: "c"
+            },
+            {
+                q: "11. The author enjoys going in a car at what speed?",
+                options: { a: "60 miles an hour", b: "80 miles an hour", c: "100 miles an hour", d: "90 miles an hour" },
+                correct: "d"
+            },
+            {
+                q: "12. What is the condition for the author to enjoy driving fast?",
+                options: { a: "He must be driving and it's not his car", b: "He is a passenger", c: "It is his own car", d: "The road is empty" },
+                correct: "a"
+            },
+            {
+                q: "13. Where does the author adore the machines that hurl you about?",
+                options: { a: "Dublin", b: "Battersea", c: "Somerset", d: "Spain" },
+                correct: "b"
+            },
+            {
+                q: "14. To dine in London and lunch in New York next day seems a ________ experience.",
+                options: { a: "Terrible", b: "Tiring", c: "Satisfactory", d: "Costly" },
+                correct: "c"
+            },
+            {
+                q: "15. The author admits that fast travel excludes the real pleasures of travel found in:",
+                options: { a: "A country bus in Somerset", b: "A train in London", c: "A flight to Paris", d: "A ship to America" },
+                correct: "a"
+            },
+            {
+                q: "16. The author belongs to the tribe of ________.",
+                options: { a: "Fast thinkers", b: "Slow thinkers", c: "Optimists", d: "Pessimists" },
+                correct: "b"
+            },
+            {
+                q: "17. What does the French phrase 'l'esprit de l'escalier' mean in this context?",
+                options: { a: "Thinking fast", b: "Speaking fluent French", c: "Lighting on repartee 4 hours later", d: "Climbing stairs quickly" },
+                correct: "c"
+            },
+            {
+                q: "18. What kind of marks does the author get in intelligence tests?",
+                options: { a: "The highest", b: "Average", c: "Good", d: "The lowest" },
+                correct: "d"
+            },
+            {
+                q: "19. According to the author, intelligence tests are designed to measure:",
+                options: { a: "The speed of your mind", b: "Your general knowledge", c: "Your memory", d: "Your depth of thought" },
+                correct: "a"
+            },
+            {
+                q: "20. When the author goes to the cinema, he finds himself in a:",
+                options: { a: "State of joy", b: "Hopeless fog", c: "Deep sleep", d: "Critical mood" },
+                correct: "b"
+            },
+            {
+                q: "21. Who enlightens the author about the plot in the cinema?",
+                options: { a: "His friend", b: "The usher", c: "His wife", d: "His nephew" },
+                correct: "c"
+            },
+            {
+                q: "22. How many girls were in the film mentioned by the author?",
+                options: { a: "Two", b: "Five", c: "Four", d: "Three" },
+                correct: "d"
+            },
+            {
+                q: "23. Which of the following was NOT one of the girls in the film?",
+                options: { a: "A redhead", b: "A tall blonde", c: "A short blonde", d: "A medium-sized brunette" },
+                correct: "a"
+            },
+            {
+                q: "24. The hero in the film falls in love with the girls in which order?",
+                options: { a: "A, B, C", b: "B, C, A", c: "C, A, B", d: "B, A, C" },
+                correct: "b"
+            },
+            {
+                q: "25. The author's mind does not work in:",
+                options: { a: "Low gear", b: "Medium gear", c: "High gear", d: "Any gear" },
+                correct: "c"
+            },
+            {
+                q: "26. People today think much faster than people did ________ years ago.",
+                options: { a: "Twenty", b: "Fifty", c: "One hundred", d: "Thirty" },
+                correct: "d"
+            },
+            {
+                q: "27. In the word study section, 'Ancestors' corresponds to:",
+                options: { a: "Forefathers", b: "Descendants", c: "Relatives", d: "Neighbours" },
+                correct: "a"
+            },
+            {
+                q: "28. 'Prejudice' means:",
+                options: { a: "A fair judgment", b: "A pre-conceived notion", c: "A post-event analysis", d: "A legal term" },
+                correct: "b"
+            },
+            {
+                q: "29. In the sentence 'I enjoy swimming', the word 'swimming' is a:",
+                options: { a: "Verb", b: "Adjective", c: "Gerund (Verbal Noun)", d: "Adverb" },
+                correct: "c"
+            },
+            {
+                q: "30. The first letter of a Proper Noun is always:",
+                options: { a: "Small", b: "Italic", c: "Bold", d: "Capital" },
+                correct: "d"
+            },
+            {
+                q: "31. Change into Indirect Speech: He said, 'I play football.'",
+                options: { a: "He said that he played football.", b: "He says he plays football.", c: "He said that I played football.", d: "He said that he plays football." },
+                correct: "a"
+            },
+            {
+                q: "32. Change into Indirect Speech: She said to me, 'Rekha is singing.'",
+                options: { a: "She told me that Rekha is singing.", b: "She told me that Rekha was singing.", c: "She said Rekha was singing.", d: "She asked if Rekha was singing." },
+                correct: "b"
+            },
+            {
+                q: "33. If the reporting verb is in the past tense, 'now' changes to ______ in indirect speech.",
+                options: { a: "today", b: "tomorrow", c: "then", d: "later" },
+                correct: "c"
+            },
+            {
+                q: "34. Indirect Speech: My friend said to me, 'Water boils at 100°C.'",
+                options: { a: "My friend told me that water boiled at 100°C.", b: "My friend told me that water would boil at 100°C.", c: "My friend said that water is boiling at 100°C.", d: "My friend told me that water boils at 100°C." },
+                correct: "d"
+            },
+            {
+                q: "35. In the play, the corn-merchant's cry of despair was: 'Now that's too ______!'",
+                options: { a: "Fast", b: "Slow", c: "Expensive", d: "Far" },
+                correct: "a"
+            },
+            {
+                q: "36. The author states that the Irish get at subtle truths by:",
+                options: { a: "Direct statements", b: "The most unlikely approaches", c: "Logical reasoning", d: "Silence" },
+                correct: "b"
+            },
+            {
+                q: "37. Who takes his hat off when he comes indoors in the film?",
+                options: { a: "The villain", b: "The corn-merchant", c: "The hero", d: "The author" },
+                correct: "c"
+            },
+            {
+                q: "38. Those who do not think fast in the High Street nowadays may not get another chance in this world to:",
+                options: { a: "Earn money", b: "Travel", c: "Watch a movie", d: "Think at all" },
+                correct: "d"
+            },
+            {
+                q: "39. Which word means 'having the power to cast a spell'?",
+                options: { a: "Enchanting", b: "Superficial", c: "Dicky", d: "Fanciful" },
+                correct: "a"
+            },
+            {
+                q: "40. Which word means 'pertaining to the surface only'?",
+                options: { a: "Deep", b: "Superficial", c: "Core", d: "Central" },
+                correct: "b"
+            }
+        ];
+
+        // State variables
+        let timeLeft = 25 * 60; // 25 minutes
+        let timerInterval;
+        let isSubmitted = false;
+        let studentName = "";
+
+        // Elements
+        const quizForm = document.getElementById('quizForm');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Functions
+        function startQuiz() {
+            const nameInput = document.getElementById('studentName');
+            if (nameInput.value.trim() === "") {
+                document.getElementById('nameError').classList.remove('hidden');
+                return;
+            }
+            studentName = nameInput.value.trim();
+            document.getElementById('nameModal').classList.add('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+            timerDisplay.classList.remove('hidden');
+            
+            renderQuestions();
+            startTimer();
+        }
+
+        function renderQuestions() {
+            let html = "";
+            questions.forEach((q, index) => {
+                html += `
+                <div class="border border-gray-200 rounded-xl p-6 hover:shadow-md transition-shadow bg-gray-50" id="qbox-${index}">
+                    <p class="font-bold text-gray-800 text-lg mb-4"><span class="text-indigo-600">${index + 1}.</span> ${q.q}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${Object.keys(q.options).map(key => `
+                            <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-white transition-colors" id="label-${index}-${key}">
+                                <input type="radio" name="q${index}" value="${key}" class="w-5 h-5 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                                <span class="ml-3 text-gray-700 font-medium">${key.toUpperCase()}) ${q.options[key]}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div id="feedback-${index}" class="hidden"></div>
+                </div>
+                `;
+            });
+            quizForm.innerHTML = html;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz(null);
+                    return;
+                }
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                if (timeLeft < 300) { // Red warning last 5 mins
+                    timerDisplay.classList.add('text-red-600', 'bg-red-50');
+                }
+            }, 1000);
+        }
+
+        function submitQuiz(e) {
+            if (e) e.preventDefault();
+            if (isSubmitted) return;
+            isSubmitted = true;
+            clearInterval(timerInterval);
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Submitted - Checking Results...";
+
+            let score = 0;
+            const formData = new FormData(quizForm);
+
+            questions.forEach((q, index) => {
+                const selected = formData.get(`q${index}`);
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                const qBox = document.getElementById(`qbox-${index}`);
+
+                // Disable inputs
+                const inputs = document.getElementsByName(`q${index}`);
+                inputs.forEach(input => input.disabled = true);
+
+                // Check answer logic
+                let isCorrect = false;
+                if (selected === q.correct) {
+                    score++;
+                    isCorrect = true;
+                }
+
+                // Show correct answer feedback
+                feedbackDiv.classList.remove('hidden');
+                feedbackDiv.classList.add('correct-answer-box');
+                feedbackDiv.innerHTML = `Correct Answer: <span class="uppercase">${q.correct}</span>) ${q.options[q.correct]}`;
+
+                // Highlight user selection
+                if (selected) {
+                    const selectedLabel = document.getElementById(`label-${index}-${selected}`);
+                    if (isCorrect) {
+                        selectedLabel.classList.add('user-correct');
+                    } else {
+                        selectedLabel.classList.add('user-wrong');
+                    }
+                }
+                
+                // Always highlight correct option green if user was wrong or didn't answer
+                if (!isCorrect) {
+                     const correctLabel = document.getElementById(`label-${index}-${q.correct}`);
+                     correctLabel.classList.add('user-correct');
+                }
+            });
+
+            // Show Result Header
+            const resultHeader = document.getElementById('resultHeader');
+            resultHeader.classList.remove('hidden');
+            document.getElementById('scoreText').innerText = `${studentName}, You Scored: ${score} / 40`;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Generate CSV
+            generateCSV(studentName, score);
+        }
+
+        function generateCSV(name, score) {
+            const date = new Date().toLocaleString();
+            const csvContent = `data:text/csv;charset=utf-8,Student Name,Score,Total Questions,Date\n"${name}",${score},40,"${date}"`;
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+        }
+
+        // Prevent Right Click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+    </script>
+</body>
+</html>
