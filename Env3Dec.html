@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>त्रैमासिक मूल्यांकन - पर्यावरण अध्ययन (Class III)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding-top: 60px; /* Space for timer */
+            user-select: none; /* Prevent text selection */
+        }
+
+        /* Timer Styling */
+        #timer-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #2c3e50;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Login Screen */
+        #login-screen {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1.2rem;
+            width: 70%;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #219150;
+        }
+
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        /* Quiz Section */
+        #quiz-section {
+            display: none;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        label:hover {
+            background-color: #f0f8ff;
+        }
+
+        /* Result Styling */
+        .correct-answer-display {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            color: #2e7d32;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none; /* Hidden initially */
+        }
+
+        .user-wrong {
+            color: #c0392b;
+        }
+        
+        .user-correct {
+            color: #27ae60;
+        }
+
+        #result-summary {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="timer-bar">समय: <span id="time-display">35:00</span></div>
+
+    <div class="container">
+        
+        <div id="login-screen">
+            <h2>स्वागत है! (Welcome)</h2>
+            <p>कृपया अपना नाम दर्ज करें परीक्षा शुरू करने के लिए:</p>
+            <input type="text" id="student-name" placeholder="आपका नाम (Your Name)">
+            <br>
+            <button onclick="startQuiz()">परीक्षा शुरू करें (Start Quiz)</button>
+        </div>
+
+        <div id="quiz-section">
+            <h1>पर्यावरण अध्ययन - दिसम्बर 2025</h1>
+            <p>निर्देश: सभी प्रश्न अनिवार्य हैं। प्रत्येक सही उत्तर के लिए 1 अंक है।</p>
+            <hr>
+
+            <form id="quiz-form">
+                <h3>सही शब्द चुनकर उत्तर दें:</h3>
+
+                <div class="question-block" id="q1-block">
+                    <div class="question-text">1. [cite_start]वर्षा के पानी को .......... करना चाहिए। [cite: 4]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q1" value="A"> A. बर्बाद</label>
+                        <label><input type="radio" name="q1" value="B"> B. जमा</label>
+                        <label><input type="radio" name="q1" value="C"> C. गंदा</label>
+                        <label><input type="radio" name="q1" value="D"> D. उपर्युक्त में से कोई नहीं</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q2-block">
+                    <div class="question-text">2. [cite_start]मुँह सूर्य की ओर होने पर पीठ .......... दिशा में होती है। [cite: 5]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q2" value="A"> A. उत्तर</label>
+                        <label><input type="radio" name="q2" value="B"> B. दक्षिण</label>
+                        <label><input type="radio" name="q2" value="C"> C. पूरब</label>
+                        <label><input type="radio" name="q2" value="D"> D. पश्चिम</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q3-block">
+                    <div class="question-text">3. [cite_start]जल का मुख्य स्रोत .......... है। [cite: 5]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q3" value="A"> A. नहर</label>
+                        <label><input type="radio" name="q3" value="B"> B. वर्षा</label>
+                        <label><input type="radio" name="q3" value="C"> C. तालाब</label>
+                        <label><input type="radio" name="q3" value="D"> D. कुआँ</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q4-block">
+                    <div class="question-text">4. [cite_start]मुख्य दिशाएँ .......... होती हैं। [cite: 6]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q4" value="A"> A. तीन</label>
+                        <label><input type="radio" name="q4" value="B"> B. चार</label>
+                        <label><input type="radio" name="q4" value="C"> C. पाँच</label>
+                        <label><input type="radio" name="q4" value="D"> D. दस</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q5-block">
+                    <div class="question-text">5. [cite_start]पीने का पानी .......... रखना चाहिए। [cite: 6]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q5" value="A"> A. ढँक कर</label>
+                        <label><input type="radio" name="q5" value="B"> B. खुला</label>
+                        <label><input type="radio" name="q5" value="C"> C. धूप में</label>
+                        <label><input type="radio" name="q5" value="D"> D. छत पर</label>
+                    </div>
+                </div>
+
+                <h3>सही या गलत बताएँ:</h3>
+
+                <div class="question-block" id="q6-block">
+                    <div class="question-text">6. [cite_start]बादल आने पर बागों में मोर नाचने लगते हैं। [cite: 7]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q6" value="A"> A. सही (True)</label>
+                        <label><input type="radio" name="q6" value="B"> B. गलत (False)</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q7-block">
+                    <div class="question-text">7. [cite_start]पानी के बिना हम जीवित नहीं रह सकते हैं। [cite: 8]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q7" value="A"> A. गलत (False)</label>
+                        <label><input type="radio" name="q7" value="B"> B. सही (True)</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q8-block">
+                    <div class="question-text">8. [cite_start]सूर्य पूरब दिशा में अस्त (set) होता है। [cite: 8]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q8" value="A"> A. सही (True)</label>
+                        <label><input type="radio" name="q8" value="B"> B. गलत (False)</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q9-block">
+                    <div class="question-text">9. [cite_start]हमें खुले नल को बंद कर देना चाहिए। [cite: 9]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q9" value="A"> A. सही (True)</label>
+                        <label><input type="radio" name="q9" value="B"> B. गलत (False)</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q10-block">
+                    <div class="question-text">10. [cite_start]सड़क के बनने से गाँव में काफी सुविधा हो गई है। [cite: 10]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q10" value="A"> A. सही (True)</label>
+                        <label><input type="radio" name="q10" value="B"> B. गलत (False)</label>
+                    </div>
+                </div>
+
+                <h3>सही मिलान का चयन करें:</h3>
+
+                <div class="question-block" id="q11-block">
+                    <div class="question-text">11. [cite_start]'हवा में चलने वाले वाहन' का सही उदाहरण कौन सा है? [cite: 12]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q11" value="A"> A. कार</label>
+                        <label><input type="radio" name="q11" value="B"> B. स्टीमर</label>
+                        <label><input type="radio" name="q11" value="C"> C. हवाई जहाज</label>
+                        <label><input type="radio" name="q11" value="D"> D. बस</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q12-block">
+                    <div class="question-text">12. [cite_start]सूर्योदय (Sunrise) की दिशा कौन सी है? [cite: 12]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q12" value="A"> A. पश्चिम</label>
+                        <label><input type="radio" name="q12" value="B"> B. उत्तर</label>
+                        <label><input type="radio" name="q12" value="C"> C. दक्षिण</label>
+                        <label><input type="radio" name="q12" value="D"> D. पूरब</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q13-block">
+                    <div class="question-text">13. [cite_start]'जमीन पर चलने वाले वाहन' का उदाहरण है: [cite: 12]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q13" value="A"> A. स्टीमर</label>
+                        <label><input type="radio" name="q13" value="B"> B. कार</label>
+                        <label><input type="radio" name="q13" value="C"> C. हवाई जहाज</label>
+                        <label><input type="radio" name="q13" value="D"> D. नाव</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q14-block">
+                    <div class="question-text">14. [cite_start]ध्रुव तारा किस दिशा में दिखाई देता है? [cite: 12]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q14" value="A"> A. उत्तर</label>
+                        <label><input type="radio" name="q14" value="B"> B. दक्षिण</label>
+                        <label><input type="radio" name="q14" value="C"> C. पूरब</label>
+                        <label><input type="radio" name="q14" value="D"> D. पश्चिम</label>
+                    </div>
+                </div>
+
+                <div class="question-block" id="q15-block">
+                    <div class="question-text">15. [cite_start]'पानी पर चलने वाले वाहन' का सही उदाहरण है: [cite: 12]</div>
+                    <div class="options-group">
+                        <label><input type="radio" name="q15" value="A"> A. हवाई जहाज</label>
+                        <label><input type="radio" name="q15" value="B"> B. कार</label>
+                        <label><input type="radio" name="q15" value="C"> C. स्टीमर</label>
+                        <label><input type="radio" name="q15" value="D"> D. रेलगाड़ी</label>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button type="button" id="submit-btn" onclick="submitQuiz()">जमा करें (Submit)</button>
+                </div>
+
+                <div id="result-summary"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Disable Right Click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Correct Answers Key
+        const correctAnswers = {
+            q1: { ans: 'B', text: 'जमा (Save)' },
+            q2: { ans: 'D', text: 'पश्चिम (West)' },
+            q3: { ans: 'B', text: 'वर्षा (Rain)' },
+            q4: { ans: 'B', text: 'चार (Four)' },
+            q5: { ans: 'A', text: 'ढँक कर (Covered)' },
+            q6: { ans: 'A', text: 'सही (True)' },
+            q7: { ans: 'B', text: 'सही (True)' },
+            q8: { ans: 'B', text: 'गलत (False)' },
+            q9: { ans: 'A', text: 'सही (True)' },
+            q10: { ans: 'A', text: 'सही (True)' },
+            q11: { ans: 'C', text: 'हवाई जहाज (Airplane)' },
+            q12: { ans: 'D', text: 'पूरब (East)' },
+            q13: { ans: 'B', text: 'कार (Car)' },
+            q14: { ans: 'A', text: 'उत्तर (North)' },
+            q15: { ans: 'C', text: 'स्टीमर (Steamer)' }
+        };
+
+        let studentName = "";
+        let timerInterval;
+        let isSubmitted = false;
+
+        function startQuiz() {
+            const nameInput = document.getElementById('student-name');
+            if (nameInput.value.trim() === "") {
+                alert("कृपया अपना नाम लिखें!");
+                return;
+            }
+            studentName = nameInput.value;
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+            startTimer(35 * 60); // 35 minutes in seconds
+        }
+
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            const display = document.getElementById('time-display');
+            
+            timerInterval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    alert("समय समाप्त! (Time's up!)");
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        function submitQuiz() {
+            if (isSubmitted) return;
+            isSubmitted = true;
+            clearInterval(timerInterval);
+
+            // Disable submit button
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('submit-btn').innerText = "जमा कर दिया गया (Submitted)";
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            // Check answers and display feedback
+            for (let i = 1; i <= totalQuestions; i++) {
+                const qKey = 'q' + i;
+                const radios = document.getElementsByName(qKey);
+                let selectedVal = null;
+                
+                for (const radio of radios) {
+                    if (radio.checked) {
+                        selectedVal = radio.value;
+                        radio.parentElement.style.fontWeight = "bold"; // Highlight user choice
+                        break;
+                    }
+                    radio.disabled = true; // Disable changes
+                }
+
+                // Check correctness
+                const isCorrect = selectedVal === correctAnswers[qKey].ans;
+                if (isCorrect) score++;
+
+                // Create Feedback Element
+                const block = document.getElementById(qKey + '-block');
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.className = 'correct-answer-display';
+                feedbackDiv.style.display = 'block';
+
+                if (isCorrect) {
+                    feedbackDiv.innerHTML = `<span class="user-correct">✔ आपका उत्तर सही है!</span>`;
+                } else {
+                    feedbackDiv.innerHTML = `<span class="user-wrong">✘ गलत उत्तर।</span> सही उत्तर है: <strong>${correctAnswers[qKey].ans}. ${correctAnswers[qKey].text}</strong>`;
+                }
+                block.appendChild(feedbackDiv);
+            }
+
+            // Show Result Summary
+            const summaryDiv = document.getElementById('result-summary');
+            summaryDiv.style.display = 'block';
+            summaryDiv.innerHTML = `<strong>परिणाम (Result):</strong><br>${studentName}, आपने ${totalQuestions} में से <strong>${score}</strong> अंक प्राप्त किए हैं।`;
+            
+            // Scroll to bottom
+            summaryDiv.scrollIntoView({behavior: "smooth"});
+
+            // Generate CSV
+            downloadCSV(studentName, score, totalQuestions);
+        }
+
+        function downloadCSV(name, score, total) {
+            const date = new Date().toLocaleString();
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Student Name,Score,Total Questions,Date\n"
+                + `${name},${score},${total},"${date}"`;
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
