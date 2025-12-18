@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 12 Hindi - Chapter 1 (40 Questions)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding-top: 60px;
+            user-select: none; /* Prevent text selection */
+        }
+
+        /* Timer Styling */
+        #timer-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #2c3e50;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Login Screen */
+        #login-screen {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1.2rem;
+            width: 70%;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #d35400;
+        }
+
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        /* Quiz Section */
+        #quiz-section {
+            display: none;
+        }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            border: 1px solid transparent;
+        }
+
+        label:hover {
+            background-color: #fef9e7;
+            border-color: #f1c40f;
+        }
+
+        /* Result Styling */
+        .correct-answer-display {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            color: #2e7d32;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .user-wrong {
+            color: #c0392b;
+        }
+        
+        .user-correct {
+            color: #27ae60;
+        }
+
+        #result-summary {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            display: none;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer-bar">समय: <span id="time-display">35:00</span></div>
+
+    <div class="container">
+        
+        <div id="login-screen">
+            <h2>स्वागत है! (Welcome)</h2>
+            <p><strong>Chapter: बातचीत (40 Questions)</strong></p>
+            <p>कृपया अपना नाम दर्ज करें:</p>
+            <input type="text" id="student-name" placeholder="आपका नाम (Your Name)">
+            <br>
+            <button onclick="startQuiz()">परीक्षा शुरू करें (Start Quiz)</button>
+        </div>
+
+        <div id="quiz-section">
+            <h1>कक्षा 12 हिंदी: अध्याय 1 (बातचीत)</h1>
+            <p style="text-align:center;">सभी 40 प्रश्नों के उत्तर दें।</p>
+            <hr>
+
+            <form id="quiz-form">
+                </form>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="button" id="submit-btn" onclick="submitQuiz()">जमा करें (Submit)</button>
+            </div>
+
+            <div id="result-summary"></div>
+        </div>
+    </div>
+
+    <script>
+        // Data for 40 Questions
+        const quizData = [
+            { id: 'q1', q: "1. 'बातचीत' शीर्षक निबंध के निबंधकार कौन हैं?", options: { A: "जयप्रकाश नारायण", B: "मोहन राकेश", C: "नावर सिंह", D: "बालकृष्ण भट्ट" }, ans: "D" },
+            { id: 'q2', q: "2. बालकृष्ण भट्ट का जन्म कब हुआ था?", options: { A: "23 जून 1884", B: "23 जून 1844", C: "20 जुलाई 1902", D: "18 सितम्बर 1834" }, ans: "B" },
+            { id: 'q3', q: "3. बालकृष्ण भट्ट का निधन कब हुआ था?", options: { A: "20 जुलाई 1914", B: "10 जून 1905", C: "15 मार्च 1900", D: "20 सितम्बर 1917" }, ans: "A" },
+            { id: 'q4', q: "4. बालकृष्ण भट्ट का निवास स्थान कहाँ था?", options: { A: "लखनऊ, उत्तर प्रदेश", B: "इलाहाबाद (प्रयागराज), उत्तर प्रदेश", C: "मथुरा, उत्तर प्रदेश", D: "वाराणसी, उत्तर प्रदेश" }, ans: "B" },
+            { id: 'q5', q: "5. बालकृष्ण भट्ट के माता का क्या नाम था?", options: { A: "सावित्री देवी", B: "पार्वती देवी", C: "राधिका देवी", D: "श्यामा देवी" }, ans: "B" },
+            { id: 'q6', q: "6. बालकृष्ण भट्ट के पिता का क्या नाम था?", options: { A: "देनी प्रसाद भट्ट", B: "बेनी प्रसाद भट्ट", C: "टेनी प्रसाद भट्ट", D: "सैनी प्रसाद भट्ट" }, ans: "B" },
+            { id: 'q7', q: "7. बालकृष्ण भट्ट के पिता पेशे से क्या थे?", options: { A: "चिकित्सक", B: "व्यापारी", C: "शिक्षक", D: "समाज सेवी" }, ans: "B" },
+            { id: 'q8', q: "8. बालकृष्ण भट्ट किस युग के निबंधकार थे?", options: { A: "द्विवेदी युग", B: "भारतेन्दु युग", C: "वीरगाथा काल", D: "छायावाद" }, ans: "B" },
+            { id: 'q9', q: "9. उन्होंने 'प्रयाग के मिशन स्कूल' से एंट्रेंस की परीक्षा कब दी?", options: { A: "1867 में", B: "1872 में", C: "1880 में", D: "1850 में" }, ans: "A" },
+            { id: 'q10', q: "10. बालकृष्ण भट्ट ने किस पत्रिका का संपादन किया?", options: { A: "आर्यावर्त", B: "हुंकार", C: "हिंदी प्रदीप", D: "पंजाब केसरी" }, ans: "C" },
+            { id: 'q11', q: "11. 'हिंदी प्रदीप' नामक मासिक पत्रिका का प्रकाशन कब शुरू हुआ?", options: { A: "1877 में", B: "1888 में", C: "1890 में", D: "1875 में" }, ans: "A" },
+            { id: 'q12', q: "12. 'हिंदी प्रदीप' पत्रिका कितने वर्षों तक चली?", options: { A: "20 वर्ष", B: "10 वर्ष", C: "33 वर्ष", D: "50 वर्ष" }, ans: "C" },
+            { id: 'q13', q: "13. बालकृष्ण भट्ट को किसने हिंदी का 'एडिसन' और 'स्टील' कहा?", options: { A: "हजारी प्रसाद द्विवेदी", B: "रामचंद्र शुक्ल", C: "डॉ. नगेन्द्र", D: "रामविलास शर्मा" }, ans: "B" },
+            { id: 'q14', q: "14. 'बातचीत' साहित्य की कौन सी विद्या है?", options: { A: "आलोचना", B: "गीत", C: "शोध", D: "निबंध" }, ans: "D" },
+            { id: 'q15', q: "15. बालकृष्ण भट्ट ने कुल कितने निबंध लिखे थे?", options: { A: "लगभग 1000", B: "लगभग 500", C: "लगभग 100", D: "लगभग 2000" }, ans: "A" },
+            { id: 'q16', q: "16. उनके निबंध संग्रह का क्या नाम है?", options: { A: "भट्ट सागर", B: "भट्ट निबंधमाला", C: "साहित्य सरोज", D: "हिंदी सरिता" }, ans: "B" },
+            { id: 'q17', q: "17. 'वाक् शक्ति' के अभाव में सृष्टि कैसी होती?", options: { A: "गूँगी", B: "वाचाल", C: "क्रोधी", D: "चंचल" }, ans: "A" },
+            { id: 'q18', q: "18. 'बोलने से ही मनुष्य के रूप का साक्षात्कार होता है' - यह किसने कहा?", options: { A: "एडिसन", B: "बेन जॉनसन", C: "स्पेंसर", D: "मिल्टन" }, ans: "B" },
+            { id: 'q19', q: "19. 'असल बातचीत सिर्फ दो व्यक्तियों में ही हो सकती है' - यह किसका मत है?", options: { A: "प्लेटो", B: "रूसो", C: "एडिसन", D: "मार्क्स" }, ans: "C" },
+            { id: 'q20', q: "20. तीन लोगों के बीच की बातचीत कैसी होती है?", options: { A: "अंगूठी में नग सी", B: "त्रिकोण जैसी", C: "औपचारिकता मात्र", D: "बहुत गहरी" }, ans: "A" }, // As per text context 'anguthi mein nag' or 'formality' but text emphasizes 'Anguthi mein nag' metaphor for 3 people fitting.
+            { id: 'q21', q: "21. चार से अधिक लोगों की बातचीत क्या कहलाती है?", options: { A: "डिबेट", B: "राम-रमौवल", C: "संवाद", D: "भाषण" }, ans: "B" },
+            { id: 'q22', q: "22. 'आर्ट ऑफ कनवरसेशन' (बातचीत की कला) कहाँ के लोगों में सर्वाधिक प्रचलित है?", options: { A: "अफ्रीका", B: "भारत", C: "यूरोप", D: "कनाडा" }, ans: "C" },
+            { id: 'q23', q: "23. यूरोप के लोगों की बातचीत के हुनर को क्या कहते हैं?", options: { A: "तर्क गोष्ठी", B: "सुहृद गोष्ठी", C: "कला गोष्ठी", D: "काव्य गोष्ठी" }, ans: "B" },
+            { id: 'q24', q: "24. रॉबिन्सन क्रूसो ने कितने वर्षों तक मानव मुख नहीं देखा?", options: { A: "10 वर्ष", B: "12 वर्ष", C: "16 वर्ष", D: "20 वर्ष" }, ans: "C" },
+            { id: 'q25', q: "25. रॉबिन्सन क्रूसो ने सबसे पहले किसके मुँह से बात सुनी?", options: { A: "फ्राइडे (Friday)", B: "सन्डे", C: "एडिसन", D: "कुत्ते" }, ans: "A" },
+            { id: 'q26', q: "26. मनुष्य की बातचीत का उत्तम तरीका क्या है?", options: { A: "भीड़ में बात करना", B: "तर्कपूर्ण बात करना", C: "आवाक होकर अपने से बातचीत करना", D: "दोस्तों से गपशप" }, ans: "C" },
+            { id: 'q27', q: "27. 'संयोगिता स्वयंवर' किसकी रचना है?", options: { A: "बालकृष्ण भट्ट की", B: "प्रताप नारायण मिश्र की", C: "श्रीनिवास दास की", D: "मैथिलीशरण गुप्त की" }, ans: "C" }, // Note: Bhatt criticized it, Srinivas Das wrote it.
+            { id: 'q28', q: "28. कौन सी रचना बालकृष्ण भट्ट की है?", options: { A: "रेल का विकट खेल", B: "कछुआ धरम", C: "रेणुका", D: "प्राच्य विद्या" }, ans: "A" },
+            { id: 'q29', q: "29. कौन सी रचना बालकृष्ण भट्ट की नहीं है?", options: { A: "नूतन ब्रह्मचारी", B: "सौ अजान एक सुजान", C: "सद्भाव का अभाव", D: "परीक्षा गुरु" }, ans: "D" },
+            { id: 'q30', q: "30. 'रसातल यात्रा' किसकी रचना है?", options: { A: "बालकृष्ण भट्ट", B: "बालमुकुंद गुप्त", C: "यशपाल", D: "अज्ञेय" }, ans: "A" },
+            { id: 'q31', q: "31. 'गुप्त वैरी' किसकी रचना है?", options: { A: "प्रेमचंद", B: "बालकृष्ण भट्ट", C: "निराला", D: "प्रसाद" }, ans: "B" },
+            { id: 'q32', q: "32. बातचीत के जरिए भाप बनकर क्या बाहर निकल जाता है?", options: { A: "मवाद और धुआँ", B: "ईर्ष्या", C: "द्वेष", D: "कलेश" }, ans: "A" },
+            { id: 'q33', q: "33. किसने कहा कि 'जब तक मनुष्य बोलता नहीं तब तक उसका गुण-दोष प्रकट नहीं होता'?", options: { A: "बेन जॉनसन", B: "एडिसन", C: "शेक्सपियर", D: "मिल्टन" }, ans: "A" },
+            { id: 'q34', q: "34. बालकृष्ण भट्ट ने किस शब्दकोश का संपादन किया?", options: { A: "अंग्रेजी शब्दकोश", B: "उर्दू शब्दकोश", C: "हिंदी शब्दकोश", D: "संस्कृत शब्दकोश" }, ans: "C" },
+            { id: 'q35', q: "35. 'पद्मावती' नाटक के लेखक कौन हैं?", options: { A: "बालकृष्ण भट्ट", B: "जयशंकर प्रसाद", C: "लल्लू लाल", D: "भारतेन्दु" }, ans: "A" },
+            { id: 'q36', q: "36. 'हमारी घड़ी' उपन्यास किसने लिखा?", options: { A: "बालकृष्ण भट्ट", B: "श्रीनिवास दास", C: "प्रेमचंद", D: "अमृतलाल नागर" }, ans: "A" },
+            { id: 'q37', q: "37. दो बुड्ढों की बातचीत का आम विषय क्या होता है?", options: { A: "खेलकूद", B: "जमाने की शिकायत", C: "बहू-बेटियों की गीला-शिकवा", D: "राजनीति" }, ans: "B" },
+            { id: 'q38', q: "38. अशिक्षित लोगों की बातचीत को क्या कहते हैं?", options: { A: "हँसी-मजाक", B: "बतकही", C: "संवाद", D: "तर्क" }, ans: "B" },
+            { id: 'q39', q: "39. बालकृष्ण भट्ट किस काल के रचनाकार हैं?", options: { A: "आदिकाल", B: "भक्तिकाल", C: "रीतिकाल", D: "आधुनिक काल" }, ans: "D" },
+            { id: 'q40', q: "40. 'मन रमाना' मुहावरे का अर्थ बातचीत के संदर्भ में क्या है?", options: { A: "मन बहलाना", B: "गुस्सा करना", C: "चुप रहना", D: "भाग जाना" }, ans: "A" }
+        ];
+
+        // Function to shuffle array (Fisher-Yates) - Disabled to keep order fixed as per user request flow, but structure exists if needed. 
+        // We render sequentially for clarity.
+
+        const formContainer = document.getElementById('quiz-form');
+
+        // Render Questions
+        quizData.forEach((item, index) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.id = item.id + '-block';
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.innerText = item.q;
+            block.appendChild(questionText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-group';
+
+            for (const [key, value] of Object.entries(item.options)) {
+                const label = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = item.id;
+                radio.value = key;
+                
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(' ' + value));
+                optionsDiv.appendChild(label);
+            }
+            block.appendChild(optionsDiv);
+            formContainer.appendChild(block);
+        });
+
+        let studentName = "";
+        let timerInterval;
+        let isSubmitted = false;
+
+        function startQuiz() {
+            const nameInput = document.getElementById('student-name');
+            if (nameInput.value.trim() === "") {
+                alert("कृपया अपना नाम लिखें!");
+                return;
+            }
+            studentName = nameInput.value;
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+            startTimer(35 * 60); 
+        }
+
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            const display = document.getElementById('time-display');
+            
+            timerInterval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    alert("समय समाप्त! (Time's up!)");
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        function submitQuiz() {
+            if (isSubmitted) return;
+            isSubmitted = true;
+            clearInterval(timerInterval);
+
+            // Disable submit button
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('submit-btn').innerText = "जमा कर दिया गया (Submitted)";
+
+            let score = 0;
+            const totalQuestions = quizData.length;
+
+            quizData.forEach(item => {
+                const qKey = item.id;
+                const radios = document.getElementsByName(qKey);
+                let selectedVal = null;
+                
+                for (const radio of radios) {
+                    if (radio.checked) {
+                        selectedVal = radio.value;
+                        radio.parentElement.style.fontWeight = "bold"; 
+                        break;
+                    }
+                    radio.disabled = true; 
+                }
+
+                // Correctness Check
+                const isCorrect = selectedVal === item.ans;
+                if (isCorrect) score++;
+
+                // Feedback
+                const block = document.getElementById(qKey + '-block');
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.className = 'correct-answer-display';
+                feedbackDiv.style.display = 'block';
+
+                if (isCorrect) {
+                    feedbackDiv.innerHTML = `<span class="user-correct">✔ सही!</span>`;
+                } else {
+                    const correctText = item.options[item.ans];
+                    feedbackDiv.innerHTML = `<span class="user-wrong">✘ गलत।</span> सही उत्तर: <strong>(${item.ans}) ${correctText}</strong>`;
+                }
+                block.appendChild(feedbackDiv);
+            });
+
+            // Summary
+            const summaryDiv = document.getElementById('result-summary');
+            summaryDiv.style.display = 'block';
+            summaryDiv.innerHTML = `<strong>परिणाम (Result):</strong><br>${studentName}, आपने ${totalQuestions} में से <strong>${score}</strong> अंक प्राप्त किए हैं।`;
+            
+            summaryDiv.scrollIntoView({behavior: "smooth"});
+
+            // CSV
+            downloadCSV(studentName, score, totalQuestions);
+        }
+
+        function downloadCSV(name, score, total) {
+            const date = new Date().toLocaleString();
+            const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
+                + "Student Name,Score,Total Questions,Date\n"
+                + `${name},${score},${total},"${date}"`;
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
