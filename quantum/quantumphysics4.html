@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>क्वांटम भौतिकी क्विज़ - सेट 4</title>
+    <style>
+        :root {
+            /* Theme: Deep Orange/Red for Set 4 */
+            --primary-color: #c2410c; 
+            --secondary-color: #9a3412;
+            --bg-color: #fff7ed;
+            --text-color: #431407;
+            --correct-color: #d1fae5;
+            --correct-border: #059669;
+            --wrong-color: #fee2e2;
+            --wrong-border: #dc2626;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            padding-top: 60px;
+            user-select: none;
+        }
+
+        /* Fixed Timer Styling */
+        #timer-container {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #111827;
+            color: #fff;
+            padding: 10px 30px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Login Screen */
+        #login-screen {
+            text-align: center;
+            padding: 40px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            width: 80%;
+            max-width: 300px;
+            border: 2px solid #fdba74;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* Quiz Section */
+        #quiz-section {
+            display: none;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #fed7aa;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #7c2d12;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #fed7aa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #ffedd5;
+        }
+
+        input[type="radio"] {
+            margin-right: 12px;
+        }
+
+        /* Results Styling */
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .user-correct {
+            background-color: var(--correct-color) !important;
+            border-color: var(--correct-border) !important;
+            color: var(--correct-border);
+        }
+
+        .user-wrong {
+            background-color: var(--wrong-color) !important;
+            border-color: var(--wrong-border) !important;
+            color: var(--wrong-border);
+        }
+
+        .actual-correct {
+            background-color: var(--correct-color) !important;
+            border: 2px solid var(--correct-border) !important;
+        }
+
+        #score-display {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f0fdf4;
+            border: 1px solid #22c55e;
+            color: #15803d;
+            border-radius: 8px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="timer-container">
+        समय शेष: <span id="time-left">25:00</span>
+    </div>
+
+    <div class="container">
+        <div id="login-screen">
+            <h1 style="color: var(--primary-color);">क्वांटम भौतिकी क्विज़ (सेट 4)</h1>
+            <p>कृपया परीक्षा शुरू करने के लिए अपना नाम दर्ज करें।</p>
+            <input type="text" id="student-name" placeholder="अपना नाम दर्ज करें" autocomplete="off">
+            <br>
+            <button onclick="startQuiz()">क्विज़ शुरू करें (Start Quiz)</button>
+        </div>
+
+        <div id="quiz-section">
+            <div id="score-display"></div>
+            <form id="quiz-form">
+                </form>
+            <div style="text-align: center; margin-top: 30px;">
+                <button id="submit-btn" type="button" onclick="submitQuiz()">सबमिट करें (Submit Quiz)</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // --- 1. Prevent Right Click ---
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // --- 2. Data: 40 NEW Questions (Set 4) ---
+    // Distribution: A=10, B=10, C=10, D=10
+    const questions = [
+        { q: "हैमिल्टोनियन ऑपरेटर (Hamiltonian Operator) Ĥ क्या दर्शाता है?", a: "कुल ऊर्जा", options: { A: "कुल ऊर्जा", B: "गतिज ऊर्जा", C: "संवेग", D: "स्थिति" }, correct: "A" },
+        { q: "1-आयामी बॉक्स (Particle in a 1D box) में कण की ऊर्जा 'E' किसके समानुपाती होती है?", a: "n²", options: { A: "n", B: "n²", C: "√n", D: "1/n" }, correct: "B" },
+        { q: "तरंग फलन के 'सामान्यीकरण' (Normalization) की शर्त क्या है?", a: "∫|Ψ|²dτ = 1", options: { A: "∫|Ψ|²dτ = 0", B: "∫Ψ dτ = 1", C: "∫|Ψ|²dτ = 1", D: "∫|Ψ|²dτ = ∞" }, correct: "C" },
+        { q: "हाइड्रोजन परमाणु की प्रथम कक्षा (n=1) की ऊर्जा कितनी होती है?", a: "-13.6 eV", options: { A: "-3.4 eV", B: "-1.5 eV", C: "0 eV", D: "-13.6 eV" }, correct: "D" },
+
+        { q: "डेविसन-जर्मर प्रयोग (Davisson-Germer Experiment) में किस क्रिस्टल का उपयोग किया गया था?", a: "निकेल (Nickel)", options: { A: "निकेल (Nickel)", B: "सोना", C: "चांदी", D: "सिलिकॉन" }, correct: "A" },
+        { q: "वीन का विस्थापन नियम (Wien's Displacement Law) क्या बताता है?", a: "λmT = नियतांक", options: { A: "E = mc²", B: "λmT = नियतांक", C: "PV = nRT", D: "F = ma" }, correct: "B" },
+        { q: "फ्रैंक-हर्ट्ज प्रयोग (Franck-Hertz experiment) ने क्या सिद्ध किया?", a: "ऊर्जा स्तरों का क्वांटीकरण", options: { A: "इलेक्ट्रॉन का आवेश", B: "फोटॉन का वेग", C: "ऊर्जा स्तरों का क्वांटीकरण", D: "नाभिक का आकार" }, correct: "C" },
+        { q: "सरल आवर्त दोलक (Harmonic Oscillator) की न्यूनतम ऊर्जा (Zero point energy) क्या है?", a: "1/2 hν", options: { A: "0", B: "hν", C: "2 hν", D: "1/2 hν" }, correct: "D" },
+
+        { q: "क्वांटम यांत्रिकी में 'आइगेन मान' (Eigenvalue) का भौतिक अर्थ क्या है?", a: "मापने योग्य मात्रा", options: { A: "मापने योग्य मात्रा", B: "तरंग का आयाम", C: "समय अंतराल", D: "काल्पनिक संख्या" }, correct: "A" },
+        { q: "चरण वेग (Phase velocity) और समूह वेग (Group velocity) का गुणनफल किसके बराबर होता है?", a: "c²", options: { A: "c", B: "c²", C: "v²", D: "0" }, correct: "B" },
+        { q: "हाइड्रोजन स्पेक्ट्रम की पाश्चन श्रेणी (Paschen Series) किस क्षेत्र में आती है?", a: "अवरक्त (Infrared)", options: { A: "दृश्य", B: "पराबैंगनी", C: "अवरक्त (Infrared)", D: "गामा किरणें" }, correct: "C" },
+        { q: "मेसॉन (Meson) सिद्धांत किसने प्रतिपादित किया था?", a: "युकावा (Yukawa)", options: { A: "बोर", B: "रदरफोर्ड", C: "आइंस्टीन", D: "युकावा (Yukawa)" }, correct: "D" },
+
+        { q: "बोहर के संगतता सिद्धांत (Correspondence Principle) का क्या अर्थ है?", a: "क्वांटम भौतिकी, क्लासिकल भौतिकी में बदल जाती है", options: { A: "क्वांटम भौतिकी, क्लासिकल भौतिकी में बदल जाती है", B: "ऊर्जा हमेशा स्थिर रहती है", C: "इलेक्ट्रॉन नाभिक में गिरते हैं", D: "प्रकाश धीमा हो जाता है" }, correct: "A" },
+        { q: "स्टेफन-बोल्ट्जमैन नियम के अनुसार ऊर्जा विकिरण (E) तापमान (T) से कैसे संबंधित है?", a: "E ∝ T⁴", options: { A: "E ∝ T", B: "E ∝ T⁴", C: "E ∝ T²", D: "E ∝ 1/T" }, correct: "B" },
+        { q: "युग्म उत्पादन (Pair Production) के लिए फोटॉन की न्यूनतम ऊर्जा कितनी होनी चाहिए?", a: "1.02 MeV", options: { A: "0.51 MeV", B: "13.6 eV", C: "1.02 MeV", D: "931 MeV" }, correct: "C" },
+        { q: "पॉज़िट्रॉन (Positron) की खोज किसने की थी?", a: "कार्ल एंडरसन", options: { A: "चैडविक", B: "क्यूरी", C: "रदरफोर्ड", D: "कार्ल एंडरसन" }, correct: "D" },
+
+        { q: "मोसले का नियम (Moseley's Law) √ν ∝ (Z-b) किससे संबंधित है?", a: "एक्स-रे स्पेक्ट्रम", options: { A: "एक्स-रे स्पेक्ट्रम", B: "गामा क्षय", C: "बीटा क्षय", D: "अवरक्त विकिरण" }, correct: "A" },
+        { q: "किस क्वांटम संख्या को 'J' से दर्शाया जाता है?", a: "कुल कोणीय संवेग", options: { A: "मुख्य", B: "कुल कोणीय संवेग", C: "चुंबकीय", D: "स्पिन" }, correct: "B" },
+        { q: "डिजेनरेसी (Degeneracy) का क्या अर्थ है?", a: "समान ऊर्जा वाले विभिन्न वेव फंक्शन", options: { A: "ऊर्जा का ह्रास", B: "इलेक्ट्रॉन का टूटना", C: "समान ऊर्जा वाले विभिन्न वेव फंक्शन", D: "शून्य संवेग" }, correct: "C" },
+        { q: "ब्रेम्सस्ट्रालुंग (Bremsstrahlung) विकिरण कब उत्पन्न होता है?", a: "जब आवेशित कण मंदित (decelerated) होता है", options: { A: "जब प्रोटॉन टकराते हैं", B: "जब न्यूट्रॉन क्षय होता है", C: "जब संलयन होता है", D: "जब आवेशित कण मंदित (decelerated) होता है" }, correct: "D" },
+
+        { q: "स्पेक्ट्रोस्कोपी में 'चयन नियम' (Selection Rules) क्या निर्धारित करते हैं?", a: "अनुमत संक्रमण (Allowed Transitions)", options: { A: "अनुमत संक्रमण (Allowed Transitions)", B: "परमाणु भार", C: "इलेक्ट्रॉन की गति", D: "नाभिकीय घनत्व" }, correct: "A" },
+        { q: "गाइरोमैग्नेटिक अनुपात (Gyromagnetic Ratio) किसका अनुपात है?", a: "चुंबकीय आघूर्ण और कोणीय संवेग", options: { A: "द्रव्यमान और आवेश", B: "चुंबकीय आघूर्ण और कोणीय संवेग", C: "ऊर्जा और समय", D: "वेग और द्रव्यमान" }, correct: "B" },
+        { q: "ऑर्थोगोनल वेव फंक्शन (Orthogonal wave function) के लिए समाकलन का मान क्या होता है?", a: "शून्य", options: { A: "एक", B: "अनंत", C: "शून्य", D: "ऋणात्मक" }, correct: "C" },
+        { q: "क्वार्क (Quark) पर कौन सा विशेष 'आवेश' होता है?", a: "रंग आवेश (Color Charge)", options: { A: "विद्युत आवेश", B: "गुरुत्वाकर्षण आवेश", C: "स्पिन आवेश", D: "रंग आवेश (Color Charge)" }, correct: "D" },
+
+        { q: "कमजोर नाभिकीय बल (Weak Nuclear Force) के वाहक कण कौन से हैं?", a: "W और Z बोसोन", options: { A: "W और Z बोसोन", B: "ग्लूऑन", C: "फोटॉन", D: "ग्रेविटोन" }, correct: "A" },
+        { q: "बोहर मॉडल के अनुसार, इलेक्ट्रॉन का वेग (v) मुख्य क्वांटम संख्या (n) पर कैसे निर्भर करता है?", a: "v ∝ 1/n", options: { A: "v ∝ n", B: "v ∝ 1/n", C: "v ∝ n²", D: "v ∝ √n" }, correct: "B" },
+        { q: "युग्म विलोपन (Pair Annihilation) में क्या होता है?", a: "कण और प्रति-कण मिलकर ऊर्जा (गामा किरण) बनाते हैं", options: { A: "दो कण जुड़ जाते हैं", B: "ऊर्जा कण में बदलती है", C: "कण और प्रति-कण मिलकर ऊर्जा (गामा किरण) बनाते हैं", D: "प्रोटॉन न्यूट्रॉन बन जाता है" }, correct: "C" },
+        { q: "हाइड्रोजन परमाणु में रिड्यूस्ड मास (Reduced Mass) μ का सूत्र क्या है?", a: "mM / (m+M)", options: { A: "m+M", B: "m-M", C: "m/M", D: "mM / (m+M)" }, correct: "D" },
+
+        { q: "कॉम्पटन शिफ्ट (Compton Shift) Δλ का अधिकतम मान किस कोण पर होता है?", a: "180°", options: { A: "180°", B: "90°", C: "45°", D: "0°" }, correct: "A" },
+        { q: "आइंस्टीन का द्रव्यमान-ऊर्जा समीकरण क्या है?", a: "E = mc²", options: { A: "E = hν", B: "E = mc²", C: "F = ma", D: "P = mv" }, correct: "B" },
+        { q: "एल-एस कपलिंग (L-S Coupling) को और किस नाम से जाना जाता है?", a: "रसेल-सॉन्डर्स कपलिंग", options: { A: "जीमन कपलिंग", B: "स्टार्क कपलिंग", C: "रसेल-सॉन्डर्स कपलिंग", D: "बोर कपलिंग" }, correct: "C" },
+        { q: "इलेक्ट्रॉन के तरंग गुण का उपयोग किस उपकरण में किया जाता है?", a: "इलेक्ट्रॉन माइक्रोस्कोप", options: { A: "टेलीस्कोप", B: "पेरिस्कोप", C: "कैलिडोस्कोप", D: "इलेक्ट्रॉन माइक्रोस्कोप" }, correct: "D" },
+
+        { q: "क्वांटम यांत्रिकी में 'संवेग ऑपरेटर' (Momentum Operator) क्या है?", a: "-iħ ∇", options: { A: "-iħ ∇", B: "iħ ∂/∂t", C: "mv", D: "h/λ" }, correct: "A" },
+        { q: "हाइड्रोजन परमाणु की आयनन ऊर्जा (Ionization Energy) कितनी है?", a: "+13.6 eV", options: { A: "-13.6 eV", B: "+13.6 eV", C: "3.4 eV", D: "0 eV" }, correct: "B" },
+        { q: "मैजिक नंबर (Magic Numbers) 2, 8, 20, 28... किस क्षेत्र से संबंधित हैं?", a: "नाभिकीय भौतिकी (Nuclear Shell Model)", options: { A: "रसायन विज्ञान", B: "परमाणु स्पेक्ट्रम", C: "नाभिकीय भौतिकी (Nuclear Shell Model)", D: "क्रिस्टल संरचना" }, correct: "C" },
+        { q: "बोहर मैग्नेटोन (Bohr Magneton) किसकी इकाई है?", a: "चुंबकीय आघूर्ण", options: { A: "विद्युत क्षेत्र", B: "कोणीय संवेग", C: "बल आघूर्ण", D: "चुंबकीय आघूर्ण" }, correct: "D" }
+    ];
+
+    // --- 3. App Logic ---
+    let studentName = "";
+    let timeLeft = 25 * 60; // 25 minutes
+    let timerInterval;
+
+    function startQuiz() {
+        const nameInput = document.getElementById('student-name');
+        if (nameInput.value.trim() === "") {
+            alert("कृपया अपना नाम दर्ज करें!");
+            return;
+        }
+        studentName = nameInput.value.trim();
+        
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+
+        renderQuestions();
+        startTimer();
+    }
+
+    function renderQuestions() {
+        const form = document.getElementById('quiz-form');
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            let optionsHtml = '';
+            for (let key in q.options) {
+                optionsHtml += `
+                    <label class="option-label" id="label-${index}-${key}">
+                        <input type="radio" name="q${index}" value="${key}">
+                        <span style="margin-left: 5px;">${key}) ${q.options[key]}</span>
+                    </label>
+                `;
+            }
+
+            card.innerHTML = `
+                <div class="question-text">${index + 1}. ${q.q}</div>
+                <div class="options-grid">${optionsHtml}</div>
+                <div class="feedback" id="feedback-${index}"></div>
+            `;
+            form.appendChild(card);
+        });
+    }
+
+    function startTimer() {
+        const timerDisplay = document.getElementById('time-left');
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerDisplay.textContent = `${minutes}:${seconds}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("समय समाप्त! क्विज़ सबमिट किया जा रहा है।");
+                submitQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    function submitQuiz() {
+        clearInterval(timerInterval);
+
+        const btn = document.getElementById('submit-btn');
+        if(btn.disabled) return;
+        btn.disabled = true;
+        btn.textContent = "सबमिट किया गया (Submitted)";
+        btn.style.backgroundColor = "#9ca3af";
+
+        let score = 0;
+
+        questions.forEach((q, index) => {
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            const selectedInput = document.querySelector(`input[name="q${index}"]:checked`);
+            
+            const allInputs = document.querySelectorAll(`input[name="q${index}"]`);
+            allInputs.forEach(input => input.disabled = true);
+
+            let userAnswer = selectedInput ? selectedInput.value : null;
+
+            if (userAnswer === q.correct) {
+                score++;
+                if(selectedInput) {
+                    document.getElementById(`label-${index}-${userAnswer}`).classList.add('user-correct');
+                }
+                feedbackDiv.innerHTML = `<span style="color: #059669">✓ सही उत्तर</span>`;
+            } else {
+                if(selectedInput) {
+                    document.getElementById(`label-${index}-${userAnswer}`).classList.add('user-wrong');
+                }
+                document.getElementById(`label-${index}-${q.correct}`).classList.add('actual-correct');
+                feedbackDiv.innerHTML = `<span style="color: #dc2626">✗ गलत।</span> सही उत्तर: <b>${q.correct}) ${q.options[q.correct]}</b>`;
+            }
+            feedbackDiv.style.display = 'block';
+        });
+
+        const scoreDisplay = document.getElementById('score-display');
+        scoreDisplay.textContent = `${studentName}, आपका स्कोर: ${score} / 40`;
+        scoreDisplay.style.display = 'block';
+        window.scrollTo(0, 0);
+
+        downloadCSV(score);
+    }
+
+    function downloadCSV(score) {
+        const date = new Date().toLocaleString();
+        const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
+            + "Student Name,Total Score,Date/Time\n"
+            + `${studentName},${score}/40,"${date}"`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "result_set4.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+</body>
+</html>
