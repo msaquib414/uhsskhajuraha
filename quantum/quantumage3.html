@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>क्वांटम युग क्विज़ - सेट 3</title>
+    <style>
+        :root {
+            /* Theme: Emerald Green for Set 3 */
+            --primary: #059669;
+            --primary-dark: #047857;
+            --bg-color: #ecfdf5;
+            --card-bg: #ffffff;
+            --text-main: #064e3b;
+            --correct-bg: #dcfce7;
+            --correct-border: #16a34a;
+            --correct-text: #14532d;
+            --wrong-bg: #fee2e2;
+            --wrong-border: #dc2626;
+            --wrong-text: #7f1d1d;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            user-select: none; /* Prevent copying */
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 750px;
+            margin: 20px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            min-height: 500px;
+        }
+
+        /* --- 1. Login Screen --- */
+        #login-section {
+            padding: 50px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            flex-grow: 1;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 10px; font-size: 2rem; }
+        .subtitle { color: #64748b; margin-bottom: 40px; }
+
+        input[type="text"] {
+            padding: 15px;
+            font-size: 1.1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px auto;
+            outline: none;
+            transition: 0.3s;
+        }
+        input[type="text"]:focus { border-color: var(--primary); }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .btn:hover { background-color: var(--primary-dark); }
+
+        /* --- 2. Quiz Card Section --- */
+        #quiz-section {
+            display: none;
+            padding: 30px;
+            flex-direction: column;
+            height: 100%;
+            flex-grow: 1;
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .timer-track {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .timer-fill {
+            height: 100%;
+            background: #ef4444;
+            width: 100%;
+            transition: width 1s linear;
+        }
+
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary);
+            background-color: #d1fae5;
+        }
+
+        input[type="radio"] {
+            transform: scale(1.3);
+            margin-right: 15px;
+            accent-color: var(--primary);
+        }
+
+        /* --- 3. Result/Review Section --- */
+        #result-section {
+            display: none;
+            padding: 0;
+            background: #f1f5f9;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .score-card {
+            background: var(--primary);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .score-big { font-size: 3rem; font-weight: 800; margin: 10px 0; }
+        
+        .review-list {
+            padding: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .review-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 5px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .review-item.correct { border-left-color: var(--correct-border); }
+        .review-item.wrong { border-left-color: var(--wrong-border); }
+
+        .review-q {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .marks-badge {
+            font-size: 0.9rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: #f1f5f9;
+            color: #64748b;
+        }
+        .correct .marks-badge { background: var(--correct-bg); color: var(--correct-text); }
+        .wrong .marks-badge { background: var(--wrong-bg); color: var(--wrong-text); }
+
+        .review-opt {
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
+        }
+
+        /* Highlighting Logic */
+        .opt-correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: var(--correct-text);
+            font-weight: bold;
+        }
+        .opt-user-wrong {
+            background-color: var(--wrong-bg);
+            border-color: var(--wrong-border);
+            color: var(--wrong-text);
+            text-decoration: line-through;
+        }
+        .opt-normal { color: #64748b; }
+
+    </style>
+</head>
+<body oncontextmenu="return false">
+
+<div class="container">
+    
+    <div id="login-section">
+        <h1>क्वांटम युग क्विज़ - सेट 3</h1>
+        <p class="subtitle">40 एडवांस प्रश्न | 15 सेकंड प्रति कार्ड | ऑटो-डाउनलोड रिजल्ट</p>
+        <input type="text" id="studentName" placeholder="अपना नाम दर्ज करें (Enter Name)" autocomplete="off">
+        <button class="btn" onclick="startApp()">क्विज़ शुरू करें (Start Quiz)</button>
+    </div>
+
+    <div id="quiz-section">
+        <div class="header-bar">
+            <span id="q-counter">प्रश्न 1 / 40</span>
+            <span id="timer-text">15s</span>
+        </div>
+        <div class="timer-track"><div class="timer-fill" id="timer-bar"></div></div>
+        
+        <div class="question-text" id="question-display">Loading...</div>
+        <div class="options-container" id="options-display">
+            </div>
+    </div>
+
+    <div id="result-section">
+        <div class="score-card">
+            <h2>परिणाम (Result)</h2>
+            <div class="score-big" id="final-score-display">0 / 40</div>
+            <p id="student-name-display">Student</p>
+            <p style="font-size: 0.9rem; opacity: 0.8;">Result.csv डाउनलोड हो रहा है...</p>
+        </div>
+        <div class="review-list" id="review-container">
+            </div>
+    </div>
+
+</div>
+
+<script>
+    // --- Data: 40 Questions (Balanced A,B,C,D) ---
+    const rawData = [
+        // A Answers (10)
+        { q: "क्वांटम एल्गोरिदम 'Deutsch-Jozsa' क्या प्रदर्शित करता है?", a: "क्वांटम तेजी (Speedup)", opts: { A: "क्वांटम तेजी (Speedup)", B: "डेटा हानि", C: "एन्क्रिप्शन", D: "नेटवर्क धीमा होना" }, correct: "A" },
+        { q: "हनीवेल (Honeywell/Quantinuum) किस तकनीक का उपयोग करता है?", a: "Trapped Ions", opts: { A: "Trapped Ions", B: "Superconducting", C: "Photonics", D: "Neutral Atoms" }, correct: "A" },
+        { q: "क्वांटम अवस्थाओं के गणितीय स्थान को क्या कहते हैं?", a: "हिल्बर्ट स्पेस (Hilbert Space)", opts: { A: "हिल्बर्ट स्पेस (Hilbert Space)", B: "यूक्लिडियन स्पेस", C: "बनाच स्पेस", D: "न्यूटनियन स्पेस" }, correct: "A" },
+        { q: "प्रकाश संश्लेषण में ऊर्जा स्थानांतरण की दक्षता का कारण क्या है?", a: "क्वांटम कोहेरेंस", opts: { A: "क्वांटम कोहेरेंस", B: "उच्च तापमान", C: "धीमी प्रक्रिया", D: "गुरुत्वाकर्षण" }, correct: "A" },
+        { q: "क्वांटम इरेज़र (Quantum Eraser) प्रयोग क्या दिखाता है?", a: "समय और मापन का संबंध", opts: { A: "समय और मापन का संबंध", B: "प्रकाश की गति", C: "ऊर्जा संरक्षण", D: "परमाणु भार" }, correct: "A" },
+        { q: "'यूनिटरी मैट्रिक्स' (Unitary Matrix) का महत्व क्या है?", a: "क्वांटम गेट्स उलटा (Reversible) होते हैं", opts: { A: "क्वांटम गेट्स उलटा (Reversible) होते हैं", B: "ऊर्जा नष्ट होती है", C: "केवल 0 और 1 संभव हैं", D: "गति बढ़ती है" }, correct: "A" },
+        { q: "क्वांटम त्रुटि सुधार कोड का पहला उदाहरण कौन सा था?", a: "शोर कोड (Shor Code)", opts: { A: "शोर कोड (Shor Code)", B: "बाइनरी कोड", C: "मोर्स कोड", D: "ASCII कोड" }, correct: "A" },
+        { q: "क्वांटम रैंडम नंबर जेनरेटर (QRNG) किस पर आधारित है?", a: "वास्तविक यादृच्छिकता (True Randomness)", opts: { A: "वास्तविक यादृच्छिकता (True Randomness)", B: "गणितीय सूत्र", C: "सॉफ्टवेयर लूप", D: "घड़ी का समय" }, correct: "A" },
+        { q: "क्वांटम इंटरनेट का 'रिपीटर' (Repeater) किस सिद्धांत पर काम करेगा?", a: "एन्टैंगलमेंट स्वैपिंग", opts: { A: "एन्टैंगलमेंट स्वैपिंग", B: "सिग्नल एम्पलीफिकेशन", C: "डेटा कॉपी", D: "फाइबर ऑप्टिक" }, correct: "A" },
+        { q: "न्यूट्रल एटम (Neutral Atom) क्वांटम कंप्यूटर में परमाणुओं को कैसे पकड़ा जाता है?", a: "ऑप्टिकल ट्वीजर्स (Optical Tweezers)", opts: { A: "ऑप्टिकल ट्वीजर्स (Optical Tweezers)", B: "चुंबकीय क्षेत्र", C: "विद्युत तार", D: "गोंद" }, correct: "A" },
+
+        // B Answers (10)
+        { q: "क्वांटम यांत्रिकी की 'कोपेनहेगन व्याख्या' किसने दी थी?", a: "नील्स बोर और हाइजेनबर्ग", opts: { A: "आइंस्टीन और रदरफोर्ड", B: "नील्स बोर और हाइजेनबर्ग", C: "श्रोडिंगर और डिरैक", D: "फेनमैन और हॉकिंग" }, correct: "B" },
+        { q: "सिलिकॉन स्पिन क्यूबिट्स (Silicon Spin Qubits) का मुख्य लाभ क्या है?", a: "मौजूदा चिप निर्माण तकनीक के साथ संगतता", opts: { A: "कमरे के तापमान पर काम करना", B: "मौजूदा चिप निर्माण तकनीक के साथ संगतता", C: "प्रकाश से तेज", D: "शून्य त्रुटि" }, correct: "B" },
+        { q: "क्वांटम ज़ेनो प्रभाव (Quantum Zeno Effect) क्या है?", a: "लगातार अवलोकन से अवस्था का स्थिर रहना", opts: { A: "तेजी से बदलना", B: "लगातार अवलोकन से अवस्था का स्थिर रहना", C: "ऊर्जा का विस्फोट", D: "कण का गायब होना" }, correct: "B" },
+        { q: "Shor's Algorithm किस प्रकार की सुरक्षा को तोड़ सकता है?", a: "RSA एन्क्रिप्शन", opts: { A: "AES 256", B: "RSA एन्क्रिप्शन", C: "One-Time Pad", D: "Biometric" }, correct: "B" },
+        { q: "Qubit की 'निष्ठा' (Fidelity) क्या मापती है?", a: "गणना की सटीकता", opts: { A: "गति", B: "गणना की सटीकता", C: "तापमान", D: "आकार" }, correct: "B" },
+        { q: "किस कंपनी ने 'Oryon' नामक क्वांटम प्रोसेसर की घोषणा की थी?", a: "IonQ", opts: { A: "Google", B: "IonQ", C: "IBM", D: "Rigetti" }, correct: "B" },
+        { q: "क्वांटम 'टेलीपोर्टेशन' के लिए क्या आवश्यक है?", a: "क्लासिकल चैनल से संचार", opts: { A: "केवल क्वांटम चैनल", B: "क्लासिकल चैनल से संचार", C: "कोई संचार नहीं", D: "वर्महोल" }, correct: "B" },
+        { q: "VQE (Variational Quantum Eigensolver) किसके लिए उपयोग होता है?", a: "रासायन विज्ञान सिमुलेशन", opts: { A: "डेटा सॉर्टिंग", B: "रासायन विज्ञान सिमुलेशन", C: "ईमेल भेजना", D: "मौसम पूर्वानुमान" }, correct: "B" },
+        { q: "क्वांटम क्लाउड सेवा 'Amazon Braket' किस कंपनी की है?", a: "AWS", opts: { A: "Microsoft", B: "AWS", C: "Google", D: "Alibaba" }, correct: "B" },
+        { q: "ब्लॉकचैन को क्वांटम कंप्यूटर से बचाने के लिए क्या विकसित हो रहा है?", a: "क्वांटम रेजिस्टेंट लेज़र", opts: { A: "बिटकॉइन 2.0", B: "क्वांटम रेजिस्टेंट लेज़र", C: "कागजी रिकॉर्ड", D: "तेज इंटरनेट" }, correct: "B" },
+
+        // C Answers (10)
+        { q: "'पायलट वेव थ्योरी' (Pilot Wave Theory) किस प्रकार की व्याख्या है?", a: "डिटरमिनिस्टिक (नियतिवादी)", opts: { A: "यादृच्छिक", B: "सांख्यिकीय", C: "डिटरमिनिस्टिक (नियतिवादी)", D: "काल्पनिक" }, correct: "C" },
+        { q: "क्वांटम कंप्यूटर में 'T1 समय' (Relaxation Time) क्या दर्शाता है?", a: "ऊर्जा क्षय का समय", opts: { A: "गणना का समय", B: "बूट होने का समय", C: "ऊर्जा क्षय का समय", D: "डाउनलोड स्पीड" }, correct: "C" },
+        { q: "Xanadu कंपनी किस तकनीक पर आधारित क्वांटम कंप्यूटर बना रही है?", a: "फोटोनिक", opts: { A: "सुपरकंडक्टिंग", B: "आयन ट्रैप", C: "फोटोनिक", D: "डायमंड" }, correct: "C" },
+        { q: "क्वांटम गेट 'SWAP' क्या करता है?", a: "दो Qubits की अवस्था बदलता है", opts: { A: "Qubit को मिटाता है", B: "सुपरपोज़िशन बनाता है", C: "दो Qubits की अवस्था बदलता है", D: "एन्टैंगलमेंट तोड़ता है" }, correct: "C" },
+        { q: "क्वांटम सेंसिंग में 'स्क्वीज़्ड लाइट' (Squeezed Light) का उपयोग क्यों होता है?", a: "शोर (Noise) कम करने के लिए", opts: { A: "रंग बदलने के लिए", B: "गति बढ़ाने के लिए", C: "शोर (Noise) कम करने के लिए", D: "तापमान बढ़ाने के लिए" }, correct: "C" },
+        { q: "Double-Slit प्रयोग में जब इलेक्ट्रॉन को देखा जाता है, तो वह कैसा व्यवहार करता है?", a: "कण जैसा", opts: { A: "तरंग जैसा", B: "प्लाज्मा जैसा", C: "कण जैसा", D: "तरल जैसा" }, correct: "C" },
+        { q: "क्वांटम गुरुत्वाकर्षण (Quantum Gravity) का एक प्रमुख सिद्धांत कौन सा है?", a: "लूप क्वांटम ग्रेविटी", opts: { A: "न्यूटन ग्रेविटी", B: "सापेक्षता", C: "लूप क्वांटम ग्रेविटी", D: "इलेक्ट्रोमैग्नेटिज्म" }, correct: "C" },
+        { q: "'W-State' किस प्रकार की अवस्था है?", a: "मल्टीपार्टाइट एन्टैंगलमेंट", opts: { A: "सुपरपोज़िशन", B: "क्लासिकल अवस्था", C: "मल्टीपार्टाइट एन्टैंगलमेंट", D: "शून्य ऊर्जा" }, correct: "C" },
+        { q: "क्वांटम कम्प्यूटिंग में 'एन्सीला क्यूबिट' (Ancilla Qubit) का उपयोग क्या है?", a: "सहायक कार्यों और त्रुटि सुधार के लिए", opts: { A: "मुख्य गणना के लिए", B: "मेमोरी स्टोरेज के लिए", C: "सहायक कार्यों और त्रुटि सुधार के लिए", D: "कूलिंग के लिए" }, correct: "C" },
+        { q: "QKD में 'इंटरसेप्ट-रीसेंड' हमले से क्या होता है?", a: "त्रुटि दर (Error Rate) बढ़ जाती है", opts: { A: "कुंजी चोरी हो जाती है", B: "सिस्टम बंद हो जाता है", C: "त्रुटि दर (Error Rate) बढ़ जाती है", D: "गति बढ़ जाती है" }, correct: "C" },
+
+        // D Answers (10)
+        { q: "क्वांटम मशीन लर्निंग में 'QSVM' का मतलब क्या है?", a: "Quantum Support Vector Machine", opts: { A: "Quantum Simple Virtual Machine", B: "Quick Standard Vector Mode", C: "Quality System Valid Mode", D: "Quantum Support Vector Machine" }, correct: "D" },
+        { q: "क्वांटम एडवेंटेज (Quantum Advantage) और सुप्रीमेसी में क्या अंतर है?", a: "एडवेंटेज व्यावहारिक उपयोग पर केंद्रित है", opts: { A: "सुप्रीमेसी छोटी है", B: "एडवेंटेज धीमा है", C: "कोई अंतर नहीं है", D: "एडवेंटेज व्यावहारिक उपयोग पर केंद्रित है" }, correct: "D" },
+        { q: "कोल्ड एटम लैब (Cold Atom Lab) कहाँ स्थित है?", a: "ISS (अंतरिक्ष स्टेशन)", opts: { A: "अंटार्कटिका", B: "CERN", C: "Google HQ", D: "ISS (अंतरिक्ष स्टेशन)" }, correct: "D" },
+        { q: "मजराना फर्मिअन (Majorana Fermion) की क्या विशेषता है?", a: "यह अपना ही प्रतिकण (Antiparticle) है", opts: { A: "यह बहुत भारी है", B: "यह प्रकाश उत्सर्जित करता है", C: "यह ऋणात्मक है", D: "यह अपना ही प्रतिकण (Antiparticle) है" }, correct: "D" },
+        { q: "क्वांटम एप्रोक्सिमेट ऑप्टिमाइजेशन एल्गोरिदम (QAOA) किसलिए है?", a: "कॉम्बिनेटोरियल समस्याओं के लिए", opts: { A: "एन्क्रिप्शन के लिए", B: "सर्च के लिए", C: "गेमिंग के लिए", D: "कॉम्बिनेटोरियल समस्याओं के लिए" }, correct: "D" },
+        { q: "क्या ध्वनि की भी क्वांटम प्रकृति होती है? उसके कण को क्या कहते हैं?", a: "फोनोन (Phonon)", opts: { A: "फोटोन", B: "इलेक्ट्रॉन", C: "ग्रेविटोन", D: "फोनोन (Phonon)" }, correct: "D" },
+        { q: "रेडियोधर्मी क्षय (Radioactive Decay) किस क्वांटम घटना का परिणाम है?", a: "क्वांटम टनलिंग", opts: { A: "एन्टैंगलमेंट", B: "सुपरपोज़िशन", C: "गुरुत्वाकर्षण", D: "क्वांटम टनलिंग" }, correct: "D" },
+        { q: "'Grover's Algorithm' किसी डेटाबेस को कितनी तेजी से खोज सकता है?", a: "वर्गमूल गति (Square Root Speedup)", opts: { A: "दोगुनी गति", B: "समान गति", C: "घातांक गति", D: "वर्गमूल गति (Square Root Speedup)" }, correct: "D" },
+        { q: "क्वांटम हॉल प्रभाव (Quantum Hall Effect) किसकी खोज के लिए महत्वपूर्ण था?", a: "टोपोलॉजिकल चरण", opts: { A: "ब्लैक होल", B: "नया ग्रह", C: "वायरस", D: "टोपोलॉजिकल चरण" }, correct: "D" },
+        { q: "सुपरपोज़िशन के दौरान, Qubit को ज्यामितीय रूप से कहाँ दर्शाया जाता है?", a: "ब्लॉक स्फीयर की सतह पर", opts: { A: "केंद्र में", B: "उत्तरी ध्रुव पर", C: "दक्षिणी ध्रुव पर", D: "ब्लॉक स्फीयर की सतह पर" }, correct: "D" }
+    ];
+
+    // Shuffle Function
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // --- State Variables ---
+    let studentName = "";
+    let quizData = [];
+    let currentIndex = 0;
+    let score = 0;
+    let userAnswers = [];
+    let timerInterval = null;
+    let timeLeft = 15;
+    const TIME_LIMIT = 15;
+
+    // --- DOM Elements ---
+    const loginSection = document.getElementById('login-section');
+    const quizSection = document.getElementById('quiz-section');
+    const resultSection = document.getElementById('result-section');
+    
+    // --- Start App ---
+    function startApp() {
+        const nameInput = document.getElementById('studentName');
+        if(!nameInput.value.trim()) { alert("नाम दर्ज करें!"); return; }
+        
+        studentName = nameInput.value.trim();
+        quizData = shuffleArray([...rawData]); // Shuffle questions
+        
+        loginSection.style.display = 'none';
+        quizSection.style.display = 'flex';
+        
+        loadQuestion();
+    }
+
+    // --- Load Question ---
+    function loadQuestion() {
+        if(currentIndex >= quizData.length) {
+            endQuiz();
+            return;
+        }
+
+        // Reset Timer
+        clearInterval(timerInterval);
+        timeLeft = TIME_LIMIT;
+        document.getElementById('timer-bar').style.width = '100%';
+        document.getElementById('timer-text').innerText = timeLeft + "s";
+
+        // Update UI
+        const qData = quizData[currentIndex];
+        document.getElementById('q-counter').innerText = `प्रश्न ${currentIndex + 1} / ${quizData.length}`;
+        document.getElementById('question-display').innerText = `${currentIndex + 1}. ${qData.q}`;
+
+        // Render Options (Radio Buttons)
+        const optsDiv = document.getElementById('options-display');
+        optsDiv.innerHTML = '';
+
+        for(let key in qData.opts) {
+            const label = document.createElement('label');
+            label.className = 'option-label';
+            label.innerHTML = `
+                <input type="radio" name="option" value="${key}" onchange="selectAnswer('${key}')">
+                <span><b>${key})</b> ${qData.opts[key]}</span>
+            `;
+            optsDiv.appendChild(label);
+        }
+
+        // Start Timer
+        startTimer();
+    }
+
+    // --- Timer Logic ---
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timer-text').innerText = timeLeft + "s";
+            const percent = (timeLeft / TIME_LIMIT) * 100;
+            document.getElementById('timer-bar').style.width = percent + "%";
+
+            if(timeLeft <= 0) {
+                clearInterval(timerInterval);
+                saveAnswer(null); // Timeout
+            }
+        }, 1000);
+    }
+
+    // --- User Selects Answer ---
+    window.selectAnswer = function(selectedKey) {
+        clearInterval(timerInterval);
+        // Small delay for UX
+        setTimeout(() => {
+            saveAnswer(selectedKey);
+        }, 300);
+    }
+
+    // --- Save Answer & Next ---
+    function saveAnswer(selected) {
+        const qData = quizData[currentIndex];
+        const isCorrect = (selected === qData.correct);
+
+        if(isCorrect) score++;
+
+        userAnswers.push({
+            q: qData.q,
+            opts: qData.opts,
+            correct: qData.correct,
+            selected: selected,
+            isCorrect: isCorrect
+        });
+
+        currentIndex++;
+        loadQuestion();
+    }
+
+    // --- End Quiz ---
+    function endQuiz() {
+        quizSection.style.display = 'none';
+        resultSection.style.display = 'block';
+
+        document.getElementById('student-name-display').innerText = studentName;
+        document.getElementById('final-score-display').innerText = `${score} / ${quizData.length}`;
+
+        generateReview();
+        downloadCSV();
+    }
+
+    // --- Generate Review List ---
+    function generateReview() {
+        const container = document.getElementById('review-container');
+        container.innerHTML = '';
+
+        userAnswers.forEach((item, idx) => {
+            const div = document.createElement('div');
+            const statusClass = item.isCorrect ? 'correct' : 'wrong';
+            const statusText = item.isCorrect ? 'अंक: 1/1' : 'अंक: 0/1';
+
+            div.className = `review-item ${statusClass}`;
+            
+            let html = `
+                <div class="review-q">
+                    <span>${idx+1}. ${item.q}</span>
+                    <span class="marks-badge">${statusText}</span>
+                </div>
+            `;
+
+            for(let key in item.opts) {
+                let optClass = 'opt-normal';
+                let suffix = '';
+
+                // Logic for highlighting
+                if(key === item.correct) {
+                    optClass = 'opt-correct'; // Always Green
+                    suffix = ' ✓';
+                } else if(key === item.selected && !item.isCorrect) {
+                    optClass = 'opt-user-wrong'; // Selected Wrong -> Red
+                    suffix = ' ✗';
+                }
+
+                html += `<div class="review-opt ${optClass}">${key}) ${item.opts[key]} ${suffix}</div>`;
+            }
+
+            div.innerHTML = html;
+            container.appendChild(div);
+        });
+    }
+
+    // --- CSV Download ---
+    function downloadCSV() {
+        const date = new Date().toLocaleString();
+        const csvHeader = "Student Name,Total Score,Max Score,Date\n";
+        const csvRow = `${studentName},${score},${quizData.length},"${date}"`;
+        
+        // BOM for Unicode support
+        const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + csvHeader + csvRow;
+        
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "result_set3.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+</script>
+</body>
+</html>

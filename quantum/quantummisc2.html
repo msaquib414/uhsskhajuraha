@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>क्वांटम भौतिकी क्विज़</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --bg-color: #f1f5f9;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --correct-bg: #dcfce7;
+            --correct-border: #15803d;
+            --correct-text: #14532d;
+            --wrong-bg: #fee2e2;
+            --wrong-border: #b91c1c;
+            --wrong-text: #7f1d1d;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            padding-top: 70px; /* For fixed timer */
+            user-select: none; /* Disable text selection */
+        }
+
+        /* Fixed Timer */
+        #timer-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #0f172a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h1, h2 { text-align: center; color: var(--primary); }
+
+        /* Login Screen */
+        #login-screen {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            font-size: 1.1rem;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover { background-color: var(--primary-dark); }
+        button:disabled { background-color: #94a3b8; cursor: not-allowed; }
+
+        /* Quiz Section */
+        #quiz-section { display: none; }
+
+        .question-block {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        label:hover { background-color: #eff6ff; }
+
+        input[type="radio"] { margin-right: 12px; transform: scale(1.2); }
+
+        /* Results & Feedback */
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: none;
+            border: 1px solid transparent;
+        }
+
+        .feedback.correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: var(--correct-text);
+        }
+
+        .feedback.wrong {
+            background-color: var(--wrong-bg);
+            border-color: var(--wrong-border);
+            color: var(--wrong-text);
+        }
+
+        /* Highlight user selection in result */
+        .user-selected-wrong {
+            background-color: var(--wrong-bg);
+            border: 1px solid var(--wrong-border);
+            color: var(--wrong-text);
+        }
+
+        .actual-correct-answer {
+            background-color: var(--correct-bg);
+            border: 1px solid var(--correct-border);
+            color: var(--correct-text);
+            font-weight: bold;
+        }
+
+        #score-display {
+            text-align: center;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .score-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer-bar">समय शेष: <span id="time-display" style="margin-left: 10px;">25:00</span></div>
+
+    <div class="container">
+        <div id="login-screen">
+            <h1>क्वांटम भौतिकी क्विज़</h1>
+            <p>ब्लैकबॉडी रेडिएशन, प्रकाश विद्युत प्रभाव, QFT, और क्वांटम इन्फॉर्मेशन</p>
+            <br>
+            <input type="text" id="student-name" placeholder="अपना नाम दर्ज करें" autocomplete="off">
+            <br>
+            <button onclick="startQuiz()">क्विज़ शुरू करें (Start Quiz)</button>
+        </div>
+
+        <div id="quiz-section">
+            <div id="score-display">
+                <h2>परिणाम (Result)</h2>
+                <div class="score-number" id="final-score">0 / 40</div>
+                <p>Result.csv डाउनलोड हो रहा है...</p>
+            </div>
+
+            <form id="quiz-form">
+                </form>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="button" id="submit-btn" onclick="submitQuiz()">सबमिट करें (Submit Quiz)</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // --- Data: 40 Questions ---
+    // Topics: Blackbody (BB), Photoelectric (PE), Quantum Field Theory (QFT), Quantum Info (QI)
+    // Distribution: 10 A, 10 B, 10 C, 10 D
+    const questions = [
+        // Answer A (10)
+        { q: "कृष्णिका (Blackbody) का मुख्य गुण क्या है?", a: "A", opts: { A: "सभी विकिरण अवशोषित करती है", B: "सभी विकिरण परावर्तित करती है", C: "केवल लाल रंग छोड़ती है", D: "पारदर्शी होती है" } },
+        { q: "देहली आवृत्ति (Threshold Frequency) क्या है?", a: "A", opts: { A: "इलेक्ट्रॉन उत्सर्जन के लिए न्यूनतम आवृत्ति", B: "अधिकतम आवृत्ति", C: "ध्वनि की आवृत्ति", D: "फोटॉन की गति" } },
+        { q: "क्वांटम फील्ड थ्योरी (QFT) में ब्रह्मांड का मूल घटक क्या है?", a: "A", opts: { A: "क्वांटम क्षेत्र (Fields)", B: "कण (Particles)", C: "तार", D: "ग्रह" } },
+        { q: "क्वांटम सूचना की इकाई क्या है?", a: "A", opts: { A: "Qubit", B: "Bit", C: "Byte", D: "Mole" } },
+        { q: "स्टीफन-बोल्ट्जमैन नियम (E ∝ T⁴) किस पर लागू होता है?", a: "A", opts: { A: "ब्लैकबॉडी रेडिएशन", B: "प्रकाश विद्युत प्रभाव", C: "ध्रुवीकरण", D: "अपवर्तन" } },
+        { q: "इलेक्ट्रॉन का एंटी-पार्टिकल (Anti-particle) क्या है?", a: "A", opts: { A: "पॉज़िट्रॉन", B: "प्रोटॉन", C: "न्यूट्रॉन", D: "फोटॉन" } },
+        { q: "क्वांटम एन्टैंगलमेंट (Entanglement) क्या दर्शाता है?", a: "A", opts: { A: "कणों का गहरा जुड़ाव", B: "कणों का टकराव", C: "ऊर्जा का विनाश", D: "प्रकाश की गति" } },
+        { q: "हिग्स फील्ड (Higgs Field) का क्या कार्य है?", a: "A", opts: { A: "कणों को द्रव्यमान देना", B: "प्रकाश पैदा करना", C: "गुरुत्वाकर्षण रोकना", D: "बिजली बनाना" } },
+        { q: "सूर्य किस रंग का सबसे अधिक विकिरण उत्सर्जित करता है (ब्लैकबॉडी के अनुसार)?", a: "A", opts: { A: "हरा-पीला (Green-Yellow)", B: "लाल", C: "नीला", D: "बैंगनी" } },
+        { q: "क्वांटम क्रिप्टोग्राफी का लाभ क्या है?", a: "A", opts: { A: "सुरक्षित संचार", B: "तेज इंटरनेट", C: "सस्ता कंप्यूटर", D: "वायरलेस चार्जिंग" } },
+
+        // Answer B (10)
+        { q: "'पराबैंगनी प्रलय' (Ultraviolet Catastrophe) किस भौतिकी की विफलता थी?", a: "B", opts: { A: "क्वांटम भौतिकी", B: "क्लासिकल भौतिकी", C: "सापेक्षता सिद्धांत", D: "रसायन विज्ञान" } },
+        { q: "एक आदर्श ब्लैकबॉडी का उदाहरण क्या है?", a: "B", opts: { A: "कांच", B: "एक छोटे छेद वाली गुहा (Cavity)", C: "दर्पण", D: "पानी" } },
+        { q: "उत्सर्जित फोटो-इलेक्ट्रॉन की गतिज ऊर्जा किस पर निर्भर करती है?", a: "B", opts: { A: "तीव्रता", B: "आवृत्ति (Frequency)", C: "समय", D: "दबाव" } },
+        { q: "QFT में कण (Particle) को क्या माना जाता है?", a: "B", opts: { A: "ठोस गेंद", B: "क्षेत्र में उत्तेजना (Excitation)", C: "तरल बूंद", D: "केवल गणित" } },
+        { q: "सुपरपोज़िशन (Superposition) का अर्थ क्या है?", a: "B", opts: { A: "0 अवस्था", B: "एक साथ कई अवस्थाओं में होना", C: "1 अवस्था", D: "डेटा मिटाना" } },
+        { q: "वर्चुअल पार्टिकल्स (Virtual Particles) क्या हैं?", a: "B", opts: { A: "असली कण", B: "अस्थायी ऊर्जा उतार-चढ़ाव", C: "स्थायी कण", D: "डार्क मैटर" } },
+        { q: "'नो-क्लोनिंग प्रमेय' (No-Cloning Theorem) क्या कहता है?", a: "B", opts: { A: "डेटा कॉपी हो सकता है", B: "अज्ञात क्वांटम अवस्था कॉपी नहीं हो सकती", C: "क्लोनिंग आसान है", D: "सॉफ्टवेयर कॉपी नहीं हो सकता" } },
+        { q: "प्लांक स्थिरांक (h) का मान क्या है?", a: "B", opts: { A: "3 x 10^8", B: "6.626 x 10^-34 Js", C: "9.8 m/s", D: "1.6 x 10^-19" } },
+        { q: "प्रकाश की तीव्रता बढ़ाने पर क्या बढ़ता है?", a: "B", opts: { A: "इलेक्ट्रॉन की ऊर्जा", B: "फोटो-इलेक्ट्रॉनों की संख्या", C: "निरोधी विभव", D: "आवृत्ति" } },
+        { q: "क्वांटम डिकोहेरेंस (Decoherence) का कारण क्या है?", a: "B", opts: { A: "सॉफ्टवेयर", B: "पर्यावरण के साथ संपर्क", C: "वायरस", D: "हार्ड डिस्क" } },
+
+        // Answer C (10)
+        { q: "मैक्स प्लैंक ने ब्लैकबॉडी रेडिएशन समझाने के लिए क्या माना?", a: "C", opts: { A: "ऊर्जा निरंतर है", B: "प्रकाश केवल तरंग है", C: "ऊर्जा पैकेट (Quanta) में है", D: "परमाणु नहीं होते" } },
+        { q: "प्रकाश विद्युत प्रभाव के लिए नोबेल पुरस्कार किसे मिला?", a: "C", opts: { A: "न्यूटन", B: "मैक्सवेल", C: "आइंस्टीन", D: "हबल" } },
+        { q: "कार्य फलन (Work Function) क्या है?", a: "C", opts: { A: "अधिकतम ऊर्जा", B: "औसत ऊर्जा", C: "इलेक्ट्रॉन निकालने के लिए न्यूनतम ऊर्जा", D: "नाभिकीय ऊर्जा" } },
+        { q: "क्वांटम इलेक्ट्रोडायनामिक्स (QED) किनकी अंतःक्रिया है?", a: "C", opts: { A: "प्रोटॉन और न्यूट्रॉन", B: "गुरुत्वाकर्षण", C: "प्रकाश और पदार्थ", D: "ध्वनि और हवा" } },
+        { q: "क्वांटम टेलीपोर्टेशन क्या भेजता है?", a: "C", opts: { A: "पदार्थ", B: "आत्मा", C: "क्वांटम अवस्था (State)", D: "बिजली" } },
+        { q: "फोटॉन का विराम द्रव्यमान (Rest Mass) क्या है?", a: "C", opts: { A: "1 ग्राम", B: "अनंत", C: "शून्य", D: "10 किग्रा" } },
+        { q: "मानक मॉडल (Standard Model) किस पर आधारित है?", a: "C", opts: { A: "गुरुत्वाकर्षण", B: "स्ट्रिंग थ्योरी", C: "क्वांटम फील्ड थ्योरी", D: "क्लासिकल मैकेनिक्स" } },
+        { q: "क्लासिकल बिट के संभव मान क्या हैं?", a: "C", opts: { A: "1 और 2", B: "0 और 10", C: "0 या 1", D: "अनंत" } },
+        { q: "कौन सा गेट क्वांटम में 'NOT' गेट जैसा है?", a: "C", opts: { A: "Hadamard", B: "CNOT", C: "Pauli-X", D: "Toffoli" } },
+        { q: "क्वांटम संचार में 'Alice' और 'Bob' के बीच जासूस कौन है?", a: "C", opts: { A: "Tom", B: "Jerry", C: "Eve", D: "Smith" } },
+
+        // Answer D (10)
+        { q: "वियन का विस्थापन नियम क्या बताता है?", a: "D", opts: { A: "ऊर्जा और समय", B: "द्रव्यमान और वेग", C: "बल और त्वरण", D: "तापमान और तरंगदैर्ध्य (Color)" } },
+        { q: "प्रकाश विद्युत प्रभाव प्रकाश की किस प्रकृति को सिद्ध करता है?", a: "D", opts: { A: "तरंग", B: "चुंबकीय", C: "ध्वनि", D: "कण (Particle)" } },
+        { q: "आइंस्टीन का प्रकाश विद्युत समीकरण क्या है?", a: "D", opts: { A: "E = mc²", B: "F = ma", C: "V = IR", D: "K.E. = hν - Φ" } },
+        { q: "बलों के वाहक कणों (Force Carriers) को क्या कहते हैं?", a: "D", opts: { A: "फर्मिअन", B: "इलेक्ट्रॉन", C: "न्यूट्रिनो", D: "बोसोन (Bosons)" } },
+        { q: "शोर का एल्गोरिदम (Shor's Algorithm) क्या करता है?", a: "D", opts: { A: "सर्चिंग", B: "सॉर्टिंग", C: "गेमिंग", D: "गुणनखंडन (Factoring)" } },
+        { q: "ग्रोवर का एल्गोरिदम (Grover's Algorithm) किसलिए है?", a: "D", opts: { A: "एन्क्रिप्शन", B: "टेलीपोर्टेशन", C: "कम्युनिकेशन", D: "डेटाबेस सर्च" } },
+        { q: "फेनमैन आरेख (Feynman Diagrams) क्या दर्शाते हैं?", a: "D", opts: { A: "परमाणु संरचना", B: "ब्रह्मांड का नक्शा", C: "विद्युत सर्किट", D: "कणों की अंतःक्रिया" } },
+        { q: "एंटी-मैटर और मैटर मिलने पर क्या होता है?", a: "D", opts: { A: "नया ग्रह बनता है", B: "बर्फ बनती है", C: "काला हो जाता है", D: "विनाश और ऊर्जा उत्सर्जन" } },
+        { q: "निरोधी विभव (Stopping Potential) किस पर निर्भर करता है?", a: "D", opts: { A: "धातु के आकार", B: "समय", C: "दूरी", D: "आवृत्ति" } },
+        { q: "ब्लैकबॉडी वक्र (Curve) का आकार किस पर निर्भर करता है?", a: "D", opts: { A: "पदार्थ", B: "आकार", C: "वजन", D: "तापमान" } }
+    ];
+
+    // Shuffle functionality
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    let studentName = "";
+    let timeLeft = 25 * 60; // 25 minutes
+    let timerInterval;
+
+    function startQuiz() {
+        const input = document.getElementById('student-name');
+        if (!input.value.trim()) {
+            alert("कृपया अपना नाम दर्ज करें!");
+            return;
+        }
+        studentName = input.value.trim();
+        
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+
+        renderQuestions();
+        startTimer();
+    }
+
+    function renderQuestions() {
+        const form = document.getElementById('quiz-form');
+        // Shuffle questions before rendering to mix topics
+        const shuffledQuestions = shuffle([...questions]);
+        
+        shuffledQuestions.forEach((q, index) => {
+            // Re-assign index for display order
+            q.displayIndex = index + 1;
+
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.id = `q-block-${index}`;
+
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerText = `${index + 1}. ${q.q}`;
+            block.appendChild(qText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-group';
+
+            for (const [key, val] of Object.entries(q.opts)) {
+                const label = document.createElement('label');
+                // Store original question index or answer in data attribute for grading
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `question-${index}`;
+                input.value = key;
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(` ${val}`)); // No "A)" prefix in visual, just option text or maintain A,B,C,D logic visually
+                optionsDiv.appendChild(label);
+            }
+            block.appendChild(optionsDiv);
+
+            // Feedback container
+            const fb = document.createElement('div');
+            fb.id = `feedback-${index}`;
+            fb.className = 'feedback';
+            block.appendChild(fb);
+
+            // Hidden data for grading
+            block.dataset.correct = q.a;
+            block.dataset.correctText = q.opts[q.a];
+
+            form.appendChild(block);
+        });
+    }
+
+    function startTimer() {
+        const display = document.getElementById('time-display');
+        timerInterval = setInterval(() => {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            display.textContent = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').innerText = "सबमिट किया गया";
+
+        let score = 0;
+        const blocks = document.querySelectorAll('.question-block');
+        
+        blocks.forEach((block, index) => {
+            const correctKey = block.dataset.correct;
+            const correctText = block.dataset.correctText;
+            const feedback = block.querySelector('.feedback');
+            
+            const selected = block.querySelector(`input[name="question-${index}"]:checked`);
+            const allInputs = block.querySelectorAll(`input[name="question-${index}"]`);
+            
+            // Disable inputs
+            allInputs.forEach(inp => inp.disabled = true);
+
+            let userVal = selected ? selected.value : null;
+
+            if (userVal === correctKey) {
+                score++;
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `✓ सही उत्तर!`;
+                if(selected) selected.parentElement.style.backgroundColor = '#dcfce7'; // Light green highlight
+            } else {
+                feedback.className = 'feedback wrong';
+                feedback.innerHTML = `✗ गलत। सही उत्तर: ${correctText}`;
+                
+                // Highlight user wrong choice in red
+                if(selected) selected.parentElement.classList.add('user-selected-wrong');
+                
+                // Highlight actual correct in green
+                allInputs.forEach(inp => {
+                    if(inp.value === correctKey) {
+                        inp.parentElement.classList.add('actual-correct-answer');
+                    }
+                });
+            }
+            feedback.style.display = 'block';
+        });
+
+        // Show Score
+        document.getElementById('score-display').style.display = 'block';
+        document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Generate CSV
+        downloadCSV(score);
+    }
+
+    function downloadCSV(score) {
+        const date = new Date().toLocaleString();
+        const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
+            + "Student Name,Total Score,Date/Time\n"
+            + `${studentName},${score}/${questions.length},"${date}"`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "result.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>क्वांटम कंप्यूटिंग क्विज़</title>
+    <style>
+        :root {
+            --primary: #7c3aed; /* Violet */
+            --primary-dark: #6d28d9;
+            --bg-color: #f5f3ff;
+            --card-bg: #ffffff;
+            --text-main: #1e1b4b;
+            --correct-bg: #d1fae5;
+            --correct-border: #10b981;
+            --correct-text: #065f46;
+            --wrong-bg: #fee2e2;
+            --wrong-border: #ef4444;
+            --wrong-text: #991b1b;
+            --timer-bg: #e5e7eb;
+            --timer-fill: #db2777; /* Pink/Red for urgency */
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            user-select: none; /* Prevent text selection */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: 20px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            min-height: 550px;
+        }
+
+        /* --- Screens --- */
+        .screen {
+            padding: 40px;
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            height: 100%;
+            flex-grow: 1;
+        }
+
+        .screen.active { display: flex; }
+
+        /* --- Login Screen --- */
+        #login-screen {
+            justify-content: center;
+            text-align: center;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 10px; font-size: 2rem; }
+        .subtitle { color: #6b7280; margin-bottom: 40px; }
+
+        input[type="text"] {
+            padding: 15px;
+            font-size: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 20px auto;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+        input[type="text"]:focus { border-color: var(--primary); }
+
+        button.btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        button.btn-primary:hover { background-color: var(--primary-dark); }
+
+        /* --- Quiz Screen --- */
+        #quiz-screen { position: relative; }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .timer-container {
+            height: 8px;
+            background: var(--timer-bg);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .timer-bar {
+            height: 100%;
+            background: var(--timer-fill);
+            width: 100%;
+            transition: width 1s linear;
+        }
+
+        .question-card {
+            background: #fff;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .q-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .option-label:hover {
+            border-color: var(--primary);
+            background-color: #f3e8ff;
+        }
+
+        input[type="radio"] {
+            transform: scale(1.4);
+            margin-right: 15px;
+            accent-color: var(--primary);
+        }
+
+        /* --- Result Screen --- */
+        #result-screen {
+            overflow-y: auto;
+            background: #f8fafc;
+            padding: 0;
+        }
+
+        .score-header {
+            background: var(--primary);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .score-num { font-size: 3.5rem; font-weight: 800; margin: 10px 0; }
+
+        .review-container {
+            padding: 30px;
+            max-width: 100%;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #ccc;
+        }
+        
+        .review-card.correct-answer { border-left-color: var(--correct-border); }
+        .review-card.wrong-answer { border-left-color: var(--wrong-border); }
+
+        .review-q {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .status-badge {
+            font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            color: white;
+            height: fit-content;
+        }
+        .bg-green { background: var(--correct-border); }
+        .bg-red { background: var(--wrong-border); }
+        .bg-gray { background: #9ca3af; }
+
+        .review-opt {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        /* Styling for review options */
+        .user-selected-correct {
+            background-color: var(--correct-bg);
+            color: var(--correct-text);
+            border: 1px solid var(--correct-border);
+            font-weight: bold;
+        }
+        .user-selected-wrong {
+            background-color: var(--wrong-bg);
+            color: var(--wrong-text);
+            border: 1px solid var(--wrong-border);
+            text-decoration: line-through;
+        }
+        .actual-correct {
+            background-color: var(--correct-bg);
+            color: var(--correct-text);
+            border: 1px solid var(--correct-border);
+            font-weight: bold;
+        }
+        .normal-opt { color: #6b7280; }
+
+    </style>
+</head>
+<body oncontextmenu="return false">
+
+    <div class="container">
+        
+        <div id="login-screen" class="screen active">
+            <h1>क्वांटम कंप्यूटिंग क्विज़</h1>
+            <p class="subtitle">40 प्रश्न | 15 सेकंड प्रति प्रश्न | ऑटो-डाउनलोड रिजल्ट</p>
+            <div>
+                <input type="text" id="studentName" placeholder="अपना नाम दर्ज करें" autocomplete="off">
+                <br>
+                <button class="btn-primary" onclick="startQuiz()">क्विज़ शुरू करें</button>
+            </div>
+        </div>
+
+        <div id="quiz-screen" class="screen">
+            <div class="top-bar">
+                <span id="progress-text">प्रश्न 1 / 40</span>
+                <span id="timer-text">15s</span>
+            </div>
+            
+            <div class="timer-container">
+                <div class="timer-bar" id="timer-bar"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="q-text" id="q-text">प्रश्न लोड हो रहा है...</div>
+                <div class="options-list" id="options-list">
+                    </div>
+            </div>
+        </div>
+
+        <div id="result-screen" class="screen">
+            <div class="score-header">
+                <h2>परिणाम (Result)</h2>
+                <div class="score-num" id="final-score">0 / 40</div>
+                <p id="student-display">Student Name</p>
+                <small>Result.csv डाउनलोड हो रहा है...</small>
+            </div>
+            <div class="review-container" id="review-list">
+                </div>
+        </div>
+
+    </div>
+
+<script>
+    // --- Data: 40 Questions (Balanced A=10, B=10, C=10, D=10) ---
+    const rawQuestions = [
+        // Set A (Correct Answer is A)
+        { q: "क्वांटम कंप्यूटर की मूल इकाई (Unit) क्या है?", a: "A", opts: { A: "Qubit", B: "Bit", C: "Byte", D: "Pixel" } },
+        { q: "सुपरपोज़िशन (Superposition) का क्या अर्थ है?", a: "A", opts: { A: "एक साथ कई अवस्थाओं में होना", B: "सिस्टम का बंद होना", C: "केवल 0 अवस्था", D: "डेटा नष्ट होना" } },
+        { q: "क्वांटम कंप्यूटर किस प्रकार की समस्याओं के लिए बेहतर हैं?", a: "A", opts: { A: "ऑप्टिमाइजेशन और सिमुलेशन", B: "वर्ड प्रोसेसिंग", C: "वीडियो स्ट्रीमिंग", D: "ईमेल भेजना" } },
+        { q: "क्वांटम 'एन्टैंगलमेंट' (Entanglement) को आइंस्टीन ने क्या कहा था?", a: "A", opts: { A: "Spooky action at a distance", B: "God particle", C: "Relativity failure", D: "Quantum leap" } },
+        { q: "शोर का एल्गोरिदम (Shor's Algorithm) किस लिए प्रसिद्ध है?", a: "A", opts: { A: "बड़ी संख्याओं के गुणनखंडन", B: "डेटा सर्च", C: "इमेज रेंडरिंग", D: "ऑडियो मिक्सिंग" } },
+        { q: "क्वांटम बिट (Qubit) को ज्यामितीय रूप से कैसे दर्शाया जाता है?", a: "A", opts: { A: "ब्लॉक स्फीयर (Bloch Sphere)", B: "पाई चार्ट", C: "हिस्टोग्राम", D: "घन (Cube)" } },
+        { q: "गूगल के क्वांटम प्रोसेसर का नाम क्या है?", a: "A", opts: { A: "Sycamore", B: "Q-System One", C: "Azure Q", D: "Xeon" } },
+        { q: "नो-क्लोनिंग प्रमेय (No-Cloning Theorem) क्या कहता है?", a: "A", opts: { A: "क्वांटम अवस्था कॉपी नहीं हो सकती", B: "डेटा मिटाया नहीं जा सकता", C: "Qubit मर नहीं सकते", D: "ऊर्जा अनंत है" } },
+        { q: "क्वांटम क्रिप्टोग्राफी का मुख्य लाभ क्या है?", a: "A", opts: { A: "अभेद्य सुरक्षा", B: "सस्ती लागत", C: "सरल हार्डवेयर", D: "कम बिजली खपत" } },
+        { q: "क्वांटम टनलिंग (Quantum Tunneling) का उपयोग कहाँ होता है?", a: "A", opts: { A: "स्कैनिंग टनलिंग माइक्रोस्कोप", B: "टेलीस्कोप", C: "कार इंजन", D: "वाई-फाई राउटर" } },
+
+        // Set B (Correct Answer is B)
+        { q: "क्लासिकल बिट्स (Classical Bits) के मान क्या हो सकते हैं?", a: "B", opts: { A: "0 और 1 एक साथ", B: "0 या 1", C: "केवल 1", D: "अनंत" } },
+        { q: "क्वांटम यांत्रिकी में 'अनिश्चितता का सिद्धांत' किसने दिया?", a: "B", opts: { A: "आइंस्टीन", B: "हाइजेनबर्ग", C: "न्यूटन", D: "फैराडे" } },
+        { q: "ग्रोवर का एल्गोरिदम (Grover's Algorithm) क्या करता है?", a: "B", opts: { A: "एन्क्रिप्शन तोड़ना", B: "असंरचित डेटाबेस सर्च", C: "गणितीय गुणा", D: "मौसम भविष्यवाणी" } },
+        { q: "क्वांटम टेलीपोर्टेशन में क्या स्थानांतरित होता है?", a: "B", opts: { A: "पदार्थ", B: "क्वांटम सूचना (अवस्था)", C: "ऊर्जा", D: "द्रव्यमान" } },
+        { q: "क्वांटम डिकोहेरेंस (Decoherence) का मुख्य कारण क्या है?", a: "B", opts: { A: "सॉफ्टवेयर बग", B: "पर्यावरण के साथ अन्योन्यक्रिया", C: "हार्ड डिस्क एरर", D: "वायरस" } },
+        { q: "क्वांटम सुप्रीमेसी (Quantum Supremacy) का क्या मतलब है?", a: "B", opts: { A: "दुनिया पर राज करना", B: "क्लासिकल कंप्यूटर से बेहतर प्रदर्शन", C: "सबसे महंगा कंप्यूटर", D: "सबसे छोटा कंप्यूटर" } },
+        { q: "हडमार्ड गेट (Hadamard Gate) का क्या कार्य है?", a: "B", opts: { A: "Qubit को मापना", B: "सुपरपोज़िशन बनाना", C: "प्रोग्राम बंद करना", D: "डेटा सेव करना" } },
+        { q: "IBM ने क्लाउड पर क्वांटम कंप्यूटिंग किस नाम से दी है?", a: "B", opts: { A: "AWS Braket", B: "IBM Quantum Experience", C: "Google Cloud", D: "Azure Quantum" } },
+        { q: "श्रोडिंगर की बिल्ली (Schrödinger's Cat) किस अवधारणा को समझाती है?", a: "B", opts: { A: "एन्टैंगलमेंट", B: "सुपरपोज़िशन", C: "टनलिंग", D: "टेलीपोर्टेशन" } },
+        { q: "प्रकाश विद्युत प्रभाव (Photoelectric Effect) की व्याख्या किसने की?", a: "B", opts: { A: "मैक्स प्लैंक", B: "अल्बर्ट आइंस्टीन", C: "नील्स बोर", D: "रदरफोर्ड" } },
+
+        // Set C (Correct Answer is C)
+        { q: "QKD का पूर्ण रूप क्या है?", a: "C", opts: { A: "Quick Key Data", B: "Quantum Kite Design", C: "Quantum Key Distribution", D: "Query Key Database" } },
+        { q: "क्वांटम एन्टैंगलमेंट के लिए कम से कम कितने कण चाहिए?", a: "C", opts: { A: "एक", B: "दस", C: "दो", D: "अनंत" } },
+        { q: "क्वांटम कंप्यूटर को ठंडा रखने के लिए किसका उपयोग होता है?", a: "C", opts: { A: "पानी", B: "पंखे", C: "तरल हीलियम / क्रायोजेनिक्स", D: "बर्फ" } },
+        { q: "स्पिन 'अप' और स्पिन 'डाउन' किसे दर्शाते हैं?", a: "C", opts: { A: "तापमान", B: "दिशा", C: "Qubit की अवस्थाएँ (1 और 0)", D: "रंग" } },
+        { q: "फोटोन (Photon) किसका क्वांटम कण है?", a: "C", opts: { A: "ध्वनि", B: "गुरुत्वाकर्षण", C: "प्रकाश", D: "चुंबक" } },
+        { q: "क्वांटम यांत्रिकी का जनक (Father) किसे माना जाता है?", a: "C", opts: { A: "टेस्ला", B: "एडिसन", C: "मैक्स प्लैंक", D: "हॉकिंग" } },
+        { q: "वेव फंक्शन (Wave Function) का प्रतीक क्या है?", a: "C", opts: { A: "Alpha (α)", B: "Beta (β)", C: "Psi (Ψ)", D: "Omega (Ω)" } },
+        { q: "कौन सा गेट क्वांटम सर्किट में 'Reversible' (उत्क्रमणीय) होता है?", a: "C", opts: { A: "AND गेट", B: "OR गेट", C: "सभी क्वांटम गेट", D: "NAND गेट" } },
+        { q: "टोफोली गेट (Toffoli Gate) को और किस नाम से जाना जाता है?", a: "C", opts: { A: "NOT Gate", B: "Hadamard", C: "CCNOT (Controlled-Controlled-NOT)", D: "SWAP Gate" } },
+        { q: "इंटरफेरेंस (Interference) का उपयोग क्वांटम कंप्यूटर में क्यों होता है?", a: "C", opts: { A: "रंग बदलने के लिए", B: "शोर बढ़ाने के लिए", C: "सही उत्तर की प्रायिकता बढ़ाने के लिए", D: "बिजली बचाने के लिए" } },
+
+        // Set D (Correct Answer is D)
+        { q: "भविष्य के 'क्वांटम सुरक्षित' क्रिप्टोग्राफी को क्या कहते हैं?", a: "D", opts: { A: "AES", B: "RSA", C: "DES", D: "Post-Quantum Cryptography" } },
+        { q: "क्वांटम सिमुलेशन का सबसे बड़ा लाभ किस क्षेत्र में है?", a: "D", opts: { A: "गेमिंग", B: "सोशल मीडिया", C: "टाइपिंग", D: "दवाओं की खोज (Drug Discovery)" } },
+        { q: "आयन ट्रैप (Ion Trap) तकनीक में Qubit क्या होता है?", a: "D", opts: { A: "इलेक्ट्रॉन", B: "फोटोन", C: "न्यूट्रॉन", D: "आवेशित परमाणु (Ion)" } },
+        { q: "सुपरकंडक्टिंग Qubits किस सामग्री से बनते हैं?", a: "D", opts: { A: "लकड़ी", B: "प्लास्टिक", C: "कांच", D: "नाइओबियम / एल्युमिनियम" } },
+        { q: "'क्वांटम वॉल्यूम' (Quantum Volume) क्या मापता है?", a: "D", opts: { A: "आकार", B: "वजन", C: "कीमत", D: "क्वांटम कंप्यूटर की शक्ति/प्रदर्शन" } },
+        { q: "CNOT गेट में कितने Qubits होते हैं?", a: "D", opts: { A: "1", B: "4", C: "3", D: "2 (Control और Target)" } },
+        { q: "बेल की असमानता (Bell's Inequality) क्या सिद्ध करती है?", a: "D", opts: { A: "न्यूटन सही था", B: "प्रकाश धीमा है", C: "गुरुत्वाकर्षण नहीं है", D: "लोकल हिडन वेरिएबल्स नहीं होते" } },
+        { q: "D-Wave कंपनी किस प्रकार के क्वांटम कंप्यूटर बनाती है?", a: "D", opts: { A: "गेट आधारित", B: "फोटोनिक", C: "टोपोलॉजिकल", D: "क्वांटम एनीलिंग (Annealing)" } },
+        { q: "टोपोलॉजिकल Qubits किस कण पर आधारित हैं?", a: "D", opts: { A: "फोटोन", B: "इलेक्ट्रॉन", C: "प्रोटॉन", D: "मजराना फर्मिअन (Majorana Fermions)" } },
+        { q: "क्वांटम त्रुटि सुधार (Error Correction) क्यों जरूरी है?", a: "D", opts: { A: "मेमोरी भरने के लिए", B: "दिखावे के लिए", C: "सॉफ्टवेयर के लिए", D: "Qubits की नाजुकता (Fragility) के कारण" } }
+    ];
+
+    // --- Variables ---
+    let questions = [];
+    let currentIdx = 0;
+    let score = 0;
+    let studentName = "";
+    let userAnswers = [];
+    let timerInterval = null;
+    let timeLeft = 15;
+    const TIME_LIMIT = 15;
+
+    // --- DOM Elements ---
+    const loginScreen = document.getElementById('login-screen');
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultScreen = document.getElementById('result-screen');
+    const timerBar = document.getElementById('timer-bar');
+    const timerText = document.getElementById('timer-text');
+
+    // --- Functions ---
+
+    // Shuffle Array
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Start Quiz
+    function startQuiz() {
+        const input = document.getElementById('studentName');
+        if (!input.value.trim()) {
+            alert("कृपया अपना नाम दर्ज करें!");
+            return;
+        }
+        studentName = input.value.trim();
+        
+        // Prepare questions (Shuffle if desired, but requirements said unique MCQs, logic handles balance)
+        // I will just shuffle the order of questions so A,B,C,D pattern isn't obvious
+        questions = shuffle([...rawQuestions]);
+
+        loginScreen.classList.remove('active');
+        quizScreen.classList.add('active');
+        loadQuestion();
+    }
+
+    // Load Question
+    function loadQuestion() {
+        if (currentIdx >= questions.length) {
+            endQuiz();
+            return;
+        }
+
+        // Reset Timer
+        clearInterval(timerInterval);
+        timeLeft = TIME_LIMIT;
+        timerBar.style.width = '100%';
+        timerText.innerText = timeLeft + "s";
+
+        const q = questions[currentIdx];
+        
+        // Update UI
+        document.getElementById('progress-text').innerText = `प्रश्न ${currentIdx + 1} / ${questions.length}`;
+        document.getElementById('q-text').innerText = `${currentIdx + 1}. ${q.q}`;
+
+        const optsList = document.getElementById('options-list');
+        optsList.innerHTML = '';
+
+        // Create Options
+        for (const [key, val] of Object.entries(q.opts)) {
+            const label = document.createElement('label');
+            label.className = 'option-label';
+            
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'q-option';
+            radio.value = key;
+            
+            // Add click listener
+            radio.onclick = () => handleAnswer(key);
+
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(` ${key}) ${val}`));
+            optsList.appendChild(label);
+        }
+
+        startTimer();
+    }
+
+    // Timer Logic
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            timerText.innerText = timeLeft + "s";
+            const percentage = (timeLeft / TIME_LIMIT) * 100;
+            timerBar.style.width = percentage + "%";
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                handleAnswer(null); // Timeout means no answer
+            }
+        }, 1000);
+    }
+
+    // Handle Selection
+    function handleAnswer(selectedKey) {
+        clearInterval(timerInterval);
+        
+        const q = questions[currentIdx];
+        const isCorrect = selectedKey === q.a;
+        
+        if (isCorrect) score++;
+
+        // Record Answer
+        userAnswers.push({
+            question: q.q,
+            options: q.opts,
+            correctAnswer: q.a,
+            selectedAnswer: selectedKey,
+            isCorrect: isCorrect
+        });
+
+        currentIdx++;
+        // Small delay for smooth transition? The prompt says 15s card, implying auto move. 
+        // Immediate move on selection is standard for card-based quizzes.
+        setTimeout(loadQuestion, 300); 
+    }
+
+    // End Quiz
+    function endQuiz() {
+        quizScreen.classList.remove('active');
+        resultScreen.classList.add('active');
+
+        // Show Score
+        document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+        document.getElementById('student-display').innerText = studentName;
+
+        // Render Review
+        renderReview();
+
+        // Download CSV
+        downloadCSV();
+    }
+
+    // Render Review List
+    function renderReview() {
+        const container = document.getElementById('review-list');
+        container.innerHTML = '';
+
+        userAnswers.forEach((ans, index) => {
+            const card = document.createElement('div');
+            card.className = `review-card ${ans.isCorrect ? 'correct-answer' : 'wrong-answer'}`;
+
+            // Header
+            const header = document.createElement('div');
+            header.className = 'review-q';
+            
+            const badge
