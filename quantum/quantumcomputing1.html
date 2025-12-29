@@ -499,4 +499,54 @@
             const header = document.createElement('div');
             header.className = 'review-q';
             
-            const badge
+            const badge = document.createElement('span');
+            badge.className = `status-badge ${ans.isCorrect ? 'bg-green' : (ans.selectedAnswer ? 'bg-red' : 'bg-gray')}`;
+            badge.innerText = ans.isCorrect ? "सही (Correct)" : (ans.selectedAnswer ? "गलत (Wrong)" : "छोड़ा गया (Skipped)");
+            
+            header.innerHTML = `<span>${index + 1}. ${ans.question}</span>`;
+            header.appendChild(badge);
+            card.appendChild(header);
+
+            // Options
+            for (const [key, val] of Object.entries(ans.options)) {
+                const optDiv = document.createElement('div');
+                let className = 'review-opt normal-opt';
+
+                // Logic: 
+                // 1. Highlight Actual Correct (Always Green)
+                // 2. Highlight User Wrong Selection (Red)
+                
+                if (key === ans.correctAnswer) {
+                    className = 'review-opt actual-correct'; // Green for correct option
+                } else if (key === ans.selectedAnswer && !ans.isCorrect) {
+                    className = 'review-opt user-selected-wrong'; // Red for wrong user choice
+                }
+
+                optDiv.className = className;
+                optDiv.innerText = `${key}) ${val}`;
+                card.appendChild(optDiv);
+            }
+
+            container.appendChild(card);
+        });
+    }
+
+    // Download CSV
+    function downloadCSV() {
+        const date = new Date().toLocaleString();
+        const csvContent = "data:text/csv;charset=utf-8," 
+            + "Student Name,Total Score,Date/Time\n"
+            + `${studentName},${score}/${questions.length},"${date}"`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "result.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+</script>
+</body>
+</html>
