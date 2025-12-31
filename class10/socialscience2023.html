@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Test - Social Science</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            padding-top: 60px; /* Space for timer */
+            user-select: none; /* Make text unselectable */
+        }
+
+        /* Timer Styling */
+        #timer-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        /* Student Info */
+        .student-info {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-radius: 5px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .student-info input {
+            padding: 8px;
+            font-size: 1rem;
+            width: 60%;
+            margin-left: 10px;
+        }
+
+        /* Question Styling */
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        label:hover {
+            background-color: #f0f0f0;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        /* Results Styling */
+        .correct-answer-display {
+            margin-top: 10px;
+            padding: 8px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            display: none; /* Hidden initially */
+            font-weight: bold;
+        }
+
+        .incorrect-mark {
+            color: red;
+        }
+        
+        .correct-mark {
+            color: green;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #submit-btn:hover {
+            background-color: #219150;
+        }
+
+        #submit-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        #result-summary {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer-container">
+        Time Left: <span id="timer">35:00</span>
+    </div>
+
+    <div class="container">
+        <h1>Social Science Mock Test</h1>
+
+        <div class="student-info">
+            <label for="studentName">Student Name:</label>
+            <input type="text" id="studentName" placeholder="Enter your full name here..." required>
+        </div>
+
+        <form id="quizForm">
+            <div id="questions-container">
+                </div>
+            
+            <div id="result-summary"></div>
+            <button type="button" id="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+        </form>
+    </div>
+
+<script>
+    // Question Data extracted from images
+    const questions = [
+        { id: 2, q: "भारत में योजना आयोग का गठन कब हुआ?", options: { A: "15 मार्च, 1950", B: "15 मार्च, 1951", C: "15 अप्रैल, 1950", D: "15 अप्रैल, 1951" }, ans: "A" },
+        { id: 3, q: "कृषि का विकास करना किस पंचवर्षीय योजना का मुख्य उद्देश्य था?", options: { A: "पहली", B: "दूसरी", C: "तीसरी", D: "पाँचवीं" }, ans: "A" },
+        { id: 4, q: "मानव विकास रिपोर्ट का प्रकाशन निम्न में से किसके द्वारा किया जाता है?", options: { A: "WTO", B: "WHO", C: "UNDP", D: "ILO" }, ans: "C" },
+        { id: 5, q: "भारत का पहला मानव विकास रिपोर्ट किस प्रधानमंत्री द्वारा जारी किया गया था?", options: { A: "मनमोहन सिंह", B: "अटल बिहारी वाजपेयी", C: "इन्द्र कुमार गुजराल", D: "जवाहरलाल नेहरू" }, ans: "B" },
+        { id: 6, q: "गरीबी के कुचक्र की धारणा किसने दी?", options: { A: "साइमन कुज्नेत्स", B: "कीन्स", C: "अल्फ्रेड मार्शल", D: "रैगनर नर्क्स" }, ans: "D" },
+        { id: 7, q: "भारत की सर्वाधिक प्रति व्यक्ति आय वाला राज्य कौन है?", options: { A: "पंजाब", B: "गोवा", C: "महाराष्ट्र", D: "कर्नाटक" }, ans: "B" },
+        { id: 8, q: "वर्ष भर में किसी देश में अर्जित आय की कुल मात्रा को क्या कहते हैं?", options: { A: "प्रति व्यक्ति आय", B: "औसत आय", C: "राष्ट्रीय आय", D: "इनमें से कोई नहीं" }, ans: "C" },
+        { id: 9, q: "टका किस देश की मुद्रा है?", options: { A: "सिंगापुर", B: "इराक", C: "नेपाल", D: "बांग्लादेश" }, ans: "D" },
+        { id: 10, q: "बिहार में पहला क्षेत्रीय ग्रामीण बैंक कब स्थापित हुआ?", options: { A: "1974", B: "1975", C: "1976", D: "1977" }, ans: "B" },
+        { id: 11, q: "केन्द्रीय सहकारी बैंक किस स्तर पर काम करता है?", options: { A: "ग्राम स्तर", B: "जिला स्तर", C: "राज्य स्तर", D: "राष्ट्रीय स्तर" }, ans: "B" },
+        { id: 12, q: "प्राथमिक कृषि साख समिति कृषकों को किस प्रकार का ऋण प्रदान करती है?", options: { A: "अल्पकालीन", B: "मध्यकालीन", C: "दीर्घकालीन", D: "इनमें से सभी" }, ans: "A" },
+        { id: 13, q: "आर्थिक विकास का तीसरा क्षेत्र क्या है?", options: { A: "कृषि", B: "उद्योग", C: "विनिर्माण", D: "सेवा" }, ans: "D" },
+        { id: 14, q: "सरकार द्वारा लगाए गए अनावश्यक नियंत्रणों तथा प्रतिबंधों को हटाना क्या कहलाता है?", options: { A: "निजीकरण", B: "उदारीकरण", C: "वैश्वीकरण", D: "इनमें से कोई नहीं" }, ans: "B" },
+        { id: 15, q: "विश्व व्यापार संगठन (WTO) का मुख्यालय कहाँ है?", options: { A: "न्यूयार्क", B: "वाशिंगटन डी० सी०", C: "जेनेवा", D: "रोम" }, ans: "C" },
+        { id: 16, q: "वर्तमान में उपभोक्ता संरक्षण हेतु कितने राज्य आयोग काम कर रहे हैं?", options: { A: "34", B: "35", C: "32", D: "36" }, ans: "B" },
+        { id: 17, q: "सहकारिता प्रांतीय सरकारों का हस्तांतरणयोग्य विषय कब बनी?", options: { A: "1929", B: "1919", C: "1918", D: "1914" }, ans: "B" },
+        { id: 18, q: "मैंगनीज उत्पादन में अग्रणी राज्य कौन है?", options: { A: "ओडिशा", B: "मध्य प्रदेश", C: "महाराष्ट्र", D: "कर्नाटक" }, ans: "A" },
+        { id: 19, q: "निम्न में से कौन लौह अयस्क का एक प्रकार है?", options: { A: "लिग्नाइट", B: "हेमाटाइट", C: "बिटुमिनस", D: "इनमें से सभी" }, ans: "B" },
+        { id: 20, q: "भाखड़ा-नंगल परियोजना किस नदी पर बनी है?", options: { A: "महानदी", B: "सतलज", C: "गोदावरी", D: "कृष्णा" }, ans: "B" },
+        { id: 21, q: "निम्न में से कौन भारत का पहला स्वदेशी प्रयास से बना परमाणु विद्युत केन्द्र है?", options: { A: "राणा प्रताप सागर", B: "नरौरा", C: "तारापुर", D: "कलपक्कम" }, ans: "D" },
+        { id: 22, q: "हिमाचल प्रदेश के मणिकरण में किस प्रकार का ऊर्जा संयंत्र है?", options: { A: "परमाणु ऊर्जा", B: "भूतापीय ऊर्जा", C: "ताप विद्युत", D: "जल विद्युत" }, ans: "B" },
+        { id: 23, q: "प्राकृतिक गैस किस खनिज के साथ पाया जाता है?", options: { A: "यूरेनियम", B: "पेट्रोलियम", C: "चूनापत्थर", D: "कोयला" }, ans: "B" },
+        { id: 24, q: "ब्रिटेन के सहयोग से कहाँ लौह इस्पात उद्योग बनाया गया?", options: { A: "बोकारो", B: "राउरकेला", C: "सेलम", D: "दुर्गापुर" }, ans: "D" },
+        { id: 25, q: "हुगली औद्योगिक प्रदेश का केन्द्र है:", options: { A: "कोलकाता-रिशरा", B: "कोलकाता-कोन्नगर", C: "कोलकाता-मेदिनीपुर", D: "कोलकाता-हावड़ा" }, ans: "D" },
+        { id: 26, q: "भारत का सबसे छोटा रेलवे जोन कौन है?", options: { A: "उत्तर रेलवे", B: "उत्तर-पूर्वी सीमांत रेलवे", C: "दक्षिण-पूर्व रेलवे", D: "पूर्वी तटवर्ती रेलवे" }, ans: "B" },
+        { id: 27, q: "फाल्टा विशेष आर्थिक क्षेत्र (SEZ) कहाँ स्थित है?", options: { A: "बिहार", B: "पश्चिम बंगाल", C: "केरल", D: "ओडिशा" }, ans: "B" },
+        { id: 28, q: "भारत का पहला सीमेंट संयंत्र कहाँ स्थापित हुआ?", options: { A: "दिल्ली", B: "कोलकाता", C: "मुम्बई", D: "चेन्नई" }, ans: "D" },
+        { id: 29, q: "भारत का बर्मिंघम किस शहर को कहा जाता है?", options: { A: "बोकारो", B: "जमशेदपुर", C: "भिलाई", D: "रेवाड़ी" }, ans: "B" },
+        { id: 30, q: "निम्न में से कौन जीवाश्म ईंधन है?", options: { A: "कोयला", B: "पेट्रोलियम", C: "प्राकृतिक गैस", D: "इनमें से सभी" }, ans: "D" },
+        { id: 31, q: "बाघ परियोजना की शुरुआत कब हुई?", options: { A: "1970", B: "1973", C: "1975", D: "1978" }, ans: "B" },
+        { id: 32, q: "काजीरंगा राष्ट्रीय उद्यान कहाँ स्थित है?", options: { A: "राजस्थान", B: "उत्तर प्रदेश", C: "उत्तराखण्ड", D: "असम" }, ans: "D" },
+        { id: 33, q: "भारतीय वन्य जीव बोर्ड का गठन कब हुआ?", options: { A: "1950", B: "1952", C: "1948", D: "1954" }, ans: "B" },
+        { id: 34, q: "आयुर्वेद के जनक कौन हैं?", options: { A: "चरक", B: "धन्वन्तरी", C: "पतंजलि", D: "सुश्रुत" }, ans: "A" },
+        { id: 35, q: "टेक्सोल का उपयोग होता है:", options: { A: "मलेरिया में", B: "एड्स में", C: "कैंसर में", D: "टी० बी० में" }, ans: "C" },
+        { id: 36, q: "निम्न में से कौन नवीकरणीय ऊर्जा का स्रोत है?", options: { A: "कोयला", B: "सौर ऊर्जा", C: "पेट्रोलियम", D: "प्राकृतिक गैस" }, ans: "B" },
+        { id: 37, q: "भारत का सबसे लंबा बाँध कौन-सा है?", options: { A: "हीराकुड बाँध", B: "टिहरी बाँध", C: "रिहन्द बाँध", D: "भाखड़ा-नंगल बाँध" }, ans: "A" },
+        { id: 38, q: "कहलगाँव तापीय विद्युत परियोजना कहाँ है?", options: { A: "मुजफ्फरपुर", B: "बरौनी", C: "भागलपुर", D: "कटिहार" }, ans: "C" },
+        { id: 39, q: "भूकंप की सर्वाधिक विनाशकारी तरंग कौन है?", options: { A: "पी-तरंग", B: "एस-तरंग", C: "एल-तरंग", D: "टी-तरंग" }, ans: "C" },
+        { id: 40, q: "निम्न में से किस नदी को 'बिहार का शोक' कहा जाता है?", options: { A: "गंगा", B: "गण्डक", C: "कोसी", D: "सोन" }, ans: "C" },
+        { id: 41, q: "निम्न में से कौन प्राकृतिक आपदा नहीं है?", options: { A: "सुनामी", B: "बाढ़", C: "भूकंप", D: "महामारी" }, ans: "D" },
+        { id: 42, q: "वर्ष 1934 में बिहार ने किस प्राकृतिक आपदा का सामना किया था?", options: { A: "सुखाड़", B: "बाढ़", C: "भूकंप", D: "सुनामी" }, ans: "C" },
+        { id: 43, q: "कच्छ प्रदेश किस भूकंपीय पेटी (Zone) से सम्बन्धित है?", options: { A: "जोन-2", B: "जोन-3", C: "जोन-4", D: "जोन-5" }, ans: "D" },
+        { id: 44, q: "महासागर तल में कम्पन को कहते हैं:", options: { A: "भूकंप", B: "चक्रवात", C: "सुनामी", D: "भूस्खलन" }, ans: "C" },
+        { id: 45, q: "मलबे के नीचे दबे हुए लोगों का पता लगाने के लिए किस यंत्र की मदद ली जाती है?", options: { A: "दूरबीन", B: "इंफ्रारेड कैमरा", C: "हेलीकॉप्टर", D: "सूक्ष्मदर्शी" }, ans: "B" },
+        { id: 46, q: "भारत की संविधान सभा का गठन कब हुआ?", options: { A: "1946", B: "1947", C: "1948", D: "1949" }, ans: "A" },
+        { id: 47, q: "एन्क्रूमा कहाँ के राष्ट्रपति चुने गए?", options: { A: "पोलैंड", B: "चिली", C: "घाना", D: "मेक्सिको" }, ans: "C" },
+        { id: 48, q: "राजनीतिक दलों की मान्यता और उसका चिह्न प्रदान किया जाता है:", options: { A: "राष्ट्रपति द्वारा", B: "प्रधानमंत्री द्वारा", C: "निर्वाचन आयोग द्वारा", D: "संसद द्वारा" }, ans: "C" }
+    ];
+
+    // Initialize Timer
+    let timeInSeconds = 35 * 60; // 35 minutes
+    const timerElement = document.getElementById('timer');
+    
+    const countdown = setInterval(() => {
+        const minutes = Math.floor(timeInSeconds / 60);
+        const seconds = timeInSeconds % 60;
+        timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        
+        if (timeInSeconds <= 0) {
+            clearInterval(countdown);
+            submitQuiz(); // Auto submit on time up
+        }
+        timeInSeconds--;
+    }, 1000);
+
+    // Render Questions
+    const container = document.getElementById('questions-container');
+    questions.forEach((item, index) => {
+        const qBlock = document.createElement('div');
+        qBlock.className = 'question-block';
+        qBlock.innerHTML = `
+            <div class="question-text">${item.id}. ${item.q}</div>
+            <div class="options-container">
+                <label><input type="radio" name="q${item.id}" value="A"> (A) ${item.options.A}</label>
+                <label><input type="radio" name="q${item.id}" value="B"> (B) ${item.options.B}</label>
+                <label><input type="radio" name="q${item.id}" value="C"> (C) ${item.options.C}</label>
+                <label><input type="radio" name="q${item.id}" value="D"> (D) ${item.options.D}</label>
+            </div>
+            <div class="correct-answer-display" id="ans-${item.id}">
+                Correct Answer: (${item.ans}) ${item.options[item.ans]}
+            </div>
+        `;
+        container.appendChild(qBlock);
+    });
+
+    // Submit Logic
+    function submitQuiz() {
+        const studentName = document.getElementById('studentName').value.trim();
+        if (!studentName) {
+            alert("Please enter your name before submitting.");
+            return;
+        }
+
+        clearInterval(countdown); // Stop timer
+        
+        let score = 0;
+        let total = questions.length;
+
+        questions.forEach(item => {
+            const selectedOption = document.querySelector(`input[name="q${item.id}"]:checked`);
+            const answerDisplay = document.getElementById(`ans-${item.id}`);
+            
+            // Show correct answer text
+            answerDisplay.style.display = 'block';
+
+            if (selectedOption) {
+                if (selectedOption.value === item.ans) {
+                    score++;
+                    selectedOption.parentElement.style.backgroundColor = '#d4edda'; // Light Green
+                } else {
+                    selectedOption.parentElement.style.backgroundColor = '#f8d7da'; // Light Red
+                }
+            }
+        });
+
+        // Display Score
+        const resultDiv = document.getElementById('result-summary');
+        resultDiv.innerHTML = `You scored ${score} out of ${total}`;
+
+        // Disable Submit Button
+        const btn = document.getElementById('submit-btn');
+        btn.disabled = true;
+        btn.innerText = "Submitted";
+
+        // Generate and Download CSV
+        downloadCSV(studentName, score, total);
+    }
+
+    function downloadCSV(name, score, total) {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Student Name,Marks Obtained,Total Questions,Date\n";
+        csvContent += `${name},${score},${total},${new Date().toLocaleString()}`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "result.csv");
+        document.body.appendChild(link); // Required for FF
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+
+</body>
+</html>
