@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geography Class 12 Full Exam</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            user-select: none; /* Prevents text selection/copying */
+        }
+
+        /* Fixed Timer Header */
+        #timer-bar {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 10px 40px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 80px auto 40px;
+            padding: 25px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        /* Intro Section */
+        #intro-section {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            font-size: 16px;
+            width: 80%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #3498db;
+        }
+
+        button.start-btn {
+            padding: 12px 30px;
+            font-size: 18px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button.start-btn:hover {
+            background-color: #219150;
+        }
+
+        /* Quiz Section */
+        #quiz-section {
+            display: none;
+        }
+
+        .question-block {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-label:hover {
+            background-color: #f7f9f9;
+            border-color: #bdc3c7;
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        /* Submit Button */
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            font-size: 1.3rem;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 40px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #submit-btn:hover {
+            background-color: #2471a3;
+        }
+
+        #submit-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Results & Feedback */
+        .result-feedback {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            background-color: #e8f8f5;
+            border-left: 5px solid #2ecc71;
+            color: #0e6251;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .correct-answer-text {
+            font-weight: bold;
+            color: #d35400;
+        }
+
+        #score-display {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-top: 30px;
+            padding: 30px;
+            background: #fef9e7;
+            border: 2px solid #f1c40f;
+            border-radius: 10px;
+            color: #7d6608;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer-bar">Time Left: <span id="time">35:00</span></div>
+
+    <div class="container">
+        <h1>Geography (Intermediate) - Full Model Paper</h1>
+
+        <div id="intro-section">
+            <h3>Enter your Name to Begin Exam</h3>
+            <input type="text" id="student-name" placeholder="Student Full Name" required autocomplete="off">
+            <br>
+            <button class="start-btn" onclick="startQuiz()">Start Exam</button>
+        </div>
+
+        <div id="quiz-section">
+            <form id="quiz-form">
+                <div id="questions-container">
+                    </div>
+                <button type="button" id="submit-btn" onclick="submitQuiz()">Submit & Download Result</button>
+            </form>
+            
+            <div id="score-display"></div>
+        </div>
+    </div>
+
+<script>
+    // --- Complete 63 Questions Data ---
+    const quizData = [
+        // --- Section A (Image 2) ---
+        { id: 1, q: "1. नव-निश्चयवाद की संकल्पना का प्रतिपादन किसने किया?", opts: { A: "ग्रिफिथ टेलर", B: "अल्फ्रेड हेटनर", C: "फ्रेडिक रट्जेल", D: "इनमें से कोई नहीं" }, ans: "A" },
+        { id: 2, q: "2. निम्नलिखित में से कौन आर्थिक भूगोल का उपक्षेत्र नहीं है?", opts: { A: "कृषि भूगोल", B: "पर्यटन भूगोल", C: "सैन्य भूगोल", D: "औद्योगिक भूगोल" }, ans: "C" },
+        { id: 3, q: "3. फेब्रे सम्बन्धित है :", opts: { A: "संभववाद से", B: "निश्चयवाद से", C: "मानवतावाद से", D: "इनमें से कोई नहीं" }, ans: "A" },
+        { id: 4, q: "4. भूगोल की कौन-सी शाखा मार्क्स के विचारों से प्रभावित है?", opts: { A: "आचरण भूगोल", B: "सांस्कृतिक भूगोल", C: "मानवतावाद भूगोल", D: "क्रांतिकारी भूगोल" }, ans: "D" },
+        { id: 5, q: "5. विश्व में सर्वाधिक जनसंख्या केन्द्रित है :", opts: { A: "पर्वतीय प्रदेशों में", B: "पठारी प्रदेशों में", C: "मैदानी प्रदेशों में", D: "मरुस्थलीय प्रदेशों में" }, ans: "C" },
+        { id: 6, q: "6. निम्नलिखित में से किसमें जनसंख्या वृद्धि सर्वाधिक है?", opts: { A: "एशिया", B: "अफ्रीका", C: "यूरोप", D: "दक्षिण अमेरिका" }, ans: "B" },
+        { id: 7, q: "7. कुल जनसंख्या तथा कुल क्षेत्रफल के अनुपात को कहते हैं:", opts: { A: "जन्म दर", B: "मृत्यु दर", C: "जनसंख्या घनत्व", D: "प्रवास" }, ans: "C" },
+        { id: 8, q: "8. निम्नलिखित में से कौन जनसंख्या को आकर्षित करता है?", opts: { A: "अशांति", B: "बेरोजगारी", C: "बाढ़ क्षेत्र", D: "रोजगार के अवसर" }, ans: "D" },
+        { id: 9, q: "9. कौन कारक मृत्यु दर में ह्रास के लिए उत्तरदायी है?", opts: { A: "महामारी पर नियंत्रण", B: "संक्रामक रोगों पर नियंत्रण", C: "(A) और (B) दोनों", D: "इनमें से कोई नहीं" }, ans: "C" },
+        { id: 10, q: "10. जनसंख्या परिवर्तन का घटक कौन है?", opts: { A: "जन्म", B: "मृत्यु", C: "प्रवास", D: "इनमें से सभी" }, ans: "D" },
+        { id: 11, q: "11. कौन आयु-वर्ग कार्यशील जनसंख्या का प्रतिनिधित्व करता है?", opts: { A: "40 वर्ष से कम", B: "40 वर्ष से अधिक", C: "20 से 65 वर्ष", D: "15 से 59 वर्ष" }, ans: "D" },
+        { id: 12, q: "12. आयु-लिंग पिरामिड का संबंध है :", opts: { A: "जनसंख्या वितरण से", B: "महिला साक्षरता से", C: "पुरुष एवं महिला जनसंख्या से", D: "इनमें से कोई नहीं" }, ans: "C" },
+        { id: 13, q: "13. मानव विकास सूचकांक में प्रथम स्थान किस देश का है?", opts: { A: "जर्मनी", B: "फ्रांस", C: "स्वीडन", D: "नॉर्वे" }, ans: "D" },
+        { id: 14, q: "14. निम्नलिखित में से कौन मानव विकास का उपागम है ?", opts: { A: "आय उपागम", B: "कल्याण उपागम", C: "क्षमता उपागम", D: "इनमें से सभी" }, ans: "D" },
+        { id: 15, q: "15. निम्न में से कौन एकल कृषि का उत्पाद है?", opts: { A: "चाय", B: "रबड़", C: "केला", D: "इनमें से सभी" }, ans: "D" },
+        { id: 16, q: "16. निम्नलिखित में किसे कर्तन-दहन कृषि भी कहते हैं ?", opts: { A: "आदिकालीन निर्वाह कृषि", B: "रोपण कृषि", C: "मिश्रित कृषि", D: "गहन निर्वाह कृषि" }, ans: "A" },
+        { id: 17, q: "17. टोकरी बनाना किस आर्थिक क्रियाकलाप का उदाहरण है?", opts: { A: "प्राथमिक", B: "द्वितीयक", C: "तृतीयक", D: "इनमें से कोई नहीं" }, ans: "B" },
+        { id: 18, q: "18. यूरोपवासियों द्वारा अपने उपनिवेशों में किस प्रकार की कृषि का विकास किया गया था?", opts: { A: "रोपण कृषि", B: "अंगूर की खेती", C: "मिल्पा", D: "मिश्रित कृषि" }, ans: "A" },
+        { id: 19, q: "19. निम्नलिखित में कौन कृषि-आधारित उत्पाद नहीं है ?", opts: { A: "कॉफी", B: "चीनी", C: "चाय", D: "नमक" }, ans: "D" },
+        { id: 20, q: "20. अंगूर की खेती सम्बन्धित है :", opts: { A: "मानसून क्षेत्र से", B: "ध्रुवीय क्षेत्र से", C: "उष्ण कटिबंधीय क्षेत्र से", D: "भूमध्यसागरीय क्षेत्र से" }, ans: "D" },
+        
+        // --- Image 1 Left Column (Gap Filled) ---
+        { id: 21, q: "21. निम्न वृक्षों में किससे च्युइंग गम सम्बन्धित है?", opts: { A: "खजूर वृक्ष", B: "ताड़ वृक्ष", C: "जेपोटा वृक्ष", D: "रबड़ वृक्ष" }, ans: "C" },
+        { id: 22, q: "22. ट्रक कृषि का सम्बन्ध है :", opts: { A: "मक्का से", B: "फूलों से", C: "सब्जी से", D: "कपास से" }, ans: "C" },
+        { id: 23, q: "23. निम्न में कौन औद्योगिक अवस्थापना का प्रमुख कारक नहीं है ?", opts: { A: "पूँजी", B: "बाजार", C: "ऊर्जा", D: "जनसंख्या घनत्व" }, ans: "D" },
+        { id: 24, q: "24. निम्नलिखित में कौन पशु आधारित उद्योग है ?", opts: { A: "कपड़ा उद्योग", B: "कागज उद्योग", C: "चमड़ा उद्योग", D: "चीनी उद्योग" }, ans: "C" },
+        
+        // --- Image 1 Continued ---
+        { id: 25, q: "25. निम्न में से कौन द्वितीयक क्रियाकलाप नहीं है?", opts: { A: "विनिर्माण", B: "कुटीर उद्योग", C: "आखेट", D: "प्रसंस्करण" }, ans: "C" },
+        { id: 26, q: "26. निम्न में कौन तृतीयक क्रियाकलाप है?", opts: { A: "खनन", B: "खाद्य प्रसंस्करण", C: "व्यापार एवं वाणिज्य", D: "परामर्शदाता" }, ans: "C" },
+        { id: 27, q: "27. पोर्ट सईद कहाँ है?", opts: { A: "पुर्तगाल", B: "साइप्रस", C: "मिश्र (Egypt)", D: "लीबिया" }, ans: "C" },
+        { id: 28, q: "28. सेंट जॉन से वैंकूवर के बीच का महामार्ग किस देश में है?", opts: { A: "मेक्सिको", B: "ऑस्ट्रेलिया", C: "कनाडा", D: "संयुक्त राज्य अमेरिका" }, ans: "C" },
+        { id: 29, q: "29. विश्व के प्रमुख समुद्री पत्तन किस प्रकार के हैं ?", opts: { A: "औद्योगिक पत्तन", B: "नौसेना पत्तन", C: "विस्तृत पत्तन", D: "तेल पत्तन" }, ans: "C" },
+        { id: 30, q: "30. परमाणु ऊर्जा आयोग की स्थापना कब हुई थी?", opts: { A: "1948", B: "1950", C: "1951", D: "1960" }, ans: "A" },
+        { id: 31, q: "31. निम्नलिखित देशों में कौन ओपेक (OPEC) का सदस्य है?", opts: { A: "ब्राज़ील", B: "चिली", C: "वेनेज़ुएला", D: "पेरू" }, ans: "C" },
+        { id: 32, q: "32. नाफ्टा (NAFTA) प्रादेशिक समूह का संबंध है:", opts: { A: "अफ्रीका से", B: "उत्तरी अमेरिका से", C: "ऑस्ट्रेलिया से", D: "एशिया से" }, ans: "B" },
+        { id: 33, q: "33. ग्रेट लेक्स जलमार्ग किस महादेश से संबंधित है?", opts: { A: "यूरोप", B: "एशिया", C: "उत्तरी अमेरिका", D: "अफ्रीका" }, ans: "C" },
+        { id: 34, q: "34. वृत्ताकार बस्ती प्रतिरूप कहाँ पाया जाता है?", opts: { A: "झील के चतुर्दिक", B: "नदी के सहारे", C: "तट के सहारे", D: "इनमें से कोई नहीं" }, ans: "A" },
+        { id: 35, q: "35. पैट्रिक गिडिज का संबंध है :", opts: { A: "सन्नगर से", B: "मेगालोपोलिस से", C: "गाँव से", D: "इनमें से कोई नहीं" }, ans: "A" },
+        { id: 36, q: "36. निम्नलिखित में से कौन औद्योगिक नगर है ?", opts: { A: "जैरुसलम", B: "केनबेरा", C: "विनीपेग", D: "पिट्सबर्ग" }, ans: "D" },
+        { id: 37, q: "37. 2011 की जनगणना के अनुसार भारत में जनसंख्या का घनत्व है?", opts: { A: "282 व्यक्ति/वर्ग किमी.", B: "382 व्यक्ति/वर्ग किमी.", C: "352 व्यक्ति/वर्ग किमी.", D: "इनमें से कोई नहीं" }, ans: "B" },
+        { id: 38, q: "38. भारत में निम्नलिखित भाषाई परिवारों में से किसकी जनसंख्या सर्वाधिक है ?", opts: { A: "द्रविड़", B: "भारतीय-यूरोपीय", C: "चीनी-तिब्बती", D: "आस्ट्रिक" }, ans: "B" },
+        { id: 39, q: "39. 2011 की जनगणना के अनुसार बिहार की जनसंख्या का घनत्व था :", opts: { A: "1126 व्यक्ति/वर्ग किमी.", B: "1006 व्यक्ति/वर्ग किमी.", C: "906 व्यक्ति/वर्ग किमी.", D: "1106 व्यक्ति/वर्ग किमी" }, ans: "D" },
+        { id: 40, q: "40. 2011 में भारत में नगरीय जनसंख्या थी :", opts: { A: "31.16 प्रतिशत", B: "27.3 प्रतिशत", C: "26.84 प्रतिशत", D: "इनमें से कोई नहीं" }, ans: "A" },
+        { id: 41, q: "41. मानव विकास सूचकांक में भारत के निम्नलिखित राज्यों में से किस की कोटि उच्चतम है ?", opts: { A: "केरल", B: "पंजाब", C: "तमिलनाडु", D: "हरियाणा" }, ans: "A" },
+
+        // --- Image 1 Right Column ---
+        { id: 42, q: "42. निम्नलिखित राज्यों में किसकी जनसंख्या सर्वाधिक है ?", opts: { A: "उत्तर प्रदेश", B: "बिहार", C: "पश्चिम बंगाल", D: "महाराष्ट्र" }, ans: "A" },
+        { id: 43, q: "43. मुख्य श्रमिकों को एक वर्ष में न्यूनतम कितने दिन रोजगार मिलना आवश्यक है ?", opts: { A: "60 दिन", B: "80 दिन", C: "200 दिन", D: "183 दिन" }, ans: "D" },
+        { id: 44, q: "44. भारत में 2011 में महिला साक्षरता सबसे कम कहाँ थी ?", opts: { A: "बिहार", B: "छत्तीसगढ़", C: "मध्य प्रदेश", D: "झारखण्ड" }, ans: "A" },
+        { id: 45, q: "45. गाजियाबाद उदाहरण है :", opts: { A: "प्राचीन नगर का", B: "मध्यकालीन नगर का", C: "आधुनिक नगर का", D: "अनुषंगी नगर का" }, ans: "D" },
+        { id: 46, q: "46. निम्नलिखित में से कौन ग्रामीण बस्तियों के प्रकार हैं ?", opts: { A: "गुच्छित बस्तियाँ", B: "पल्ली बस्तियाँ", C: "प्रकीर्ण बस्तियाँ", D: "इनमें से सभी" }, ans: "D" },
+        { id: 47, q: "47. निम्न में से कौन गैरिसन नगर है ?", opts: { A: "मथुरा", B: "रानीगंज", C: "जालंधर", D: "सतना" }, ans: "C" },
+        { id: 48, q: "48. निम्नलिखित में कौन भारतीय कृषि की समस्या है ?", opts: { A: "निम्न उत्पादकता", B: "विखंडित जोत", C: "अनियमित मानसून", D: "इनमें से सभी" }, ans: "D" },
+        { id: 49, q: "49. सबसे महत्वपूर्ण जूट उत्पादक क्षेत्र है :", opts: { A: "गंगा डेल्टा", B: "कृष्णा डेल्टा", C: "गोदावरी डेल्टा", D: "इनमें से कोई नहीं" }, ans: "A" },
+        { id: 50, q: "50. निम्नलिखित में कौन रेशेदार फसल है ?", opts: { A: "चाय", B: "गेहूँ", C: "कॉफी", D: "कपास" }, ans: "D" },
+        { id: 51, q: "51. चाय उत्पादन में अग्रणी राज्य कौन है ?", opts: { A: "गुजरात", B: "बिहार", C: "असम", D: "सिक्किम" }, ans: "C" },
+        { id: 52, q: "52. पाइकारा जलविद्युत परियोजना है :", opts: { A: "तमिलनाडु में", B: "पंजाब में", C: "झारखण्ड में", D: "असम में" }, ans: "A" },
+        { id: 53, q: "53. निम्नलिखित नदिया में कौन पूर्व की ओर प्रवाहित नहीं होती है?", opts: { A: "महानदी", B: "स्वर्णरेखा", C: "तापी", D: "कृष्णा" }, ans: "C" },
+        { id: 54, q: "54. भारत में जल संसाधन से जुड़ी समस्या है :", opts: { A: "संरक्षण", B: "वितरण", C: "उपलब्धता", D: "इनमें से सभी" }, ans: "D" },
+        { id: 55, q: "55. डिगबोई प्रसिद्ध है :", opts: { A: "लोहा के लिए", B: "पेट्रोलियम के लिए", C: "तांबा के लिए", D: "चाँदी के लिए" }, ans: "B" },
+        { id: 56, q: "56. निम्न में से कौन खनिज-आधारित उद्योग नहीं है?", opts: { A: "तांबा उद्योग", B: "सीमेंट उद्योग", C: "सूती वस्त्र उद्योग", D: "लोहा एवं इस्पात उद्योग" }, ans: "C" },
+        { id: 57, q: "57. मुम्बई हाई क्या है?", opts: { A: "कोयला क्षेत्र", B: "पेट्रोलियम क्षेत्र", C: "तांबा क्षेत्र", D: "अभ्रक क्षेत्र" }, ans: "B" },
+        { id: 58, q: "58. बालाघाट मैंगनीज क्षेत्र किस राज्य में स्थित है?", opts: { A: "ओडिशा", B: "छत्तीसगढ़", C: "झारखण्ड", D: "मध्य प्रदेश" }, ans: "D" },
+        { id: 59, q: "59. नोआमुंडी लौह अयस्क क्षेत्र स्थित है :", opts: { A: "महाराष्ट्र में", B: "मध्य प्रदेश में", C: "झारखण्ड में", D: "छत्तीसगढ़ में" }, ans: "C" },
+        { id: 60, q: "60. निम्नलिखित राज्यों में कौन गोंडवाना कोयला के लिए प्रसिद्ध है?", opts: { A: "नागालैंड", B: "तमिलनाडु", C: "झारखण्ड", D: "त्रिपुरा" }, ans: "C" },
+        { id: 61, q: "61. निम्नलिखित राज्यों में किसमें कैगा नाभिकीय ऊर्जा केन्द्र अवस्थित है?", opts: { A: "उत्तर प्रदेश", B: "महाराष्ट्र", C: "गुजरात", D: "कर्नाटक" }, ans: "D" },
+        { id: 62, q: "62. हुबली सूती वस्त्र उद्योग केन्द्र कहाँ अवस्थित है?", opts: { A: "पश्चिम बंगाल", B: "कर्नाटक", C: "तमिलनाडु", D: "महाराष्ट्र" }, ans: "B" },
+        { id: 63, q: "63. लोहा एवं इस्पात उद्योग है :", opts: { A: "आधारभूत उद्योग", B: "स्वच्छंद उद्योग", C: "कुटीर उद्योग", D: "छोटे पैमाने का उद्योग" }, ans: "A" }
+    ];
+
+    let timeLimit = 35 * 60; // 35 minutes
+    let timerInterval;
+    let studentName = "";
+
+    function startQuiz() {
+        const nameInput = document.getElementById('student-name');
+        if (nameInput.value.trim() === "") {
+            alert("Please enter your name first.");
+            return;
+        }
+        studentName = nameInput.value.trim();
+
+        document.getElementById('intro-section').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        
+        renderQuestions();
+        startTimer();
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questions-container');
+        let html = "";
+
+        quizData.forEach((q, i) => {
+            html += `
+                <div class="question-block">
+                    <div class="question-text">${q.q}</div>
+                    <div class="options-container">
+                        <label class="option-label"><input type="radio" name="q${i}" value="A"> (A) ${q.opts.A}</label>
+                        <label class="option-label"><input type="radio" name="q${i}" value="B"> (B) ${q.opts.B}</label>
+                        <label class="option-label"><input type="radio" name="q${i}" value="C"> (C) ${q.opts.C}</label>
+                        <label class="option-label"><input type="radio" name="q${i}" value="D"> (D) ${q.opts.D}</label>
+                    </div>
+                    <div class="result-feedback" id="feedback-${i}">
+                        Correct Answer: <span class="correct-answer-text">Option ${q.ans}</span>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function startTimer() {
+        const timeDisplay = document.getElementById('time');
+        
+        timerInterval = setInterval(() => {
+            let m = Math.floor(timeLimit / 60);
+            let s = timeLimit % 60;
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+            timeDisplay.textContent = `${m}:${s}`;
+
+            if (timeLimit <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            } else {
+                timeLimit--;
+            }
+        }, 1000);
+    }
+
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        
+        const btn = document.getElementById('submit-btn');
+        if (btn.disabled) return; // Prevent double submit
+        btn.disabled = true;
+        btn.textContent = "Exam Submitted";
+        btn.style.backgroundColor = "#7f8c8d";
+
+        let score = 0;
+        const total = quizData.length;
+
+        quizData.forEach((q, i) => {
+            const radios = document.getElementsByName(`q${i}`);
+            let val = null;
+            for (let r of radios) {
+                r.disabled = true; // Disable inputs
+                if (r.checked) val = r.value;
+            }
+
+            if (val === q.ans) score++;
+
+            // Show answer
+            const fb = document.getElementById(`feedback-${i}`);
+            fb.style.display = 'block';
+            
+            // Visual coloring
+            if(val === q.ans) {
+                fb.style.backgroundColor = "#d4efdf"; // Greenish
+                fb.innerHTML += " <span style='color:green'> (Your Answer is Correct)</span>";
+            } else if (val !== null) {
+                fb.style.backgroundColor = "#fadbd8"; // Reddish
+                fb.innerHTML += ` <span style='color:red'> (You selected ${val})</span>`;
+            } else {
+                fb.style.backgroundColor = "#fdedec";
+                fb.innerHTML += " <span style='color:red'> (Not Attempted)</span>";
+            }
+        });
+
+        const scoreDiv = document.getElementById('score-display');
+        scoreDiv.style.display = 'block';
+        scoreDiv.innerHTML = `<strong>Result:</strong> ${studentName}, you scored <strong>${score} / ${total}</strong>`;
+        
+        // Auto Scroll to bottom
+        scoreDiv.scrollIntoView({behavior: "smooth"});
+
+        downloadCSV(score, total);
+    }
+
+    function downloadCSV(score, total) {
+        const d = new Date().toLocaleString();
+        const csv = "data:text/csv;charset=utf-8," 
+            + "Student Name,Score,Total Questions,Date\n"
+            + `${studentName},${score},${total},"${d}"`;
+
+        const encoded = encodeURI(csv);
+        const link = document.createElement("a");
+        link.href = encoded;
+        link.download = `${studentName}_Geography_Result.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+</body>
+</html>
