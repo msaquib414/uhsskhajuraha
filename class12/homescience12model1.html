@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Science Full Model Paper - 70 Questions</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; margin: 0; padding-top: 80px; user-select: none; -webkit-user-select: none; }
+        #timer-box { position: fixed; top: 0; left: 0; width: 100%; background: #2c3e50; color: #ecf0f1; text-align: center; padding: 15px 0; font-size: 24px; font-weight: bold; z-index: 9999; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .container { max-width: 900px; margin: 20px auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.1); }
+        .setup-screen { text-align: center; padding: 50px 0; }
+        input[type="text"] { padding: 15px; width: 300px; border: 2px solid #ddd; border-radius: 8px; font-size: 18px; margin-bottom: 20px; outline: none; }
+        input[type="text"]:focus { border-color: #3498db; }
+        .btn { background: #27ae60; color: white; border: none; padding: 15px 40px; border-radius: 8px; cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s; }
+        .btn:hover { background: #219150; transform: translateY(-2px); }
+        .btn:disabled { background: #bdc3c7; cursor: not-allowed; transform: none; }
+        .q-card { margin-bottom: 30px; padding: 20px; border-bottom: 2px solid #f0f0f0; }
+        .q-text { font-size: 18px; font-weight: 600; color: #34495e; margin-bottom: 15px; }
+        .opt-label { display: block; padding: 12px; margin: 8px 0; background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+        .opt-label:hover { background: #ebf5fb; border-color: #3498db; }
+        .correct-reveal { margin-top: 15px; padding: 12px; background: #d4edda; color: #155724; border-radius: 6px; font-weight: bold; display: none; border-left: 5px solid #28a745; }
+        #final-result { display: none; text-align: center; padding: 30px; background: #e8f6f3; border-radius: 10px; margin-top: 20px; border: 2px solid #27ae60; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer-box">Remaining Time: <span id="clock">35:00</span></div>
+
+    <div class="container">
+        <div id="setup-screen" class="setup-screen">
+            <h1>गृह विज्ञान (Home Science) XII</h1>
+            <p>समय: 35 मिनट | कुल प्रश्न: 70</p>
+            <input type="text" id="userName" placeholder="अपना पूरा नाम लिखें (Student Name)" required>
+            <br>
+            <button class="btn" onclick="initQuiz()">परीक्षा शुरू करें (Start Quiz)</button>
+        </div>
+
+        <div id="quiz-area" class="hidden">
+            <form id="quizForm">
+                <div id="questions-container"></div>
+                <div style="text-align: center; padding: 40px 0;">
+                    <button type="button" id="submitBtn" class="btn" onclick="endQuiz()">सबमिट करें (Submit Answers)</button>
+                </div>
+            </form>
+            <div id="final-result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Data derived from all 3 uploaded images (Total 70 Questions)
+        const examData = [
+            { q: "1. निम्न में से कौन सा कथन सही है?", o: ["विकास निरंतर होता है", "विकास रुक जाता है", "विकास केवल शारीरिक है", "इनमें से कोई नहीं"], c: 0 },
+            { q: "2. वृद्धि और विकास को प्रभावित करने वाले कारक हैं:", o: ["अनुवांशिकता", "पर्यावरण", "भोजन", "उपरोक्त सभी"], c: 3 },
+            { q: "3. अंतःस्रावी ग्रंथियाँ क्या स्रावित करती हैं?", o: ["एंजाइम", "हार्मोन", "रक्त", "पानी"], c: 1 },
+            { q: "4. पीयूष ग्रंथि स्थित होती है:", o: ["गले में", "हृदय में", "मस्तिष्क में", "पेट में"], c: 2 },
+            { q: "5. किशोरावस्था में होने वाले शारीरिक परिवर्तन हैं:", o: ["लंबाई बढ़ना", "वजन बढ़ना", "यौन परिपक्वता", "उपरोक्त सभी"], c: 3 },
+            { q: "6. पुरुष प्रजनन तंत्र का हिस्सा है:", o: ["अंडाशय", "गर्भाशय", "वृषण", "फैलोपियन ट्यूब"], c: 2 },
+            { q: "7. गर्भावस्था की अवधि सामान्यतः होती है:", o: ["180 दिन", "280 दिन", "380 दिन", "480 दिन"], c: 1 },
+            { q: "8. प्रसवोपरांत अवधि का अर्थ है:", o: ["जन्म से पूर्व", "जन्म के बाद 6 सप्ताह", "जन्म के 1 वर्ष बाद", "इनमें से कोई नहीं"], c: 1 },
+            { q: "9. स्तनपान क्यों जरूरी है?", o: ["रोग प्रतिरोधक क्षमता हेतु", "पोषण हेतु", "प्यार हेतु", "उपरोक्त सभी"], c: 3 },
+            { q: "10. ओआरएस (ORS) का घोल पिलाया जाता है:", o: ["बुखार में", "सर्दी में", "अतिसार (Diarrhea) में", "दर्द में"], c: 2 },
+            { q: "11. शुद्ध जल होता है:", o: ["रंगहीन", "गंधहीन", "स्वादहीन", "उपरोक्त सभी"], c: 3 },
+            { q: "12. वायु प्रदूषण के कारण होता है:", o: ["अस्थमा", "बहरापन", "हैजा", "टाइफाइड"], c: 0 },
+            { q: "13. कूड़ा-करकट फेंकना चाहिए:", o: ["सड़क पर", "नाली में", "कूड़ेदान में", "पड़ोसी के घर"], c: 2 },
+            { q: "14. ध्वनि प्रदूषण मापा जाता है:", o: ["मीटर में", "डेसीबल में", "किलो में", "लीटर में"], c: 1 },
+            { q: "15. आहार आयोजन का लाभ है:", o: ["समय की बचत", "धन की बचत", "शक्ति की बचत", "उपरोक्त सभी"], c: 3 },
+            { q: "16. संतुलित आहार में शामिल है:", o: ["प्रोटीन", "विटामिन", "कार्बोहाइड्रेट", "उपरोक्त सभी"], c: 3 },
+            { q: "17. विटामिन 'C' की कमी से होता है:", o: ["रतौंधी", "बेरी-बेरी", "स्कर्वी", "रिकेट्स"], c: 2 },
+            { q: "18. कैल्शियम का सबसे अच्छा स्रोत है:", o: ["मांस", "दूध", "चावल", "फल"], c: 1 },
+            { q: "19. आयोडीन की कमी से कौन सा रोग होता है?", o: ["घेंघा", "एनीमिया", "मधुमेह", "मोटापा"], c: 0 },
+            { q: "20. खाद्य संरक्षण की विधि है:", o: ["ठंडा करना", "निर्जलीकरण", "अचार बनाना", "उपरोक्त सभी"], c: 3 },
+            { q: "21. एफपीओ (FPO) मार्क लगाया जाता है:", o: ["सोने पर", "कपड़ों पर", "फलों के उत्पादों पर", "मसालों पर"], c: 2 },
+            { q: "22. आईएसआई (ISI) मार्क देखा जाता है:", o: ["सब्जियों पर", "औद्योगिक उपकरणों पर", "किताबों पर", "दूध पर"], c: 1 },
+            { q: "23. मानकीकरण चिन्ह सुनिश्चित करते हैं:", o: ["कीमत", "मात्रा", "गुणवत्ता", "आकार"], c: 2 },
+            { q: "24. उपभोक्ता संरक्षण अधिनियम कब लागू हुआ?", o: ["1986", "1996", "2006", "1976"], c: 0 },
+            { q: "25. पारिवारिक आय के प्रकार हैं:", o: ["प्रत्यक्ष आय", "अप्रत्यक्ष आय", "मानसिक आय", "उपरोक्त सभी"], c: 3 },
+            { q: "26. बचत का सबसे अच्छा साधन है:", o: ["जमीन खरीदना", "बैंक में जमा", "घर में रखना", "गहने खरीदना"], c: 1 },
+            { q: "27. चेक के प्रकार होते हैं:", o: ["वाहक चेक", "आदेशित चेक", "रेखांकित चेक", "उपरोक्त सभी"], c: 3 },
+            { q: "28. एटीएम (ATM) का पूर्ण रूप है:", o: ["एनी टाइम मनी", "ऑटोमेटेड टेलर मशीन", "ऑटोमेटिक टॉकिंग मशीन", "इनमें से कोई नहीं"], c: 1 },
+            { q: "29. निवेश का उदाहरण है:", o: ["भोजन खरीदना", "एलआईसी (LIC)", "सिनेमा देखना", "किराया देना"], c: 1 },
+            { q: "30. सजावट के सिद्धांत हैं:", o: ["अनुपात", "संतुलन", "लय", "उपरोक्त सभी"], c: 3 },
+            { q: "31. प्राथमिक रंग कितने हैं?", o: ["2", "3", "4", "5"], c: 1 },
+            { q: "32. घर में प्रकाश का स्रोत है:", o: ["सूर्य", "बल्ब", "मोमबत्ती", "उपरोक्त सभी"], c: 3 },
+            { q: "33. आंतरिक सज्जा की जाती है:", o: ["घर में", "दुकान में", "कार्यालय में", "उपरोक्त सभी"], c: 3 },
+            { q: "34. पुष्प सज्जा के लिए आवश्यक है:", o: ["फूल", "फूलदान", "पानी", "उपरोक्त सभी"], c: 3 },
+            { q: "35. समय प्रबंधन का साधन है:", o: ["समय योजना", "कार्य का बोझ", "आराम", "मनोरंजन"], c: 0 },
+            { q: "36. कार्य सरलीकरण का अर्थ है:", o: ["कठिन कार्य करना", "कार्य को आसान बनाना", "कार्य न करना", "ज्यादा समय लेना"], c: 1 },
+            { q: "37. ऊर्जा बचाने का तरीका है:", o: ["प्रेशर कुकर का प्रयोग", "खुली कड़ाही में पकाना", "ज्यादा पानी डालना", "तेज आंच रखना"], c: 0 },
+            { q: "38. वस्त्रों का चयन प्रभावित होता है:", o: ["आयु से", "अवसर से", "मौसम से", "उपरोक्त सभी"], c: 3 },
+            { q: "39. कपास का स्रोत है:", o: ["जानवर", "पौधे", "रसायन", "खनिज"], c: 1 },
+            { q: "40. रेशम के कीड़े पाले जाते हैं:", o: ["नीम पर", "शहतूत पर", "आम पर", "गुलाब पर"], c: 1 },
+            { q: "41. ऊन प्राप्त होता है:", o: ["भेड़ से", "ऊंट से", "बकरी से", "उपरोक्त सभी"], c: 3 },
+            { q: "42. कृत्रिम तंतु है:", o: ["नायलॉन", "सूती", "रेशम", "ऊन"], c: 0 },
+            { q: "43. तिरछी बुनाई को कहते हैं:", o: ["सादी बुनाई", "ट्विल बुनाई", "साटन बुनाई", "इनमें से कोई नहीं"], c: 1 },
+            { q: "44. वस्त्रों की धुलाई का उद्देश्य है:", o: ["गंदगी हटाना", "कीटाणु मारना", "ताजगी लाना", "उपरोक्त सभी"], c: 3 },
+            { q: "45. कड़ापन लाने के लिए प्रयोग करते हैं:", o: ["नील", "कलफ (Starch)", "साबुन", "पानी"], c: 1 },
+            { q: "46. ऊनी वस्त्रों को धोना चाहिए:", o: ["गरम पानी से", "रीठा या माइल्ड डिटर्जेंट से", "ब्लीच से", "सोडा से"], c: 1 },
+            { q: "47. चाय का दाग किस श्रेणी में आता है?", o: ["प्राणिज", "वनस्पतिक", "खनिज", "चिकनाई"], c: 1 },
+            { q: "48. जंग का दाग हटाने के लिए प्रयोग करते हैं:", o: ["नींबू और नमक", "साबुन", "कलफ", "नील"], c: 0 },
+            { q: "49. गृह विज्ञान का क्षेत्र है:", o: ["बाल विकास", "खाद्य एवं पोषण", "वस्त्र विज्ञान", "उपरोक्त सभी"], c: 3 },
+            { q: "50. बच्चों को टीका लगाया जाता है:", o: ["बीमारी से बचाने हेतु", "सुलाने हेतु", "भूख बढ़ाने हेतु", "इनमें से कोई नहीं"], c: 0 },
+            { q: "51. डीपीटी (DPT) का टीका बचाता है:", o: ["काली खांसी", "डिप्थीरिया", "टिटनस", "उपरोक्त सभी"], c: 3 },
+            { q: "52. पोलियो की दवा पिलाई जाती है:", o: ["0-5 वर्ष तक", "10-15 वर्ष तक", "20-25 वर्ष तक", "बुजुर्गों को"], c: 0 },
+            { q: "53. व्यक्तिगत स्वच्छता में शामिल है:", o: ["नहाना", "दांत साफ करना", "नाखून काटना", "उपरोक्त सभी"], c: 3 },
+            { q: "54. अपंगता का कारण हो सकता है:", o: ["जन्मजात", "दुर्घटना", "बीमारी", "उपरोक्त सभी"], c: 3 },
+            { q: "55. आईसीडीएस (ICDS) का लाभ मिलता है:", o: ["बच्चों को", "गर्भवती महिलाओं को", "धात्री माताओं को", "उपरोक्त सभी"], c: 3 },
+            { q: "56. पूरक आहार देना शुरू करना चाहिए:", o: ["3 माह पर", "6 माह पर", "9 माह पर", "12 माह पर"], c: 1 },
+            { q: "57. आहार आयोजन में ध्यान रखना चाहिए:", o: ["रुचि का", "बजट का", "पोषण का", "उपरोक्त सभी"], c: 3 },
+            { q: "58. दूध में मिलावट की जाती है:", o: ["पानी की", "स्टार्च की", "यूरिया की", "उपरोक्त सभी"], c: 3 },
+            { q: "59. खाद्य मिलावट निरोधक अधिनियम बना:", o: ["1954", "1964", "1974", "1984"], c: 0 },
+            { q: "60. बचत की योजना है:", o: ["डाकघर", "बीमा", "भविष्य निधि", "उपरोक्त सभी"], c: 3 },
+            { q: "61. रेडीमेड कपड़ों के लाभ हैं:", o: ["सस्ते", "फैशनेबल", "समय की बचत", "उपरोक्त सभी"], c: 3 },
+            { q: "62. सिलाई मशीन की देखभाल हेतु जरूरी है:", o: ["तेल डालना", "सफाई", "सुई बदलना", "उपरोक्त सभी"], c: 3 },
+            { q: "63. बच्चों के वस्त्र होने चाहिए:", o: ["ढीले और आरामदायक", "टाइट", "सिंथेटिक", "भारी"], c: 0 },
+            { q: "64. दाग-धब्बे छुड़ाने की विधि है:", o: ["घोलक विधि", "अवशोषक विधि", "रासायनिक विधि", "उपरोक्त सभी"], c: 3 },
+            { q: "65. सूती वस्त्रों की विशेषता है:", o: ["पसीना सोखना", "ठंडा रखना", "धोने में आसान", "उपरोक्त सभी"], c: 3 },
+            { q: "66. बिहार की सुजनी कढ़ाई प्रसिद्ध है:", o: ["मुजफ्फरपुर", "पटना", "मिथिला", "इनमें से सभी"], c: 3 },
+            { q: "67. आहार में फाइबर (रेशे) का महत्व है:", o: ["पाचन हेतु", "वजन बढ़ाने हेतु", "त्वचा हेतु", "इनमें से कोई नहीं"], c: 0 },
+            { q: "68. गर्भावस्था में किसकी आवश्यकता बढ़ जाती है?", o: ["लोह तत्व", "कैल्शियम", "प्रोटीन", "उपरोक्त सभी"], c: 3 },
+            { q: "69. किशोरों के लिए आहार होना चाहिए:", o: ["केवल जंक फूड", "संतुलित और पौष्टिक", "कम कैलोरी वाला", "सिर्फ तरल"], c: 1 },
+            { q: "70. गृह विज्ञान शिक्षा सहायक है:", o: ["स्वरोजगार में", "पारिवारिक जीवन में", "नौकरी में", "उपरोक्त सभी"], c: 3 }
+        ];
+
+        let timeSeconds = 35 * 60;
+        let clockTimer;
+        let userName = "";
+
+        function initQuiz() {
+            const nameField = document.getElementById('userName');
+            if (nameField.value.trim() === "") {
+                alert("कृपया अपना नाम दर्ज करें!");
+                return;
+            }
+            userName = nameField.value.trim();
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('quiz-area').classList.remove('hidden');
+            
+            loadQuestions();
+            runClock();
+        }
+
+        function loadQuestions() {
+            const container = document.getElementById('questions-container');
+            examData.forEach((item, i) => {
+                const card = document.createElement('div');
+                card.className = 'q-card';
+                let optsHtml = '';
+                item.o.forEach((opt, oi) => {
+                    const label = String.fromCharCode(65 + oi);
+                    optsHtml += `<label class="opt-label"><input type="radio" name="q${i}" value="${oi}"> (${label}) ${opt}</label>`;
+                });
+                card.innerHTML = `<div class="q-text">${i+1}. ${item.q}</div>${optsHtml}
+                <div id="correct-${i}" class="correct-reveal">सही उत्तर: (${String.fromCharCode(65 + item.c)}) ${item.o[item.c]}</div>`;
+                container.appendChild(card);
+            });
+        }
+
+        function runClock() {
+            clockTimer = setInterval(() => {
+                let m = Math.floor(timeSeconds / 60);
+                let s = timeSeconds % 60;
+                document.getElementById('clock').innerText = `${m}:${s < 10 ? '0' + s : s}`;
+                if (timeSeconds <= 0) {
+                    clearInterval(clockTimer);
+                    endQuiz();
+                }
+                timeSeconds--;
+            }, 1000);
+        }
+
+        function endQuiz() {
+            clearInterval(clockTimer);
+            document.getElementById('submitBtn').disabled = true;
+            let score = 0;
+
+            examData.forEach((item, i) => {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                document.getElementById(`correct-${i}`).style.display = 'block';
+                if (selected && parseInt(selected.value) === item.c) {
+                    score++;
+                }
+            });
+
+            const resDiv = document.getElementById('final-result');
+            resDiv.style.display = 'block';
+            resDiv.innerHTML = `<h2>परीक्षा परिणाम (Result)</h2><p>नाम: <strong>${userName}</strong></p><p>प्राप्तांक: <strong>${score} / ${examData.length}</strong></p>`;
+            
+            genCSV(score);
+        }
+
+        function genCSV(score) {
+            let csv = "Student Name,Total Questions,Correct Answers,Score Percentage,Date\n";
+            let percent = ((score / examData.length) * 100).toFixed(2);
+            csv += `"${userName}",${examData.length},${score},${percent}%,${new Date().toLocaleString()}\n`;
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "result.csv";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
