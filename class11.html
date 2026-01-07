@@ -31,16 +31,30 @@
             border-bottom: 1px solid #ddd;
             padding-bottom: 20px;
         }
-        .message {
-            color: #606770;
-            font-size: 1.1rem;
-            margin-top: 20px;
-        }
         .link-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
+        .link-list li {
+            margin-bottom: 20px;
+        }
+        .link-list a {
+            display: block;
+            padding: 20px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+        .link-list a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .subject-geography { background-color: #27ae60; }
+        .subject-geography:hover { background-color: #219150; }
     </style>
 </head>
 <body>
@@ -48,11 +62,9 @@
     <div class="container">
         <h1>Class 11 - Model Papers</h1>
         <ul class="link-list">
-            <!-- Links to Class 11 model papers will be added here -->
+            <li><a href="class11/geography11bhugol1.html" class="subject-geography">Geography Quiz 1: भूगोल एक विषय के रूप में</a></li>
+            <li><a href="class11/geography11bhugol2.html" class="subject-geography">Geography Quiz 2: भूगोल एक विषय के रूप में</a></li>
         </ul>
-        <p class="message">
-            Model papers for Class 11 are not yet available. Please check back later.
-        </p>
     </div>
 
 </body>
