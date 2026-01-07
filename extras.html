@@ -1,125 +1,78 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>| ICT Lab | UHSS Khajuraha, Sonbarsa |</title>
+    <title>Extra Resources</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif; /* आधुनिक फ़ॉन्ट */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f4; /* हल्का पृष्ठभूमि रंग */
-            color: #333; /* मुख्य टेक्स्ट रंग */
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: #0056b3; /* गहरा नीला हेडर */
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-
-        #math10-section {
             padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* हल्की छाया */
-            margin: 0 auto;
-            max-width: 960px; /* अधिकतम चौड़ाई */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-
-        #math10-section h2 {
-            color: #0056b3;
-            border-bottom: 2px solid #0056b3;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            text-align: center;
         }
-
-        #math10-section ul {
+        h1 {
+            color: #1c1e21;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+        .link-list {
             list-style: none;
             padding: 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* रिस्पॉन्सिव ग्रिड */
-            gap: 15px;
+            margin: 0;
         }
-
-        #math10-section ul li {
-            background-color: #e9ecef; /* हल्के रंग की लिस्ट आइटम */
-            border-radius: 5px;
-            overflow: hidden; /* कोनों को गोल करने के लिए */
+        .link-list li {
+            margin-bottom: 20px;
         }
-
-        #math10-section ul li a {
+        .link-list a {
             display: block;
-            padding: 15px;
-            text-decoration: none;
-            color: #007bff; /* लिंक रंग */
-            transition: background-color 0.3s ease;
-        }
-
-        #math10-section ul li a:hover {
-            background-color: #d0d8e0; /* होवर पर हल्का गहरा रंग */
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: #343a40; /* गहरा फ़ूटर */
+            padding: 20px;
             color: white;
-            margin-top: 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
         }
+        .link-list a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .subject-reasoning { background-color: #8e44ad; }
+        .subject-reasoning:hover { background-color: #7d3c98; }
 
-        /* मोबाइल डिवाइस के लिए मीडिया क्वेरी */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
-            }
-            #math10-section {
-                padding: 15px;
-            }
-            #math10-section ul {
-                grid-template-columns: 1fr; /* मोबाइल में सिंगल कॉलम */
-            }
-        }
+        .subject-english { background-color: #f39c12; }
+        .subject-english:hover { background-color: #d35400; }
+
+        .subject-math { background-color: #16a085; }
+        .subject-math:hover { background-color: #117a65; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>| ICT Lab | UHSS Khajuraha, Sonbarsa |</h1>
-    </header>
-    <section>
-        <h2>Reasoning</h2>
-        <ul>
-            <li><a href="reasoningoddoneout.html">विषम चुनें</a></li>
-
+    <div class="container">
+        <h1>Extra Resources</h1>
+        <ul class="link-list">
+            <li><a href="reasoningoddoneout.html" class="subject-reasoning">Reasoning (विषम चुनें)</a></li>
+            <li><a href="https://www.eductify.com/en/english-grammar-tests/by-topics" class="subject-english" target="_blank" rel="noopener noreferrer">English Grammar</a></li>
+            <li><a href="https://www.eductify.com/en/math-tests" class="subject-math" target="_blank" rel="noopener noreferrer">Simple Mathematics</a></li>
         </ul>
-    </section>
-    <section>
-        <h2><a href="https://www.eductify.com/en/english-grammar-tests/by-topics">English Grammer</h2>
-        <ul>
-            
-            
-        </ul>
-    </section>
-    <section>
-        <h2><a href="https://www.eductify.com/en/math-tests">Simple Mathematics</h2>
-        <ul>
-            
-            
-        </ul>
-    </section>
-    <footer>
-        <p>&copy; 2024 | Mohammad Saquib Alam</p>
-    </footer>
+    </div>
 
 </body>
 </html>
