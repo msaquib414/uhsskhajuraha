@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psychology Class XII - Full Model Paper Quiz</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --bg-color: #f5f7fa;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            user-select: none; /* Prevent text selection */
+            -webkit-user-select: none;
+        }
+
+        /* Fixed Header with Timer */
+        header {
+            background-color: #34495e;
+            color: white;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timer-badge {
+            background-color: #e74c3c;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 100px auto 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Login Section */
+        #login-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        input[type="text"] {
+            padding: 12px 20px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.1s, background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #357abd;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Quiz Layout */
+        .question-card {
+            background: #fff;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .question-header {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-label {
+            display: block;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .option-label:hover {
+            background-color: #e3f2fd;
+            border-color: #bbdefb;
+        }
+
+        .option-label input {
+            margin-right: 10px;
+        }
+
+        /* Results & Feedback */
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Styling for post-submission */
+        .option-label.correct-choice {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+        }
+
+        .option-label.wrong-choice {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+
+        #result-summary {
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #d4edda;
+            border-radius: 8px;
+            color: #155724;
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <header>
+        <div class="timer-badge">
+            <span>⏱ Time Left:</span>
+            <span id="time-display">35:00</span>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Psychology (Manovigyan) Class XII - Model Paper</h1>
+        
+        <div id="login-section">
+            <h2 style="color:#666; margin-bottom: 25px;">Student Entry</h2>
+            <input type="text" id="student-name" placeholder="Enter your full name" autocomplete="off">
+            <br>
+            <button class="btn" onclick="startQuiz()">Start Examination</button>
+            <p style="margin-top:20px; color:#888; font-size: 0.9rem;">
+                Note: 70 Questions | 35 Minutes | 1 Mark Each
+            </p>
+        </div>
+
+        <div id="quiz-section" class="hidden">
+            <form id="quiz-form">
+                <div id="questions-container"></div>
+                
+                <div style="text-align: center; margin: 40px 0;">
+                    <button type="button" id="submit-btn" class="btn" onclick="submitQuiz()">Submit Answers</button>
+                </div>
+            </form>
+            <div id="result-summary"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- Data: 70 Questions Transcribed ---
+        // Answers mapped based on the provided Answer Key (Uttar Mala).
+        // 0=A, 1=B, 2=C, 3=D
+        const quizData = [
+            { q: "1. शिक्षा मनोविज्ञान है :", options: ["(A) सैद्धान्तिक मनोविज्ञान", "(B) व्यवहारिक मनोविज्ञान", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 2 },
+            { q: "2. 'एक्सेप्शनल चिल्ड्रेन' पुस्तक के लेखक कौन हैं ?", options: ["(A) औरलेंस्की", "(B) फ्रायड", "(C) शेल्डन", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "3. निम्न में से कौन-सा तत्व अभिप्रेरक चक्र में नहीं है ?", options: ["(A) आवश्यकता", "(B) तनाव", "(C) अन्तर्नोद", "(D) प्रोत्साहन"], ans: 1 },
+            { q: "4. शारीरिक विकलांग बच्चों को देना चाहिए -", options: ["(A) सामान्य शिक्षा", "(B) विशिष्ट शिक्षा", "(C) दोनों का मिश्रण", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "5. निम्नलिखित में से कौन शेल्डन के व्यक्तित्व प्रकार नहीं हैं ?", options: ["(A) लम्बाकार प्रकार", "(B) आयताकार प्रकार", "(C) गोलाकार प्रकार", "(D) इनमें से कोई नहीं"], ans: 3 },
+            { q: "6. किस अवस्था में 'मातृप्रेम ग्रन्थि' का अनुभव होता है ?", options: ["(A) मुखावस्था में", "(B) जननेन्द्रिय अवस्था में", "(C) लिंग प्रधान अवस्था में", "(D) इनमें से कोई नहीं"], ans: 2 },
+            { q: "7. स्याही धब्बा परीक्षण किसने विकसित किया ?", options: ["(A) हेनरी मरे", "(B) हरमन रोर्शाक", "(C) एडलर", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "8. व्यक्तित्व के अन्तर्मुखता-बहिर्मुखता आयाम का प्रतिपादन किसने किया ?", options: ["(A) युंग", "(B) आईजेंक", "(C) कैटेल", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "9. किसने कहा, \"व्यक्ति जिस रूप में अपने आप को देखता है, वही उसकी आत्म है\" ?", options: ["(A) डेनियल गोलमन", "(B) मेयर", "(C) क्रेंच और क्रचफील्ड", "(D) इनमें से कोई नहीं"], ans: 3 },
+            { q: "10. व्यक्तित्व का आत्म सिद्धान्त किसने प्रतिपादित किया ?", options: ["(A) रोजर्स", "(B) मास्लो", "(C) आलपोर्ट", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "11. सामान्य अनुकूलन संलक्षण के संप्रत्यय का प्रतिपादन किसने किया ?", options: ["(A) होल्मस", "(B) हंस सैली", "(C) लेजारस", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "12. स्वीकारोत्मक तनाव का दूसरा नाम क्या है ?", options: ["(A) यूस्ट्रेस", "(B) डिस्ट्रेस", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "13. वे दबाव जिन्हें हम अपने मन में उत्पन्न करते हैं, उन्हें कहा जाता है -", options: ["(A) पर्यावरणीय दबाव", "(B) मनोवैज्ञानिक दबाव", "(C) भौतिक दबाव", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "14. निम्नलिखित में से कौन सामाजिक तनाव है ?", options: ["(A) बाढ़", "(B) भूकंप", "(C) विवाह-विच्छेद", "(D) इनमें से कोई नहीं"], ans: 2 },
+            { q: "15. अप्रबंधित कार्य में तनाव उत्पन्न करता है, इसकी पुष्टि निम्नांकित में किनके अध्ययनों से होती है ?", options: ["(A) राइस", "(B) रोजर्स", "(C) हारलो", "(D) इनमें से कोई नहीं"], ans: 3 },
+            { q: "16. सामान्य अनुकूलन संलक्षण की प्रथम अवस्था क्या है ?", options: ["(A) परिश्रांति की अवस्था", "(B) प्रतिरोध की अवस्था", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 3 },
+            { q: "17. आधुनिक मनोरोगविज्ञान के जनक कौन हैं ?", options: ["(A) फिलिप पिनेल", "(B) शेल्डन", "(C) बिने", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "18. प्रसिद्ध पुस्तक 'दी इंटरप्रेटेशन ऑफ ड्रीम' के लेखक कौन हैं ?", options: ["(A) फ्रायड", "(B) युंग", "(C) वाटसन", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "19. निम्नलिखित में से कौन असामान्य व्यवहार की विशेषता है ?", options: ["(A) मानसिक असंतुलन", "(B) विघटित व्यक्तित्व", "(C) अपर्याप्त समायोजन", "(D) इनमें से सभी"], ans: 3 },
+            { q: "20. विषादी विकार को अन्य किस नाम से जाना जाता है ?", options: ["(A) एक ध्रुवीय विकार", "(B) द्विध्रुवीय विकार", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "21. कुत्ता से अयुक्तिसंगत भय को क्या कहते हैं ?", options: ["(A) एल्यूरोफोबिया", "(B) साइनोफोबिया", "(C) इन्सेक्टोफोबिया", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "22. उत्तर अभिघाताज तनाव विकार का कारण है -", options: ["(A) बाढ़", "(B) चक्रवात", "(C) भूकंप", "(D) इनमें से सभी"], ans: 3 },
+            { q: "23. मनोचिकित्सा का उद्देश्य है -", options: ["(A) रचनात्मक समायोजन", "(B) जीवन शैली के सुधार में सहायता करना", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 2 },
+            { q: "24. विद्युत-आघात चिकित्सा के प्रतिपादक कौन थे ?", options: ["(A) सरलेठी तथा बिनी", "(B) पर्ल्स", "(C) मोनिज", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "25. युंग द्वारा किस चिकित्सा का प्रतिपादन हुआ ?", options: ["(A) विश्लेषणात्मक चिकित्सा", "(B) व्यवहार चिकित्सा", "(C) संज्ञानात्मक चिकित्सा", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "26. श्वसन अभ्यास को योग में क्या कहा जाता है ?", options: ["(A) आसन", "(B) ध्यान", "(C) प्राणायाम", "(D) इनमें से कोई नहीं"], ans: 2 },
+            { q: "27. बैण्डुरा ने दुर्भीति को दूर करने के लिए किस प्रविधि को उपयोग किया है ?", options: ["(A) मॉडलिंग", "(B) विरुचि अनुबंध", "(C) क्रमबद्ध असंवेदीकरण", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "28. मनोवृत्ति है -", options: ["(A) वंशागत", "(B) अर्जित", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 2 },
+            { q: "29. लियोन फेस्टिंगर किस क्षेत्र से संबंधित हैं ?", options: ["(A) संवेग", "(B) मनोवृति परिवर्तन", "(C) तनाव", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "30. निम्न में से कौन रूढ़ियुक्तियों की एक विशेषता है ?", options: ["(A) मानसिक प्रतिमा", "(B) पूर्ण सम्मत विश्वास", "(C) अपेक्षाकृत स्थिर", "(D) उपरोक्त सभी"], ans: 3 },
+            { q: "31. निम्नलिखित में से कौन मनोवृत्ति के संघटक हैं ?", options: ["(A) संज्ञानात्मक", "(B) भावात्मक", "(C) व्यवहारात्मक", "(D) उपरोक्त सभी"], ans: 3 },
+            { q: "32. पिट्ज हाइडर के P-O-x मॉडल में 'O' प्रतिनिधित्व करता है, -", options: ["(A) व्यक्ति", "(B) अन्य व्यक्ति", "(C) कोई वस्तु", "(D) इनमें से कोई नहीं"], ans: 2 },
+            { q: "33. थर्सटन मापनी विधि है -", options: ["(A) 5 बिन्दु स्केल", "(B) 7 बिन्दु स्केल", "(C) 11 बिन्दु स्केल", "(D) इनमें से कोई नहीं"], ans: 2 },
+            { q: "34. प्राथमिक समूह को किसने प्रस्तुत किया ?", options: ["(A) समनर", "(B) चार्ल्स कूले", "(C) कर्ट लेविन", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "35. एक सामाजिक समूह की संरचना के लिए कम से कम कितने सदस्यों की आवश्यकता होती है ?", options: ["(A) 2", "(B) 4", "(C) 6", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "36. भीड़ का व्यवहार है -", options: ["(A) अविवेकी", "(B) त्रिवेकपूर्ण", "(C) तर्कपूर्ण", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "37. निम्न में से कौन द्वितीयक समूह नहीं है ?", options: ["(A) राजनैतिक दल", "(B) परिवार", "(C) औद्योगिक संगठन", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "38. बैंडवैगन प्रभाव किसका एक कारण है ?", options: ["(A) समूह ध्रुवीकरण", "(B) समूह एकाग्रता", "(C) समूह मानक", "(D) इनमें से सभी"], ans: 3 },
+            { q: "39. चाटुकारिता, पारस्परिकता तथा बहु अनुरोध प्रविधियाँ हैं, -", options: ["(A) अनुरूपता", "(B) अनुपालन", "(C) आज्ञापालन", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "40. निम्नलिखित में से कौन समूह संघर्ष का कारण है ?", options: ["(A) असुरक्षा का भाव", "(B) कुंठा", "(C) ध्वंसात्मक प्रवृत्ति", "(D) इनमें से सभी"], ans: 3 },
+            { q: "41. आक्रमण के मूल प्रवृत्ति सिद्धान्त का प्रतिपादन किसने किया ?", options: ["(A) डोलार्ड", "(B) फ्रायड", "(C) बन्डूरा", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "42. 5 जून को निम्नांकित में से कौन दिवस मनाया जाता है ?", options: ["(A) विश्व साक्षरता दिवस", "(B) विश्व पर्यावरण दिवस", "(C) विश्व एड्स दिवस", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "43. ध्वनि प्रदूषण को मापन क्या है ?", options: ["(A) बेल", "(B) माइक्रोबेल", "(C) डेसिबेल", "(D) इनमें से कोई नहीं"], ans: 2 },
+            { q: "44. भूकंप किस प्रकार की आपदा है ?", options: ["(A) राजनैतिक", "(B) प्राकृतिक", "(C) धार्मिक", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "45. माधव राष्ट्रीय उद्यान कहाँ स्थित है ?", options: ["(A) बिहार", "(B) मध्य प्रदेश", "(C) उत्तर प्रदेश", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "46. सूर्य की पराबैंगनी किरणों का दुष्परिणाम है -", options: ["(A) शिशु विकृतियाँ", "(B) चमड़ी का जलना", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "47. 'इरोस' तथा 'थेनेटोस' संप्रत्यय के प्रतिपादक कौन हैं ?", options: ["(A) फ्रायड", "(B) युंग", "(C) एडलर", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "48. निम्नलिखित में से कौन नेतृत्व के उद्भव के कारण हैं ?", options: ["(A) समूह की जटिलता", "(B) समूह संकट", "(C) समूह अस्थिरता", "(D) इनमें से सभी"], ans: 1 },
+            { q: "49. बोगार्डस के अनुसार नेता के कितने प्रकार हैं ?", options: ["(A) 2", "(B) 5", "(C) 8", "(D) इनमें से कोई नहीं"], ans: 3 },
+            { q: "50. सत्तावादी नेता की तुलना में प्रजातांत्रिक नेता अधिक होता है -", options: ["(A) कार्य उन्मुखी", "(B) सदस्य उन्मुखी", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "51. सामान्यतः मानसिक रूप से मंदित बच्चों की बुद्धि लब्धि होती है -", options: ["(A) 100 से ऊपर", "(B) 70 से नीचे", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "52. किसने कहा “सीखने की प्रक्रिया अच्छी तरह तभी होगी जबकि अभिप्रेरक हो” ?", options: ["(A) एण्डरसन", "(B) एंडलर", "(C) युंग", "(D) इनमें से कोई नहीं"], ans: 3 },
+            { q: "53. 'टाईप-सी' व्यक्तित्व का प्रतिपादन किसने किया ?", options: ["(A) मोरिस", "(B) रोजेनमैन", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 3 },
+            { q: "54. आइजेंक के अनुसार सांवेगिक स्थिरता का दूसरा ध्रुव क्या है ?", options: ["(A) मोरिस", "(B) रोजेनमैन", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 3 },
+            { q: "55. मन के आकारत्मक पहलू हैं -", options: ["(A) अचेतन", "(B) अर्धचेतन", "(C) चेतन", "(D) इनमें से सभी"], ans: 0 },
+            { q: "56. एम०एम०पी०आई० से किसका मापन होता है ?", options: ["(A) व्यक्तित्व का", "(B) बुद्धि का", "(C) समायोजन का", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "57. 'अंगूर खट्टे हैं' यह किस रक्षा प्रक्रम का उदाहरण है ?", options: ["(A) दमन", "(B) प्रतिक्रिया निर्माण", "(C) प्रक्षेपण", "(D) यौक्तिकरण"], ans: 3 },
+            { q: "58. ऊँचाई से अयुक्तिसंगत भय को क्या कहते हैं ?", options: ["(A) ब्रोंटोफोबिया", "(B) एक्रोफोबिया", "(C) एप्रोफोबिया", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "59. सामान्य और असामान्य के बीच अन्तर होता है -", options: ["(A) मात्रा का", "(B) प्रकार का", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "60. बार-बार शब्द या वाक्यांश को दोहराना लक्षण है -", options: ["(A) मनोग्रस्तता-बाध्यता स्नायु विकृति", "(B) हिस्टीरिया", "(C) मनोविदलता", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "61. एफोनिया एवं मुटिज्म लक्षण हैं -", options: ["(A) बाध्यता के", "(B) स्थिर व्यामोह के", "(C) रूपान्तर हिस्टीरिया के", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "62. उत्साह विषाद मनोविकृति पद का प्रतिपादन किसने किया ?", options: ["(A) ब्राउन", "(B) क्रेपलिन", "(C) फ्रायड", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "63. निम्नांकित में से कौन मानसिक विकृति है ?", options: ["(A) मानसिक दुर्बलता", "(B) द्विध्रुवीय विकार", "(C) कायिक मस्तिष्क विकृति", "(D) इनमें से सभी"], ans: 3 },
+            { q: "64. गेस्टाल्ट चिकित्सा को किसने प्रतिपादित किया ?", options: ["(A) बैण्डुरा", "(B) फ्रित्ज़ पर्ल्स", "(C) बेक", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "65. सीखने के सिद्धान्त का प्रयोग होता है -", options: ["(A) मनोविश्लेषण चिकित्सा में", "(B) व्यवहार चिकित्सा में", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 1 },
+            { q: "66. संज्ञानात्मक व्यवहार चिकित्सा का दूसरा नाम क्या है ?", options: ["(A) व्यवहार चिकित्सा", "(B) संज्ञानात्मक चिकित्सा", "(C) (A) और (B) दोनों", "(D) इनमें से कोई नहीं"], ans: 2 },
+            { q: "67. परामर्श में सहायता प्राप्त करनेवाले को कहा जाता है -", options: ["(A) परामर्शी", "(B) परामर्शदाता", "(C) चिकित्सक", "(D) इनमें से कोई नहीं"], ans: 3 },
+            { q: "68. निम्नांकित में से कौन परामर्श कौशल नहीं है ?", options: ["(A) स्वीकारात्मक सम्मान", "(B) तदनुभूति", "(C) संप्रेषण", "(D) इनमें से कोई नहीं"], ans: 0 },
+            { q: "69. निम्नांकित में से कौन सा अशाब्दिक संचार का उदाहरण है ?", options: ["(A) फोन पर बात करना", "(B) ईमेल", "(C) टेक्स्ट संदेश", "(D) सहमति दर्शाने के लिए सिर हिलाना"], ans: 3 },
+            { q: "70. परामर्श सम्बंधी आवश्यक तत्व कौन नहीं है ?", options: ["(A) गोपनीयता", "(B) सहयोग", "(C) सामूहिकत", "(D) इनमें से कोई नहीं"], ans: 2 }
+        ];
+
+        let studentName = "";
+        let timerInterval;
+        let timeRemaining = 35 * 60; // 35 minutes in seconds
+        let isSubmitted = false;
+
+        // --- Core Functions ---
+
+        function startQuiz() {
+            const nameInput = document.getElementById('student-name');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert("Please enter your name to proceed.");
+                nameInput.focus();
+                return;
+            }
+
+            studentName = name;
+            
+            // UI Transition
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('quiz-section').classList.remove('hidden');
+            
+            // Render and Start
+            renderQuestions();
+            startTimer();
+            window.scrollTo(0, 0);
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            let htmlHTML = "";
+
+            quizData.forEach((item, index) => {
+                let optionsHTML = "";
+                item.options.forEach((opt, optIndex) => {
+                    optionsHTML += `
+                        <label class="option-label" id="lbl-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}">
+                            ${opt}
+                        </label>
+                    `;
+                });
+
+                htmlHTML += `
+                    <div class="question-card">
+                        <div class="question-header">${item.q}</div>
+                        <div class="options-grid">
+                            ${optionsHTML}
+                        </div>
+                        <div class="feedback" id="feedback-${index}">
+                            Correct Answer: ${item.options[item.ans]}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = htmlHTML;
+        }
+
+        function startTimer() {
+            const display = document.getElementById('time-display');
+            
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                
+                display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz();
+                } else {
+                    timeRemaining--;
+                }
+            }, 1000);
+        }
+
+        function submitQuiz() {
+            if (isSubmitted) return;
+            isSubmitted = true;
+            clearInterval(timerInterval);
+
+            // Disable button
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.textContent = "Submitted";
+
+            let score = 0;
+
+            quizData.forEach((item, index) => {
+                // Get user choice
+                const selectedInput = document.querySelector(`input[name="q${index}"]:checked`);
+                const userChoice = selectedInput ? parseInt(selectedInput.value) : -1;
+                
+                // Show Correct Answer Feedback Div
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                feedbackDiv.style.display = 'block';
+                feedbackDiv.classList.add('correct');
+
+                // Visual Styling for options
+                if (userChoice !== -1) {
+                    const selectedLabel = document.getElementById(`lbl-${index}-${userChoice}`);
+                    if (userChoice === item.ans) {
+                        score++;
+                        selectedLabel.classList.add('correct-choice');
+                    } else {
+                        selectedLabel.classList.add('wrong-choice');
+                    }
+                }
+                
+                // Always highlight the correct answer
+                const correctLabel = document.getElementById(`lbl-${index}-${item.ans}`);
+                correctLabel.classList.add('correct-choice');
+
+                // Disable all inputs
+                const inputs = document.querySelectorAll(`input[name="q${index}"]`);
+                inputs.forEach(inp => inp.disabled = true);
+            });
+
+            // Show Result Summary
+            const resultDiv = document.getElementById('result-summary');
+            const percentage = ((score / quizData.length) * 100).toFixed(2);
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `Result: ${score} / ${quizData.length} (${percentage}%)`;
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+
+            // Download CSV
+            downloadCSV(score, percentage);
+        }
+
+        function downloadCSV(score, percentage) {
+            const date = new Date().toLocaleDateString();
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Student Name,Date,Total Questions,Correct Answers,Percentage\n"
+                + `${studentName},${date},${quizData.length},${score},${percentage}%`;
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `result_${studentName.replace(/\s/g, '_')}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+    </script>
+</body>
+</html>
