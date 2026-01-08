@@ -269,7 +269,7 @@
         { id: 70, text: "70. नियमित धुलाई से वस्त्र बने रहते हैं -", options: ["(A) दुर्गन्ध मुक्त", "(B) रोगाणु मुक्त", "(C) साफ एवं स्वच्छ", "(D) इनमें से सभी"], correctIndex: 3 }
     ];
 
-    // --- INITIALIZATION ---
+   // --- INITIALIZATION ---
     const container = document.getElementById('quiz-container');
 
     function renderQuestions() {
@@ -294,4 +294,110 @@
             const optionLetters = ['A', 'B', 'C', 'D'];
             
             card.innerHTML = `
-                <div class="
+                <div class="question-text">${q.text}</div>
+                ${optionsHtml}
+                <div class="correct-answer-text" id="ans-${index}">
+                    सही उत्तर (Correct Answer): ${q.options[q.correctIndex]}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    renderQuestions();
+
+    // --- TIMER LOGIC ---
+    let timeRemaining = 35 * 60; // 35 minutes in seconds
+    const timerDisplay = document.getElementById('timer');
+    
+    const timerInterval = setInterval(() => {
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        
+        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert("समय समाप्त! (Time's Up!) Quiz submitting automatically.");
+            submitQuiz();
+        }
+        timeRemaining--;
+    }, 1000);
+
+
+    // --- SUBMIT & CSV LOGIC ---
+    let isSubmitted = false;
+
+    function submitQuiz() {
+        if (isSubmitted) return;
+
+        const nameInput = document.getElementById('studentName');
+        const studentName = nameInput.value.trim() || "Anonymous";
+
+        if (!studentName && timeRemaining > 0) {
+            alert("कृपया क्विज जमा करने से पहले अपना नाम दर्ज करें (Please enter your name).");
+            nameInput.focus();
+            return;
+        }
+
+        isSubmitted = true;
+        clearInterval(timerInterval);
+        
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.innerText = "Submitted";
+
+        let score = 0;
+        const total = allQuestions.length;
+
+        allQuestions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const card = document.getElementById(`card-${index}`);
+            const ansDiv = document.getElementById(`ans-${index}`);
+            
+            ansDiv.style.display = 'block';
+
+            if (selected) {
+                if (parseInt(selected.value) === q.correctIndex) {
+                    score++;
+                    card.classList.add('card-correct');
+                } else {
+                    card.classList.add('card-wrong');
+                }
+            } else {
+                card.classList.add('card-wrong');
+            }
+
+            const radios = document.getElementsByName(`q${index}`);
+            for (let r of radios) r.disabled = true;
+        });
+
+        const resultArea = document.getElementById('resultArea');
+        resultArea.style.display = 'block';
+        resultArea.innerHTML = `<div class="score-display">परिणाम (Result): ${score} / ${total}</div>`;
+        
+        window.scrollTo(0, 0);
+        downloadCSV(studentName, score, total);
+    }
+
+    function downloadCSV(name, score, total) {
+        let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+        csvContent += "Student Name,Score,Total Marks,Date\n";
+        csvContent += `${name},${score},${total},${new Date().toLocaleString()}`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "result.csv");
+        document.body.appendChild(link);
+        link.click(); 
+        document.body.removeChild(link);
+    }
+
+    // Disable Right Click
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+</script>
+
+</body>
+</html>
