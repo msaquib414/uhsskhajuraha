@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geography Model Paper Quiz (Class 12)</title>
+    <style>
+        :root {
+            --correct-color: #28a745;
+            --wrong-color: #dc3545;
+            --primary-color: #007bff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f6f9;
+            user-select: none; /* कॉपी रोकने के लिए */
+            padding-top: 80px;
+        }
+
+        /* टाइमर स्टाइल */
+        #timer-header {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 40px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            border-bottom: 3px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .student-section {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 6px solid var(--primary-color);
+        }
+
+        .student-section input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #212529;
+        }
+
+        .options-grid {
+            list-style: none;
+            padding: 0;
+        }
+
+        .options-grid li {
+            margin-bottom: 10px;
+        }
+
+        .options-grid label {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .options-grid label:hover {
+            background-color: #f8f9fa;
+            border-color: #ced4da;
+        }
+
+        .options-grid input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+
+        /* परिणाम के रंग */
+        .correct-bg {
+            background-color: #d4edda !important;
+            border-color: var(--correct-color) !important;
+            color: #155724;
+        }
+
+        .wrong-bg {
+            background-color: #f8d7da !important;
+            border-color: var(--wrong-color) !important;
+            color: #721c24;
+        }
+
+        .answer-key {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 6px;
+            color: #856404;
+            font-weight: bold;
+            display: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .submit-btn:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        #result-display {
+            margin-top: 30px;
+            text-align: center;
+            padding: 25px;
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-radius: 8px;
+            font-size: 1.8em;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="timer-header">
+        समय: <span id="timer">35:00</span>
+    </div>
+
+    <div class="container">
+        <h1>Geography Model Paper (Class 12)</h1>
+
+        <div class="student-section">
+            <label><strong>छात्र का नाम (Student Name):</strong></label>
+            <input type="text" id="studentName" placeholder="अपना नाम लिखें..." required>
+        </div>
+
+        <form id="quizForm">
+            <div id="quiz-container"></div>
+            <button type="button" class="submit-btn" id="submitBtn" onclick="submitQuiz()">उत्तर जमा करें (Submit Quiz)</button>
+        </form>
+
+        <div id="result-display"></div>
+    </div>
+
+    <script>
+        // प्रश्न डेटा: Page 172 -> 173 -> 174
+        const questions = [
+            // --- Page 172 ---
+            { q: "1. पहला आधुनिक सूती वस्त्र कारखाना कहाँ स्थापित किया गया था ?", options: {A: "मुंबई", B: "पटना", C: "कानपुर", D: "गया"}, ans: "A" },
+            { q: "2. हल्दिया पोताश्रय है-", options: {A: "ओडिशा में", B: "कर्नाटक में", C: "पश्चिम बंगाल में", D: "केरल में"}, ans: "C" },
+            { q: "3. मयूरभंज में कौन खनिज पाया जाता है ?", options: {A: "सोना", B: "लौह अयस्क", C: "कोयला", D: "ताँबा"}, ans: "B" },
+            { q: "4. मणिकरण है-", options: {A: "पंजाब", B: "बिहार में", C: "हिमाचल प्रदेश में", D: "उत्तर प्रदेश में"}, ans: "C" },
+            { q: "5. पोर्ट सईद किस जलमार्ग पर स्थित है ?", options: {A: "पनामा नहर", B: "उत्तर अटलांटिक", C: "कील नहर", D: "स्वेज नहर"}, ans: "D" },
+            { q: "6. इनमें कौन मानव भूगोल की उपशाखा नहीं है ?", options: {A: "सांस्कृतिक भूगोल", B: "परिवहन भूगोल", C: "आर्थिक भूगोल", D: "जलवायु विज्ञान"}, ans: "D" },
+            { q: "7. नरोरा नाभिकीय ऊर्जा परियोजना कहाँ है ?", options: {A: "उत्तर प्रदेश", B: "बिहार", C: "केरल", D: "त्रिपुरा"}, ans: "A" },
+            { q: "8. कोंकण रेलवे पर रोहा स्टेशन किस राज्य में अवस्थित है ?", options: {A: "महाराष्ट्र", B: "कर्नाटक", C: "राजस्थान", D: "ओडिशा"}, ans: "A" },
+            { q: "9. मीटर गेज रेल-पटरियों के बीच चौड़ाई होती है-", options: {A: "1.6 मीटर", B: "0.7 मीटर", C: "1.9 मीटर", D: "1.0 मीटर"}, ans: "D" },
+            { q: "10. भिलाई इस्पात संयंत्र किस राज्य में अवस्थित है ?", options: {A: "मध्य प्रदेश", B: "छत्तीसगढ़", C: "मणिपुर", D: "केरल"}, ans: "B" },
+            { q: "11. इनमें से कौन कृषि आधारित उद्योग है ?", options: {A: "चीनी", B: "सीमेंट", C: "इस्पात", D: "इनमें से कोई नहीं"}, ans: "A" },
+            { q: "12. जनांकिकीय संक्रमण की अंतिम अवस्था में क्या होता है ?", options: {A: "जन्म दर एवं मृत्यु दर दोनों उच्च होती है", B: "जन्म दर उच्च एवं मृत्यु दर निम्न होती है", C: "जन्म दर निम्न एवं मृत्यु दर उच्च होती है", D: "जन्म दर एवं मृत्यु दर दोनों निम्न होती है"}, ans: "D" },
+            { q: "13. वह व्यक्ति जो एक वर्ष में 183 दिनों से कम दिन काम करता है, कहलाता है-", options: {A: "मुख्य श्रमिक", B: "सीमांत श्रमिक", C: "किसान", D: "इनमें से कोई नहीं"}, ans: "B" },
+            { q: "14. इनमें से कौन अपकर्ष (Pull) कारक है ?", options: {A: "शहरीकरण", B: "औद्योगीकरण", C: "तृतीयक कार्यों की प्रमुखता", D: "इनमें से सभी"}, ans: "D" },
+            { q: "15. मानव विकास सूचकांक का मान होता है-", options: {A: "0-0.5", B: "5-10", C: "90-100", D: "0-1"}, ans: "D" },
+            { q: "16. अंगूर की खेती को कहा जाता है-", options: {A: "विटीकल्चर", B: "पीसीकल्चर", C: "सेरीकल्चर", D: "इनमें से कोई नहीं"}, ans: "A" },
+            { q: "17. सार्वजनिक क्षेत्र के उद्योगों पर किसका नियंत्रण होता है ?", options: {A: "एक व्यक्ति", B: "संयुक्त कंपनी", C: "सरकार", D: "इनमें से कोई नहीं"}, ans: "C" },
+            { q: "18. टोकियो औद्योगिक केन्द्र है-", options: {A: "रूस में", B: "जापान में", C: "ऑस्ट्रेलिया में", D: "इनमें से कोई नहीं"}, ans: "B" },
+
+            // --- Page 173 ---
+            { q: "19. स्वर्ण कॉलर (Gold Collar) सम्बन्धित है-", options: {A: "पंचम क्रियाकलाप से", B: "चतुर्थक क्रियाकलाप से", C: "तृतीयक क्रियाकलाप से", D: "द्वितीयक क्रियाकलाप से"}, ans: "A" },
+            { q: "20. लंदन किस महादेश में अवस्थित है ?", options: {A: "एशिया", B: "अफ्रीका", C: "ऑस्ट्रेलिया", D: "यूरोप"}, ans: "D" },
+            { q: "21. वेस्टफैलिया किस देश में स्थित है ?", options: {A: "जापान", B: "भारत", C: "जर्मनी", D: "स्पेन"}, ans: "C" },
+            { q: "22. ओरिएंट एक्सप्रेस रेलमार्ग है-", options: {A: "यूरोप में", B: "एशिया में", C: "उत्तरी अमेरिका में", D: "ऑस्ट्रेलिया में"}, ans: "A" },
+            { q: "23. निम्नलिखित में कौन परिवहन का साधन नहीं है ?", options: {A: "पाइपलाइन", B: "नहर", C: "उपग्रह", D: "राजमार्ग"}, ans: "C" },
+            { q: "24. नम बिन्दु बस्ती किस क्षेत्र की विशेषता है ?", options: {A: "मरुस्थलीय क्षेत्र", B: "मैदानी क्षेत्र", C: "र्फीला क्षेत्र", D: "पठारी क्षेत्र"}, ans: "B" },
+            { q: "25. किस भाषा परिवार की जनसंख्या सबसे अधिक है ?", options: {A: "द्रविड़", B: "भारतीय-यूरोपीय", C: "आस्ट्रिक", D: "इनमें से कोई नहीं"}, ans: "B" },
+            { q: "26. भाखड़ा-नांगल परियोजना अवस्थित है-", options: {A: "सतलज नदी पर", B: "ब्यास नदी पर", C: "गंगा नदी पर", D: "नर्मदा नदी पर"}, ans: "A" },
+            { q: "27. गोदावरी बेसिन कहाँ है ?", options: {A: "उत्तर भारत में", B: "पूर्वी भारत में", C: "दक्षिण भारत में", D: "पश्चिमी भारत में"}, ans: "C" },
+            { q: "28. इनमें से कौन खनन नगर नहीं है ?", options: {A: "खेतड़ी", B: "धनबाद", C: "कोडरमा", D: "पटना"}, ans: "D" },
+            { q: "29. झील के सहारे किस प्रतिरूप का अधिवास पाया जाता है ?", options: {A: "रेखीय", B: "वृताकार", C: "चौक पट्टी", D: "इनमें से कोई नहीं"}, ans: "B" },
+            { q: "30. पहाड़ियों पर कौन अधिवासीय प्रतिरूप पाया जाता है ?", options: {A: "रेखीय", B: "सीढ़ीनुमा", C: "वृताकार", D: "इनमें से कोई नहीं"}, ans: "B" },
+            { q: "31. भारत में वर्ग-1 के शहर/नगर की जनसंख्या होती है-", options: {A: "1 लाख से अधिक", B: "10 लाख से अधिक", C: "20 हजार से कम", D: "इनमें से कोई नहीं"}, ans: "A" },
+            { q: "32. कालका, एक प्रसिद्ध परिवहन शहर है-", options: {A: "पंजाब में", B: "हरियाणा में", C: "उत्तराखंड में", D: "इनमें से कोई नहीं"}, ans: "B" },
+            { q: "33. इनमें से कौन एक प्राचीन नगर है ?", options: {A: "नालंदा", B: "चंडीगढ़", C: "बरौनी", D: "इनमें कोई नहीं"}, ans: "A" },
+            { q: "34. इनमें से कौन शुष्क कृषि से सम्बन्धित है ?", options: {A: "धान", B: "बाजरा", C: "गन्ना", D: "इनमें कोई नहीं"}, ans: "B" },
+            { q: "35. ऑपरेशन 'फ्लड' सम्बन्धित है-", options: {A: "गेहूँ से", B: "नारियल से", C: "कपास से", D: "दूध से"}, ans: "D" },
+            { q: "36. भारत में सिंचाई का साधन है-", options: {A: "तालाब", B: "कुआँ", C: "नहर", D: "उपर्युक्त सभी"}, ans: "D" },
+            { q: "37. भारत में जल संसाधनों से सम्बन्धित समस्या है-", options: {A: "वितरण", B: "उपलब्धता", C: "गुणवत्ता", D: "उपर्युक्त सभी"}, ans: "D" },
+            { q: "38. लौह अयस्क के मुख्य क्षेत्र हैं-", options: {A: "झारखंड में", B: "बिहार में", C: "मणिपुर में", D: "कर्नाटक में"}, ans: "A" },
+            { q: "39. मोनाजाइट पाया जाता है-", options: {A: "केरल में", B: "बिहार में", C: "असम में", D: "उपर्युक्त सभी"}, ans: "A" },
+            { q: "40. लाम्बा सम्बन्धित है-", options: {A: "पवन ऊर्जा से", B: "सौर ऊर्जा से", C: "भूतापीय ऊर्जा से", D: "उपर्युक्त सभी"}, ans: "A" },
+            { q: "41. कोयला मिलता है-", options: {A: "झरिया में", B: "कोलार में", C: "गुआ में", D: "खेतड़ी में"}, ans: "A" },
+            { q: "42. जनसंचार का माध्यम है-", options: {A: "टेलीविजन", B: "समाचार पत्र", C: "रेडियो", D: "उपर्युक्त सभी"}, ans: "D" },
+            { q: "43. इनमें से कौन सामाजिक भूगोल की उप-शाखा है ?", options: {A: "चिकित्सा भूगोल", B: "सैन्य भूगोल", C: "संसाधन भूगोल", D: "इनमें से कोई नहीं"}, ans: "A" },
+            { q: "44. स्थानिक संगठन भौगोलिक अध्ययन का उपागम रहा है-", options: {A: "1990 के बाद", B: "1950-1960", C: "1930-1940", D: "1930 से पहले"}, ans: "B" },
+            { q: "45. विश्व की जनसंख्या किस वर्ष सात बिलियन हो गई ?", options: {A: "2020", B: "2018", C: "2011", D: "1975"}, ans: "C" },
+            { q: "46. इन देशों में कौन जनांकिकीय संक्रमण की अंतिम अवस्था में है ?", options: {A: "बांग्लादेश", B: "श्रीलंका", C: "कीनिया", D: "जापान"}, ans: "D" },
+            { q: "47. ऑस्ट्रेलिया के आयु-लिंग पिरामिड की आकृति है-", options: {A: "त्रिभुजाकार", B: "घंटीनुमा", C: "आयताकार", D: "इनमें से कोई नहीं"}, ans: "B" },
+            { q: "48. इनमें से कौन विद्वान मानव विकास सूचकांक से सम्बन्धित हैं ?", options: {A: "अमर्त्य सेन", B: "एलेन सी. रेम्पुल", C: "हम्बोल्ट", D: "इनमें से सभी"}, ans: "A" },
+            { q: "49. इनमें कौन चलवासी पशुचारण से सम्बन्धित है ?", options: {A: "लामा", B: "याक", C: "रेनडियर", D: "इनमें से सभी"}, ans: "D" },
+            { q: "50. इनमें कौन व्यापारिक अन्न कृषि से सम्बन्धित है ?", options: {A: "गेहूँ", B: "जौ", C: "राई", D: "इनमें से सभी"}, ans: "D" },
+            { q: "51. इनमें कौन पशु-आधारित उद्योग से सम्बन्धित है ?", options: {A: "कागज", B: "लाह", C: "ऊन", D: "इस्पात"}, ans: "C" },
+            { q: "52. इन कोयला क्षेत्रों में कौन जर्मनी में है ?", options: {A: "तालचर", B: "रूर", C: "अप्लेशियन", D: "इनमें से सभी"}, ans: "B" },
+            { q: "53. इनमें कौन तृतीयक सेवा नहीं है ?", options: {A: "परिवहन", B: "संचार", C: "बैंक", D: "नीति निर्धारण"}, ans: "D" },
+            { q: "54. सीमांत सड़कों का सम्बन्ध है-", options: {A: "तटीय सड़कों से", B: "अंतर्राष्ट्रीय सीमा सीमा पर स्थित सड़कों से", C: "पहाड़ी सड़कों से", D: "इनमें से कोई नहीं"}, ans: "B" },
+            { q: "55. ट्रांस-साइबेरियन रेलमार्ग है-", options: {A: "रूस में", B: "यू.एस.ए. में", C: "कनाडा में", D: "इनमें से सभी"}, ans: "A" },
+            { q: "56. इन शब्दों में किसका प्रयोग अंतर्राष्ट्रीय व्यापार में किया जाता है ?", options: {A: "डम्पिंग", B: "व्यापार संतुलन", C: "मुक्त व्यापार", D: "इनमें से सभी"}, ans: "D" },
+            { q: "57. लोएस मैदान में किस प्रकार का घर पाया जाता है ?", options: {A: "कंक्रीट", B: "गुफा", C: "झोपड़ी", D: "इनमें कोई नहीं"}, ans: "B" },
+            { q: "58. इनमें कौन नियोजित नगर है ?", options: {A: "चंडीगढ़", B: "केनबरा", C: "जमशेदपुर", D: "इनमें से सभी"}, ans: "A" },
+            { q: "59. जनसंख्या घनत्व का सम्बन्ध होता है-", options: {A: "जनसंख्या एवं क्षेत्रफल से", B: "जनसंख्या एवं परिवहन से", C: "जनसंख्या एवं क्षेत्रफल से", D: "इनमें से कोई नहीं"}, ans: "A" },
+            { q: "60. 2011 की जनगणना के अनुसार भारत की ग्रामीण आबादी है-", options: {A: "10%", B: "45%", C: "69%", D: "85%"}, ans: "C" },
+
+            // --- Page 174 ---
+            { q: "61. भारत में ग्रामीण अधिवासों के प्रकारों की कुल संख्या कितनी है ?", options: {A: "4", B: "2", C: "8", D: "14"}, ans: "A" },
+            { q: "62. इन शहरों में कौन पश्चिमी भारत में अवस्थित है ?", options: {A: "राजकोट", B: "धनबाद", C: "पुरी", D: "इनमें से सभी"}, ans: "A" },
+            { q: "63. सड़क किस भूमि उपयोग वर्ग में आती है ?", options: {A: "गैर-कृषिगत भूमि", B: "वन भूमि", C: "बंजर भूमि", D: "परती भूमि"}, ans: "A" },
+            { q: "64. कौन राज्य सूर्यमुखी का अग्रणी उत्पादक है ?", options: {A: "कर्नाटक", B: "आंध्र प्रदेश", C: "तेलंगाना", D: "इनमें से सभी"}, ans: "A" },
+            { q: "65. इनमें कौन जलसंभरण प्रबंधन से सम्बन्धित है ?", options: {A: "हरियाली", B: "नीरू-मीरू", C: "अरवरी जल संसद", D: "इनमें से सभी"}, ans: "D" },
+            { q: "66. बराक नदी बेसिन कहाँ है ?", options: {A: "पश्चिमी भारत", B: "दक्षिणी भारत", C: "उत्तर-पूर्वी भारत", D: "उत्तरी भारत"}, ans: "C" },
+            { q: "67. विश्व के कितने प्रतिशत अनाज का उत्पादन भारत में किया जाता है ?", options: {A: "5%", B: "11%", C: "25%", D: "45%"}, ans: "B" },
+            { q: "68. इनमें कौन खनिज अन्वेषण से सम्बन्धित है ?", options: {A: "जी.एस.आई.", B: "एच.सी.एल.", C: "ओ.एन.जी.सी.", D: "इनमें से सभी"}, ans: "A" },
+            { q: "69. भरमौर जिला है-", options: {A: "हिमाचल प्रदेश में", B: "बिहार में", C: "केरल में", D: "राजस्थान में"}, ans: "A" },
+            { q: "70. भील जनजाति मुख्यत: केन्द्रित है-", options: {A: "भोजपुर जिला में", B: "झाबुआ जिला में", C: "चंबा जिला में", D: "इनमें से कोई नहीं"}, ans: "B" }
+        ];
+
+        let timeLeft = 35 * 60; // 35 minutes
+        let timerInterval;
+
+        function initQuiz() {
+            const container = document.getElementById('quiz-container');
+            questions.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.innerHTML = `
+                    <div class="question-text">${item.q}</div>
+                    <ul class="options-grid">
+                        ${Object.keys(item.options).map(key => `
+                            <li>
+                                <label id="label-${index}-${key}">
+                                    <input type="radio" name="q${index}" value="${key}">
+                                    (${key}) ${item.options[key]}
+                                </label>
+                            </li>
+                        `).join('')}
+                    </ul>
+                    <div class="answer-key" id="ans-${index}">सही उत्तर: (${item.ans}) ${item.options[item.ans]}</div>
+                `;
+                container.appendChild(card);
+            });
+            startTimer();
+        }
+
+        function startTimer() {
+            const timerDisplay = document.getElementById('timer');
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("समय समाप्त! (Time's Up!)");
+                    submitQuiz(true);
+                } else {
+                    let m = Math.floor(timeLeft / 60);
+                    let s = timeLeft % 60;
+                    timerDisplay.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+
+        function submitQuiz(force = false) {
+            const name = document.getElementById('studentName').value.trim();
+            if (!name && !force) {
+                alert("कृपया अपना नाम दर्ज करें।");
+                return;
+            }
+
+            clearInterval(timerInterval);
+            let score = 0;
+            
+            questions.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const answerDiv = document.getElementById(`ans-${index}`);
+                answerDiv.style.display = 'block';
+
+                // Disable inputs
+                document.querySelectorAll(`input[name="q${index}"]`).forEach(inp => inp.disabled = true);
+
+                if (selected) {
+                    const label = document.getElementById(`label-${index}-${selected.value}`);
+                    if (selected.value === item.ans) {
+                        score++;
+                        label.classList.add('correct-bg');
+                    } else {
+                        label.classList.add('wrong-bg');
+                        document.getElementById(`label-${index}-${item.ans}`).classList.add('correct-bg');
+                    }
+                } else {
+                    document.getElementById(`label-${index}-${item.ans}`).classList.add('correct-bg');
+                }
+            });
+
+            // Show Score
+            const resultDiv = document.getElementById('result-display');
+            resultDiv.innerHTML = `${name}<br>स्कोर: ${score} / ${questions.length}`;
+            resultDiv.style.display = 'block';
+
+            // Disable button
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerText = "उत्तर जमा हो चुके हैं";
+
+            downloadCSV(name || "Unknown", score);
+            window.scrollTo(0, 0);
+        }
+
+        function downloadCSV(name, score) {
+            const date = new Date().toLocaleString();
+            const csvContent = `data:text/csv;charset=utf-8,Student Name,Total Score,Date\n"${name}",${score},"${date}"`;
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>
