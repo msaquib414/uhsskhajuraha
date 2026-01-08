@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 10 Science Quiz - Bihar Board</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #d4edda;
+            --success-border: #c3e6cb;
+            --success-text: #155724;
+            --error-color: #f8d7da;
+            --error-border: #f5c6cb;
+            --error-text: #721c24;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: #333;
+            user-select: none; /* Helps prevent copying text */
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 80px; /* Space for fixed header */
+        }
+
+        /* Login Screen */
+        #login-screen {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 70%;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Fixed Header / Timer */
+        #sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: none; /* Hidden initially */
+            display: flex; /* Changed via JS */
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        #timer {
+            font-weight: bold;
+            font-size: 1.2em;
+            background: #e74c3c;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+
+        /* Questions */
+        .question-card {
+            background: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .q-text {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-label {
+            display: block;
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background: #e9ecef;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        /* Results styling */
+        .result-box {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .correct-answer-text {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: var(--primary-color);
+            display: none; /* Hidden until submit */
+            padding: 5px;
+            border-top: 1px dashed #ccc;
+        }
+
+        /* Feedback Colors */
+        .user-correct {
+            background-color: var(--success-color) !important;
+            border-color: var(--success-border) !important;
+            color: var(--success-text);
+        }
+
+        .user-wrong {
+            background-color: var(--error-color) !important;
+            border-color: var(--error-border) !important;
+            color: var(--error-text);
+        }
+
+        .actual-correct {
+            background-color: var(--success-color) !important;
+            border-color: var(--success-border) !important;
+            font-weight: bold;
+        }
+
+        #quiz-screen {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <h2>विज्ञान क्विज़ (कक्षा 10)</h2>
+        <p>विषय: रासायनिक अभिक्रिया, नियंत्रण एवं समन्वय, विद्युत</p>
+        <p>समय: 25 मिनट | प्रश्न: 40</p>
+        <input type="text" id="studentName" placeholder="अपना नाम दर्ज करें (Student Name)" autocomplete="off">
+        <br>
+        <button class="btn" onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <div id="sticky-header" style="display:none;">
+        <span id="display-name">Student</span>
+        <span id="timer">25:00</span>
+        <span id="score-display" style="display:none;">Score: 0</span>
+    </div>
+
+    <div class="container" id="quiz-screen">
+        <div id="result-header" class="result-box"></div>
+        <form id="quizForm">
+            <div id="questions-container">
+                </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="button" class="btn" id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
+            </div>
+        </form>
+    </div>
+
+<script>
+    // --- DATA: 40 Questions (Distributed Correct Answers: ~10 A, 10 B, 10 C, 10 D) ---
+    // Topics: Chemical Reactions, Control & Coordination, Electricity
+    const quizData = [
+        // Chemical Reactions
+        { q: "1. रासायनिक अभिक्रिया में भाग लेने वाले पदार्थों को क्या कहते हैं?", options: ["A. अभिकारक", "B. उत्पाद", "C. उत्प्रेरक", "D. इनमें से कोई नहीं"], ans: 0 },
+        { q: "2. श्वसन (Respiration) किस प्रकार की रासायनिक अभिक्रिया है?", options: ["A. उपचयन", "B. संयोजन", "C. ऊष्माक्षेपी", "D. ऊष्माशोषी"], ans: 2 },
+        { q: "3. समीकरण CaCO₃(s) → CaO(s) + CO₂(g) किस प्रकार का समीकरण है?", options: ["A. वियोजन (Decomposition)", "B. संयोजन", "C. उभयगामी", "D. प्रतिस्थापन"], ans: 0 },
+        { q: "4. फेरस सल्फेट क्रिस्टल का रंग कैसा होता है?", options: ["A. सफेद", "B. हरा", "C. लाल", "D. भूरा"], ans: 1 },
+        { q: "5. साग-सब्जियों का विघटित होकर कम्पोस्ट बनना किस अभिक्रिया का उदाहरण है?", options: ["A. ऊष्माशोषी", "B. ऊष्माक्षेपी", "C. प्रतिस्थापन", "D. उभयगामी"], ans: 1 },
+        { q: "6. सिल्वर क्लोराइड (AgCl) का रंग क्या है?", options: ["A. श्वेत (White)", "B. पीला", "C. हरा", "D. काला"], ans: 0 },
+        { q: "7. निम्न में से कौन सा उत्पाद लेड नाइट्रेट को गर्म करने पर प्राप्त होता है?", options: ["A. O₂", "B. NO₂", "C. NO₂ और N₂", "D. NO₂ और O₂"], ans: 3 },
+        { q: "8. लोहा को जिंक से लेपित करने की क्रिया को क्या कहते हैं?", options: ["A. संक्षारण", "B. गैल्वनीकरण", "C. पानी चढ़ाना", "D. विद्युत अपघटन"], ans: 1 },
+        { q: "9. दूध से दही बनना कैसा परिवर्तन है?", options: ["A. भौतिक", "B. रासायनिक", "C. दोनों", "D. इनमें से कोई नहीं"], ans: 1 },
+        { q: "10. चिप्स की थैली में उपचयन (Oxidation) रोकने के लिए कौन सी गैस भरी जाती है?", options: ["A. ऑक्सीजन", "B. नाइट्रोजन", "C. हीलियम", "D. हाइड्रोजन"], ans: 1 },
+        { q: "11. CuO + H₂ → Cu + H₂O किस प्रकार की अभिक्रिया है?", options: ["A. उपचयन", "B. अपचयन", "C. रेडॉक्स (Redox)", "D. उदासीनीकरण"], ans: 2 },
+        { q: "12. लिटमस रंजक बैंगनी रंग का होता है, जो निकाला जाता है:", options: ["A. लाइकेन से", "B. लाल पत्ता गोभी से", "C. हल्दी से", "D. पेटुनिया फूल से"], ans: 0 },
+        
+        // Control and Coordination
+        { q: "13. शरीर की प्रधान नियंत्रक ग्रंथि (Master Gland) किसे कहा जाता है?", options: ["A. जनन ग्रंथि", "B. पीयूष ग्रंथि (Pituitary)", "C. थायराइड ग्रंथि", "D. अग्न्याशय"], ans: 1 },
+        { q: "14. दो तंत्रिका कोशिका के मध्य खाली स्थान को क्या कहते हैं?", options: ["A. द्रुमिका", "B. सिगैप्स (Synapse)", "C. एक्सॉन", "D. आवेग"], ans: 1 },
+        { q: "15. मस्तिष्क का कौन सा भाग शरीर की स्थिति तथा संतुलन का अनुरक्षण करता है?", options: ["A. अग्र मस्तिष्क", "B. मध्य मस्तिष्क", "C. अनुमस्तिष्क (Cerebellum)", "D. इनमें से सभी"], ans: 2 },
+        { q: "16. पादप हार्मोन 'ऑक्सिन' (Auxin) कहाँ उत्पन्न होता है?", options: ["A. जड़ की नोक पर", "B. तने के अग्रभाग (Tip) पर", "C. पत्तियों में", "D. फलों में"], ans: 1 },
+        { q: "17. निम्नलिखित में से कौन सा पादप हार्मोन फल पकाने में उपयोग होता है?", options: ["A. ऑक्जीन", "B. जिबरेलिन", "C. एथिलीन", "D. साइटोकाइनिन"], ans: 2 },
+        { q: "18. इन्सुलिन की कमी से कौन सा रोग होता है?", options: ["A. घेघा", "B. बौनापन", "C. मधुमेह (Diabetes)", "D. उच्च रक्तचाप"], ans: 2 },
+        { q: "19. ग्वाइटर (Goitre) रोग किसकी कमी से पनपता है?", options: ["A. चीनी की कमी से", "B. आयोडीन की कमी से", "C. रक्त की कमी से", "D. मोटापा से"], ans: 1 },
+        { q: "20. एंड्रोजन (Androgen) क्या है?", options: ["A. नर लिंग हार्मोन", "B. मादा लिंग हार्मोन", "C. पाचक रस", "D. एंजाइम"], ans: 0 },
+        { q: "21. तंत्रिका तंत्र की रचनात्मक और क्रियात्मक इकाई क्या है?", options: ["A. नेफ्रॉन", "B. न्यूरॉन", "C. सेरीब्रम", "D. साइटोन"], ans: 1 },
+        { q: "22. बीज रहित फलों के बनने को क्या कहते हैं?", options: ["A. अनिषेक फलन", "B. अनिषेक अंडपी", "C. अग्र प्रभाविकता", "D. इनमें से कोई नहीं"], ans: 0 },
+        { q: "23. प्रतिवर्ती क्रिया (Reflex Action) का नियंत्रण केंद्र कहाँ होता है?", options: ["A. मस्तिष्क में", "B. मेरुरज्जु (Spinal Cord) में", "C. तंत्रिका में", "D. कोशिकाओं में"], ans: 1 },
+        { q: "24. पत्तियों का मुरझाना किस हार्मोन के कारण होता है?", options: ["A. ऑक्सिन", "B. जिबरेलिन", "C. एब्सिसिक अम्ल", "D. साइटोकाइनिन"], ans: 2 },
+
+        // Electricity
+        { q: "25. विद्युत धारा का SI मात्रक क्या है?", options: ["A. वाट (Watt)", "B. वोल्ट (Volt)", "C. ओम (Ohm)", "D. एम्पियर (Ampere)"], ans: 3 },
+        { q: "26. विद्युत प्रतिरोध (Resistance) का मात्रक है:", options: ["A. एम्पियर", "B. वोल्ट", "C. ओम", "D. वाट"], ans: 2 },
+        { q: "27. विभवांतर (Potential Difference) मापने वाले यंत्र को क्या कहते हैं?", options: ["A. अमीटर", "B. वोल्टमीटर", "C. गैल्वेनोमीटर", "D. टेकोमीटर"], ans: 1 },
+        { q: "28. 1 वोल्ट कहलाता है:", options: ["A. 1 जूल/सेकंड", "B. 1 जूल/कूलम्ब", "C. 1 जूल/एम्पियर", "D. इनमें से कोई नहीं"], ans: 1 },
+        { q: "29. ओम का नियम क्या है?", options: ["A. V = IR", "B. V = I/R", "C. V = I²R", "D. V = R/I"], ans: 0 },
+        { q: "30. विद्युत बल्ब का तंतु (Filament) किस धातु का बना होता है?", options: ["A. लोहा", "B. टंगस्टन", "C. तांबा", "D. सोना"], ans: 1 },
+        { q: "31. विद्युत शक्ति (Power) का SI मात्रक क्या होता है?", options: ["A. वोल्ट", "B. वाट", "C. जूल", "D. कूलम्ब"], ans: 1 },
+        { q: "32. 1 किलोवाट-घंटा (kWh) किसके बराबर होता है?", options: ["A. 3.6 × 10⁶ जूल", "B. 3.6 × 10⁵ जूल", "C. 3.6 जूल", "D. 3600 जूल"], ans: 0 },
+        { q: "33. घरों में विद्युत परिपथ किस क्रम में जोड़े जाते हैं?", options: ["A. श्रेणी क्रम (Series)", "B. समांतर क्रम (Parallel)", "C. मिश्रित क्रम", "D. इनमें से कोई नहीं"], ans: 1 },
+        { q: "34. किसी चालक की प्रतिरोधकता (Resistivity) का मात्रक है:", options: ["A. ओम-मीटर (Ωm)", "B. ओम/मीटर", "C. ओम", "D. मीटर"], ans: 0 },
+        { q: "35. अमीटर (Ammeter) को विद्युत परिपथ में कैसे जोड़ा जाता है?", options: ["A. श्रेणी क्रम में", "B. समांतर क्रम में", "C. A और B दोनों", "D. इनमें से कोई नहीं"], ans: 0 },
+        { q: "36. यदि किसी तार की लंबाई दोगुनी कर दी जाए, तो उसका प्रतिरोध क्या होगा?", options: ["A. आधा हो जाएगा", "B. दोगुना हो जाएगा", "C. चौगुना हो जाएगा", "D. अपवर्तित रहेगा"], ans: 1 },
+        { q: "37. विद्युत धारा उत्पन्न करने की युक्ति को क्या कहते हैं?", options: ["A. जनित्र (Generator)", "B. गैल्वेनोमीटर", "C. एमीटर", "D. मोटर"], ans: 0 },
+        { q: "38. आवेश (Charge) का SI मात्रक क्या है?", options: ["A. वोल्ट", "B. ओम", "C. जूल", "D. कूलम्ब"], ans: 3 },
+        { q: "39. बैटरी से किस प्रकार की धारा प्राप्त होती है?", options: ["A. प्रत्यावर्ती धारा (AC)", "B. दिष्ट धारा (DC)", "C. A और B दोनों", "D. इनमें से कोई नहीं"], ans: 1 },
+        { q: "40. जूल/कूलम्ब (J/C) किसके बराबर है?", options: ["A. ओम", "B. वोल्ट", "C. एम्पियर", "D. वाट"], ans: 1 }
+    ];
+
+    // --- LOGIC ---
+    let timerInterval;
+    let timeRemaining = 25 * 60; // 25 minutes in seconds
+    let isSubmitted = false;
+
+    // Security: Disable Right Click
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    function startQuiz() {
+        const nameInput = document.getElementById('studentName').value.trim();
+        if (nameInput === "") {
+            alert("कृपया अपना नाम दर्ज करें (Please enter your name).");
+            return;
+        }
+
+        // UI Transition
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('sticky-header').style.display = 'flex';
+        document.getElementById('quiz-screen').style.display = 'block';
+        document.getElementById('display-name').innerText = nameInput;
+
+        renderQuestions();
+        startTimer();
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById('questions-container');
+        quizData.forEach((item, index) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question-card';
+            
+            let optionsHTML = '';
+            item.options.forEach((opt, optIndex) => {
+                optionsHTML += `
+                    <label class="option-label" id="lbl-${index}-${optIndex}">
+                        <input type="radio" name="q${index}" value="${optIndex}">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            qDiv.innerHTML = `
+                <span class="q-text">${item.q}</span>
+                <div class="options-grid">
+                    ${optionsHTML}
+                </div>
+                <div id="ans-text-${index}" class="correct-answer-text">
+                    सही उत्तर: ${item.options[item.ans]}
+                </div>
+            `;
+            container.appendChild(qDiv);
+        });
+    }
+
+    function startTimer() {
+        const timerElement = document.getElementById('timer');
+        timerInterval = setInterval(() => {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerElement.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            timeRemaining--;
+
+            if (timeRemaining < 0) {
+                clearInterval(timerInterval);
+                alert("समय समाप्त! क्विज़ सबमिट किया जा रहा है (Time's Up!)");
+                submitQuiz();
+            }
+        }, 1000);
+    }
+
+    function submitQuiz() {
+        if (isSubmitted) return;
+        isSubmitted = true;
+        clearInterval(timerInterval);
+
+        // UI Updates
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Submitted";
+
+        let score = 0;
+        const studentName = document.getElementById('studentName').value;
+
+        // Scoring & Highlighting Logic
+        quizData.forEach((item, index) => {
+            const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+            const answerTextDiv = document.getElementById(`ans-text-${index}`);
+            const correctLabel = document.getElementById(`lbl-${index}-${item.ans}`);
+            
+            // Always show correct answer text
+            answerTextDiv.style.display = 'block';
+
+            if (selectedOption) {
+                const selectedVal = parseInt(selectedOption.value);
+                const selectedLabel = document.getElementById(`lbl-${index}-${selectedVal}`);
+
+                if (selectedVal === item.ans) {
+                    score++;
+                    selectedLabel.classList.add('user-correct');
+                } else {
+                    selectedLabel.classList.add('user-wrong');
+                    correctLabel.classList.add('actual-correct');
+                }
+            } else {
+                // Not attempted - highlight correct answer
+                correctLabel.classList.add('actual-correct');
+            }
+        });
+
+        // Show Score
+        const resultHeader = document.getElementById('result-header');
+        resultHeader.style.display = 'block';
+        resultHeader.innerText = `Total Score: ${score} / 40`;
+        
+        // Scroll to top
+        window.scrollTo(0, 0);
+
+        // Generate CSV
+        downloadCSV(studentName, score);
+    }
+
+    function downloadCSV(name, score) {
+        const date = new Date().toLocaleString();
+        const csvContent = "data:text/csv;charset=utf-8," 
+            + "Student Name,Total Score,Date/Time\n"
+            + `"${name}","${score}/40","${date}"`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "result.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+
+</body>
+</html>
