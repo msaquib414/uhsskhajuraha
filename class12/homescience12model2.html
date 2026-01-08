@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Science Quiz Class XII</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            user-select: none; /* Helps prevent copying */
+        }
+
+        /* Timer Header */
+        #timer-container {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 60px auto 20px auto; /* Adjusted top margin for timer */
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .student-info {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+
+        .student-info input {
+            padding: 8px;
+            width: 60%;
+            margin-left: 10px;
+        }
+
+        .question-box {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options-list li {
+            margin-bottom: 5px;
+        }
+
+        label {
+            cursor: pointer;
+            display: block;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        /* Grading Styles */
+        .correct-answer-highlight {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .wrong-answer-highlight {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .feedback-text {
+            margin-top: 10px;
+            font-weight: bold;
+            display: none; /* Hidden initially */
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #result-area {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;"> <div id="timer-container">
+        समय शेष: <span id="timer">35:00</span>
+    </div>
+
+    <div class="container">
+        <h1>Home Science - Model Paper Quiz</h1>
+
+        <div class="student-info">
+            <label for="studentName">छात्र का नाम (Student Name):</label>
+            <input type="text" id="studentName" placeholder="अपना नाम दर्ज करें" required>
+        </div>
+
+        <form id="quizForm">
+            <div id="quiz-questions-container">
+                </div>
+            <button type="button" class="submit-btn" id="submitBtn" onclick="submitQuiz()">उत्तर जमा करें (Submit Answers)</button>
+        </form>
+
+        <div id="result-area"></div>
+    </div>
+
+    <script>
+        // Data structure holding all questions transcribed from the images
+        // Correct answers are based on the ticks present in the provided images.
+        const quizData = [
+            // Page 197 Questions
+            { q: "1. मानव रक्त का रंग लाल होता है-", options: {a: "(A) मायोग्लोबिन के कारण", b: "(B) हीमोग्लोबिन के कारण", c: "(C) इम्युनोग्लोबुलिन के कारण", d: "(D) हैप्टोग्लोबिन के कारण"}, correct: "b" },
+            { q: "2. रक्त का कौन सा भाग ऑक्सीजन का संवहन करता है ?", options: {a: "(A) लाल रक्त कण", b: "(B) श्वेत रक्त कण", c: "(C) विषाणु", d: "(D) फाइब्रिनोजेन"}, correct: "a" },
+            { q: "3. मानव शरीर में वृक्कों की संख्या कितनी होती है ?", options: {a: "(A) एक", b: "(B) दो", c: "(C) तीन", d: "(D) चार"}, correct: "b" },
+            { q: "4. स्वास्थ्य का संबंध-", options: {a: "(A) सम्पूर्ण जीवन से रहता है", b: "(B) शरीर की निरोगता से रहता है", c: "(C) शरीर की पुष्टता से रहता है", d: "(D) अच्छी आदतें से रहता है"}, correct: "d" }, // Tick appears to be on D
+            { q: "5. किडनी रोग से पीड़ित होने के क्या लक्षण है ?", options: {a: "(A) उच्च रक्तचाप", b: "(B) श्वसन की समस्या", c: "(C) चेहरे, पैर आदि पर सूजन होना", d: "(D) उपर्युक्त सभी"}, correct: "d" },
+            { q: "6. इनमें से कौन एक प्राथमिक चिकित्सक का गुण है ?", options: {a: "(A) जानकार", b: "(B) सहनशीलता", c: "(C) निर्णयात्मक बुद्धि", d: "(D) उपर्युक्त सभी"}, correct: "d" }, // Tick is on D
+            { q: "7. मनुष्य के शरीर के लिए ऊर्जा का मुख्य स्रोत क्या है ?", options: {a: "(A) विटामिन", b: "(B) कैल्शियम", c: "(C) कार्बोहाइड्रेट", d: "(D) प्रोटीन"}, correct: "c" },
+            { q: "8. इनमें से कौन टिटनस का लक्षण है ?", options: {a: "(A) जबड़ा जकड़ना", b: "(B) ठंड महसूस करना", c: "(C) पेट में दर्द होना", d: "(D) टॉन्सिल का फूलना"}, correct: "a" },
+            { q: "9. कौन सा रोग दूषित पानी के कारण होता है ?", options: {a: "(A) हैजा", b: "(B) खसरा", c: "(C) मलेरिया", d: "(D) क्षय रोग"}, correct: "a" },
+            { q: "10. अतिसार के लाग हैं-", options: {a: "(A) पतला दस्त", b: "(B) जल्दी-जल्दी मल का त्याग होना", c: "(C) पखाना के साथ रक्त का आना", d: "(D) उपर्युक्त सभी"}, correct: "d" },
+            { q: "11. स्वच्छ जल होता है-", options: {a: "(A) रंगहीन", b: "(B) गंधहीन", c: "(C) स्वादहीन", d: "(D) उपर्युक्त में से सभी"}, correct: "d" },
+            { q: "12. रसायन एवं उच्च ताप से किसे नष्ट किया जाता है ?", options: {a: "(A) जीवाणु", b: "(B) फफूँदी", c: "(C) चूहा", d: "(D) (A) एवं (B) दोनों"}, correct: "d" },
+            { q: "13. किस प्रकार के बर्तनों में खट्टी चीजों को बनाने से भोजन विषाक्त हो जाता है ?", options: {a: "(A) स्टेनलेस स्टील के बर्तन", b: "(B) काँच के बर्तन", c: "(C) पीतल के बर्तन", d: "(D) इनमें से कोई नहीं"}, correct: "c" },
+            { q: "14. मार्क का चिह्न जो पर्यावरण संबंधी उत्पादों पर लगाया जाता है-", options: {a: "(A) हॉलमार्क", b: "(B) वुलमार्क", c: "(C) इकोमार्क", d: "(D) एगमार्क"}, correct: "c" },
+            { q: "15. दही ......... का एक अच्छा स्रोत होता है-", options: {a: "(A) लोहा", b: "(B) कैल्शियम", c: "(C) कार्बन", d: "(D) आयोडीन"}, correct: "b" },
+            { q: "16. अगर आयोडीन युक्त नमक को आहार में शामिल नहीं किया जाता है तो यह किस बीमारी का कारण बन सकता है ?", options: {a: "(A) स्कर्वी", b: "(B) एनीमिया", c: "(C) घेघा", d: "(D) रिकेट्स"}, correct: "c" },
+            { q: "17. ......... का उपयोग धातु के नल को साफ़ करने में किया जाता है-", options: {a: "(A) हाइड्रोक्लोरिक अम्ल", b: "(B) फिनायल", c: "(C) लोहे का स्क्रबर", d: "(D) नींबू एवं सिरका"}, correct: "d" },
+            { q: "18. इनमें से किसका प्रयोग बादाम एवं काजू काटने में किया जाता है ?", options: {a: "(A) स्लाइसर", b: "(B) नट कटर", c: "(C) कद्दूकस", d: "(D) इनमें से कोई नहीं"}, correct: "b" },
+            { q: "19. प्रत्यक्ष सौर ऊर्जा का उपयोग किया जाता है-", options: {a: "(A) पानी गर्म करने में", b: "(B) शुद्धीकरण में", c: "(C) सुखाने में", d: "(D) इनमें से सभी"}, correct: "d" },
+            { q: "20. खरीफ फसल की बुआई कब की जाती है ?", options: {a: "(A) जून से जुलाई", b: "(B) सितम्बर से नवम्बर", c: "(C) जनवरी से मार्च", d: "(D) अगस्त से सितम्बर"}, correct: "a" },
+            { q: "21. नौकरी पेशा वाले की आय होती है-", options: {a: "(A) निश्चित", b: "(B) अनियमित", c: "(C) अनिश्चित", d: "(D) इनमें से सभी"}, correct: "a" },
+            { q: "22. भोजन आवश्यक है-", options: {a: "(A) मानसिक संतुष्टि के लिए", b: "(B) शरीर को ऊर्जा प्रदान करने के लिए", c: "(C) शारीरिक विकास के लिए", d: "(D) इनमें से सभी"}, correct: "d" },
+            { q: "23. इनमें से कौन एक सुरक्षात्मक पौष्टिक तत्व है ?", options: {a: "(A) प्रोटीन", b: "(B) कार्बोहाइड्रेट", c: "(C) वसा", d: "(D) विटामिन"}, correct: "d" },
+            { q: "24. बच्चे को ठोस आहार दिए जाते हैं-", options: {a: "(A) 4-5 महीने में", b: "(B) 5-6 महीने में", c: "(C) 5-7 महीने में", d: "(D) 4-6 महीने में"}, correct: "b" },
+            { q: "25. परंतु फर्नीचर होना चाहिए-", options: {a: "(A) आरामदायक", b: "(B) बहुपयोगी", c: "(C) कीमती", d: "(D) (A) और (B) दोनों"}, correct: "d" },
+            { q: "26. इनमें से कौन लौह-लवण का अच्छा स्रोत है ?", options: {a: "(A) गुड़", b: "(B) सूखे मेवे", c: "(C) कलेजी", d: "(D) उपर्युक्त सभी"}, correct: "d" },
+            { q: "27. इनमें से किसका खेल में होना जरुरी है ?", options: {a: "(A) स्वतंत्रता", b: "(B) स्वच्छ", c: "(C) आनन्द", d: "(D) इनमें से सभी"}, correct: "d" },
+            { q: "28. त्वचा से संबंधित बीमारी किस विटामिन की कमी से होती है ?", options: {a: "(A) विटामिन-D", b: "(B) विटामिन-E", c: "(C) विटामिन-K", d: "(D) विटामिन-C"}, correct: "d" },
+            { q: "29. इनमें से कौन घरेलू गतिविधि है ?", options: {a: "(A) खाना बनाना", b: "(B) स्कूल जाना", c: "(C) बाजार जाना", d: "(D) इनमें से सभी"}, correct: "a" },
+            { q: "30. इनमें से कौन पशुजनित वसा के स्रोत है ?", options: {a: "(A) मछली का तेल", b: "(B) मूँगफली का तेल", c: "(C) सरसों का तेल", d: "(D) सूखे मेवे"}, correct: "a" },
+            { q: "31. एक गृहनिर्मात्री में क्या गुण होने चाहिए ?", options: {a: "(A) बुद्धिमान", b: "(B) उपाय कुशल", c: "(C) आत्म विश्वासी", d: "(D) इनमें से सभी"}, correct: "d" },
+            { q: "32. जी. सी. जी. का टीका किस बीमारी से बचाता है ?", options: {a: "(A) पोलियो", b: "(B) डायरिया", c: "(C) क्षयरोग या तपेदिक", d: "(D) इन्फ्लुएंजा"}, correct: "c" },
+            { q: "33. घर के समस्त कचरे को किस स्थान पर एकत्र करना चाहिए ?", options: {a: "(A) घर के किसी कोने में", b: "(B) सड़क पर", c: "(C) कचरा पात्र में", d: "(D) घर के बगल में"}, correct: "c" },
+            { q: "33. इनमें से कौन रसोईघर में प्रयुक्त होने वाला समय एवं शक्ति बचत उपकरण है ?", options: {a: "(A) गैस चूल्हा", b: "(B) माइक्रोवेव ओवन", c: "(C) टोस्टर", d: "(D) इनमें से सभी"}, correct: "d" },
+            { q: "35. हमारे स्वास्थ्य के लिए किस प्रकार का प्रदूषण हानिकारक है ?", options: {a: "(A) जल प्रदूषण", b: "(B) ध्वनि प्रदूषण", c: "(C) वायु प्रदूषण", d: "(D) इनमें से सभी"}, correct: "d" },
+            { q: "36. सरकारी कर्मचारी को सेवानिवृत्ति के उपरांत प्राप्त होता है-", options: {a: "(A) वेतन", b: "(B) पेंशन", c: "(C) बोनस", d: "(D) इनमें से कुछ नहीं"}, correct: "b" },
+            { q: "37. सामान्य रूप से घर के किस भाग की सज्जा को सर्वाधिक महत्व दिया जाता है ?", options: {a: "(A) रसोईघर", b: "(B) भोजन कक्ष", c: "(C) ड्राइंग-रूम (बैठक)", d: "(D) शयनकक्ष"}, correct: "c" },
+            { q: "38. अशुद्ध जल का सेवन करने से कौन सा रोग होता है ?", options: {a: "(A) क्षयरोग", b: "(B) चेचक", c: "(C) हैजा", d: "(D) मलेरिया"}, correct: "c" },
+
+            // Page 198 Questions
+            { q: "39. सभी व्यक्तियों में रोग प्रतिरोधक क्षमता होती है-", options: {a: "(A) समान", b: "(B) भिन्न-भिन्न", c: "(C) उम्र अनुसार", d: "(D) इनमें से कोई नहीं"}, correct: "b" },
+            { q: "40. पेचिस के रोगी को किस प्रकार का भोजन दिया जाता है ?", options: {a: "(A) दही-चावल", b: "(B) केवल चावल", c: "(C) केवल दूध", d: "(D) रोटी-सब्जी"}, correct: "a" },
+            { q: "41. स्वस्थ मनुष्य ......... से मुक्त रहता है-", options: {a: "(A) रोग", b: "(B) धन", c: "(C) चिन्ता", d: "(D) भय"}, correct: "a" },
+            { q: "42. किस प्रकार का रसोईघर एक आदर्श रसोईघर होता है ?", options: {a: "(A) एक दीवार का", b: "(B) यू-आकार का", c: "(C) दो दीवार का", d: "(D) एल-आकार का"}, correct: "b" },
+            { q: "43. खनिज लवण का कार्य है-", options: {a: "(A) ऊर्जा प्रदान करना", b: "(B) रोगों से लड़ना", c: "(C) शरीर का निर्माण करना", d: "(D) इनमें से कोई नहीं"}, correct: "c" },
+            { q: "44. गृह विज्ञान किस प्रकार का रोजगार उपलब्ध कराता है ?", options: {a: "(A) स्वरोजगार", b: "(B) अन्य संस्था में रोजगार", c: "(C) दोनों", d: "(D) दोनों में से कोई नहीं"}, correct: "c" },
+            { q: "45. आहार विज्ञान विशेषज्ञों के अनुसार भोजन में कितने पोषक तत्व पाए जाते हैं ?", options: {a: "(A) 2", b: "(B) 3", c: "(C) 4", d: "(D) 6"}, correct: "d" },
+            { q: "46. क्षारीय प्रकृति के प्रतिकर्मक से ......... वस्त्रों में दाग-धब्बे छुड़ाया जाता है-", options: {a: "(A) रेशमी", b: "(B) ऊनी", c: "(C) सूती", d: "(D) इनमें कोई नहीं"}, correct: "c" },
+            { q: "47. कीड़ों को वस्त्रों से दूर रखने के लिए ......... का प्रयोग किया जाता है-", options: {a: "(A) समाचार पत्र की स्याही", b: "(B) सूखी नीम की पत्तियां", c: "(C) नेफ्थलीन की गोलियां", d: "(D) इनमें से सभी"}, correct: "d" },
+            { q: "48. कपड़े पर अधिक नील के दाग को हटाने के लिए क्या उपयोग किया जाता है?", options: {a: "(A) साबुन", b: "(B) एसिटिक अम्ल", c: "(C) नमक", d: "(D) इनमें से कोई नहीं"}, correct: "b" },
+            { q: "49. इनमें से कौन कार्बोहाइड्रेट का कार्य है ?", options: {a: "(A) ऊर्जा प्रदान करना", b: "(B) रोगों से लड़ना", c: "(C) शरीर का निर्माण करना", d: "(D) इनमें से कोई नहीं"}, correct: "a" },
+            { q: "50. 6-12 वर्ष की अवस्था कहलाती है-", options: {a: "(A) शालीय अवस्था", b: "(B) उत्तर किशोरावस्था", c: "(C) शालापूर्व अवस्था", d: "(D) इनमें से कोई नहीं"}, correct: "a" },
+            { q: "51. शरीर में कैल्सियम के अवशोषण में ......... की आवश्यकता पड़ती है-", options: {a: "(A) विटामिन 'जी' समूह", b: "(B) विटामिन सी", c: "(C) विटामिन 'डी'", d: "(D) फॉस्फोरस"}, correct: "c" },
+            { q: "52. रोटी पकाने की विधि है-", options: {a: "(A) उबालना", b: "(B) तलना", c: "(C) सेंकना", d: "(D) बेकिंग"}, correct: "c" },
+            { q: "53. मिट्टी याबालू के छोटे-छोटे घरौंदे बनाना ......... खेल है-", options: {a: "(A) स्वप्रेरित", b: "(B) प्रयोगात्मक", c: "(C) कल्पनात्मक", d: "(D) रचनात्मक"}, correct: "c" },
+            { q: "54. वस्त्रों के उचित देख-रेख एवं संरक्षण से, वस्त्र-", options: {a: "(A) टिकाऊ बना रहता है", b: "(B) नया एवं जीवंत दिखता है", c: "(C) का जीवन बढ़ता है", d: "(D) उपर्युक्त सभी"}, correct: "d" },
+            { q: "55. छ: महीने के शिशु को सोना चाहिए-", options: {a: "(A) 10 घंटे", b: "(B) 11 घंटे", c: "(C) 15 घंटे", d: "(D) 22 घंटे"}, correct: "c" },
+            { q: "56. इनमें से कौन मानव शरीर में त्वरित ऊर्जा प्रदान करता है-", options: {a: "(A) वसा", b: "(B) प्रोटीन", c: "(C) ग्लूकोज", d: "(D) जल"}, correct: "c" },
+            { q: "57. इनमें से कौन नवजात शिशु का सर्वोत्तम आहार है ?", options: {a: "(A) गाय का दूध", b: "(B) माता का दूध", c: "(C) पाउडर का दूध", d: "(D) भैंस का दूध"}, correct: "b" },
+            { q: "58. जन्म के समय देने वाला टीका है-", options: {a: "(A) बी.सी.जी.", b: "(B) डी.पी.टी.", c: "(C) खसरा", d: "(D) एम.एम.आर."}, correct: "a" },
+            { q: "59. विटामिन-A की कमी से होता है-", options: {a: "(A) रतौंधी", b: "(B) बेरीबेरी", c: "(C) चेचक", d: "(D) तपेदिक"}, correct: "a" },
+            { q: "60. बच्चों के खिलौने कैसे होने चाहिए ?", options: {a: "(A) हल्के", b: "(B) भारी", c: "(C) नुकीले", d: "(D) बड़े"}, correct: "a" },
+            { q: "61. गृह विज्ञान के क्षेत्र हैं-", options: {a: "(A) आहार एवं पोषण", b: "(B) गृह प्रबंध", c: "(C) वस्त्र एवं परिधान", d: "(D) इनमें से सभी"}, correct: "d" },
+            { q: "62. निम्न में से कौन भोज्य पदार्थ कार्बोहाइड्रेट का मुख्य स्रोत है ?", options: {a: "(A) चावल", b: "(B) आलू", c: "(C) चीनी", d: "(D) इनमें से सभी"}, correct: "a" }, // Tick is on A, though others are also sources. Follow tick.
+            { q: "63. कपड़े की सबसे छोटी इकाई क्या है ?", options: {a: "(A) रेश", b: "(B) धागा", c: "(C) कच्चा माल", d: "(D) इनमें कोई नहीं"}, correct: "a" },
+            { q: "64. इनमें से कौन नरम आहार है ?", options: {a: "(A) नरम चावल", b: "(B) रोटी", c: "(C) सब्जी", d: "(D) अंडा"}, correct: "a" },
+            { q: "65. चावल किस विधि से पकायाजाता है ?", options: {a: "(A) उबालना", b: "(B) तलना", c: "(C) सेंकना", d: "(D) बेकिंग"}, correct: "a" },
+            { q: "66. वायुकोष पाये जाते हैं-", options: {a: "(A) श्वासनली में", b: "(B) हृदय में", c: "(C) फेफड़ा में", d: "(D) वृक्क में"}, correct: "c" },
+            { q: "67. वैक्यूम क्लीनर का प्रयोग किया जाता है-", options: {a: "(A) बर्तन की सफाई के लिए", b: "(B) फर्नीचर के पॉलिश के लिए", c: "(C) घर सफाई के लिए", d: "(D) वस्तुओं को चमकाने के लिए"}, correct: "c" },
+            { q: "68. एक स्वस्थ व्यक्ति एक मिनट में कितनी बार साँस लेता है ?", options: {a: "(A) 25-30 बार", b: "(B) 12-20 बार", c: "(C) 5-10 बार", d: "(D) अनेक बार"}, correct: "b" },
+            { q: "69. कारखानों की चिमनियों के धुँए से किस प्रकार का प्रदूषण होता है ?", options: {a: "(A) जल प्रदूषण", b: "(B) ध्वनि प्रदूषण", c: "(C) मृदा प्रदूषण", d: "(D) वायु प्रदूषण"}, correct: "d" },
+            { q: "70. इनमें से कौन सम्पूर्ण आहार है ?", options: {a: "(A) फल", b: "(B) दूध", c: "(C) दही", d: "(D) माँस"}, correct: "b" }
+        ];
+
+        // Timer Logic
+        let timeInSeconds = 35 * 60; // 35 minutes
+        const timerElement = document.getElementById('timer');
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeInSeconds / 60);
+                let seconds = timeInSeconds % 60;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                timerElement.innerText = `${minutes}:${seconds}`;
+
+                if (timeInSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("समय समाप्त! आपके उत्तर स्वचालित रूप से जमा किए जा रहे हैं। (Time's up! Auto-submitting.)");
+                    submitQuiz();
+                }
+                timeInSeconds--;
+            }, 1000);
+        }
+
+        // Load Questions
+        function loadQuestions() {
+            const container = document.getElementById('quiz-questions-container');
+            quizData.forEach((data, index) => {
+                const qNum = index + 1;
+                const questionHTML = `
+                    <div class="question-box" id="qbox-${index}">
+                        <div class="question-text">${data.q}</div>
+                        <ul class="options-list">
+                            <li>
+                                <label id="label-${index}-a">
+                                    <input type="radio" name="q${index}" value="a"> ${data.options.a}
+                                </label>
+                            </li>
+                            <li>
+                                <label id="label-${index}-b">
+                                    <input type="radio" name="q${index}" value="b"> ${data.options.b}
+                                </label>
+                            </li>
+                            <li>
+                                <label id="label-${index}-c">
+                                    <input type="radio" name="q${index}" value="c"> ${data.options.c}
+                                </label>
+                            </li>
+                            <li>
+                                <label id="label-${index}-d">
+                                    <input type="radio" name="q${index}" value="d"> ${data.options.d}
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="feedback-text" id="feedback-${index}">
+                            सही उत्तर: <span style="color: green;">${data.options[data.correct]}</span>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += questionHTML;
+            });
+        }
+
+        // Submit Quiz Function
+        function submitQuiz() {
+            const studentNameInput = document.getElementById('studentName');
+            const studentName = studentNameInput.value.trim();
+
+            if (!studentName && timeInSeconds > 0) {
+                alert("कृपया अपना नाम दर्ज करें। (Please enter your name.)");
+                studentNameInput.focus();
+                return;
+            }
+
+            // Stop timer
+            clearInterval(timerInterval);
+
+            // Disable submit button
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "उत्तर जमा हो चुके हैं (Answers Submitted)";
+            
+            // Disable name input
+            studentNameInput.disabled = true;
+
+            let score = 0;
+            let totalQuestions = quizData.length;
+
+            quizData.forEach((data, index) => {
+                const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                feedbackDiv.style.display = "block"; // Show correct answer text
+
+                if (selectedOption) {
+                    const userAnswer = selectedOption.value;
+                    const selectedLabel = document.getElementById(`label-${index}-${userAnswer}`);
+
+                    if (userAnswer === data.correct) {
+                        score++;
+                        selectedLabel.classList.add('correct-answer-highlight');
+                    } else {
+                        selectedLabel.classList.add('wrong-answer-highlight');
+                        // Highlight correct one as well just in case
+                        document.getElementById(`label-${index}-${data.correct}`).classList.add('correct-answer-highlight');
+                    }
+                } else {
+                     // If skipped, still highlight correct answer
+                     document.getElementById(`label-${index}-${data.correct}`).classList.add('correct-answer-highlight');
+                }
+
+                // Disable all radio buttons
+                const radios = document.querySelectorAll(`input[name="q${index}"]`);
+                radios.forEach(radio => radio.disabled = true);
+            });
+
+            // Show result
+            const resultArea = document.getElementById('result-area');
+            resultArea.innerText = `${studentName || 'Student'}, आपका स्कोर: ${score} / ${totalQuestions}`;
+            resultArea.style.display = "block";
+
+            // Download CSV
+            downloadCSV(studentName || 'Unknown', score, totalQuestions);
+        }
+
+        // CSV Download Function
+        function downloadCSV(name, score, total) {
+            const csvContent = `data:text/csv;charset=utf-8,Student Name,Score,Total Questions\n"${name}",${score},${total}`;
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize
+        window.onload = function() {
+            loadQuestions();
+            startTimer();
+            // Prevent accidental back navigation causing issues
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                history.go(1);
+            };
+        };
+
+    </script>
+</body>
+</html>
