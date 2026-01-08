@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>कक्षा 10 विज्ञान क्विज़ (मिश्रित)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            user-select: none; /* Prevent text selection */
+            -webkit-user-select: none;
+        }
+
+        /* Feedback Styles */
+        .correct-answer-box {
+            background-color: #dcfce7; /* green-100 */
+            border: 1px solid #16a34a; /* green-600 */
+            color: #14532d; /* green-900 */
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+        
+        .correct-text::before {
+            content: "✓";
+            margin-right: 8px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .user-correct {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            position: relative;
+        }
+
+        .user-wrong {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            position: relative;
+        }
+
+        /* Sticky Timer */
+        .sticky-timer {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen pb-16" oncontextmenu="return false;">
+
+    <!-- Name Modal -->
+    <div id="nameModal" class="fixed inset-0 bg-gray-900 bg-opacity-90 flex items-center justify-center z-[60] backdrop-blur-sm px-4">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md transform transition-all scale-100">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">विज्ञान क्विज़</h2>
+            <p class="text-center text-gray-600 mb-6 font-medium">अम्ल-क्षार, आनुवंशिकता, प्रकाश परावर्तन</p>
+            
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">विद्यार्थी का नाम दर्ज करें</label>
+                    <input type="text" id="studentName" class="w-full px-4 py-3 rounded-lg border-2 border-gray-300 focus:ring-4 focus:ring-blue-200 focus:border-blue-600 outline-none transition text-lg" placeholder="जैसे: सुमित कुमार">
+                    <p id="nameError" class="text-red-500 text-sm mt-2 hidden flex items-center"><span class="mr-1">⚠</span> कृपया नाम लिखें।</p>
+                </div>
+                <button onclick="startQuiz()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition duration-200 shadow-lg text-lg tracking-wide">
+                    क्विज़ शुरू करें
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timer Display -->
+    <div id="timerDisplay" class="sticky-timer hidden bg-white px-8 py-3 rounded-b-xl border-t-4 border-blue-600 text-2xl font-bold text-blue-800 min-w-[220px] text-center shadow-lg">
+        25:00
+    </div>
+
+    <!-- Main Quiz Container -->
+    <div id="quizContainer" class="hidden container mx-auto px-4 pt-28 max-w-4xl">
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+            <!-- Header -->
+            <div class="bg-blue-700 p-8 text-white text-center">
+                <h1 class="text-3xl md:text-4xl font-bold mb-3">कक्षा 10 विज्ञान</h1>
+                <p class="opacity-90 text-xl font-light">कुल प्रश्न: 60 | समय: 25 मिनट</p>
+            </div>
+
+            <!-- Score Section (Hidden initially) -->
+            <div id="resultHeader" class="hidden bg-green-50 p-8 text-center border-b border-green-200">
+                <h3 class="text-4xl font-bold text-green-800 mb-2" id="scoreText"></h3>
+                <p class="text-green-700 font-medium text-lg">परिणाम फ़ाइल (CSV) डाउनलोड हो गई है। नीचे सही उत्तर देखें।</p>
+            </div>
+
+            <!-- Questions Form -->
+            <form id="quizForm" class="p-6 md:p-12 space-y-12">
+                <!-- Questions will be injected here via JS -->
+            </form>
+
+            <!-- Submit Button Footer -->
+            <div class="p-10 bg-gray-50 border-t border-gray-200 text-center">
+                <button id="submitBtn" onclick="submitQuiz(event)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-20 rounded-full text-xl shadow-xl transform transition hover:-translate-y-1 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                    उत्तर जमा करें (Submit)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions Data (A:15, B:15, C:15, D:15)
+        const questions = [
+            // --- Option A Correct (15 Questions) ---
+            { q: "1. प्रकाश के परावर्तन के कितने नियम हैं?", options: { a: "दो", b: "तीन", c: "चार", d: "एक" }, correct: "a" },
+            { q: "2. आनुवंशिकी का जनक किसे कहा जाता है?", options: { a: "ग्रेगर जॉन मेंडल", b: "डार्विन", c: "लैमार्क", d: "अरस्तू" }, correct: "a" },
+            { q: "3. लिटमस पत्र को लाल कर देता है:", options: { a: "अम्ल", b: "क्षार", c: "लवण", d: "कोई नहीं" }, correct: "a" },
+            { q: "4. समतल दर्पण द्वारा बना प्रतिबिंब होता है:", options: { a: "काल्पनिक और सीधा", b: "वास्तविक और उल्टा", c: "वास्तविक और सीधा", d: "काल्पनिक और उल्टा" }, correct: "a" },
+            { q: "5. 'द ओरिजिन ऑफ स्पीशीज' पुस्तक किसने लिखी?", options: { a: "डार्विन", b: "मेंडल", c: "लैमार्क", d: "ओपेरिन" }, correct: "a" },
+            { q: "6. बेकिंग सोडा का रासायनिक सूत्र है:", options: { a: "NaHCO3", b: "Na2CO3", c: "CaCO3", d: "NaOH" }, correct: "a" },
+            { q: "7. मोटर गाड़ी के चालक के सामने लगा दर्पण होता है:", options: { a: "उत्तल दर्पण", b: "अवतल दर्पण", c: "समतल दर्पण", d: "बेलनाकार दर्पण" }, correct: "a" },
+            { q: "8. शुद्ध जल का pH मान होता है:", options: { a: "7", b: "6", c: "8", d: "0" }, correct: "a" },
+            { q: "9. जीन शब्द का प्रयोग सबसे पहले किसने किया?", options: { a: "जोहान्सन", b: "मेंडल", c: "वॉटसन", d: "क्रिक" }, correct: "a" },
+            { q: "10. चींटी के डंक में कौन सा अम्ल होता है?", options: { a: "मेथेनोइक अम्ल", b: "लैक्टिक अम्ल", c: "सिट्रिक अम्ल", d: "टार्टरिक अम्ल" }, correct: "a" },
+            { q: "11. गोलीय दर्पण की फोकस दूरी उसकी वक्रता त्रिज्या की:", options: { a: "आधी होती है", b: "दुगुनी होती है", c: "तिगुनी होती है", d: "बराबर होती है" }, correct: "a" },
+            { q: "12. पक्षी और चमगादड़ के पंख हैं:", options: { a: "समजात अंग", b: "समरूप अंग", c: "अवशेषी अंग", d: "इनमें से कोई नहीं" }, correct: "a" },
+            { q: "13. दाढ़ी बनाने में कौन सा दर्पण उपयुक्त है?", options: { a: "अवतल", b: "उत्तल", c: "समतल", d: "कोई नहीं" }, correct: "a" },
+            { q: "14. नीला थोथा (तूतिया) का रासायनिक सूत्र है:", options: { a: "CuSO4.5H2O", b: "CuSO4.7H2O", c: "ZnSO4.7H2O", d: "FeSO4.7H2O" }, correct: "a" },
+            { q: "15. मनुष्य में कितने जोड़े गुणसूत्र पाए जाते हैं?", options: { a: "23", b: "46", c: "22", d: "44" }, correct: "a" },
+
+            // --- Option B Correct (15 Questions) ---
+            { q: "16. अम्ल स्वाद में कैसा होता है?", options: { a: "कड़वा", b: "खट्टा", c: "मीठा", d: "नमकीन" }, correct: "b" },
+            { q: "17. प्रकाश की चाल सबसे अधिक होती है:", options: { a: "कांच में", b: "निर्वात में", c: "जल में", d: "हीरा में" }, correct: "b" },
+            { q: "18. मेंडल ने अपने प्रयोग के लिए किस पौधे को चुना?", options: { a: "गुलाब", b: "मटर", c: "गेहूँ", d: "चना" }, correct: "b" },
+            { q: "19. क्षार लाल लिटमस को कैसा कर देता है?", options: { a: "हरा", b: "नीला", c: "काला", d: "बैंगनी" }, correct: "b" },
+            { q: "20. अवतल दर्पण की फोकस दूरी होती है:", options: { a: "धनात्मक", b: "ऋणात्मक", c: "शून्य", d: "अनंत" }, correct: "b" },
+            { q: "21. मनुष्य में लिंग निर्धारण कौन करता है?", options: { a: "ऑटोसोम", b: "लिंग गुणसूत्र", c: "साइटोप्लाज्म", d: "माइटोकॉन्ड्रिया" }, correct: "b" },
+            { q: "22. धोबिया सोडा का रासायनिक सूत्र है:", options: { a: "NaHCO3", b: "Na2CO3.10H2O", c: "Ca(OH)2", d: "CaCO3" }, correct: "b" },
+            { q: "23. निर्वात में प्रकाश की चाल है:", options: { a: "3 × 10^5 km/s", b: "3 × 10^8 m/s", c: "3 × 10^10 m/s", d: "2 × 10^8 m/s" }, correct: "b" },
+            { q: "24. स्त्री में लिंग गुणसूत्र होते हैं:", options: { a: "XY", b: "XX", c: "YY", d: "XO" }, correct: "b" },
+            { q: "25. दाँतों का क्षय कब शुरू होता है?", options: { a: "जब मुँह का pH 7 से कम हो", b: "जब मुँह का pH 5.5 से कम हो", c: "जब मुँह का pH 10 हो", d: "जब मुँह का pH 8 हो" }, correct: "b" },
+            { q: "26. दर्पण सूत्र है:", options: { a: "1/v - 1/u = 1/f", b: "1/v + 1/u = 1/f", c: "1/f + 1/v = 1/u", d: "v/u = f" }, correct: "b" },
+            { q: "27. प्राकृतिक चयन का सिद्धांत किसने दिया?", options: { a: "लैमार्क", b: "डार्विन", c: "मेंडल", d: "वाइसमैन" }, correct: "b" },
+            { q: "28. जिप्सम का रासायनिक सूत्र है:", options: { a: "CaSO4.1/2H2O", b: "CaSO4.2H2O", c: "CaSO4.5H2O", d: "CuSO4.2H2O" }, correct: "b" },
+            { q: "29. स्नेल का नियम संबंधित है:", options: { a: "परावर्तन से", b: "अपवर्तन से", c: "वर्ण विक्षेपण से", d: "प्रकीर्णन से" }, correct: "b" },
+            { q: "30. अफ्रीकी मानव का सबसे निकट संबंधी है:", options: { a: "बंदर", b: "चिम्पैंजी", c: "गोरिल्ला", d: "गिलहरी" }, correct: "b" },
+
+            // --- Option C Correct (15 Questions) ---
+            { q: "31. किसी माध्यम के अपवर्तनांक का मान होता है:", options: { a: "sin r / sin i", b: "sin i + sin r", c: "sin i / sin r", d: "sin i × sin r" }, correct: "c" },
+            { q: "32. प्लास्टर ऑफ पेरिस का रासायनिक सूत्र है:", options: { a: "CaSO4.2H2O", b: "CaSO4.H2O", c: "CaSO4.1/2H2O", d: "CaCO3" }, correct: "c" },
+            { q: "33. पुरुष में लिंग गुणसूत्र होते हैं:", options: { a: "XX", b: "YY", c: "XY", d: "XO" }, correct: "c" },
+            { q: "34. सर्च लाइट का परावर्तक सतह होता है:", options: { a: "उत्तल", b: "समतल", c: "अवतल", d: "कोई नहीं" }, correct: "c" },
+            { q: "35. रक्त का pH मान होता है:", options: { a: "6.4", b: "5.4", c: "7.4", d: "8.4" }, correct: "c" },
+            { q: "36. समजात अंगों का उदाहरण है:", options: { a: "हमारा हाथ और कुत्ते के अग्रपाद", b: "हमारे दाँत और हाथी के दाँत", c: "दोनों A और B", d: "आलू और घास के उपरिभूस्तारी" }, correct: "c" },
+            { q: "37. अवतल दर्पण में काल्पनिक प्रतिबिंब कब बनता है?", options: { a: "जब वस्तु C पर हो", b: "जब वस्तु F पर हो", c: "जब वस्तु P और F के बीच हो", d: "जब वस्तु अनंत पर हो" }, correct: "c" },
+            { q: "38. अपच का उपचार करने के लिए किस औषधि का उपयोग होता है?", options: { a: "एंटीबायोटिक", b: "एनालजेसिक", c: "एंटासिड", d: "एंटीसेप्टिक" }, correct: "c" },
+            { q: "39. एक संकर क्रॉस का जीनोटाइप अनुपात है:", options: { a: "3:1", b: "9:3:3:1", c: "1:2:1", d: "1:1" }, correct: "c" },
+            { q: "40. उत्तल दर्पण द्वारा बना प्रतिबिंब हमेशा होता है:", options: { a: "उल्टा", b: "वास्तविक", c: "सीधा और छोटा", d: "सीधा और बड़ा" }, correct: "c" },
+            { q: "41. एसिटिक अम्ल का प्राकृतिक स्रोत है:", options: { a: "संतरा", b: "इमली", c: "सिरका", d: "टमाटर" }, correct: "c" },
+            { q: "42. प्रकाश की किरणें गमन करती हैं:", options: { a: "टेढ़ी रेखा में", b: "वृत्ताकार पथ पर", c: "सीधी रेखा में", d: "जिग-जैग पथ पर" }, correct: "c" },
+            { q: "43. घोंघा किस समुदाय का प्राणी है?", options: { a: "आर्थ्रोपोडा", b: "एनेलिडा", c: "मोलस्का", d: "इकानोडर्मेटा" }, correct: "c" },
+            { q: "44. निम्नलिखित में कौन प्रबल क्षारक है?", options: { a: "Mg(OH)2", b: "NH4OH", c: "NaOH", d: "Cu(OH)2" }, correct: "c" },
+            { q: "45. सौर कुकर के लिए कौन सा दर्पण सर्वाधिक उपयुक्त है?", options: { a: "उत्तल", b: "समतल", c: "अवतल", d: "इनमें से सभी" }, correct: "c" },
+
+            // --- Option D Correct (15 Questions) ---
+            { q: "46. दंत विशेषज्ञ किस दर्पण का उपयोग मरीजों के दाँतों का बड़ा प्रतिबिंब देखने के लिए करते हैं?", options: { a: "उत्तल दर्पण", b: "समतल दर्पण", c: "बेलनाकार दर्पण", d: "अवतल दर्पण" }, correct: "d" },
+            { q: "47. कौन सा पदार्थ लाल लिटमस को नीला कर देता है?", options: { a: "अम्ल", b: "लवण", c: "जल", d: "क्षार" }, correct: "d" },
+            { q: "48. विकास के दृष्टिकोण से हमारी किससे अधिक समानता है?", options: { a: "चीन के विद्यार्थी", b: "मकड़ी", c: "जीवाणु", d: "चिम्पैंजी" }, correct: "d" },
+            { q: "49. लेंस की क्षमता का SI मात्रक है:", options: { a: "मीटर", b: "सेमी", c: "वाट", d: "डायोप्टर (D)" }, correct: "d" },
+            { q: "50. इमली में कौन सा अम्ल पाया जाता है?", options: { a: "सिट्रिक अम्ल", b: "एसिटिक अम्ल", c: "लैक्टिक अम्ल", d: "टार्टरिक अम्ल" }, correct: "d" },
+            { q: "51. मेंडल के द्विसंकर क्रॉस का फेनोटाइप अनुपात है:", options: { a: "3:1", b: "1:2:1", c: "1:1", d: "9:3:3:1" }, correct: "d" },
+            { q: "52. पानी में डूबी हुई छड़ मुड़ी हुई प्रतीत होती है, इसका कारण है:", options: { a: "परावर्तन", b: "विवर्तन", c: "प्रकीर्णन", d: "अपवर्तन" }, correct: "d" },
+            { q: "53. विरंजक चूर्ण का सूत्र है:", options: { a: "CaCO3", b: "Ca(OH)2", c: "CaCl2", d: "CaOCl2" }, correct: "d" },
+            { q: "54. उपार्जित लक्षणों का वंशागति सिद्धांत किसने दिया?", options: { a: "डार्विन", b: "मेंडल", c: "वाइसमैन", d: "लैमार्क" }, correct: "d" },
+            { q: "55. किस दर्पण से हमेशा वस्तु से छोटा प्रतिबिंब प्राप्त होता है?", options: { a: "समतल", b: "अवतल", c: "गोलीय", d: "उत्तल" }, correct: "d" },
+            { q: "56. उदासीन विलयन का pH मान होता है:", options: { a: "6", b: "8", c: "0", d: "7" }, correct: "d" },
+            { q: "57. कीटों के पंख और चमगादड़ के पंख किस प्रकार के अंग हैं?", options: { a: "समजात अंग", b: "अवशेषी अंग", c: "अविकसित अंग", d: "समवृत्ति अंग" }, correct: "d" },
+            { q: "58. साइड मिरर के रूप में प्रयुक्त होता है:", options: { a: "अवतल दर्पण", b: "समतल दर्पण", c: "प्रिज्म", d: "उत्तल दर्पण" }, correct: "d" },
+            { q: "59. संगमरमर का रासायनिक सूत्र क्या है?", options: { a: "CaO", b: "Ca(OH)2", c: "CaSO4", d: "CaCO3" }, correct: "d" },
+            { q: "60. कौन सा जीव केवल भारत में ही पाया जाता है?", options: { a: "कछुआ", b: "ह्वेल", c: "मगरमच्छ", d: "घड़ियाल" }, correct: "d" }
+        ];
+
+        // State variables
+        let timeLeft = 25 * 60; // 25 minutes
+        let timerInterval;
+        let isSubmitted = false;
+        let studentName = "";
+
+        // Elements
+        const quizForm = document.getElementById('quizForm');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Functions
+        function startQuiz() {
+            const nameInput = document.getElementById('studentName');
+            if (nameInput.value.trim() === "") {
+                document.getElementById('nameError').classList.remove('hidden');
+                return;
+            }
+            studentName = nameInput.value.trim();
+            document.getElementById('nameModal').classList.add('hidden');
+            document.getElementById('quizContainer').classList.remove('hidden');
+            timerDisplay.classList.remove('hidden');
+            
+            renderQuestions();
+            startTimer();
+        }
+
+        function renderQuestions() {
+            let html = "";
+            questions.forEach((q, index) => {
+                html += `
+                <div class="border-2 border-gray-100 rounded-xl p-6 hover:shadow-lg transition-all bg-white" id="qbox-${index}">
+                    <p class="font-bold text-gray-800 text-xl mb-4 leading-relaxed"><span class="text-blue-600 mr-2">${index + 1}.</span> ${q.q}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        ${Object.keys(q.options).map(key => `
+                            <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors duration-200 group" id="label-${index}-${key}">
+                                <div class="relative flex items-center">
+                                    <input type="radio" name="q${index}" value="${key}" class="w-5 h-5 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                </div>
+                                <span class="ml-3 text-gray-700 font-medium text-lg group-hover:text-blue-700">${key.toUpperCase()}) ${q.options[key]}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div id="feedback-${index}" class="hidden"></div>
+                </div>
+                `;
+            });
+            quizForm.innerHTML = html;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitQuiz(null);
+                    return;
+                }
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                if (timeLeft < 300) { // Red warning last 5 mins
+                    timerDisplay.classList.add('text-red-600', 'bg-red-50', 'border-red-500');
+                    timerDisplay.classList.remove('text-blue-800', 'border-blue-600');
+                }
+            }, 1000);
+        }
+
+        function submitQuiz(e) {
+            if (e) e.preventDefault();
+            if (isSubmitted) return;
+            isSubmitted = true;
+            clearInterval(timerInterval);
+
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.innerText = "जमा हो गया (Submitted)";
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            let score = 0;
+            const formData = new FormData(quizForm);
+
+            questions.forEach((q, index) => {
+                const selected = formData.get(`q${index}`);
+                const feedbackDiv = document.getElementById(`feedback-${index}`);
+                
+                // Disable inputs
+                const inputs = document.getElementsByName(`q${index}`);
+                inputs.forEach(input => input.disabled = true);
+
+                let isCorrect = false;
+                if (selected === q.correct) {
+                    score++;
+                    isCorrect = true;
+                }
+
+                // Show feedback text
+                feedbackDiv.classList.remove('hidden');
+                feedbackDiv.classList.add('correct-answer-box');
+                feedbackDiv.innerHTML = `<span class="correct-text">सही उत्तर: <span class="uppercase ml-2">${q.correct}</span>) ${q.options[q.correct]}</span>`;
+
+                // Highlight Logic
+                if (selected) {
+                    const selectedLabel = document.getElementById(`label-${index}-${selected}`);
+                    if (isCorrect) {
+                        selectedLabel.classList.add('user-correct');
+                    } else {
+                        selectedLabel.classList.add('user-wrong');
+                    }
+                }
+                
+                // Always show green on correct answer
+                if (!isCorrect) {
+                     const correctLabel = document.getElementById(`label-${index}-${q.correct}`);
+                     correctLabel.classList.add('user-correct');
+                }
+            });
+
+            // Show Result Header
+            const resultHeader = document.getElementById('resultHeader');
+            resultHeader.classList.remove('hidden');
+            document.getElementById('scoreText').innerText = `${studentName}, आपका स्कोर: ${score} / 60`;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // CSV Download
+            generateCSV(studentName, score);
+        }
+
+        function generateCSV(name, score) {
+            const date = new Date().toLocaleString('hi-IN');
+            // Add BOM for Excel
+            const csvContent = `\uFEFFStudent Name,Score,Total Questions,Date\n"${name}",${score},60,"${date}"`;
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            link.setAttribute("download", "result.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Prevent Right Click
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Prevent typical copy shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'p')) {
+                e.preventDefault();
+            }
+        });
+
+    </script>
+</body>
+</html>
