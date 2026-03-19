@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCC Project Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #0f172a;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="text-slate-200 min-h-screen p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-white mb-2">NCC Project Links</h1>
+            <p class="text-slate-400">सभी HTML फाइलों की सूची यहाँ दी गई है</p>
+            <div class="h-1 w-24 bg-blue-500 mx-auto mt-4 rounded-full"></div>
+        </header>
+
+        <!-- Search/Filter Placeholder (UI only) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Category: About NCC -->
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-blue-400">
+                    <i class="fas fa-info-circle"></i> About NCC
+                </h2>
+                <div class="space-y-3">
+                    <a href="aboutncc1.html" class="block p-3 bg-slate-700 rounded-lg hover:bg-blue-600 transition-colors flex justify-between items-center group">
+                        <span>About NCC 1</span>
+                        <i class="fas fa-arrow-right text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                    <a href="aboutncc2.html" class="block p-3 bg-slate-700 rounded-lg hover:bg-blue-600 transition-colors flex justify-between items-center group">
+                        <span>About NCC 2</span>
+                        <i class="fas fa-arrow-right text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Category: General -->
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-green-400">
+                    <i class="fas fa-book"></i> General Knowledge
+                </h2>
+                <div class="space-y-3">
+                    <a href="general1.html" class="block p-3 bg-slate-700 rounded-lg hover:bg-green-600 transition-colors flex justify-between items-center group">
+                        <span>General 1</span>
+                        <i class="fas fa-arrow-right text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                    <a href="general2.html" class="block p-3 bg-slate-700 rounded-lg hover:bg-green-600 transition-colors flex justify-between items-center group">
+                        <span>General 2</span>
+                        <i class="fas fa-arrow-right text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Category: Health -->
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-red-400">
+                    <i class="fas fa-heartbeat"></i> Health & Hygiene
+                </h2>
+                <div class="space-y-3">
+                    <a href="health1.html" class="block p-3 bg-slate-700 rounded-lg hover:bg-red-600 transition-colors flex justify-between items-center group">
+                        <span>Health 1</span>
+                        <i class="fas fa-arrow-right text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                    <a href="health2.html" class="block p-3 bg-slate-700 rounded-lg hover:bg-red-600 transition-colors flex justify-between items-center group">
+                        <span>Health 2</span>
+                        <i class="fas fa-arrow-right text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Category: Indian -->
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-orange-400">
+                    <i class="fas fa-flag"></i> Indian Heritage
+                </h2>
+                <div class="space-y-3">
+                    <a href="indian1.html" class="block p-3 bg-slate-700 rounded-lg hover:bg-orange-600 transition-colors flex justify-between items-center group">
+                        <span>Indian 1</span>
+                        <i class="fas fa-arrow-right text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                    <a href="indian2.html" class="block p-3 bg-slate-700 rounded-lg hover:bg-orange-600 transition-colors flex justify-between items-center group">
+                        <span>Indian 2</span>
+                        <i class="fas fa-arrow-right text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Category: Leader -->
+            <div class="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl md:col-span-2">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-purple-400">
+                    <i class="fas fa-user-tie"></i> Leadership
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <a href="leader1.html" class="block p-3 bg-slate-700 rounded-lg hover:bg-purple-600 transition-colors flex justify-between items-center group">
+                        <span>Leader 1</span>
+                        <i class="fas fa-arrow-right text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                    <a href="leader2.html" class="block p-3 bg-slate-700 rounded-lg hover:bg-purple-600 transition-colors flex justify-between items-center group">
+                        <span>Leader 2</span>
+                        <i class="fas fa-arrow-right text-sm opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-16 text-center text-slate-500 text-sm">
+            <p>&copy; 2024 NCC Project Repository. All files linked.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
