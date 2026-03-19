@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>भारतीय सेना का इतिहास (सेट 2) - Indian Army History Quiz</title>
+    <style>
+        :root {
+            --primary: #3f6212; /* Dark Olive Green */
+            --secondary: #27272a; /* Dark Gray / Black */
+            --bg: #f4f4f5; /* Light Gray Background */
+            --text: #18181b; 
+            --white: #ffffff;
+            --accent: #d97706; /* Military Gold/Brass */
+            --correct: #dcfce7;
+            --correct-border: #16a34a;
+            --wrong: #fee2e2;
+            --wrong-border: #dc2626;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            /* Disable text selection for security */
+            user-select: none; 
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Fixed Timer Bar */
+        .timer-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: var(--secondary);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 1000;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 90px auto 40px;
+            background: var(--white);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(63, 98, 18, 0.15);
+            border-top: 5px solid var(--primary);
+        }
+
+        /* Login Screen */
+        #login-screen {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 10px; font-size: 2.2rem; text-transform: uppercase;}
+        .subtitle { color: #52525b; margin-bottom: 30px; font-size: 1.15rem; font-weight: 500;}
+
+        input[type="text"] {
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus { border-color: var(--primary); }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1.15rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.2s;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(63, 98, 18, 0.3);
+            text-transform: uppercase;
+        }
+        .btn:hover { background-color: var(--accent); color: white;}
+
+        /* Quiz Section */
+        #quiz-section { display: none; }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .q-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: #18181b;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fafafa;
+            font-size: 1.05rem;
+        }
+
+        label:hover { background-color: #f4f4f5; border-color: #a1a1aa; }
+
+        input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: var(--primary);
+        }
+
+        /* Results */
+        #result-section {
+            display: none;
+            text-align: center;
+        }
+
+        .score-box {
+            background: var(--secondary);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 15px rgba(39, 39, 42, 0.3);
+            border: 2px solid var(--accent);
+        }
+        .score-val { font-size: 4rem; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); color: var(--accent); }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: none;
+            text-align: left;
+            font-size: 1.05rem;
+        }
+        .feedback.correct { background: var(--correct); color: #166534; border: 1px solid var(--correct-border); }
+        .feedback.wrong { background: var(--wrong); color: #991b1b; border: 1px solid var(--wrong-border); }
+
+        .user-wrong { background-color: var(--wrong) !important; border-color: var(--wrong-border) !important; }
+        .actual-correct { background-color: var(--correct) !important; border-color: var(--correct-border) !important; font-weight: bold; }
+
+    </style>
+</head>
+<body oncontextmenu="return false;"> <div class="timer-bar">
+        समय शेष: <span id="timer" style="margin-left: 15px; color: #fbbf24;">40:00</span>
+    </div>
+
+    <div class="container">
+        
+        <div id="login-screen">
+            <h1>भारतीय सेना का इतिहास - सेट 2</h1>
+            <p class="subtitle">युद्ध, ऑपरेशन्स और सैन्य संरचना (40 प्रश्न)</p>
+            <input type="text" id="candidateName" placeholder="अपना पूरा नाम दर्ज करें" autocomplete="off">
+            <br>
+            <button class="btn" onclick="startQuiz()">क्विज़ शुरू करें (Start Quiz)</button>
+        </div>
+
+        <div id="quiz-section">
+            <form id="quiz-form">
+                </form>
+            <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+                <button type="button" class="btn" id="submitBtn" onclick="submitQuiz()">उत्तर जमा करें (Submit Test)</button>
+            </div>
+        </div>
+
+        <div id="result-section">
+            <div class="score-box">
+                <h2>आपका परिणाम (Result)</h2>
+                <div class="score-val" id="final-score">0 / 40</div>
+                <p id="candidate-display" style="font-size: 1.3rem; margin-top: 15px; opacity: 0.9;"></p>
+                <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">विस्तृत विश्लेषण के लिए Result.csv डाउनलोड हो रहा है...</p>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    // --- Data: 40 MCQs (Indian Army History - Set 2) ---
+    // Distribution: Exactly 10 A, 10 B, 10 C, 10 D.
+    const quizData = [
+        // Set A (Correct Answer: A) - 10 Questions
+        { q: "1947-48 के भारत-पाक युद्ध में 'बडगाम की लड़ाई' के नायक कौन थे?", a: "A", opts: { A: "मेजर सोमनाथ शर्मा", B: "कैप्टन विक्रम बत्रा", C: "मेजर शैतान सिंह", D: "सूबेदार जोगिंदर सिंह" } },
+        { q: "भारतीय सेना की पहली पैराशूट बटालियन कब बनाई गई थी?", a: "A", opts: { A: "1941", B: "1947", C: "1950", D: "1965" } },
+        { q: "'ऑपरेशन रक्षक' का मुख्य उद्देश्य क्या था?", a: "A", opts: { A: "जम्मू-कश्मीर और पंजाब में आतंकवाद विरोधी अभियान", B: "सियाचिन ग्लेशियर पर कब्ज़ा", C: "श्रीलंका में शांति स्थापित करना", D: "मालदीव को बचाना" } },
+        { q: "भारतीय सेना की सबसे पुरानी रेजीमेंट 'मद्रास रेजीमेंट' का गठन किस वर्ष हुआ था?", a: "A", opts: { A: "1758", B: "1857", C: "1947", D: "1895" } },
+        { q: "'ऑपरेशन स्माइलिंग बुद्धा' (1974) की सुरक्षा की जिम्मेदारी मुख्य रूप से किसे सौंपी गई थी?", a: "A", opts: { A: "भारतीय सेना", B: "सीआरपीएफ (CRPF)", C: "भारतीय नौसेना", D: "सीमा सुरक्षा बल (BSF)" } },
+        { q: "1971 के युद्ध में 'बैटल ऑफ लोंगेवाला' में भारतीय सेना का नेतृत्व किसने किया था?", a: "A", opts: { A: "मेजर कुलदीप सिंह चांदपुरी", B: "जनरल जगजीत सिंह अरोड़ा", C: "ब्रिगेडियर उस्मान", D: "मेजर होशियार सिंह" } },
+        { q: "1962 के युद्ध में रेजांग ला की लड़ाई में किस रेजीमेंट ने अदम्य साहस दिखाया था?", a: "A", opts: { A: "13 कुमाऊं रेजीमेंट", B: "सिख रेजीमेंट", C: "राजपूताना राइफल्स", D: "बिहार रेजीमेंट" } },
+        { q: "भारतीय सेना का 'कमांडो स्कूल' (Commando School/JLW) कहाँ स्थित है?", a: "A", opts: { A: "बेलगाम (Belagavi)", B: "पुणे", C: "देहरादून", D: "महू" } },
+        { q: "संयुक्त राष्ट्र शांति अभियानों (UN Peacekeeping) में सेना भेजने के मामले में भारत का स्थान विश्व में सामान्यतः कौन सा रहता है?", a: "A", opts: { A: "शीर्ष देशों में (Top 3)", B: "सबसे निचले स्थान पर", C: "भारत सेना नहीं भेजता", D: "15वें स्थान के आसपास" } },
+        { q: "भारतीय सेना की किस टुकड़ी को 'स्नो लेपर्ड' (Snow Leopard) के नाम से भी जाना जाता है?", a: "A", opts: { A: "लद्दाख स्काउट्स", B: "गोरखा राइफल्स", C: "डोगरा रेजीमेंट", D: "पैरा एसएफ" } },
+
+        // Set B (Correct Answer: B) - 10 Questions
+        { q: "'ऑपरेशन पवन' (1987) भारतीय सेना द्वारा कहाँ चलाया गया था?", a: "B", opts: { A: "मालदीव", B: "श्रीलंका", C: "म्यांमार", D: "नेपाल" } },
+        { q: "1999 के कारगिल युद्ध में 'टाइगर हिल' पर कब्ज़ा करने में किन रेजीमेंट्स की प्रमुख भूमिका थी?", a: "B", opts: { A: "पंजाब और मद्रास रेजीमेंट", B: "18 ग्रेनेडियर्स और 8 सिख", C: "राजपूत और डोगरा", D: "जाट और कुमाऊं रेजीमेंट" } },
+        { q: "भारतीय सेना में महिलाओं का पहला बैच (शॉर्ट सर्विस कमीशन) किस वर्ष शामिल हुआ था?", a: "B", opts: { A: "1985", B: "1992", C: "2001", D: "2010" } },
+        { q: "शांति काल के दौरान दिया जाने वाला भारत का सर्वोच्च सैन्य वीरता पुरस्कार कौन सा है?", a: "B", opts: { A: "परमवीर चक्र", B: "अशोक चक्र", C: "कीर्ति चक्र", D: "शौर्य चक्र" } },
+        { q: "'आर्मी मेडिकल कोर' (AMC) का आदर्श वाक्य क्या है?", a: "B", opts: { A: "सेवा परमो धर्म:", B: "सर्वे सन्तु निरामया", C: "वीर भोग्या वसुंधरा", D: "सर्वत्र विजय" } },
+        { q: "1971 के युद्ध के बाद पाकिस्तानी सेना के कितने सैनिकों ने भारत के सामने ऐतिहासिक रूप से आत्मसमर्पण किया था?", a: "B", opts: { A: "लगभग 50,000", B: "लगभग 93,000", C: "लगभग 1,20,000", D: "लगभग 30,000" } },
+        { q: "भारतीय सेना की 'पैरा स्पेशल फोर्सेस' (Para SF) का गठन किस वर्ष किया गया था?", a: "B", opts: { A: "1947", B: "1966", C: "1984", D: "1999" } },
+        { q: "भारतीय सेना का 'ऑपरेशन कैक्टस लिली' किस युद्ध से संबंधित था?", a: "B", opts: { A: "1962 का भारत-चीन युद्ध", B: "1971 का भारत-पाक युद्ध", C: "कारगिल युद्ध", D: "1948 का कश्मीर युद्ध" } },
+        { q: "'आर्मी एयर डिफेंस कॉलेज' (Army Air Defence College) कहाँ स्थित है?", a: "B", opts: { A: "ग्वालियर", B: "गोपालपुर (ओडिशा)", C: "जोधपुर", D: "अहमदनगर" } },
+        { q: "भारतीय सेना की 'स्ट्राइक कोर' (Strike Corps) की मुख्य भूमिका क्या होती है?", a: "B", opts: { A: "केवल रसद (Supplies) पहुँचाना", B: "दुश्मन के इलाके में गहराई तक हमला करना (Offensive role)", C: "केवल अपनी सीमा की रक्षा करना (Defensive)", D: "शांति वार्ता करना" } },
+
+        // Set C (Correct Answer: C) - 10 Questions
+        { q: "'आर्मी वार कॉलेज' (Army War College) भारत में कहाँ स्थित है?", a: "C", opts: { A: "देहरादून", B: "खड़कवासला", C: "महू (Mhow)", D: "चेन्नई" } },
+        { q: "1965 के भारत-पाक युद्ध में 'असल उत्तर' (Battle of Asal Uttar) की लड़ाई क्यों प्रसिद्ध है?", a: "C", opts: { A: "सबसे बड़े हवाई हमले के लिए", B: "नौसेना के हमले के लिए", C: "द्वितीय विश्व युद्ध के बाद सबसे बड़े टैंक युद्धों में से एक होने के कारण", D: "यह लड़ाई बिना गोली चले जीती गई थी" } },
+        { q: "भारतीय सेना में 'सूबेदार मेजर' रैंक किस श्रेणी (Category) में आता है?", a: "C", opts: { A: "कमीशंड ऑफिसर (Commissioned Officer)", B: "नॉन-कमीशंड ऑफिसर (NCO)", C: "जूनियर कमीशंड ऑफिसर (JCO)", D: "सिपाही (Sepoy)" } },
+        { q: "भारत के पहले चीफ ऑफ डिफेंस स्टाफ (CDS) जनरल बिपिन रावत भारतीय सेना की किस रेजीमेंट से थे?", a: "C", opts: { A: "पैराशूट रेजीमेंट", B: "मराठा लाइट इन्फैंट्री", C: "11 गोरखा राइफल्स", D: "राजपूताना राइफल्स" } },
+        { q: "'ऑपरेशन पोलो' (1948) का नेतृत्व किस भारतीय सैन्य अधिकारी ने किया था?", a: "C", opts: { A: "जनरल सैम मानेकशॉ", B: "फील्ड मार्शल करियप्पा", C: "मेजर जनरल जे. एन. चौधरी", D: "ब्रिगेडियर उस्मान" } },
+        { q: "1984 में अमृतसर के स्वर्ण मंदिर में चलाए गए सेना के अभियान का कोड नाम क्या था?", a: "C", opts: { A: "ऑपरेशन विजय", B: "ऑपरेशन रक्षक", C: "ऑपरेशन ब्लू स्टार", D: "ऑपरेशन मेघदूत" } },
+        { q: "सीमावर्ती इलाकों में सड़कें बनाने वाले 'बॉर्डर रोड्स आर्गेनाईजेशन' (BRO) की स्थापना किस वर्ष हुई थी?", a: "C", opts: { A: "1947", B: "1950", C: "1960", D: "1975" } },
+        { q: "भारतीय सेना का आर्टिलरी स्कूल (School of Artillery) कहाँ स्थित है?", a: "C", opts: { A: "गया", B: "बेंगलुरु", C: "देवलाली (महाराष्ट्र)", D: "शिमला" } },
+        { q: "किस युद्ध के बाद 'लाइन ऑफ कंट्रोल' (LoC) को आधिकारिक रूप से मान्यता दी गई थी?", a: "C", opts: { A: "1948 युद्ध", B: "1962 युद्ध", C: "1971 युद्ध (शिमला समझौता 1972)", D: "1999 कारगिल युद्ध" } },
+        { q: "1971 के युद्ध में भारतीय सेना की पूर्वी कमांड के जीओसी-इन-सी (GOC-in-C) कौन थे, जिन्होंने पाकिस्तान का सरेंडर लिया था?", a: "C", opts: { A: "जनरल के. एस. थिमय्या", B: "लेफ्टिनेंट जनरल सगत सिंह", C: "लेफ्टिनेंट जनरल जगजीत सिंह अरोड़ा", D: "मेजर जनरल इयान कार्डोजो" } },
+
+        // Set D (Correct Answer: D) - 10 Questions
+        { q: "1962 के भारत-चीन युद्ध के दौरान भारत के थल सेनाध्यक्ष (Army Chief) कौन थे?", a: "D", opts: { A: "जनरल सैम मानेकशॉ", B: "जनरल के. एस. थिमय्या", C: "जनरल जे. एन. चौधरी", D: "जनरल प्राण नाथ थापर" } },
+        { q: "सियाचिन ग्लेशियर में तैनात होने वाली भारतीय सेना की पहली महिला चिकित्सा अधिकारी (Medical Officer) कौन बनीं?", a: "D", opts: { A: "कैप्टन शालिजा धामी", B: "पुनीता अरोड़ा", C: "पद्मावती बंदोपाध्याय", D: "कैप्टन गीतिका कौल" } },
+        { q: "हॉकी के जादूगर 'मेजर ध्यानचंद' भारतीय सेना की किस रेजीमेंट के सैनिक थे?", a: "D", opts: { A: "सिख रेजीमेंट", B: "राजपूत रेजीमेंट", C: "मद्रास रेजीमेंट", D: "पंजाब रेजीमेंट" } },
+        { q: "भारतीय सेना की 'मैकेनाइज्ड इन्फैंट्री रेजीमेंट' (Mechanised Infantry Regiment) का मुख्यालय कहाँ है?", a: "D", opts: { A: "पुणे", B: "लखनऊ", C: "चंडीगढ़", D: "अहमदनगर" } },
+        { q: "'ऑपरेशन ऑल आउट' (Operation All Out) भारतीय सेना द्वारा आतंकवादियों के खिलाफ कहाँ चलाया गया है?", a: "D", opts: { A: "पूर्वोत्तर भारत", B: "पंजाब", C: "राजस्थान बॉर्डर", D: "जम्मू और कश्मीर" } },
+        { q: "शांति काल में वीरता के लिए दिया जाने वाला भारत का 'दूसरा' सबसे बड़ा पुरस्कार कौन सा है?", a: "D", opts: { A: "परमवीर चक्र", B: "महावीर चक्र", C: "अशोक चक्र", D: "कीर्ति चक्र" } },
+        { q: "भारतीय सेना में शामिल पूरी तरह से स्वदेशी मुख्य युद्धक टैंक (Main Battle Tank) का नाम क्या है?", a: "D", opts: { A: "टी-90 भीष्म", B: "टी-72 अजेय", C: "विजयांत", D: "अर्जुन (Arjun)" } },
+        { q: "भारत में कुल कितने स्थानों पर 'राष्ट्रीय मिलिट्री स्कूल' (Rashtriya Military Schools) स्थित हैं?", a: "D", opts: { A: "2", B: "10", C: "7", D: "5" } },
+        { q: "भारत और फ्रांस की थल सेनाओं के बीच होने वाले संयुक्त सैन्य अभ्यास का क्या नाम है?", a: "D", opts: { A: "वरुण", B: "गरुड़", C: "सूर्य किरण", D: "शक्ति (Shakti)" } },
+        { q: "1947 के युद्ध में पाकिस्तानी घुसपैठियों को रोकने के लिए एयरलिफ्ट होकर कश्मीर में प्रवेश करने वाली पहली भारतीय टुकड़ी कौन सी थी?", a: "D", opts: { A: "मराठा लाइट इन्फैंट्री", B: "गोरखा राइफल्स", C: "कुमाऊं रेजीमेंट", D: "1 सिख रेजीमेंट (1 Sikh)" } }
+    ];
+
+    // Function to randomly shuffle the questions array
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    let shuffledQuestions = [];
+    let timeLeft = 40 * 60; // 40 Minutes
+    let timerInterval;
+
+    // Initialize Quiz
+    function startQuiz() {
+        const nameInput = document.getElementById('candidateName');
+        if (!nameInput.value.trim()) {
+            alert("क्विज़ शुरू करने से पहले कृपया अपना नाम दर्ज करें।");
+            return;
+        }
+
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        
+        shuffledQuestions = shuffle([...quizData]);
+        renderQuestions();
+        startTimer();
+    }
+
+    // Render Questions in the DOM
+    function renderQuestions() {
+        const form = document.getElementById('quiz-form');
+        form.innerHTML = '';
+
+        shuffledQuestions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            const qTitle = document.createElement('div');
+            qTitle.className = 'q-text';
+            qTitle.innerText = `प्र. ${index + 1}: ${q.q}`;
+            card.appendChild(qTitle);
+
+            const optsDiv = document.createElement('div');
+            optsDiv.className = 'options';
+
+            for (const [key, value] of Object.entries(q.opts)) {
+                const label = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q${index}`;
+                radio.value = key;
+                
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(` ${value}`)); 
+                optsDiv.appendChild(label);
+            }
+            card.appendChild(optsDiv);
+
+            const feedback = document.createElement('div');
+            feedback.id = `feedback-${index}`;
+            feedback.className = 'feedback';
+            card.appendChild(feedback);
+
+            form.appendChild(card);
+        });
+    }
+
+    // Timer Logic
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer');
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            timerDisplay.innerText = `${minutes}:${seconds}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    // Submit and Evaluate Logic
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').innerText = "परीक्षा समाप्त (Submitted)";
+        document.getElementById('submitBtn').style.opacity = "0.5";
+
+        let score = 0;
+        let candidateName = document.getElementById('candidateName').value;
+        const total = shuffledQuestions.length;
+
+        shuffledQuestions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            const card = feedbackDiv.parentElement;
+            const options = card.querySelectorAll('label');
+
+            let userAnswer = selected ? selected.value : null;
+
+            // Lock inputs
+            const inputs = card.querySelectorAll('input');
+            inputs.forEach(inp => inp.disabled = true);
+
+            if (userAnswer === q.a) {
+                score++;
+                feedbackDiv.innerHTML = `✅ सही उत्तर!`;
+                feedbackDiv.className = 'feedback correct';
+                if(selected) selected.parentElement.classList.add('actual-correct');
+            } else {
+                feedbackDiv.innerHTML = `❌ गलत उत्तर। सही विकल्प: <b>${q.opts[q.a]}</b>`;
+                feedbackDiv.className = 'feedback wrong';
+                
+                if (selected) selected.parentElement.classList.add('user-wrong');
+                
+                // Show actual correct option
+                options.forEach(lbl => {
+                    if (lbl.querySelector('input').value === q.a) {
+                        lbl.classList.add('actual-correct');
+                    }
+                });
+            }
+            feedbackDiv.style.display = 'block';
+        });
+
+        // Show Result Screen
+        document.getElementById('quiz-section').style.display = 'block';
+        document.getElementById('result-section').style.display = 'block';
+        
+        const container = document.querySelector('.container');
+        const resSec = document.getElementById('result-section');
+        const loginSec = document.getElementById('login-screen');
+        container.insertBefore(resSec, loginSec.nextSibling);
+
+        document.getElementById('final-score').innerText = `${score} / ${total}`;
+        document.getElementById('candidate-display').innerText = `परीक्षार्थी: ${candidateName}`;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        downloadCSV(candidateName, score, total);
+    }
+
+    // Generate CSV for offline tracking
+    function downloadCSV(name, score, total) {
+        const date = new Date().toLocaleString('en-IN');
+        const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
+            + "Candidate Name,Score,Total Questions,Topic,Date\n"
+            + `"${name}",${score},${total},"Indian Army History - Set 2","${date}"`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `Army_History_Set2_${name.replace(/\s+/g, '_')}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Security Features: Disable Right Click and Developer Tools shortcuts
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+        if(e.keyCode == 123) return false; // F12
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U
+    }
+</script>
+</body>
+</html>
