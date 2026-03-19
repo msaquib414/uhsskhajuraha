@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>स्वास्थ्य और स्वच्छता (Set 2) - Health & Hygiene Quiz</title>
+    <style>
+        :root {
+            --primary: #0891b2; /* Cyan 600 */
+            --secondary: #0e7490; /* Cyan 700 */
+            --bg: #ecfeff; /* Cyan 50 */
+            --text: #0f172a; 
+            --white: #ffffff;
+            --correct: #cffafe;
+            --correct-border: #06b6d4;
+            --wrong: #fee2e2;
+            --wrong-border: #ef4444;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            /* Disable text selection for security */
+            user-select: none; 
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Fixed Timer Bar */
+        .timer-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #164e63;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 90px auto 40px;
+            background: var(--white);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(8, 145, 178, 0.15);
+        }
+
+        /* Login Screen */
+        #login-screen {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 10px; font-size: 2.2rem;}
+        .subtitle { color: #475569; margin-bottom: 30px; font-size: 1.15rem; font-weight: 500;}
+
+        input[type="text"] {
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus { border-color: var(--primary); }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1.15rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.2s;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(8, 145, 178, 0.3);
+        }
+        .btn:hover { background-color: var(--secondary); }
+
+        /* Quiz Section */
+        #quiz-section { display: none; }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--primary);
+            border-radius: 8px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .q-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8fafc;
+            font-size: 1.05rem;
+        }
+
+        label:hover { background-color: #f1f5f9; border-color: #94a3b8; }
+
+        input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: var(--primary);
+        }
+
+        /* Results */
+        #result-section {
+            display: none;
+            text-align: center;
+        }
+
+        .score-box {
+            background: var(--primary);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 15px rgba(8, 145, 178, 0.2);
+        }
+        .score-val { font-size: 4rem; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); color: #ecfeff; }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: none;
+            text-align: left;
+            font-size: 1.05rem;
+        }
+        .feedback.correct { background: var(--correct); color: #0f766e; border: 1px solid var(--correct-border); }
+        .feedback.wrong { background: var(--wrong); color: #b91c1c; border: 1px solid var(--wrong-border); }
+
+        .user-wrong { background-color: var(--wrong) !important; border-color: var(--wrong-border) !important; }
+        .actual-correct { background-color: var(--correct) !important; border-color: var(--correct-border) !important; font-weight: bold; }
+
+    </style>
+</head>
+<body oncontextmenu="return false;"> <div class="timer-bar">
+        समय शेष: <span id="timer" style="margin-left: 15px; color: #67e8f9;">40:00</span>
+    </div>
+
+    <div class="container">
+        
+        <div id="login-screen">
+            <h1>स्वास्थ्य और स्वच्छता - सेट 2</h1>
+            <p class="subtitle">Health & Hygiene Awareness (40 Questions)</p>
+            <input type="text" id="candidateName" placeholder="अपना पूरा नाम दर्ज करें" autocomplete="off">
+            <br>
+            <button class="btn" onclick="startQuiz()">क्विज़ शुरू करें (Start Quiz)</button>
+        </div>
+
+        <div id="quiz-section">
+            <form id="quiz-form">
+                </form>
+            <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+                <button type="button" class="btn" id="submitBtn" onclick="submitQuiz()">उत्तर जमा करें (Submit Test)</button>
+            </div>
+        </div>
+
+        <div id="result-section">
+            <div class="score-box">
+                <h2>आपका परिणाम</h2>
+                <div class="score-val" id="final-score">0 / 40</div>
+                <p id="candidate-display" style="font-size: 1.3rem; margin-top: 15px; opacity: 0.9;"></p>
+                <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">विस्तृत विश्लेषण के लिए Result.csv डाउनलोड हो रहा है...</p>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    // --- Data: 40 MCQs (Health & Hygiene Set 2) ---
+    // Distribution: Exactly 10 A, 10 B, 10 C, 10 D.
+    const quizData = [
+        // Set A (Correct Answer: A) - 10 Questions
+        { q: "विश्व शौचालय दिवस (World Toilet Day) कब मनाया जाता है?", a: "A", opts: { A: "19 नवंबर", B: "15 अगस्त", C: "2 अक्टूबर", D: "5 सितंबर" } },
+        { q: "टाइफाइड बुखार शरीर के किस अंग को मुख्य रूप से प्रभावित करता है?", a: "A", opts: { A: "आंत (Intestines)", B: "फेफड़े", C: "मस्तिष्क", D: "हृदय" } },
+        { q: "जल शोधन (Water Purification) के लिए आमतौर पर किस रसायन का उपयोग किया जाता है?", a: "A", opts: { A: "क्लोरीन (Chlorine)", B: "सोडियम", C: "नाइट्रोजन", D: "हीलियम" } },
+        { q: "विटामिन डी का सबसे अच्छा प्राकृतिक स्रोत क्या है?", a: "A", opts: { A: "सूर्य का प्रकाश", B: "हरी सब्जियां", C: "सेब", D: "चावल" } },
+        { q: "विश्व रक्तदाता दिवस (World Blood Donor Day) कब मनाया जाता है?", a: "A", opts: { A: "14 जून", B: "1 मई", C: "10 दिसंबर", D: "8 मार्च" } },
+        { q: "रेबीज (Rabies) बीमारी मुख्य रूप से किसके काटने से फैलती है?", a: "A", opts: { A: "संक्रमित कुत्ता या जानवर", B: "मच्छर", C: "मकड़ी", D: "सांप" } },
+        { q: "हमारे शरीर में रोगों से लड़ने की क्षमता को क्या कहते हैं?", a: "A", opts: { A: "रोग प्रतिरोधक क्षमता (Immunity)", B: "पाचन तंत्र", C: "श्वसन तंत्र", D: "रक्तचाप" } },
+        { q: "कुपोषण (Malnutrition) से बचने के लिए किस प्रकार का आहार लेना चाहिए?", a: "A", opts: { A: "संतुलित आहार (Balanced Diet)", B: "फास्ट फूड", C: "केवल फल", D: "केवल पानी" } },
+        { q: "पीलिया (Jaundice) रोग में शरीर का कौन सा अंग सबसे अधिक प्रभावित होता है?", a: "A", opts: { A: "यकृत (Liver)", B: "गुर्दे (Kidneys)", C: "आंखें", D: "त्वचा" } },
+        { q: "मानसिक स्वास्थ्य को बेहतर बनाने के लिए कौन सी आदत फायदेमंद है?", a: "A", opts: { A: "पर्याप्त नींद और ध्यान (Meditation)", B: "रात भर जागना", C: "जंक फूड खाना", D: "लगातार तनाव लेना" } },
+
+        // Set B (Correct Answer: B) - 10 Questions
+        { q: "हैजा (Cholera) फैलने का मुख्य कारण क्या है?", a: "B", opts: { A: "हवा", B: "दूषित जल और भोजन", C: "मच्छर", D: "शारीरिक संपर्क" } },
+        { q: "बच्चों को दी जाने वाली बीसीजी (BCG) वैक्सीन किस बीमारी से बचाती है?", a: "B", opts: { A: "पोलियो", B: "तपेदिक (टीबी - TB)", C: "खसरा", D: "टेटनस" } },
+        { q: "दांतों और मसूड़ों को स्वस्थ रखने के लिए किस विटामिन की सबसे अधिक आवश्यकता होती है?", a: "B", opts: { A: "विटामिन ए", B: "विटामिन सी", C: "विटामिन डी", D: "विटामिन ई" } },
+        { q: "भोजन को अच्छी तरह चबाकर खाने से क्या फायदा होता है?", a: "B", opts: { A: "वजन बढ़ता है", B: "पाचन (Digestion) आसान होता है", C: "दांत खराब होते हैं", D: "भूख कम लगती है" } },
+        { q: "कच्चे फलों और सब्जियों को खाने से पहले क्या करना चाहिए?", a: "B", opts: { A: "सीधे खा लेना चाहिए", B: "साफ पानी से अच्छी तरह धोना चाहिए", C: "कपड़े से पोंछना चाहिए", D: "धूप में सुखाना चाहिए" } },
+        { q: "हमारे शरीर के लिए सबसे आवश्यक तरल पदार्थ कौन सा है?", a: "B", opts: { A: "चाय", B: "शुद्ध जल (Water)", C: "कोल्ड ड्रिंक", D: "जूस" } },
+        { q: "'स्वच्छ भारत अभियान' का मुख्य उद्देश्य क्या है?", a: "B", opts: { A: "पेड़ लगाना", B: "खुले में शौच मुक्त और स्वच्छ भारत बनाना", C: "जल संरक्षण", D: "वायु प्रदूषण कम करना" } },
+        { q: "नींद की कमी (Lack of sleep) से शरीर पर क्या प्रभाव पड़ता है?", a: "B", opts: { A: "ऊर्जा बढ़ती है", B: "रोग प्रतिरोधक क्षमता कमजोर होती है और तनाव बढ़ता है", C: "पाचन में सुधार होता है", D: "याददाश्त तेज होती है" } },
+        { q: "इनमें से कौन सा रोग हवा के माध्यम से फैलता है?", a: "B", opts: { A: "मलेरिया", B: "इन्फ्लूएंजा (फ्लू)", C: "डेंगू", D: "एड्स" } },
+        { q: "भोजन में फाइबर (Fiber) का मुख्य कार्य क्या है?", a: "B", opts: { A: "ऊर्जा देना", B: "कब्ज रोकना और पाचन तंत्र को साफ रखना", C: "रक्त बनाना", D: "हड्डियां मजबूत करना" } },
+
+        // Set C (Correct Answer: C) - 10 Questions
+        { q: "सामान्य मनुष्य का रक्तचाप (Blood Pressure) लगभग कितना होना चाहिए?", a: "C", opts: { A: "140/90 mmHg", B: "100/60 mmHg", C: "120/80 mmHg", D: "160/100 mmHg" } },
+        { q: "ओज़ोन परत हमें किससे बचाती है?", a: "C", opts: { A: "बारिश से", B: "धूल से", C: "सूर्य की हानिकारक पराबैंगनी (UV) किरणों से", D: "ठंड से" } },
+        { q: "मच्छरों से बचने के लिए सोते समय किस चीज का उपयोग सबसे सुरक्षित है?", a: "C", opts: { A: "धुंआ करना", B: "तेज पंखा चलाना", C: "मच्छरदानी (Mosquito Net) का उपयोग", D: "पानी छिड़कना" } },
+        { q: "कोविड-19 (COVID-19) बीमारी किस वायरस के कारण होती है?", a: "C", opts: { A: "एचआईवी (HIV)", B: "राइनोवायरस", C: "सार्स-कोव-2 (SARS-CoV-2)", D: "इबोला" } },
+        { q: "प्राथमिक उपचार (First Aid) बॉक्स में इनमें से क्या होना अनिवार्य है?", a: "C", opts: { A: "मिठाई", B: "खिलौने", C: "एंटीसेप्टिक क्रीम और पट्टियां", D: "मोबाइल चार्जर" } },
+        { q: "कान की सफाई के लिए क्या इस्तेमाल नहीं करना चाहिए?", a: "C", opts: { A: "साफ सूती कपड़ा", B: "इयर ड्रॉप्स", C: "माचिस की तीली या हेयरपिन", D: "डॉक्टर की सलाह" } },
+        { q: "जल जनित बीमारियों (Waterborne diseases) से बचने का सबसे अच्छा तरीका क्या है?", a: "C", opts: { A: "ठंडा पानी पीना", B: "केवल मीठा पानी पीना", C: "पानी को उबालकर या फिल्टर करके पीना", D: "कम पानी पीना" } },
+        { q: "मोटापे (Obesity) का मुख्य कारण क्या हो सकता है?", a: "C", opts: { A: "ज्यादा पैदल चलना", B: "कम खाना खाना", C: "शारीरिक निष्क्रियता और अत्यधिक कैलोरी का सेवन", D: "ज्यादा पानी पीना" } },
+        { q: "तंबाकू और धूम्रपान से शरीर के किस अंग को सबसे ज्यादा नुकसान पहुँचता है?", a: "C", opts: { A: "आंखें", B: "कान", C: "फेफड़े (Lungs)", D: "पैर" } },
+        { q: "भोजन पकाने के लिए किस प्रकार के तेल का उपयोग स्वास्थ्य के लिए बेहतर माना जाता है?", a: "C", opts: { A: "बार-बार इस्तेमाल किया हुआ तेल", B: "पाम ऑयल", C: "जैतून या सरसों का तेल (सीमित मात्रा में)", D: "डालडा" } },
+
+        // Set D (Correct Answer: D) - 10 Questions
+        { q: "आंखों की रोशनी के लिए कौन सा विटामिन सबसे फायदेमंद है?", a: "D", opts: { A: "विटामिन सी", B: "विटामिन डी", C: "विटामिन के", D: "विटामिन ए" } },
+        { q: "डब्ल्यूएचओ (WHO) का पूर्ण रूप क्या है?", a: "D", opts: { A: "वर्ल्ड हीलिंग ऑर्गनाइजेशन", B: "वर्ल्ड ह्यूमन ऑर्गनाइजेशन", C: "वाइड हेल्थ ऑर्गनाइजेशन", D: "विश्व स्वास्थ्य संगठन (World Health Organization)" } },
+        { q: "डेंगू बुखार के दौरान रक्त में किस चीज की तेजी से कमी हो जाती है?", a: "D", opts: { A: "लाल रक्त कोशिकाएं", B: "श्वेत रक्त कोशिकाएं", C: "प्लाज्मा", D: "प्लेटलेट्स (Platelets)" } },
+        { q: "आयोडीन युक्त नमक खाने की सलाह क्यों दी जाती है?", a: "D", opts: { A: "स्वाद के लिए", B: "प्यास बुझाने के लिए", C: "रक्तचाप बढ़ाने के लिए", D: "घेंघा (Goiter) रोग से बचाव के लिए" } },
+        { q: "व्यायाम करने से पहले 'वार्म-अप' (Warm-up) क्यों जरूरी है?", a: "D", opts: { A: "पसीना लाने के लिए", B: "समय बिताने के लिए", C: "वजन कम करने के लिए", D: "मांसपेशियों को तैयार करने और चोट से बचने के लिए" } },
+        { q: "खुले घाव पर मिट्टी या धूल लगने से किस बीमारी का खतरा सबसे अधिक होता है?", a: "D", opts: { A: "मलेरिया", B: "डेंगू", C: "हैजा", D: "टेटनस (Tetanus)" } },
+        { q: "व्यक्तिगत तौलिया और कंघी साझा करने से क्या हो सकता है?", a: "D", opts: { A: "प्यार बढ़ता है", B: "पैसे बचते हैं", C: "बाल मजबूत होते हैं", D: "त्वचा और बालों के संक्रमण का खतरा बढ़ता है" } },
+        { q: "घर में और आसपास सफाई रखने से मुख्य रूप से क्या फायदा होता है?", a: "D", opts: { A: "मेहमान खुश होते हैं", B: "घर बड़ा लगता है", C: "हवा तेज चलती है", D: "बीमारियों को फैलाने वाले कीटाणु और कीड़े पनप नहीं पाते" } },
+        { q: "फलों और सब्जियों को काटने के बाद धोने से क्या नुकसान होता है?", a: "D", opts: { A: "वे कड़वे हो जाते हैं", B: "वे जल्दी खराब हो जाते हैं", C: "उनका रंग बदल जाता है", D: "पानी में घुलनशील विटामिन नष्ट हो जाते हैं" } },
+        { q: "मानसिक तनाव कम करने का प्राकृतिक तरीका कौन सा है?", a: "D", opts: { A: "सिगरेट पीना", B: "ज्यादा सोना", C: "दूसरों पर गुस्सा करना", D: "प्रकृति के बीच समय बिताना और योग करना" } }
+    ];
+
+    // Function to shuffle questions
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    let shuffledQuestions = [];
+    let timeLeft = 40 * 60; // 40 Minutes
+    let timerInterval;
+
+    // Start Quiz
+    function startQuiz() {
+        const nameInput = document.getElementById('candidateName');
+        if (!nameInput.value.trim()) {
+            alert("क्विज़ शुरू करने से पहले कृपया अपना नाम दर्ज करें।");
+            return;
+        }
+
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        
+        shuffledQuestions = shuffle([...quizData]);
+        renderQuestions();
+        startTimer();
+    }
+
+    // Render Form
+    function renderQuestions() {
+        const form = document.getElementById('quiz-form');
+        form.innerHTML = '';
+
+        shuffledQuestions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            const qTitle = document.createElement('div');
+            qTitle.className = 'q-text';
+            qTitle.innerText = `प्र. ${index + 1}: ${q.q}`;
+            card.appendChild(qTitle);
+
+            const optsDiv = document.createElement('div');
+            optsDiv.className = 'options';
+
+            for (const [key, value] of Object.entries(q.opts)) {
+                const label = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q${index}`;
+                radio.value = key;
+                
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(` ${value}`)); 
+                optsDiv.appendChild(label);
+            }
+            card.appendChild(optsDiv);
+
+            const feedback = document.createElement('div');
+            feedback.id = `feedback-${index}`;
+            feedback.className = 'feedback';
+            card.appendChild(feedback);
+
+            form.appendChild(card);
+        });
+    }
+
+    // Timer Logic
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer');
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            timerDisplay.innerText = `${minutes}:${seconds}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    // Submit and Evaluate
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').innerText = "मूल्यांकन समाप्त (Test Submitted)";
+        document.getElementById('submitBtn').style.opacity = "0.5";
+
+        let score = 0;
+        let candidateName = document.getElementById('candidateName').value;
+        const total = shuffledQuestions.length;
+
+        shuffledQuestions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            const card = feedbackDiv.parentElement;
+            const options = card.querySelectorAll('label');
+
+            let userAnswer = selected ? selected.value : null;
+
+            const inputs = card.querySelectorAll('input');
+            inputs.forEach(inp => inp.disabled = true);
+
+            if (userAnswer === q.a) {
+                score++;
+                feedbackDiv.innerHTML = `✅ बिल्कुल सही उत्तर!`;
+                feedbackDiv.className = 'feedback correct';
+                if(selected) selected.parentElement.classList.add('actual-correct');
+            } else {
+                feedbackDiv.innerHTML = `❌ गलत उत्तर। सही विकल्प: <b>${q.opts[q.a]}</b>`;
+                feedbackDiv.className = 'feedback wrong';
+                
+                if (selected) selected.parentElement.classList.add('user-wrong');
+                
+                options.forEach(lbl => {
+                    if (lbl.querySelector('input').value === q.a) {
+                        lbl.classList.add('actual-correct');
+                    }
+                });
+            }
+            feedbackDiv.style.display = 'block';
+        });
+
+        document.getElementById('quiz-section').style.display = 'block';
+        document.getElementById('result-section').style.display = 'block';
+        
+        const container = document.querySelector('.container');
+        const resSec = document.getElementById('result-section');
+        const loginSec = document.getElementById('login-screen');
+        container.insertBefore(resSec, loginSec.nextSibling);
+
+        document.getElementById('final-score').innerText = `${score} / ${total}`;
+        document.getElementById('candidate-display').innerText = `प्रतिभागी: ${candidateName}`;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        downloadCSV(candidateName, score, total);
+    }
+
+    // Generate CSV for tracking
+    function downloadCSV(name, score, total) {
+        const date = new Date().toLocaleString('en-IN');
+        const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
+            + "Participant Name,Score,Total Questions,Topic,Date/Time\n"
+            + `"${name}",${score},${total},"Health and Hygiene - Set 2","${date}"`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `Health_Hygiene_Set2_${name.replace(/\s+/g, '_')}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Security Features to prevent cheating/copying
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+        if(e.keyCode == 123) return false; // Disable F12
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Disable Ctrl+Shift+I
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Disable Ctrl+Shift+J
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Disable Ctrl+U
+    }
+</script>
+</body>
+</html>
