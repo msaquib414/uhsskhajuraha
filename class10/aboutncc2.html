@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NCC क्विज़ (सेट 2) - राष्ट्रीय कैडेट कोर</title>
+    <title>NCC क्विज़ (सेट 2) - National Cadet Corps</title>
     <style>
         :root {
-            --primary: #047857; /* NCC Green theme for Set 2 */
-            --secondary: #064e3b; 
-            --bg: #f0fdf4;
-            --text: #1f2937;
+            --primary: #b91c1c; /* NCC Red */
+            --secondary: #1e3a8a; /* NCC Navy Blue */
+            --tertiary: #0ea5e9; /* NCC Air Force Blue */
+            --bg: #f8fafc;
+            --text: #0f172a;
             --white: #ffffff;
-            --correct: #d1fae5;
-            --correct-border: #059669;
+            --correct: #dcfce7;
+            --correct-border: #16a34a;
             --wrong: #fee2e2;
             --wrong-border: #dc2626;
         }
@@ -24,7 +25,10 @@
             color: var(--text);
             margin: 0;
             padding: 0;
-            user-select: none; /* Text selection disabled */
+            /* Security: Disable text selection */
+            user-select: none; 
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
 
         /* Fixed Timer Bar */
@@ -41,38 +45,40 @@
             align-items: center;
             font-size: 1.5rem;
             font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             z-index: 1000;
+            border-bottom: 3px solid var(--tertiary);
         }
 
         .container {
-            max-width: 800px;
-            margin: 80px auto 40px;
+            max-width: 850px;
+            margin: 90px auto 40px;
             background: var(--white);
-            padding: 30px;
+            padding: 35px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 5px solid var(--primary);
         }
 
         /* Login Screen */
         #login-screen {
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
         }
 
-        h1 { color: var(--primary); margin-bottom: 10px; }
-        .subtitle { color: #4b5563; margin-bottom: 30px; font-weight: 500;}
+        h1 { color: var(--primary); margin-bottom: 10px; font-size: 2.2rem; text-transform: uppercase;}
+        .subtitle { color: #64748b; margin-bottom: 30px; font-size: 1.15rem; font-weight: 500;}
 
         input[type="text"] {
-            padding: 12px 20px;
+            padding: 14px 20px;
             font-size: 1.1rem;
-            border: 2px solid #d1d5db;
+            border: 2px solid #cbd5e1;
             border-radius: 8px;
             width: 100%;
-            max-width: 320px;
+            max-width: 380px;
             text-align: center;
             outline: none;
-            transition: 0.3s;
+            transition: border-color 0.3s ease;
         }
         input[type="text"]:focus { border-color: var(--primary); }
 
@@ -80,13 +86,14 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 12px 30px;
-            font-size: 1.1rem;
+            padding: 14px 40px;
+            font-size: 1.15rem;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 20px;
-            transition: 0.2s;
+            margin-top: 25px;
+            transition: background-color 0.2s;
             font-weight: bold;
+            box-shadow: 0 4px 6px rgba(185, 28, 28, 0.3);
         }
         .btn:hover { background-color: var(--secondary); }
 
@@ -95,42 +102,45 @@
 
         .question-card {
             background: #fff;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--secondary);
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
 
         .q-text {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--secondary);
+            margin-bottom: 18px;
+            color: #1e293b;
+            line-height: 1.4;
         }
 
         .options {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
 
         label {
             display: flex;
             align-items: center;
-            padding: 12px 15px;
-            border: 1px solid #e5e7eb;
+            padding: 14px 18px;
+            border: 1px solid #e2e8f0;
             border-radius: 6px;
             cursor: pointer;
-            transition: 0.2s;
-            background: #fdfdfd;
+            transition: all 0.2s;
+            background: #f8fafc;
+            font-size: 1.05rem;
         }
 
-        label:hover { background-color: #f3f4f6; border-color: #d1d5db; }
+        label:hover { background-color: #f1f5f9; border-color: #cbd5e1; }
 
         input[type="radio"] {
-            margin-right: 12px;
-            transform: scale(1.2);
+            margin-right: 15px;
+            transform: scale(1.3);
             accent-color: var(--primary);
         }
 
@@ -143,58 +153,61 @@
         .score-box {
             background: var(--secondary);
             color: white;
-            padding: 30px;
+            padding: 40px;
             border-radius: 12px;
             margin-bottom: 30px;
-            border-top: 5px solid var(--primary);
+            box-shadow: 0 10px 15px rgba(30, 58, 138, 0.3);
+            border: 2px solid var(--tertiary);
         }
-        .score-val { font-size: 3rem; font-weight: 800; color: #fbbf24; }
+        .score-val { font-size: 4rem; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); color: #facc15; }
 
         .feedback {
             margin-top: 15px;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             font-weight: bold;
             display: none;
             text-align: left;
+            font-size: 1.05rem;
         }
-        .feedback.correct { background: var(--correct); color: #065f46; border: 1px solid var(--correct-border); }
+        .feedback.correct { background: var(--correct); color: #166534; border: 1px solid var(--correct-border); }
         .feedback.wrong { background: var(--wrong); color: #991b1b; border: 1px solid var(--wrong-border); }
 
-        /* Highlight classes */
         .user-wrong { background-color: var(--wrong) !important; border-color: var(--wrong-border) !important; }
         .actual-correct { background-color: var(--correct) !important; border-color: var(--correct-border) !important; font-weight: bold; }
 
     </style>
 </head>
-<body oncontextmenu="return false;"> <div class="timer-bar">
-        समय शेष: <span id="timer" style="margin-left: 15px;">40:00</span>
+<body oncontextmenu="return false;">
+
+    <div class="timer-bar">
+        समय शेष: <span id="timer" style="margin-left: 15px; color: #facc15;">40:00</span>
     </div>
 
     <div class="container">
         
         <div id="login-screen">
-            <h1>NCC क्विज़ - सेट 2</h1>
-            <p class="subtitle">हथियार प्रशिक्षण, मैप रीडिंग, ड्रिल और नेतृत्व</p>
-            <input type="text" id="cadetName" placeholder="कैडेट का नाम / रेजिमेंटल नंबर" autocomplete="off">
+            <h1>राष्ट्रीय कैडेट कोर (NCC) - सेट 2</h1>
+            <p class="subtitle">ड्रिल, वेपन ट्रेनिंग और एनसीसी इतिहास (40 प्रश्न)</p>
+            <input type="text" id="cadetName" placeholder="अपना नाम या रेजिमेंटल नंबर दर्ज करें" autocomplete="off">
             <br>
-            <button class="btn" onclick="startQuiz()">परीक्षा प्रारंभ करें</button>
+            <button class="btn" onclick="startQuiz()">परीक्षा शुरू करें (Start Quiz)</button>
         </div>
 
         <div id="quiz-section">
             <form id="quiz-form">
                 </form>
-            <div style="text-align: center; margin-top: 30px;">
-                <button type="button" class="btn" id="submitBtn" onclick="submitQuiz()">उत्तर जमा करें (Submit)</button>
+            <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+                <button type="button" class="btn" id="submitBtn" onclick="submitQuiz()">उत्तर जमा करें (Submit Test)</button>
             </div>
         </div>
 
         <div id="result-section">
             <div class="score-box">
-                <h2>परीक्षा परिणाम</h2>
+                <h2>आपका परीक्षा परिणाम</h2>
                 <div class="score-val" id="final-score">0 / 40</div>
-                <p id="cadet-display" style="font-size: 1.2rem; margin-top: 10px;"></p>
-                <small style="color: #d1d5db;">आपका Result.csv डाउनलोड हो रहा है...</small>
+                <p id="cadet-display" style="font-size: 1.3rem; margin-top: 15px; opacity: 0.9;"></p>
+                <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">विस्तृत विश्लेषण के लिए Result.csv डाउनलोड हो रहा है...</p>
             </div>
         </div>
 
@@ -202,55 +215,55 @@
 
 <script>
     // --- Data: 40 MCQs (NCC Set 2) ---
-    // Distribution: 10 A, 10 B, 10 C, 10 D
+    // Exact Distribution: 10 A, 10 B, 10 C, 10 D.
     const quizData = [
-        // Set A (Correct: A)
-        { q: "बिना हथियार के (खाली हाथ) 'सैल्यूट' कितने प्रकार के होते हैं?", a: "A", opts: { A: "2 (सामने और बाजू का)", B: "3", C: "4", D: "1" } },
-        { q: "ड्रिल में 'कदम ताल' (Mark Time) का आदेश मुख्य रूप से कब दिया जाता है?", a: "A", opts: { A: "जब जगह कम हो या मार्च रोकना हो", B: "दौड़ते समय", C: "विश्राम के लिए", D: "सलामी देने के लिए" } },
-        { q: "7.62 mm SLR का पूर्ण रूप क्या है?", a: "A", opts: { A: "सेल्फ लोडिंग राइफल (Self Loading Rifle)", B: "स्माल लोडिंग राइफल", C: "सिंगल लोडिंग राइफल", D: "सेमी लाइट राइफल" } },
-        { q: ".22 राइफल की सफाई के लिए इस्तेमाल होने वाली चिंदी (Pull-through) का आकार क्या होता है?", a: "A", opts: { A: "4 x 1.5 इंच", B: "3 x 2 इंच", C: "5 x 2 इंच", D: "2 x 1 इंच" } },
-        { q: "मैप रीडिंग में 'बियरिंग' (Bearing) नापने के लिए किस उपकरण का प्रयोग किया जाता है?", a: "A", opts: { A: "प्रिज्मीय कंपास (Prismatic Compass)", B: "सर्विस प्रोटेक्टर", C: "बाइनोकुलर", D: "स्केल" } },
-        { q: "पेट्रोलिंग (गश्त) मुख्य रूप से कितने प्रकार की होती है?", a: "A", opts: { A: "दो (रेकी और प्रोटेक्टिव)", B: "तीन", C: "चार", D: "एक" } },
-        { q: "समाज सेवा (Social Service) के अंतर्गत NCC कैडेट्स इनमें से कौन सा कार्य करते हैं?", a: "A", opts: { A: "रक्तदान (Blood Donation)", B: "हथियार चलाना", C: "सीमा की प्रत्यक्ष सुरक्षा", D: "राजनीतिक चुनाव लड़ना" } },
-        { q: "आग लगने के तीन मुख्य तत्व (Fire Triangle) कौन से होते हैं?", a: "A", opts: { A: "ईंधन, ऑक्सीजन, ताप", B: "लकड़ी, पानी, हवा", C: "धुआं, गैस, लकड़ी", D: "ईंधन, कार्बन डाइऑक्साइड, ताप" } },
-        { q: "नेतृत्व (Leadership) की मुख्य शैलियां कितने प्रकार की होती हैं?", a: "A", opts: { A: "तीन (ऑटोक्रेटिक, डेमोक्रेटिक, लेसेज-फेयर)", B: "दो", C: "चार", D: "पाँच" } },
-        { q: "एक स्वस्थ व्यक्ति के शरीर में रक्त की मात्रा उसके कुल भार का लगभग कितना प्रतिशत होती है?", a: "A", opts: { A: "7%", B: "15%", C: "20%", D: "30%" } },
+        // Set A (Correct Answer: A) - 10 Questions
+        { q: "NCC का झंडा पहली बार कब फहराया गया था?", a: "A", opts: { A: "1951", B: "1948", C: "1950", D: "1954" } },
+        { q: "NCC के झंडे में हल्का नीला (Light Blue) रंग किस अंग को दर्शाता है?", a: "A", opts: { A: "वायु सेना (Air Force)", B: "थल सेना (Army)", C: "नौसेना (Navy)", D: "तटरक्षक (Coast Guard)" } },
+        { q: "महानिदेशक (Director General) NCC का रैंक क्या होता है?", a: "A", opts: { A: "लेफ्टिनेंट जनरल", B: "मेजर जनरल", C: "ब्रिगेडियर", D: "कर्नल" } },
+        { q: "ड्रिल के दौरान 'पीछे मुड़' (About Turn) के आदेश पर किस तरफ से मुड़ा जाता है?", a: "A", opts: { A: "दाहिनी तरफ से (Right Side)", B: "बाईं तरफ से", C: "सामने से", D: "किसी भी तरफ से" } },
+        { q: "राइफल की सफाई के लिए 'पुल्थ्रू' (Pull-through) का उपयोग किस लिए किया जाता है?", a: "A", opts: { A: "बैरल (Barrel) की सफाई के लिए", B: "मैगजीन की सफाई के लिए", C: "ट्रिगर की सफाई के लिए", D: "बट की सफाई के लिए" } },
+        { q: "मानचित्र (Map) पर भूरे (Brown) रंग की रेखाएं क्या दर्शाती हैं?", a: "A", opts: { A: "कंटूर (पहाड़ी/ऊंचाई)", B: "पानी (नदी/झील)", C: "वन (जंगल)", D: "सड़कें" } },
+        { q: ".22 डीलक्स राइफल की कारगर रेंज (Effective Range) क्या है?", a: "A", opts: { A: "25 गज (Yards)", B: "50 गज", C: "100 गज", D: "200 गज" } },
+        { q: "लीडरशिप में 'इंटेग्रिटी' (Integrity) का क्या अर्थ है?", a: "A", opts: { A: "ईमानदारी और नैतिकता", B: "अनुशासनहीनता", C: "साहस", D: "शारीरिक क्षमता" } },
+        { q: "पूरे भारत में NCC के कितने निदेशालय (Directorates) हैं?", a: "A", opts: { A: "17", B: "15", C: "16", D: "18" } },
+        { q: "7.62 mm SLR की मैगजीन में अधिकतम कितने राउंड आते हैं?", a: "A", opts: { A: "20 राउंड", B: "30 राउंड", C: "10 राउंड", D: "15 राउंड" } },
 
-        // Set B (Correct: B)
-        { q: "भारत में एनसीसी की स्थापना किस समिति की सिफारिश पर की गई थी?", a: "B", opts: { A: "कोठारी समिति", B: "एच.एन. कुंजरू समिति", C: "राधाकृष्णन समिति", D: "स्वर्ण सिंह समिति" } },
-        { q: "'सावधान' पोजीशन में दोनों पैरों के पंजों के बीच का कोण कितना होता है?", a: "B", opts: { A: "45 डिग्री", B: "30 डिग्री", C: "60 डिग्री", D: "90 डिग्री" } },
-        { q: "5.56 mm INSAS राइफल की मैगजीन क्षमता कितनी होती है?", a: "B", opts: { A: "30 राउंड", B: "20 राउंड", C: "15 राउंड", D: "10 राउंड" } },
-        { q: "LMG (Light Machine Gun) को खोलने के लिए इसे कितने मुख्य भागों में बांटा जाता है?", a: "B", opts: { A: "4 भागों में", B: "5 भागों में", C: "6 भागों में", D: "3 भागों में" } },
-        { q: "प्रिज्मीय कंपास में कुल कितने डिग्री (Degrees) होते हैं?", a: "B", opts: { A: "180 डिग्री", B: "360 डिग्री", C: "90 डिग्री", D: "270 डिग्री" } },
-        { q: "नक्शे पर 'ग्रिड बेयरिंग' (Grid Bearing) किसके द्वारा नापी जाती है?", a: "B", opts: { A: "कंपास", B: "सर्विस प्रोटेक्टर (Service Protractor)", C: "स्केल", D: "दूरबीन" } },
-        { q: "भारत में 'स्वच्छ भारत अभियान' की शुरुआत किस वर्ष हुई थी?", a: "B", opts: { A: "2012", B: "2014", C: "2015", D: "2016" } },
-        { q: "'लोकतांत्रिक' (Democratic) शैली किस प्रकार की अवधारणा है?", a: "B", opts: { A: "तानाशाही की", B: "नेतृत्व की (Leadership Style)", C: "हथियार की", D: "मानचित्र की" } },
-        { q: "एक स्वस्थ मनुष्य का हृदय सामान्यतः एक मिनट में कितनी बार धड़कता है?", a: "B", opts: { A: "60 बार", B: "72 बार", C: "80 बार", D: "90 बार" } },
-        { q: "चिकित्सा में CPR का फुल फॉर्म क्या होता है?", a: "B", opts: { A: "कार्डियक पल्स रेट", B: "कार्डियो पल्मोनरी रिससिटेशन (Cardio Pulmonary Resuscitation)", C: "सेंट्रल पुलिस रिजर्व", D: "कंट्रोल पावर रूम" } },
+        // Set B (Correct Answer: B) - 10 Questions
+        { q: "NCC गान 'हम सब भारतीय हैं' के रचयिता कौन हैं?", a: "B", opts: { A: "रवींद्रनाथ टैगोर", B: "सुदर्शन फाकिर", C: "बंकिम चंद्र चटर्जी", D: "रामप्रसाद बिस्मिल" } },
+        { q: "'सावधान' की स्थिति में दोनों पंजों के बीच कितने डिग्री का कोण होता है?", a: "B", opts: { A: "45 डिग्री", B: "30 डिग्री", C: "60 डिग्री", D: "90 डिग्री" } },
+        { q: "5.56 mm INSAS राइफल का कारगर रेंज (Effective Range) कितना है?", a: "B", opts: { A: "200 मीटर", B: "400 मीटर", C: "300 मीटर", D: "500 मीटर" } },
+        { q: "राष्ट्रीय एकीकरण शिविर (NIC) का मुख्य उद्देश्य क्या है?", a: "B", opts: { A: "हथियार चलाना सिखाना", B: "विभिन्न संस्कृतियों और राज्यों के कैडेट्स में एकता बढ़ाना", C: "विदेश भेजना", D: "केवल खेलकूद प्रतियोगिताएं" } },
+        { q: "प्रिज्मीय कंपास (Prismatic Compass) का मुख्य उपयोग क्या है?", a: "B", opts: { A: "दूरी मापना", B: "डिग्री (Bearing) मापना और दिशा खोजना", C: "ऊंचाई मापना", D: "हवा की गति मापना" } },
+        { q: "गार्ड ऑफ ऑनर (Guard of Honour) में भारत के प्रधानमंत्री के लिए कितने कैडेट्स की नफरी होती है?", a: "B", opts: { A: "150", B: "100", C: "50", D: "200" } },
+        { q: "'विश्राम' अवस्था में दोनों एड़ियों (Heels) के बीच कितनी दूरी होती है?", a: "B", opts: { A: "10 इंच", B: "12 इंच", C: "18 इंच", D: "8 इंच" } },
+        { q: "'C' सर्टिफिकेट परीक्षा के लिए 'B' सर्टिफिकेट पास करने के बाद कम से कम कितना समय अनिवार्य है?", a: "B", opts: { A: "6 महीने", B: "1 वर्ष", C: "2 वर्ष", D: "कोई समय सीमा नहीं" } },
+        { q: "आग बुझाने के मुख्य तीन तत्व (Fire Triangle) क्या हैं?", a: "B", opts: { A: "हवा, पानी, मिट्टी", B: "ईंधन, ऑक्सीजन, तापमान (Heat)", C: "लकड़ी, गैस, पानी", D: "रसायन, कार्बन, हवा" } },
+        { q: "'तेज चल' में एक मिनट में कितने कदम लिए जाते हैं (SD/SW कैडेट्स के लिए सामान्यतः)?", a: "B", opts: { A: "110", B: "120", C: "130", D: "100" } },
 
-        // Set C (Correct: C)
-        { q: "ड्रिल में 'लाइन तोड़' और 'विसर्जन' में मुख्य अंतर क्या है?", a: "C", opts: { A: "कोई अंतर नहीं है", B: "विसर्जन कुछ समय के लिए होता है", C: "विसर्जन परेड की समाप्ति है, जबकि लाइन तोड़ थोड़े समय का ब्रेक है", D: "लाइन तोड़ केवल अधिकारियों के लिए है" } },
-        { q: "तेज चल (Quick March) में लड़कियों (SW) के लिए एक कदम की लंबाई कितनी होती है?", a: "C", opts: { A: "30 इंच", B: "24 इंच", C: "27 इंच", D: "33 इंच" } },
-        { q: "7.62 mm SLR राइफल का वजन (बिना मैगजीन के) लगभग कितना होता है?", a: "C", opts: { A: "3.5 किलो", B: "4.5 किलो", C: "4.4 किलो", D: "5.1 किलो" } },
-        { q: ".22 डीलक्स राइफल की अधिकतम सीमा (Maximum Range) कितनी होती है?", a: "C", opts: { A: "500 गज", B: "1000 गज", C: "1700 गज", D: "2000 गज" } },
-        { q: "नक्शे (Map) पर नीली रेखाएं या नीला रंग क्या दर्शाता है?", a: "C", opts: { A: "पहाड़", B: "जंगल", C: "जल स्रोत (Water bodies)", D: "सड़कें" } },
-        { q: "हाथ की उंगलियों से (बिना कंपास के) अधिकतम कितने डिग्री तक का अनुमान लगाया जा सकता है?", a: "C", opts: { A: "10 डिग्री", B: "15 डिग्री", C: "19 डिग्री", D: "25 डिग्री" } },
-        { q: "एचआईवी (HIV) मुख्य रूप से शरीर के किस तंत्र को नष्ट करता है?", a: "C", opts: { A: "पाचन तंत्र", B: "श्वसन तंत्र", C: "प्रतिरक्षा तंत्र (Immune System)", D: "तंत्रिका तंत्र" } },
-        { q: "निम्नलिखित में से एक अच्छे नागरिक का कर्तव्य कौन सा है?", a: "C", opts: { A: "कर (Tax) न देना", B: "नियमों का उल्लंघन", C: "देश के प्रति निष्ठा और संविधान का पालन", D: "केवल अपने अधिकारों की बात करना" } },
-        { q: "विटामिन 'सी' की कमी से मसूड़ों में होने वाला रोग कौन सा है?", a: "C", opts: { A: "रतौंधी", B: "बेरी-बेरी", C: "स्कर्वी (Scurvy)", D: "रिकेट्स" } },
-        { q: "एक सामान्य इन्फैंट्री बटालियन में कितनी राइफल कंपनियां (Rifle Companies) होती हैं?", a: "C", opts: { A: "2", B: "3", C: "4", D: "5" } },
+        // Set C (Correct Answer: C) - 10 Questions
+        { q: "NCC के ध्वज में लाल (Red) रंग क्या दर्शाता है?", a: "C", opts: { A: "नौसेना", B: "वायु सेना", C: "थल सेना (Army)", D: "रक्त" } },
+        { q: "ड्रिल (Drill) की शुरुआत किस देश से मानी जाती है?", a: "C", opts: { A: "भारत", B: "ब्रिटेन", C: "जर्मनी (जनरल ड्राल द्वारा)", D: "अमेरिका" } },
+        { q: "LMG (Light Machine Gun) को साफ करने के लिए मुख्य रूप से कितने भागों में खोला जाता है?", a: "C", opts: { A: "3", B: "4", C: "5", D: "6" } },
+        { q: "मैप रीडिंग में उत्तर (North) दिशा कितने प्रकार की होती है?", a: "C", opts: { A: "1", B: "2", C: "3 (True, Magnetic, Grid North)", D: "4" } },
+        { q: "प्राथमिक उपचार (First Aid) का मुख्य उद्देश्य क्या है?", a: "C", opts: { A: "डॉक्टर बनना", B: "बीमारी बढ़ाना", C: "जीवन बचाना और स्थिति को बिगड़ने से रोकना", D: "अस्पताल से भागना" } },
+        { q: "बिना हथियार के 'सैल्यूट' (Salute) कितने प्रकार के होते हैं?", a: "C", opts: { A: "1", B: "2", C: "3 (सामने का, दाहिने का, बाएं का)", D: "4" } },
+        { q: "भारत का सर्वोच्च सैन्य वीरता पुरस्कार (युद्धकाल) कौन सा है?", a: "C", opts: { A: "अशोक चक्र", B: "महावीर चक्र", C: "परमवीर चक्र", D: "शौर्य चक्र" } },
+        { q: ".22 राइफल (मार्क IV) का वजन लगभग कितना होता है?", a: "C", opts: { A: "5 पौंड 4 औंस", B: "6 पौंड", C: "8 पौंड 10 औंस", D: "9 पौंड" } },
+        { q: "एनसीसी में 'कैंप' (Camp) ट्रेनिंग का सबसे महत्वपूर्ण पहलू क्या है?", a: "C", opts: { A: "आराम करना", B: "घर से दूर रहना", C: "टीम वर्क, नेतृत्व और अनुशासन का विकास करना", D: "केवल शारीरिक व्यायाम करना" } },
+        { q: "समाज सेवा (Social Service) के अंतर्गत NCC कैडेट्स मुख्य रूप से क्या करते हैं?", a: "C", opts: { A: "चुनाव लड़ना", B: "व्यापार करना", C: "रक्तदान, वृक्षारोपण और पल्स पोलियो अभियान", D: "पुलिस की ड्यूटी करना" } },
 
-        // Set D (Correct: D)
-        { q: "भारतीय राष्ट्रीय ध्वज की लंबाई और चौड़ाई का अनुपात क्या होता है?", a: "D", opts: { A: "2:3", B: "1:2", C: "4:3", D: "3:2" } },
-        { q: "भारत के राष्ट्रपति को इनमें से कौन सा सैल्यूट दिया जाता है?", a: "D", opts: { A: "जनरल सैल्यूट", B: "बट सैल्यूट", C: "सलामी शस्त्र", D: "राष्ट्रीय सैल्यूट (National Salute)" } },
-        { q: "5.56 mm INSAS राइफल का कारगर रेंज (Effective Range) कितना होता है?", a: "D", opts: { A: "100 मीटर", B: "200 मीटर", C: "300 मीटर", D: "400 मीटर" } },
-        { q: "एनसीसी प्रशिक्षण में 'WT' का क्या अर्थ है?", a: "D", opts: { A: "वाटर ट्रेनिंग", B: "वार टैक्टिक्स", C: "वेट ट्रेनिंग", D: "वेपन ट्रेनिंग (Weapon Training)" } },
-        { q: "नक्शे पर कंटूर लाइनें (Contour lines) किस रंग से दर्शाई जाती हैं?", a: "D", opts: { A: "काला", B: "लाल", C: "हरा", D: "भूरा (Brown)" } },
-        { q: "दिन या रात में उत्तर (North) दिशा ज्ञात करने की सबसे सटीक विधि कौन सी मानी जाती है?", a: "D", opts: { A: "सूर्य द्वारा", B: "तारों द्वारा", C: "घड़ी द्वारा", D: "कंपास द्वारा (By Compass)" } },
-        { q: "आपदा प्रबंधन (Disaster Management) में एनसीसी कैडेट्स की क्या भूमिका होती है?", a: "D", opts: { A: "केवल घटनास्थल देखना", B: "वहां से भाग जाना", C: "मीडिया को बुलाना", D: "बचाव कार्यों और राहत में प्रशासन की मदद करना" } },
-        { q: "जलने (Burns) पर प्राथमिक उपचार (First Aid) के रूप में तुरंत क्या करना चाहिए?", a: "D", opts: { A: "तेल या घी लगाना", B: "जले हुए हिस्से को रगड़ना", C: "गर्म पानी डालना", D: "ठंडे पानी से धोना या साफ कपड़ा रखना" } },
-        { q: "आपदा के समय कार्य करने वाली 'NDRF' का पूर्ण रूप क्या है?", a: "D", opts: { A: "नेशनल डिफेंस रिज़र्व फोर्स", B: "नेशनल डिजास्टर रिस्पांस फंड", C: "न्यू डिजास्टर रिलीफ फोर्स", D: "नेशनल डिजास्टर रिस्पांस फोर्स (National Disaster Response Force)" } },
-        { q: "सेना में 'प्लाटून कमांडर' सामान्यतः किस रैंक का अधिकारी होता है?", a: "D", opts: { A: "कर्नल", B: "मेजर", C: "सूबेदार", D: "जेसीओ (JCO) या लेफ्टिनेंट" } }
+        // Set D (Correct Answer: D) - 10 Questions
+        { q: "NCC में YEP का पूर्ण रूप क्या है?", a: "D", opts: { A: "Youth Education Program", B: "Young Energetic Person", C: "Youth Empowerment Program", D: "Youth Exchange Program" } },
+        { q: "भारत के प्रथम फील्ड मार्शल (Field Marshal) कौन थे?", a: "D", opts: { A: "के. एम. करियप्पा", B: "अर्जन सिंह", C: "वी. के. सिंह", D: "सैम मानेकशॉ" } },
+        { q: "ड्रिल में 'वर्ड ऑफ कमांड' (Word of Command) के कितने भाग होते हैं?", a: "D", opts: { A: "4", B: "3", C: "1", D: "2 (चेतावनी और कार्यकारी)" } },
+        { q: "राइफल से सही निशाना (Good Shooting) लगाने के बुनियादी उसूल क्या हैं?", a: "D", opts: { A: "केवल अच्छी दृष्टि", B: "केवल राइफल का वजन", C: "अच्छी ट्रिगर वर्किंग", D: "मजबूत पकड़, सही लक्ष्य और सही ट्रिगर ऑपरेशन (HAT)" } },
+        { q: "दिन के समय दिशा (Direction) ज्ञात करने का सबसे अच्छा प्राकृतिक तरीका कौन सा है?", a: "D", opts: { A: "चांद से", B: "तारों से", C: "बादलों से", D: "सूर्य (Sun) से" } },
+        { q: "ड्रिल में 'लाइन तोड़' (Falling Out) का क्या अर्थ होता है?", a: "D", opts: { A: "परेड की पूरी समाप्ति", B: "सजा मिलना", C: "घर जाना", D: "थोड़े समय का विश्राम (Break)" } },
+        { q: "7.62 mm SLR की कारगर रेंज (Effective Range) क्या है?", a: "D", opts: { A: "100 मीटर", B: "200 गज", C: "500 गज", D: "300 गज" } },
+        { q: "भारतीय वायु सेना (Air Force) का सर्वोच्च रैंक क्या होता है?", a: "D", opts: { A: "एडमिरल", B: "जनरल", C: "ग्रुप कैप्टन", D: "एयर चीफ मार्शल" } },
+        { q: "भारत में एनसीसी की स्थापना किस समिति की सिफारिश पर की गई थी?", a: "D", opts: { A: "कोठारी समिति", B: "स्वर्ण सिंह समिति", C: "सरकारी समिति", D: "पं. एच.एन. कुंजरू समिति" } },
+        { q: "एक अच्छे नागरिक (Good Citizen) का मुख्य कर्तव्य क्या है?", a: "D", opts: { A: "कर चोरी करना", B: "नियमों को तोड़ना", C: "दूसरों को परेशान करना", D: "देश के कानूनों का पालन करना और संविधान के प्रति वफादार होना" } }
     ];
 
     // Array Shuffler
@@ -264,16 +277,15 @@
         return array;
     }
 
-    // State Variables
     let shuffledQuestions = [];
     let timeLeft = 40 * 60; // 40 Minutes
     let timerInterval;
 
-    // Initialize Quiz
+    // Start Quiz
     function startQuiz() {
         const nameInput = document.getElementById('cadetName');
         if (!nameInput.value.trim()) {
-            alert("कृपया परीक्षा प्रारंभ करने से पहले अपना नाम या रेजिमेंटल नंबर दर्ज करें।");
+            alert("क्विज़ शुरू करने से पहले कृपया अपना नाम या रेजिमेंटल नंबर दर्ज करें।");
             return;
         }
 
@@ -285,7 +297,7 @@
         startTimer();
     }
 
-    // Render Form
+    // Render Questions
     function renderQuestions() {
         const form = document.getElementById('quiz-form');
         form.innerHTML = '';
@@ -294,13 +306,11 @@
             const card = document.createElement('div');
             card.className = 'question-card';
             
-            // Question Statement
             const qTitle = document.createElement('div');
             qTitle.className = 'q-text';
             qTitle.innerText = `प्र. ${index + 1}: ${q.q}`;
             card.appendChild(qTitle);
 
-            // Options Container
             const optsDiv = document.createElement('div');
             optsDiv.className = 'options';
 
@@ -317,7 +327,6 @@
             }
             card.appendChild(optsDiv);
 
-            // Feedback Box
             const feedback = document.createElement('div');
             feedback.id = `feedback-${index}`;
             feedback.className = 'feedback';
@@ -327,7 +336,7 @@
         });
     }
 
-    // Timer Implementation
+    // Timer Logic
     function startTimer() {
         const timerDisplay = document.getElementById('timer');
         timerInterval = setInterval(() => {
@@ -347,11 +356,11 @@
         }, 1000);
     }
 
-    // Validation & Result Processing
+    // Submit and Evaluate
     function submitQuiz() {
         clearInterval(timerInterval);
         document.getElementById('submitBtn').disabled = true;
-        document.getElementById('submitBtn').innerText = "जमा कर दिया गया (Submitted)";
+        document.getElementById('submitBtn').innerText = "परीक्षा समाप्त (Test Submitted)";
         document.getElementById('submitBtn').style.opacity = "0.5";
 
         let score = 0;
@@ -366,7 +375,7 @@
 
             let userAnswer = selected ? selected.value : null;
 
-            // Lock Inputs
+            // Lock inputs
             const inputs = card.querySelectorAll('input');
             inputs.forEach(inp => inp.disabled = true);
 
@@ -381,7 +390,6 @@
                 
                 if (selected) selected.parentElement.classList.add('user-wrong');
                 
-                // Highlight actual correct
                 options.forEach(lbl => {
                     if (lbl.querySelector('input').value === q.a) {
                         lbl.classList.add('actual-correct');
@@ -391,7 +399,7 @@
             feedbackDiv.style.display = 'block';
         });
 
-        // Show Results Panel
+        // Show Result Screen
         document.getElementById('quiz-section').style.display = 'block';
         document.getElementById('result-section').style.display = 'block';
         
@@ -408,13 +416,30 @@
         downloadCSV(cadetName, score, total);
     }
 
-    // Auto-generate Score CSV
+    // Generate CSV Results File
     function downloadCSV(name, score, total) {
         const date = new Date().toLocaleString('en-IN');
         const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
-            + "Cadet Name/No.,Score,Total Questions,Date\n"
-            + `"${name}",${score},${total},"${date}"`;
+            + "Cadet Name/Reg. No.,Score,Total Questions,Topic,Date\n"
+            + `"${name}",${score},${total},"NCC Quiz - Set 2","${date}"`;
 
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
-        
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `NCC_Set2_${name.replace(/\s+/g, '_')}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Security Features
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+        if(e.keyCode == 123) return false; // Disable F12
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Ctrl+Shift+I
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Ctrl+Shift+J
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Ctrl+U
+    }
+</script>
+</body>
+</html>
