@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>नेतृत्व और व्यक्तित्व विकास (Leadership & Personality Building)</title>
+    <style>
+        :root {
+            --primary: #1e3a8a; /* Deep Blue for Professionalism */
+            --secondary: #172554; /* Darker Blue */
+            --accent: #d97706; /* Golden Amber for Leadership */
+            --bg: #f8fafc;
+            --text: #0f172a;
+            --white: #ffffff;
+            --correct: #dcfce7;
+            --correct-border: #16a34a;
+            --wrong: #fee2e2;
+            --wrong-border: #dc2626;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            /* Disable text selection for security */
+            user-select: none; 
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Fixed Timer Bar */
+        .timer-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: var(--secondary);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 90px auto 40px;
+            background: var(--white);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.1);
+        }
+
+        /* Login Screen */
+        #login-screen {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 10px; font-size: 2.2rem;}
+        .subtitle { color: #475569; margin-bottom: 30px; font-size: 1.15rem; font-weight: 500;}
+
+        input[type="text"] {
+            padding: 14px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus { border-color: var(--accent); }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1.15rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background-color 0.2s;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(30, 58, 138, 0.3);
+        }
+        .btn:hover { background-color: var(--accent); }
+
+        /* Quiz Section */
+        #quiz-section { display: none; }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid var(--accent);
+            border-radius: 8px;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .q-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: var(--secondary);
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #f8fafc;
+            font-size: 1.05rem;
+        }
+
+        label:hover { background-color: #f1f5f9; border-color: #94a3b8; }
+
+        input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+            accent-color: var(--primary);
+        }
+
+        /* Results */
+        #result-section {
+            display: none;
+            text-align: center;
+        }
+
+        .score-box {
+            background: var(--primary);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 15px rgba(30, 58, 138, 0.2);
+        }
+        .score-val { font-size: 4rem; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); color: #fde047; }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: none;
+            text-align: left;
+            font-size: 1.05rem;
+        }
+        .feedback.correct { background: var(--correct); color: #166534; border: 1px solid var(--correct-border); }
+        .feedback.wrong { background: var(--wrong); color: #991b1b; border: 1px solid var(--wrong-border); }
+
+        .user-wrong { background-color: var(--wrong) !important; border-color: var(--wrong-border) !important; }
+        .actual-correct { background-color: var(--correct) !important; border-color: var(--correct-border) !important; font-weight: bold; }
+
+    </style>
+</head>
+<body oncontextmenu="return false;"> <div class="timer-bar">
+        समय शेष: <span id="timer" style="margin-left: 15px; color: #fde047;">40:00</span>
+    </div>
+
+    <div class="container">
+        
+        <div id="login-screen">
+            <h1>नेतृत्व और व्यक्तित्व विकास</h1>
+            <p class="subtitle">Leadership & Personality Building (40 Questions)</p>
+            <input type="text" id="candidateName" placeholder="अपना पूरा नाम दर्ज करें" autocomplete="off">
+            <br>
+            <button class="btn" onclick="startQuiz()">मूल्यांकन शुरू करें (Start Quiz)</button>
+        </div>
+
+        <div id="quiz-section">
+            <form id="quiz-form">
+                </form>
+            <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+                <button type="button" class="btn" id="submitBtn" onclick="submitQuiz()">उत्तर जमा करें (Submit Test)</button>
+            </div>
+        </div>
+
+        <div id="result-section">
+            <div class="score-box">
+                <h2>आपका मूल्यांकन परिणाम</h2>
+                <div class="score-val" id="final-score">0 / 40</div>
+                <p id="candidate-display" style="font-size: 1.3rem; margin-top: 15px; opacity: 0.9;"></p>
+                <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">विस्तृत विश्लेषण के लिए Result.csv डाउनलोड हो रहा है...</p>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    // --- Data: 40 MCQs (Leadership & Personality Building) ---
+    // Distribution: Exactly 10 A, 10 B, 10 C, 10 D.
+    const quizData = [
+        // Set A (Correct Answer: A) - 10 Questions
+        { q: "नेतृत्व (Leadership) का मुख्य उद्देश्य क्या होता है?", a: "A", opts: { A: "टीम को एक साझा लक्ष्य की ओर प्रेरित करना और मार्गदर्शन देना", B: "केवल दूसरों पर हुक्म चलाना", C: "व्यक्तिगत स्वार्थ और लाभ को प्राथमिकता देना", D: "टीम के सदस्यों में डर पैदा करके काम करवाना" } },
+        { q: "एक प्रभावी नेता की संचार शैली (Communication Style) कैसी होनी चाहिए?", a: "A", opts: { A: "स्पष्ट, पारदर्शी और सहानुभूतिपूर्ण", B: "आक्रामक और हावी होने वाली", C: "अस्पष्ट और भ्रमित करने वाली", D: "केवल लिखित संवाद पर निर्भर" } },
+        { q: "व्यक्तित्व विकास (Personality Development) में सबसे पहला और महत्वपूर्ण कदम क्या है?", a: "A", opts: { A: "आत्म-जागरूकता (Self-awareness)", B: "महंगे कपड़े पहनना", C: "दूसरों की नकल करना", D: "झूठा आत्मविश्वास दिखाना" } },
+        { q: "'लोकतांत्रिक नेतृत्व' (Democratic Leadership) शैली की क्या विशेषता है?", a: "A", opts: { A: "निर्णय लेने से पहले टीम के सदस्यों की राय और सुझाव लिए जाते हैं", B: "नेता अकेले ही सभी फैसले लेता है", C: "टीम को काम करने की पूरी छूट दे दी जाती है", D: "किसी भी नियम का पालन नहीं किया जाता" } },
+        { q: "समय प्रबंधन (Time Management) का सबसे बड़ा और प्रत्यक्ष लाभ क्या है?", a: "A", opts: { A: "उत्पादकता (Productivity) में वृद्धि और तनाव में कमी", B: "काम से बचने का बहाना मिलना", C: "अतिरिक्त कार्यभार प्राप्त होना", D: "सहकर्मियों के साथ विवाद" } },
+        { q: "तनाव प्रबंधन (Stress Management) के लिए निम्नलिखित में से सबसे प्रभावी तरीका कौन सा है?", a: "A", opts: { A: "नियमित व्यायाम, ध्यान (Meditation) और पर्याप्त नींद", B: "तनाव को पूरी तरह से अनदेखा करना", C: "अपनी समस्याओं के लिए दूसरों को दोष देना", D: "अत्यधिक कैफीन का सेवन करना" } },
+        { q: "संचार कौशल में 'सक्रिय श्रवण' (Active Listening) का क्या अर्थ है?", a: "A", opts: { A: "वक्ता की बात को पूरे ध्यान से सुनना, समझना और प्रतिक्रिया देना", B: "बोलने वाले के खत्म होने का इंतज़ार करना ताकि अपनी बात कह सकें", C: "सुनते समय मोबाइल फोन चलाना", D: "केवल उन बातों को सुनना जो आपके काम की हों" } },
+        { q: "लक्ष्य निर्धारण (Goal Setting) में 'SMART' फ्रेमवर्क का क्या अर्थ है?", a: "A", opts: { A: "Specific, Measurable, Achievable, Relevant, Time-bound", B: "Simple, Moral, Actionable, Real, Tough", C: "Speed, Motion, Agility, Reaction, Time", D: "Smart, Meaningful, Artistic, Rational, True" } },
+        { q: "एक सकारात्मक दृष्टिकोण (Positive Attitude) का व्यक्ति के पेशेवर जीवन पर क्या प्रभाव पड़ता है?", a: "A", opts: { A: "यह आत्मविश्वास बढ़ाता है और चुनौतियों का सामना करने की क्षमता देता है", B: "यह व्यक्ति को अहंकारी बनाता है", C: "यह वास्तविक समस्याओं को छिपाता है", D: "इससे सहकर्मियों के बीच ईर्ष्या बढ़ती है" } },
+        { q: "टीम निर्माण (Team Building) में 'विविधता' (Diversity) का क्या लाभ है?", a: "A", opts: { A: "यह नए विचारों, दृष्टिकोणों और रचनात्मक समाधानों को जन्म देती है", B: "यह केवल भ्रम और विवाद पैदा करती है", C: "इससे निर्णय लेने की प्रक्रिया धीमी हो जाती है", D: "इससे एकरूपता (Uniformity) बनी रहती है" } },
+
+        // Set B (Correct Answer: B) - 10 Questions
+        { q: "'निरंकुश नेतृत्व' (Autocratic Leadership) की सबसे बड़ी पहचान क्या है?", a: "B", opts: { A: "सबकी राय लेकर काम करना", B: "नेता अकेले ही सभी निर्णय लेता है और टीम से बिना सवाल किए पालन की अपेक्षा करता है", C: "कोई स्पष्ट नियम न होना", D: "अधीनस्थों को निर्णय लेने का पूरा अधिकार देना" } },
+        { q: "संघर्ष समाधान (Conflict Resolution) के दौरान एक अच्छे नेता को क्या करना चाहिए?", a: "B", opts: { A: "संघर्ष को नजरअंदाज करना", B: "दोनों पक्षों को निष्पक्ष रूप से सुनना और जीत-जीत (Win-Win) समाधान खोजना", C: "जो व्यक्ति अधिक मुखर है उसका पक्ष लेना", D: "टीम के सदस्यों को एक-दूसरे से बात करने से रोक देना" } },
+        { q: "'बॉडी लैंग्वेज' (Body Language) मानव संचार का कौन सा रूप है?", a: "B", opts: { A: "शाब्दिक संचार (Verbal communication)", B: "अशाब्दिक संचार (Non-verbal communication)", C: "लिखित संचार", D: "तकनीकी संचार" } },
+        { q: "एक उच्च प्रदर्शन करने वाली टीम (High-Performing Team) का सबसे महत्वपूर्ण गुण क्या है?", a: "B", opts: { A: "सदस्यों के बीच हमेशा सहमति होना", B: "आपसी विश्वास, सहयोग और स्पष्ट लक्ष्य", C: "एक-दूसरे से कड़ी प्रतिस्पर्धा", D: "टीम में केवल वरिष्ठ कर्मचारियों का होना" } },
+        { q: "कार्यस्थल पर 'आंतरिक प्रेरणा' (Intrinsic Motivation) का क्या तात्पर्य है?", a: "B", opts: { A: "केवल वेतन और बोनस के लिए काम करना", B: "काम से मिलने वाली स्वयं की संतुष्टि, आनंद और व्यक्तिगत विकास के लिए कार्य करना", C: "बॉस के डर से काम करना", D: "सहकर्मियों को नीचा दिखाने के लिए मेहनत करना" } },
+        { q: "रचनात्मक आलोचना (Constructive Criticism) देने का मुख्य उद्देश्य क्या होता है?", a: "B", opts: { A: "व्यक्ति का मनोबल गिराना", B: "व्यक्ति की कमियों को दूर करके उसके सुधार और विकास में मदद करना", C: "सार्वजनिक रूप से किसी का अपमान करना", D: "अपनी श्रेष्ठता साबित करना" } },
+        { q: "व्यक्तित्व निर्माण में 'ईमानदारी और सत्यनिष्ठा' (Integrity) का क्या अर्थ है?", a: "B", opts: { A: "केवल तब सही काम करना जब कोई देख रहा हो", B: "अपने नैतिक सिद्धांतों और मूल्यों पर अडिग रहना, चाहे कोई देख रहा हो या नहीं", C: "अपना काम निकलवाने के लिए झूठ बोलना", D: "हमेशा दूसरों की गलती खोजना" } },
+        { q: "एक अच्छे श्रोता (Good Listener) की प्रमुख विशेषता क्या होती है?", a: "B", opts: { A: "वह अपनी बारी आने का इंतज़ार करता है", B: "वह बोलते समय व्यक्ति के बीच में टोकता नहीं है और आँखें मिलाकर बात करता है", C: "वह सुनते समय अन्य काम भी करता रहता है", D: "वह हर बात का तुरंत विरोध करता है" } },
+        { q: "निर्णय लेने की प्रक्रिया (Decision Making) में सबसे पहला कदम क्या होना चाहिए?", a: "B", opts: { A: "परिणामों का मूल्यांकन करना", B: "मूल समस्या या चुनौती की सही पहचान करना", C: "विकल्पों को लागू करना", D: "दूसरों से पूछकर तुरंत फैसला लेना" } },
+        { q: "'करिश्माई नेता' (Charismatic Leader) मुख्य रूप से किस शक्ति पर निर्भर करता है?", a: "B", opts: { A: "अपने पद और अधिकार पर", B: "अपने व्यक्तिगत आकर्षण, ऊर्जा और दूसरों को प्रेरित करने की क्षमता पर", C: "धन और संसाधनों पर", D: "कठोर दंड नीति पर" } },
+
+        // Set C (Correct Answer: C) - 10 Questions
+        { q: "एक लीडर के रूप में 'डेलिगेशन' (Delegation) करने का क्या अर्थ है?", a: "C", opts: { A: "अपना सारा काम दूसरों पर थोप देना", B: "किसी को कोई काम न सौंपना", C: "टीम के सदस्यों को उनकी क्षमता के अनुसार कार्य, अधिकार और जिम्मेदारियां सौंपना", D: "केवल साफ-सफाई के काम बाँटना" } },
+        { q: "समूह की गतिशीलता (Group Dynamics) को समझने का एक टीम लीडर को क्या लाभ होता है?", a: "C", opts: { A: "यह टीम में राजनीति को बढ़ावा देता है", B: "इससे सदस्यों के बीच दूरियां बढ़ती हैं", C: "यह टीम के भीतर बेहतर समन्वय, तालमेल और उत्पादकता स्थापित करने में मदद करता है", D: "यह केवल समय की बर्बादी है" } },
+        { q: "'अहंकार' (Ego) व्यक्ति के विकास और नेतृत्व में किस प्रकार कार्य करता है?", a: "C", opts: { A: "यह सीखने की क्षमता को बढ़ाता है", B: "यह टीम के सदस्यों को प्रेरित करता है", C: "यह विकास, सहयोग और रचनात्मक प्रतिक्रिया में सबसे बड़ी बाधा बन सकता है", D: "यह अच्छे निर्णय लेने में मदद करता है" } },
+        { q: "एक मेंटर (Mentor) की किसी व्यक्ति के करियर में क्या भूमिका होती है?", a: "C", opts: { A: "उसे आर्थिक सहायता देना", B: "उसके हिस्से का काम खुद करना", C: "अपने अनुभव साझा करना, सही मार्गदर्शन देना और पेशेवर विकास में मदद करना", D: "केवल पदोन्नति की गारंटी देना" } },
+        { q: "'लचीलापन' (Resilience) का व्यक्तित्व के संदर्भ में क्या अर्थ है?", a: "C", opts: { A: "दूसरों की हर बात मान लेना", B: "शारीरिक रूप से चुस्त होना", C: "असफलताओं और विपरीत परिस्थितियों से जल्दी उबरने और वापस खड़े होने की क्षमता", D: "अपने विचारों को बार-बार बदलना" } },
+        { q: "सार्वजनिक भाषण (Public Speaking) के डर (स्टेज फियर) को कैसे कम किया जा सकता है?", a: "C", opts: { A: "भाषण देने से पूरी तरह बचकर", B: "मंच पर बिना तैयारी के जाकर", C: "विषय की गहरी जानकारी, पर्याप्त अभ्यास और सकारात्मक कल्पना (Visualization) के माध्यम से", D: "श्रोताओं को देखकर गुस्सा करके" } },
+        { q: "'भावनात्मक बुद्धिमत्ता' (Emotional Intelligence - EQ) के अंतर्गत इनमें से क्या शामिल नहीं है?", a: "C", opts: { A: "अपनी भावनाओं को पहचानना", B: "दूसरों की भावनाओं के प्रति सहानुभूति रखना", C: "अपनी कुंठा और क्रोध को दूसरों पर थोपना", D: "तनावपूर्ण स्थितियों में खुद को शांत रखना" } },
+        { q: "कार्यस्थल पर अच्छे व्यावसायिक शिष्टाचार (Professional Etiquettes) क्या दर्शाते हैं?", a: "C", opts: { A: "आपका कमजोर स्वभाव", B: "आपका अत्यधिक दोस्ताना रवैया", C: "आपका पेशेवर रवैया, कार्य संस्कृति की समझ और दूसरों के प्रति सम्मान", D: "सहकर्मियों से दूरी बनाए रखना" } },
+        { q: "स्व-अनुशासन (Self-Discipline) विकसित करने का मुख्य लाभ क्या है?", a: "C", opts: { A: "यह जीवन को उबाऊ बना देता है", B: "यह आपको दूसरों से अलग-थलग कर देता है", C: "यह प्रलोभनों से बचाकर आपको अपने दीर्घकालिक लक्ष्यों को प्राप्त करने में मदद करता है", D: "यह केवल सेना में काम आता है" } },
+        { q: "एक 'विजनरी लीडर' (Visionary Leader) की सबसे बड़ी खासियत क्या होती है?", a: "C", opts: { A: "वह केवल आज के मुनाफे पर ध्यान देता है", B: "वह पुरानी परंपराओं को कभी नहीं बदलता", C: "वह भविष्य की स्पष्ट रूपरेखा देखता है और टीम को उस नई दिशा की ओर ले जाता है", D: "वह जोखिम लेने से हमेशा डरता है" } },
+
+        // Set D (Correct Answer: D) - 10 Questions
+        { q: "'माइक्रोमैनेजमेंट' (Micromanagement) का टीम के प्रदर्शन पर आमतौर पर क्या प्रभाव पड़ता है?", a: "D", opts: { A: "यह टीम को सशक्त बनाता है", B: "यह कार्य की गति को दोगुना कर देता है", C: "यह सदस्यों के बीच आपसी प्रेम बढ़ाता है", D: "यह टीम के मनोबल, स्वतंत्रता और रचनात्मकता को गंभीर रूप से कम करता है" } },
+        { q: "एक प्रभावी नेता के लिए अपनी टीम से 'फीडबैक' (Feedback) लेना क्यों महत्वपूर्ण है?", a: "D", opts: { A: "यह दिखाने के लिए कि वह बॉस नहीं है", B: "ताकि वह टीम के सदस्यों को दंडित कर सके", C: "औपचारिकता पूरी करने के लिए", D: "अपनी नेतृत्व शैली की कमजोरियों को जानने और निरंतर सुधार करने के लिए" } },
+        { q: "'सहानुभूति' (Sympathy) और 'तदनुभूति/समानुभूति' (Empathy) में मुख्य अंतर क्या है?", a: "D", opts: { A: "दोनों बिल्कुल समान हैं", B: "सहानुभूति अच्छी है, तदनुभूति बुरी है", C: "सहानुभूति में कठोरता होती है, जबकि तदनुभूति में नहीं", D: "सहानुभूति में केवल दया भाव होता है, जबकि तदनुभूति में व्यक्ति खुद को दूसरे की स्थिति में रखकर उसकी भावना को महसूस करता है" } },
+        { q: "पेशेवर जीवन में कार्य-जीवन संतुलन (Work-Life Balance) बनाए रखना क्यों आवश्यक है?", a: "D", opts: { A: "ताकि कंपनी को नुकसान हो", B: "ज्यादा छुट्टियां मनाने के लिए", C: "प्रमोशन से बचने के लिए", D: "व्यक्तिगत रिश्तों, मानसिक शांति और समग्र शारीरिक स्वास्थ्य को बनाए रखने के लिए" } },
+        { q: "मीटिंग्स में 'ब्रेनस्टॉर्मिंग' (Brainstorming) तकनीक का मुख्य उद्देश्य क्या होता है?", a: "D", opts: { A: "समय बर्बाद करना", B: "किसी एक व्यक्ति की बात थोपना", C: "गलतियों पर बहस करना", D: "किसी समस्या के समाधान के लिए टीम से बिना आलोचना के नए और रचनात्मक विचार उत्पन्न करना" } },
+        { q: "करियर और व्यक्तित्व विकास में 'नेटवर्किंग' (Networking) का क्या महत्व है?", a: "D", opts: { A: "यह केवल समय की बर्बादी है", B: "इससे लोग आपसे पैसे मांगते हैं", C: "यह केवल बिक्री (Sales) वालों के लिए है", D: "मजबूत पेशेवर रिश्ते बनाने, ज्ञान साझा करने और नए अवसरों की पहचान करने में" } },
+        { q: "एक महान लीडर को 'असफलता' (Failure) को किस दृष्टिकोण से देखना चाहिए?", a: "D", opts: { A: "अंत के रूप में", B: "दूसरों को दोष देने के बहाने के रूप में", C: "हताश होकर लक्ष्य छोड़ने के संकेत के रूप में", D: "सीखने, रणनीति बदलने और मूल्यवान अनुभव प्राप्त करने के अवसर के रूप में" } },
+        { q: "'अहस्तक्षेपी नेतृत्व' (Laissez-Faire Leadership) शैली में कार्यप्रणाली कैसी होती है?", a: "D", opts: { A: "नेता हर छोटी बात पर नजर रखता है", B: "नेता तानाशाही करता है", C: "नेता बाहर से लोगों को काम पर रखता है", D: "नेता टीम को पूरी स्वतंत्रता देता है और निर्णय लेने का अधिकार टीम के पास ही होता है" } },
+        { q: "'समय की पाबंदी' (Punctuality) किसी व्यक्ति के व्यक्तित्व के बारे में क्या मुख्य बात दर्शाती है?", a: "D", opts: { A: "वह डरा हुआ है", B: "उसके पास कोई और काम नहीं है", C: "वह बहुत जल्दबाज़ है", D: "वह अत्यधिक अनुशासित है, विश्वसनीय है और दूसरों के समय का सम्मान करता है" } },
+        { q: "एक आदर्श 'रोल मॉडल' (Role Model) कैसा होना चाहिए?", a: "D", opts: { A: "जो बहुत अमीर हो", B: "जो सोशल मीडिया पर मशहूर हो", C: "जो केवल बड़ी-बड़ी बातें करता हो", D: "जिसके कार्य, मूल्य (Values) और व्यवहार दूसरों के लिए सकारात्मक और प्रेरणादायक हों" } }
+    ];
+
+    // Function to shuffle questions
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    let shuffledQuestions = [];
+    let timeLeft = 40 * 60; // 40 Minutes
+    let timerInterval;
+
+    // Start Quiz
+    function startQuiz() {
+        const nameInput = document.getElementById('candidateName');
+        if (!nameInput.value.trim()) {
+            alert("क्विज़ शुरू करने से पहले कृपया अपना नाम दर्ज करें।");
+            return;
+        }
+
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        
+        shuffledQuestions = shuffle([...quizData]);
+        renderQuestions();
+        startTimer();
+    }
+
+    // Render Form
+    function renderQuestions() {
+        const form = document.getElementById('quiz-form');
+        form.innerHTML = '';
+
+        shuffledQuestions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            const qTitle = document.createElement('div');
+            qTitle.className = 'q-text';
+            qTitle.innerText = `प्र. ${index + 1}: ${q.q}`;
+            card.appendChild(qTitle);
+
+            const optsDiv = document.createElement('div');
+            optsDiv.className = 'options';
+
+            for (const [key, value] of Object.entries(q.opts)) {
+                const label = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q${index}`;
+                radio.value = key;
+                
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(` ${value}`)); 
+                optsDiv.appendChild(label);
+            }
+            card.appendChild(optsDiv);
+
+            const feedback = document.createElement('div');
+            feedback.id = `feedback-${index}`;
+            feedback.className = 'feedback';
+            card.appendChild(feedback);
+
+            form.appendChild(card);
+        });
+    }
+
+    // Timer Logic
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer');
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            timerDisplay.innerText = `${minutes}:${seconds}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    // Submit and Evaluate
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').innerText = "मूल्यांकन समाप्त (Test Submitted)";
+        document.getElementById('submitBtn').style.opacity = "0.5";
+
+        let score = 0;
+        let candidateName = document.getElementById('candidateName').value;
+        const total = shuffledQuestions.length;
+
+        shuffledQuestions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            const card = feedbackDiv.parentElement;
+            const options = card.querySelectorAll('label');
+
+            let userAnswer = selected ? selected.value : null;
+
+            const inputs = card.querySelectorAll('input');
+            inputs.forEach(inp => inp.disabled = true);
+
+            if (userAnswer === q.a) {
+                score++;
+                feedbackDiv.innerHTML = `✅ बिल्कुल सही उत्तर!`;
+                feedbackDiv.className = 'feedback correct';
+                if(selected) selected.parentElement.classList.add('actual-correct');
+            } else {
+                feedbackDiv.innerHTML = `❌ गलत उत्तर। सही विकल्प: <b>${q.opts[q.a]}</b>`;
+                feedbackDiv.className = 'feedback wrong';
+                
+                if (selected) selected.parentElement.classList.add('user-wrong');
+                
+                options.forEach(lbl => {
+                    if (lbl.querySelector('input').value === q.a) {
+                        lbl.classList.add('actual-correct');
+                    }
+                });
+            }
+            feedbackDiv.style.display = 'block';
+        });
+
+        document.getElementById('quiz-section').style.display = 'block';
+        document.getElementById('result-section').style.display = 'block';
+        
+        const container = document.querySelector('.container');
+        const resSec = document.getElementById('result-section');
+        const loginSec = document.getElementById('login-screen');
+        container.insertBefore(resSec, loginSec.nextSibling);
+
+        document.getElementById('final-score').innerText = `${score} / ${total}`;
+        document.getElementById('candidate-display').innerText = `प्रतिभागी: ${candidateName}`;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        downloadCSV(candidateName, score, total);
+    }
+
+    // Generate CSV for tracking
+    function downloadCSV(name, score, total) {
+        const date = new Date().toLocaleString('en-IN');
+        const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
+            + "Participant Name,Score,Total Questions,Topic,Date/Time\n"
+            + `"${name}",${score},${total},"Leadership & Personality Building","${date}"`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `Leadership_Quiz_Result_${name.replace(/\s+/g, '_')}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Security Features to prevent cheating/copying
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function(e) {
+        if(e.keyCode == 123) return false; // Disable F12
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false; // Disable Ctrl+Shift+I
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false; // Disable Ctrl+Shift+J
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false; // Disable Ctrl+U
+    }
+</script>
+</body>
+</html>
