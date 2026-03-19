@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCC क्विज़ (राष्ट्रीय कैडेट कोर)</title>
+    <style>
+        :root {
+            --primary: #b91c1c; /* NCC Red */
+            --secondary: #0f172a; /* Navy Blue */
+            --tertiary: #38bdf8; /* Air Force Blue */
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --white: #ffffff;
+            --correct: #dcfce7;
+            --correct-border: #16a34a;
+            --wrong: #fee2e2;
+            --wrong-border: #dc2626;
+        }
+
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            user-select: none; /* पाठ का चयन (Text selection) अक्षम करें */
+        }
+
+        /* Fixed Timer Bar */
+        .timer-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: var(--secondary);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 80px auto 40px;
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Login Screen */
+        #login-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 10px; }
+        .subtitle { color: #64748b; margin-bottom: 30px; font-weight: 500;}
+
+        input[type="text"] {
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+        }
+        input[type="text"]:focus { border-color: var(--primary); }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+        .btn:hover { background-color: var(--secondary); }
+
+        /* Quiz Section */
+        #quiz-section { display: none; }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .q-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #fcfcfc;
+        }
+
+        label:hover { background-color: #f1f5f9; border-color: #cbd5e1; }
+
+        input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            accent-color: var(--primary);
+        }
+
+        /* Results */
+        #result-section {
+            display: none;
+            text-align: center;
+        }
+
+        .score-box {
+            background: var(--secondary);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-top: 5px solid var(--primary);
+        }
+        .score-val { font-size: 3rem; font-weight: 800; color: #facc15; }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: none;
+            text-align: left;
+        }
+        .feedback.correct { background: var(--correct); color: #166534; border: 1px solid var(--correct-border); }
+        .feedback.wrong { background: var(--wrong); color: #991b1b; border: 1px solid var(--wrong-border); }
+
+        /* Highlight classes */
+        .user-wrong { background-color: var(--wrong) !important; border-color: var(--wrong-border) !important; }
+        .actual-correct { background-color: var(--correct) !important; border-color: var(--correct-border) !important; font-weight: bold; }
+
+    </style>
+</head>
+<body oncontextmenu="return false;"> <div class="timer-bar">
+        समय शेष: <span id="timer" style="margin-left: 15px;">40:00</span>
+    </div>
+
+    <div class="container">
+        
+        <div id="login-screen">
+            <h1>राष्ट्रीय कैडेट कोर (NCC) क्विज़</h1>
+            <p class="subtitle">NCC से संबंधित सामान्य ज्ञान और नियम</p>
+            <input type="text" id="cadetName" placeholder="अपना नाम/रजिमेंटल नंबर दर्ज करें" autocomplete="off">
+            <br>
+            <button class="btn" onclick="startQuiz()">परीक्षा शुरू करें (Start Quiz)</button>
+        </div>
+
+        <div id="quiz-section">
+            <form id="quiz-form">
+                </form>
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="button" class="btn" id="submitBtn" onclick="submitQuiz()">उत्तर जमा करें (Submit)</button>
+            </div>
+        </div>
+
+        <div id="result-section">
+            <div class="score-box">
+                <h2>आपका परिणाम (Result)</h2>
+                <div class="score-val" id="final-score">0 / 40</div>
+                <p id="cadet-display" style="font-size: 1.2rem; margin-top: 10px;">Cadet Name</p>
+                <small style="color: #cbd5e1;">Result.csv डाउनलोड हो रहा है...</small>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    // --- Data: 40 MCQs (NCC Topic) ---
+    // Distribution: 10 A, 10 B, 10 C, 10 D
+    const quizData = [
+        // Set A (Correct: A)
+        { q: "NCC का पूर्ण रूप क्या है?", a: "A", opts: { A: "नेशनल कैडेट कोर (National Cadet Corps)", B: "नेशनल कोस्ट कोर", C: "नॉन कॉम्बैट कोर", D: "नेशनल कॉमन कोर" } },
+        { q: "NCC का आदर्श वाक्य (मोटो) क्या है?", a: "A", opts: { A: "एकता और अनुशासन (Unity and Discipline)", B: "सेवा और वफादारी", C: "वीरता और विवेक", D: "साहस और शौर्य" } },
+        { q: "भारत में NCC की स्थापना किस वर्ष हुई थी?", a: "A", opts: { A: "1948", B: "1950", C: "1945", D: "1952" } },
+        { q: "NCC दिवस कब मनाया जाता है?", a: "A", opts: { A: "नवंबर के चौथे रविवार को", B: "15 अगस्त को", C: "26 जनवरी को", D: "दिसंबर के पहले रविवार को" } },
+        { q: "NCC का मुख्यालय (Headquarters) कहाँ स्थित है?", a: "A", opts: { A: "नई दिल्ली", B: "देहरादून", C: "पुणे", D: "कोलकाता" } },
+        { q: "भारत में NCC के कितने निदेशालय (Directorates) हैं?", a: "A", opts: { A: "17", B: "15", C: "19", D: "21" } },
+        { q: "NCC के ध्वज में कितने रंग होते हैं?", a: "A", opts: { A: "तीन (लाल, गहरा नीला, हल्का नीला)", B: "दो (लाल और सफेद)", C: "चार", D: "एक (केवल लाल)" } },
+        { q: "NCC के वर्तमान महानिदेशक (DG) का सामान्य रैंक क्या होता है?", a: "A", opts: { A: "लेफ्टिनेंट जनरल", B: "मेजर जनरल", C: "ब्रिगेडियर", D: "कर्नल" } },
+        { q: "NCC का गीत 'हम सब भारतीय हैं' किसने लिखा है?", a: "A", opts: { A: "सुदर्शन फाकिर", B: "रवींद्रनाथ टैगोर", C: "बंकिम चंद्र चटर्जी", D: "मैथिलीशरण गुप्त" } },
+        { q: "सेना (Army) विंग के NCC ध्वज का रंग क्या होता है?", a: "A", opts: { A: "लाल", B: "हल्का नीला", C: "गहरा नीला", D: "सफेद" } },
+
+        // Set B (Correct: B)
+        { q: "नेवल विंग (Naval Wing) के NCC ध्वज का रंग क्या दर्शाता है?", a: "B", opts: { A: "लाल", B: "गहरा नीला", C: "हल्का नीला", D: "हरा" } },
+        { q: "एयर विंग (Air Wing) के NCC ध्वज का रंग क्या होता है?", a: "B", opts: { A: "गहरा नीला", B: "हल्का नीला", C: "लाल", D: "सफेद" } },
+        { q: "NCC के 'A' सर्टिफिकेट परीक्षा के लिए न्यूनतम आयु क्या है?", a: "B", opts: { A: "10 वर्ष", B: "13 वर्ष", C: "15 वर्ष", D: "18 वर्ष" } },
+        { q: "सीनियर डिवीजन (SD) में लड़कों के प्रशिक्षण की सामान्य अवधि कितनी होती है?", a: "B", opts: { A: "2 वर्ष", B: "3 वर्ष", C: "4 वर्ष", D: "5 वर्ष" } },
+        { q: "NCC महानिदेशालय (DGNCC) किस मंत्रालय के अधीन कार्य करता है?", a: "B", opts: { A: "गृह मंत्रालय", B: "रक्षा मंत्रालय", C: "शिक्षा मंत्रालय", D: "खेल मंत्रालय" } },
+        { q: "लड़कियों के लिए NCC (गर्ल्स डिवीजन) की शुरुआत किस वर्ष हुई थी?", a: "B", opts: { A: "1948", B: "1949", C: "1952", D: "1960" } },
+        { q: "एयर विंग (Air Wing) NCC की शुरुआत किस वर्ष हुई थी?", a: "B", opts: { A: "1948", B: "1950", C: "1952", D: "1955" } },
+        { q: "नेवल विंग (Naval Wing) NCC की शुरुआत किस वर्ष हुई थी?", a: "B", opts: { A: "1950", B: "1952", C: "1954", D: "1960" } },
+        { q: "NCC में कैडेट्स का सर्वोच्च रैंक कौन सा होता है?", a: "B", opts: { A: "सार्जेंट", B: "सीनियर अंडर ऑफिसर (SUO)", C: "कॉरपोरल", D: "अंडर ऑफिसर (UO)" } },
+        { q: "RDC का पूर्ण रूप क्या है?", a: "B", opts: { A: "रूरल डेवलपमेंट कैंप", B: "रिपब्लिक डे कैंप (Republic Day Camp)", C: "रेजिमेंटल ड्रिल कैंप", D: "रेंज ड्रिल कोर्स" } },
+
+        // Set C (Correct: C)
+        { q: "'B' सर्टिफिकेट प्राप्त करने के लिए न्यूनतम कितनी उपस्थिति (Attendance) आवश्यक है?", a: "C", opts: { A: "50%", B: "60%", C: "75%", D: "90%" } },
+        { q: "एक कंपनी में कितने कैडेट होते हैं (आर्मी विंग सीनियर डिवीजन में सामान्यतः)?", a: "C", opts: { A: "100", B: "120", C: "160", D: "200" } },
+        { q: "ड्रिल की शुरुआत किस देश से हुई थी?", a: "C", opts: { A: "भारत", B: "ब्रिटेन", C: "जर्मनी", D: "अमेरिका" } },
+        { q: "राष्ट्रीय गान गाते समय कैडेट को किस स्थिति में खड़ा होना चाहिए?", a: "C", opts: { A: "विश्राम", B: "आराम से", C: "सावधान (Attention)", D: "बैठकर" } },
+        { q: "'सावधान' की स्थिति में दोनों पंजों के बीच कितने डिग्री का कोण होता है?", a: "C", opts: { A: "45 डिग्री", B: "60 डिग्री", C: "30 डिग्री", D: "90 डिग्री" } },
+        { q: "राइफल के साथ 'सैल्यूट' कितने प्रकार के होते हैं?", a: "C", opts: { A: "एक", B: "दो", C: "तीन (बट, राष्ट्रीय और जनरल)", D: "चार" } },
+        { q: "एनसीसी में 'कैंप' का मुख्य उद्देश्य क्या है?", a: "C", opts: { A: "छुट्टियां मनाना", B: "केवल हथियार चलाना सीखना", C: "नेतृत्व, चरित्र और टीम वर्क का विकास", D: "शारीरिक दंड देना" } },
+        { q: "भारत के प्रथम प्रधानमंत्री जिन्होंने NCC का उद्घाटन किया था, वे कौन थे?", a: "C", opts: { A: "लाल बहादुर शास्त्री", B: "सरदार वल्लभभाई पटेल", C: "पंडित जवाहरलाल नेहरू", D: "डॉ. राजेंद्र प्रसाद" } },
+        { q: "NIC का पूर्ण रूप क्या है?", a: "C", opts: { A: "नेशनल इंटेलिजेंस कॉर्प्स", B: "नेवल इंस्ट्रक्शन कैंप", C: "नेशनल इंटीग्रेशन कैंप (National Integration Camp)", D: "नेशनल इन्फैंट्री कैंप" } },
+        { q: "'C' सर्टिफिकेट परीक्षा में बैठने के लिए कौन सा सर्टिफिकेट होना अनिवार्य है?", a: "C", opts: { A: "केवल 'A' सर्टिफिकेट", B: "कोई सर्टिफिकेट नहीं", C: "'B' सर्टिफिकेट", D: "स्पोर्ट्स सर्टिफिकेट" } },
+
+        // Set D (Correct: D)
+        { q: "YEP का पूर्ण रूप क्या है?", a: "D", opts: { A: "यूथ एजुकेशन प्रोग्राम", B: "यंग एंटरप्रेन्योर प्रोग्राम", C: "यूथ एंगेजमेंट पॉलिसी", D: "यूथ एक्सचेंज प्रोग्राम (Youth Exchange Program)" } },
+        { q: "एएनओ (ANO) का पूर्ण रूप क्या है?", a: "D", opts: { A: "आर्मी नेवल ऑफिसर", B: "असिस्टेंट एनसीसी ऑफिसर", C: "एडिशनल नोडल ऑफिसर", D: "एसोसिएट एनसीसी ऑफिसर (Associate NCC Officer)" } },
+        { q: "'विश्राम' की स्थिति में दोनों एड़ियों (Heels) के बीच की दूरी कितनी होती है?", a: "D", opts: { A: "6 इंच", B: "8 इंच", C: "10 इंच", D: "12 इंच" } },
+        { q: "तेज चल (Quick March) में लड़कों के लिए एक मिनट में कदम की दर (कदम/मिनट) कितनी होती है?", a: "D", opts: { A: "100", B: "110", C: "140", D: "120" } },
+        { q: "7.62 mm एसएलआर (SLR) राइफल की मैगजीन क्षमता (Magazine Capacity) कितनी होती है?", a: "D", opts: { A: "5 राउंड", B: "10 राउंड", C: "30 राउंड", D: "20 राउंड" } },
+        { q: ".22 डीलक्स राइफल की कारगर रेंज (Effective Range) कितनी होती है?", a: "D", opts: { A: "100 गज", B: "50 गज", C: "300 गज", D: "25 गज" } },
+        { q: "मैप रीडिंग (Map Reading) में उत्तर (North) कितने प्रकार के होते हैं?", a: "D", opts: { A: "एक", B: "दो", C: "चार", D: "तीन (True, Magnetic, Grid North)" } },
+        { q: "कंपास (Prismatic Compass) का उपयोग मुख्य रूप से किसलिए किया जाता है?", a: "D", opts: { A: "दूरी नापने के लिए", B: "ऊंचाई नापने के लिए", C: "समय देखने के लिए", D: "दिशा और डिग्री (Bearing) ज्ञात करने के लिए" } },
+        { q: "वर्तमान एनसीसी गान (NCC Song 'Hum Sab Bharatiya Hain') को आधिकारिक तौर पर कब अपनाया गया था?", a: "D", opts: { A: "1948", B: "1950", C: "1962", D: "1982" } },
+        { q: "एक सामान्य प्लाटून (Platoon) में कितने कैडेट होते हैं?", a: "D", opts: { A: "100", B: "50", C: "10", D: "32 (लगभग)" } }
+    ];
+
+    // Array Shuffler
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+
+    // State Variables
+    let shuffledQuestions = [];
+    let timeLeft = 40 * 60; // 40 Minutes
+    let timerInterval;
+
+    // Initialize Quiz
+    function startQuiz() {
+        const nameInput = document.getElementById('cadetName');
+        if (!nameInput.value.trim()) {
+            alert("कृपया परीक्षा शुरू करने के लिए अपना नाम या रेजिमेंटल नंबर दर्ज करें।");
+            return;
+        }
+
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('quiz-section').style.display = 'block';
+        
+        shuffledQuestions = shuffle([...quizData]);
+        renderQuestions();
+        startTimer();
+    }
+
+    // Render Form
+    function renderQuestions() {
+        const form = document.getElementById('quiz-form');
+        form.innerHTML = '';
+
+        shuffledQuestions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            // Question Statement
+            const qTitle = document.createElement('div');
+            qTitle.className = 'q-text';
+            qTitle.innerText = `प्र. ${index + 1}: ${q.q}`;
+            card.appendChild(qTitle);
+
+            // Options Container
+            const optsDiv = document.createElement('div');
+            optsDiv.className = 'options';
+
+            for (const [key, value] of Object.entries(q.opts)) {
+                const label = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `q${index}`;
+                radio.value = key;
+                
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(` ${value}`)); 
+                optsDiv.appendChild(label);
+            }
+            card.appendChild(optsDiv);
+
+            // Feedback Box
+            const feedback = document.createElement('div');
+            feedback.id = `feedback-${index}`;
+            feedback.className = 'feedback';
+            card.appendChild(feedback);
+
+            form.appendChild(card);
+        });
+    }
+
+    // Timer Implementation
+    function startTimer() {
+        const timerDisplay = document.getElementById('timer');
+        timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            timerDisplay.innerText = `${minutes}:${seconds}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitQuiz();
+            }
+            timeLeft--;
+        }, 1000);
+    }
+
+    // Validation & Result Processing
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').innerText = "जमा कर दिया गया (Submitted)";
+        document.getElementById('submitBtn').style.opacity = "0.5";
+
+        let score = 0;
+        let cadetName = document.getElementById('cadetName').value;
+        const total = shuffledQuestions.length;
+
+        shuffledQuestions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            const card = feedbackDiv.parentElement;
+            const options = card.querySelectorAll('label');
+
+            let userAnswer = selected ? selected.value : null;
+
+            // Lock Inputs
+            const inputs = card.querySelectorAll('input');
+            inputs.forEach(inp => inp.disabled = true);
+
+            if (userAnswer === q.a) {
+                score++;
+                feedbackDiv.innerHTML = `✅ बिल्कुल सही!`;
+                feedbackDiv.className = 'feedback correct';
+                if(selected) selected.parentElement.classList.add('actual-correct');
+            } else {
+                feedbackDiv.innerHTML = `❌ गलत उत्तर। सही उत्तर: <b>${q.opts[q.a]}</b>`;
+                feedbackDiv.className = 'feedback wrong';
+                
+                if (selected) selected.parentElement.classList.add('user-wrong');
+                
+                // Highlight actual correct
+                options.forEach(lbl => {
+                    if (lbl.querySelector('input').value === q.a) {
+                        lbl.classList.add('actual-correct');
+                    }
+                });
+            }
+            feedbackDiv.style.display = 'block';
+        });
+
+        // Show Results Panel
+        document.getElementById('quiz-section').style.display = 'block';
+        document.getElementById('result-section').style.display = 'block';
+        
+        const container = document.querySelector('.container');
+        const resSec = document.getElementById('result-section');
+        const loginSec = document.getElementById('login-screen');
+        container.insertBefore(resSec, loginSec.nextSibling);
+
+        document.getElementById('final-score').innerText = `${score} / ${total}`;
+        document.getElementById('cadet-display').innerText = `Cadet: ${cadetName}`;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        downloadCSV(cadetName, score, total);
+    }
+
+    // Auto-generate Score CSV
+    function downloadCSV(name, score, total) {
+        const date = new Date().toLocaleString('en-IN');
+        const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
+            + "Cadet Name/No.,Score,Total Questions,Date\n"
+            + `"${name}",${score},${total},"${date}"`;
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `NCC_Quiz_Result_${name.replace(/\s+/g, '_')}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+</body>
+</html>
